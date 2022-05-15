@@ -1,0 +1,296 @@
+import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
+import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
+import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+/// DeviceManager Example
+class DeviceManager extends StatefulWidget {
+  /// Construct the [DeviceManager]
+  const DeviceManager({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _State();
+}
+
+class _State extends State<DeviceManager> {
+  late final RtcEngine _engine;
+  bool _isReadyPreview = false;
+  String channelId = config.channelId;
+  bool isJoined = false;
+  List<int> remoteUid = [];
+  List<VideoDeviceInfo> devices = [];
+  late final VideoDeviceManager _videoDeviceManager;
+  late TextEditingController _controller;
+  late String _selectedDeviceId;
+  bool _isSetVideoDeviceEnabled = false;
+  // late RtcVideoViewController _localVideoController;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: channelId);
+    _initEngine();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _dispose();
+  }
+
+  Future<void> _dispose() async {
+    _controller.dispose();
+    // await _localVideoController.dispose();
+    await _engine.leaveChannel();
+    await _engine.release();
+  }
+
+  Future<void> _initEngine() async {
+    _engine = createAgoraRtcEngine();
+    await _engine.initialize(RtcEngineContext(
+      appId: config.appId,
+      channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+    ));
+
+    // _localVideoController = RtcVideoViewController(
+    //   canvas: const VideoCanvas(uid: 0),
+    //   channelId: _controller!.text,
+    // );
+    // await _localVideoController.initialize(_engine);
+
+    _engine.registerEventHandler(RtcEngineEventHandler(
+      onWarning: (warn, msg) {
+        logSink.log('[onWarning] warn: $warn, msg: $msg');
+      },
+      onError: (ErrorCodeType err, String msg) {
+        logSink.log('[onError] err: $err, msg: $msg');
+      },
+      onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+        logSink.log(
+            '[onJoinChannelSuccess] connection: ${connection.toJson()} elapsed: $elapsed');
+        setState(() {
+          isJoined = true;
+        });
+      },
+      onUserJoined: (RtcConnection connection, int rUid, int elapsed) {
+        logSink.log(
+            '[onUserJoined] connection: ${connection.toJson()} remoteUid: $rUid elapsed: $elapsed');
+        setState(() {});
+      },
+      onUserOffline:
+          (RtcConnection connection, int rUid, UserOfflineReasonType reason) {
+        logSink.log(
+            '[onUserOffline] connection: ${connection.toJson()}  rUid: $rUid reason: $reason');
+        setState(() {});
+      },
+      onLeaveChannel: (RtcConnection connection, RtcStats stats) {
+        logSink.log(
+            '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
+        setState(() {
+          isJoined = false;
+        });
+      },
+    ));
+
+    await _engine.enableVideo();
+    await _engine.startPreview();
+    await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    await _enumerateVideoDevices();
+
+    setState(() {
+      _isReadyPreview = true;
+    });
+  }
+
+  void _joinChannel() async {
+    await _engine.joinChannel(
+        token: config.token, channelId: channelId, info: '', uid: config.uid);
+  }
+
+  _leaveChannel() async {
+    await _engine.leaveChannel();
+  }
+
+  Future<void> _enumerateVideoDevices() async {
+    _videoDeviceManager = _engine.getVideoDeviceManager();
+    _selectedDeviceId = await _videoDeviceManager.getDevice();
+    final devices = await _videoDeviceManager.enumerateVideoDevices();
+    setState(() {
+      this.devices = devices;
+    });
+  }
+
+  Widget _devicesDropDown() {
+    if (devices.isEmpty) return Container();
+    final dropDownMenus = <DropdownMenuItem<String>>[];
+    for (var v in devices) {
+      dropDownMenus.add(DropdownMenuItem(
+        child: Text(
+          v.deviceName!,
+          style: TextStyle(fontSize: 13),
+        ),
+        value: v.deviceId,
+      ));
+    }
+    return DropdownButton<String>(
+      items: dropDownMenus,
+      value: _selectedDeviceId,
+      onChanged: (v) {
+        setState(() {
+          _isSetVideoDeviceEnabled = _selectedDeviceId != v;
+          _selectedDeviceId = v!;
+        });
+      },
+    );
+  }
+
+  Future<void> _setVideoDevice(String deviceId) async {
+    _videoDeviceManager.setDevice(deviceId);
+    setState(() {
+      _isSetVideoDeviceEnabled = false;
+    });
+    logSink.log('setVideoDevice deviceId: $deviceId');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExampleActionsWidget(
+      displayContentBuilder: (context, isLayoutHorizontal) {
+        if (!_isReadyPreview) return Container();
+        return AgoraVideoView(
+          controller: VideoViewController(
+            rtcEngine: _engine,
+            canvas: const VideoCanvas(uid: 0),
+          ),
+        );
+      },
+      actionsBuilder: (context, isLayoutHorizontal) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _controller,
+              decoration: const InputDecoration(hintText: 'Channel ID'),
+              onChanged: (text) {
+                setState(() {
+                  channelId = text;
+                });
+              },
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: isJoined ? _leaveChannel : _joinChannel,
+                    child: Text('${isJoined ? 'Leave' : 'Join'} channel'),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            _devicesDropDown(),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: _isSetVideoDeviceEnabled
+                  ? () {
+                      _setVideoDevice(_selectedDeviceId);
+                    }
+                  : null,
+              child: const Text('Set video device'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // return Stack(
+    //   children: [
+    //     Column(
+    //       mainAxisAlignment: MainAxisAlignment.start,
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         TextField(
+    //           controller: _controller,
+    //           decoration: const InputDecoration(hintText: 'Channel ID'),
+    //           onChanged: (text) {
+    //             setState(() {
+    //               channelId = text;
+    //             });
+    //           },
+    //         ),
+    //         Row(
+    //           children: [
+    //             Expanded(
+    //               flex: 1,
+    //               child: ElevatedButton(
+    //                 onPressed: isJoined ? _leaveChannel : _joinChannel,
+    //                 child: Text('${isJoined ? 'Leave' : 'Join'} channel'),
+    //               ),
+    //             )
+    //           ],
+    //         ),
+    //         _devicesDropDown(),
+    //         ElevatedButton(
+    //           onPressed: _isSetVideoDeviceEnabled
+    //               ? () {
+    //                   _setVideoDevice(_selectedDeviceId);
+    //                 }
+    //               : null,
+    //           child: const Text('Set video device'),
+    //         ),
+    //         _renderVideo(),
+    //       ],
+    //     ),
+    //     // if (kIsWeb || (Platform.isWindows || Platform.isMacOS))
+    //     //   Align(
+    //     //     alignment: Alignment.bottomRight,
+    //     //     child: Column(
+    //     //       mainAxisSize: MainAxisSize.min,
+    //     //       children: [
+    //     //         ElevatedButton(
+    //     //           onPressed: _enumerateVideoDevices,
+    //     //           child: const Text('Enumerate video devices'),
+    //     //         ),
+    //     //         ElevatedButton(
+    //     //           onPressed: _isSetVideoDeviceEnabled
+    //     //               ? () {
+    //     //                   _setVideoDevice(_selectedDeviceId);
+    //     //                 }
+    //     //               : null,
+    //     //           child: const Text('Set video device'),
+    //     //         ),
+    //     //       ],
+    //     //     ),
+    //     //   )
+    //   ],
+    // );
+  }
+
+  _renderVideo() {
+    return Expanded(
+        child: Stack(
+      children: [
+        Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: AgoraVideoView(
+                  controller: VideoViewController(
+                    rtcEngine: _engine,
+                    canvas: const VideoCanvas(uid: 0),
+                  ),
+                )),
+          ],
+        ),
+      ],
+    ));
+  }
+}
