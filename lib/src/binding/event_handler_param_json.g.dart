@@ -484,8 +484,10 @@ RtcEngineEventHandlerOnNetworkQualityJson
               : RtcConnection.fromJson(
                   json['connection'] as Map<String, dynamic>),
           remoteUid: json['remoteUid'] as int?,
-          txQuality: json['txQuality'] as int?,
-          rxQuality: json['rxQuality'] as int?,
+          txQuality:
+              $enumDecodeNullable(_$QualityTypeEnumMap, json['txQuality']),
+          rxQuality:
+              $enumDecodeNullable(_$QualityTypeEnumMap, json['rxQuality']),
         );
 
 Map<String, dynamic> _$RtcEngineEventHandlerOnNetworkQualityJsonToJson(
@@ -493,8 +495,8 @@ Map<String, dynamic> _$RtcEngineEventHandlerOnNetworkQualityJsonToJson(
     <String, dynamic>{
       'connection': instance.connection?.toJson(),
       'remoteUid': instance.remoteUid,
-      'txQuality': instance.txQuality,
-      'rxQuality': instance.rxQuality,
+      'txQuality': _$QualityTypeEnumMap[instance.txQuality],
+      'rxQuality': _$QualityTypeEnumMap[instance.rxQuality],
     };
 
 RtcEngineEventHandlerOnIntraRequestReceivedJson

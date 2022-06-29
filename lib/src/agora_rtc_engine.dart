@@ -935,8 +935,8 @@ class RtcEngineEventHandler {
 
   final void Function(MediaDeviceType deviceType)? onMediaDeviceChanged;
 
-  final void Function(RtcConnection connection, int remoteUid, int txQuality,
-      int rxQuality)? onNetworkQuality;
+  final void Function(RtcConnection connection, int remoteUid,
+      QualityType txQuality, QualityType rxQuality)? onNetworkQuality;
 
   final void Function(RtcConnection connection)? onIntraRequestReceived;
 

@@ -188,8 +188,8 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
             RtcEngineEventHandlerOnNetworkQualityJson.fromJson(jsonMap);
         RtcConnection? connection = paramJson.connection;
         int? remoteUid = paramJson.remoteUid;
-        int? txQuality = paramJson.txQuality;
-        int? rxQuality = paramJson.rxQuality;
+        QualityType? txQuality = paramJson.txQuality;
+        QualityType? rxQuality = paramJson.rxQuality;
         if (connection == null ||
             remoteUid == null ||
             txQuality == null ||

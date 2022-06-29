@@ -231,9 +231,9 @@ class RtcEngineEventHandlerOnNetworkQualityJson {
   @JsonKey(name: 'remoteUid')
   final int? remoteUid;
   @JsonKey(name: 'txQuality')
-  final int? txQuality;
+  final QualityType? txQuality;
   @JsonKey(name: 'rxQuality')
-  final int? rxQuality;
+  final QualityType? rxQuality;
   factory RtcEngineEventHandlerOnNetworkQualityJson.fromJson(
           Map<String, dynamic> json) =>
       _$RtcEngineEventHandlerOnNetworkQualityJsonFromJson(json);
