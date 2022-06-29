@@ -12,7 +12,8 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 # not be changed
 set(PLUGIN_NAME "agora_rtc_ng_plugin")
 
-set(IRIS_SDK_DOWNLOAD_NAME "iris_3.8.201_DCG_Windows_Video_20220628_0213")
+set(IRIS_SDK_DOWNLOAD_URL "https://download.agora.io/sdk/release/iris_3.8.201_DCG_Windows_Video_20220628_0213.zip")
+set(IRIS_SDK_DOWNLOAD_NAME "iris_3.8.201_DCG_Windows_20220628_0213")
 set(RTC_SDK_DOWNLOAD_NAME "Agora_Native_SDK_for_Windows_x64_rel.v3.8.201.2_65275_20220623_0036_full_212886")
 set(IRIS_SDK_VERSION "v3_6_2_fix.1")
 
@@ -29,7 +30,7 @@ set(RTC_SDK_BIN_PATH "${RTC_SDK_PATH}/${RTC_SDK_DOWNLOAD_NAME}/rtc/sdk")
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.plugin_dev")
     # Download and extract the SDK binary distribution (executes DownloadSDK.cmake).
     include(DownloadSDK)
-    DownloadSDK("Windows" "${IRIS_SDK_VERSION}" "${IRIS_DOWNLOAD_PATH}")   
+    DOWNLOAD_SDK_BY_URL("${IRIS_SDK_DOWNLOAD_URL}" "${IRIS_DOWNLOAD_PATH}")   
 endif()
 
 # Any new source files that you add to the plugin should be added here.
