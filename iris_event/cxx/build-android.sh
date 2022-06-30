@@ -20,7 +20,7 @@ BUILD_TYPE="Release"
 
 # unzip iris_android.zip -d ./
 
-ABIS="arm64-v8a x86_64"
+ABIS="arm64-v8a armeabi-v7a x86_64"
 
 rm -rf $OUT_DIR/libs
 

@@ -53,6 +53,6 @@ android {
 }
 
 dependencies {
-    implementation 'io.agora.rtc:iris-event-flutter-beta:1.0.0' 
+    implementation 'io.agora.rtc:iris-event-flutter-beta:1.0.0.1' 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
