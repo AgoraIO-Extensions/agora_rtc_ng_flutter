@@ -15,7 +15,11 @@ dependencies:
   json_annotation: ^4.4.0
   ffi: ^1.1.2
   iris_event:
-    path: ./iris_event
+    git:
+      url: https://github.com/AgoraIO-Community/agora_rtc_ng_flutter.git
+      path: iris_event
+      ref: dev/6.0.0
+
 
 dev_dependencies:
   flutter_test:
