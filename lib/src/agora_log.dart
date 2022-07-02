@@ -16,6 +16,12 @@ enum LogLevel {
 }
 
 extension LogLevelExt on LogLevel {
+  /// @nodoc
+  static LogLevel fromValue(int value) {
+    return $enumDecode(_$LogLevelEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LogLevelEnumMap[this]!;
   }
@@ -40,6 +46,12 @@ enum LogFilterType {
 }
 
 extension LogFilterTypeExt on LogFilterType {
+  /// @nodoc
+  static LogFilterType fromValue(int value) {
+    return $enumDecode(_$LogFilterTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LogFilterTypeEnumMap[this]!;
   }

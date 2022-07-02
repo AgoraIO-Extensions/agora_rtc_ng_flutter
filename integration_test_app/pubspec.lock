@@ -132,9 +132,11 @@ packages:
   iris_event:
     dependency: transitive
     description:
-      path: "../iris_event"
-      relative: true
-    source: path
+      path: iris_event
+      ref: "dev/6.0.0"
+      resolved-ref: "39db493f6ff84e44c3fd732d7a39e31a28ad9445"
+      url: "https://github.com/AgoraIO-Community/agora_rtc_ng_flutter.git"
+    source: git
     version: "0.0.1"
   js:
     dependency: transitive

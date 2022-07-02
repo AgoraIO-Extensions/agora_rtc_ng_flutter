@@ -28,6 +28,12 @@ enum AudioRoute {
 }
 
 extension AudioRouteExt on AudioRoute {
+  /// @nodoc
+  static AudioRoute fromValue(int value) {
+    return $enumDecode(_$AudioRouteEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioRouteEnumMap[this]!;
   }
@@ -50,6 +56,12 @@ enum NlpAggressiveness {
 }
 
 extension NlpAggressivenessExt on NlpAggressiveness {
+  /// @nodoc
+  static NlpAggressiveness fromValue(int value) {
+    return $enumDecode(_$NlpAggressivenessEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$NlpAggressivenessEnumMap[this]!;
   }
@@ -62,6 +74,12 @@ enum BytesPerSample {
 }
 
 extension BytesPerSampleExt on BytesPerSample {
+  /// @nodoc
+  static BytesPerSample fromValue(int value) {
+    return $enumDecode(_$BytesPerSampleEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$BytesPerSampleEnumMap[this]!;
   }
@@ -91,6 +109,12 @@ enum RawAudioFrameOpModeType {
 }
 
 extension RawAudioFrameOpModeTypeExt on RawAudioFrameOpModeType {
+  /// @nodoc
+  static RawAudioFrameOpModeType fromValue(int value) {
+    return $enumDecode(_$RawAudioFrameOpModeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RawAudioFrameOpModeTypeEnumMap[this]!;
   }
@@ -129,6 +153,12 @@ enum MediaSourceType {
 }
 
 extension MediaSourceTypeExt on MediaSourceType {
+  /// @nodoc
+  static MediaSourceType fromValue(int value) {
+    return $enumDecode(_$MediaSourceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaSourceTypeEnumMap[this]!;
   }
@@ -158,6 +188,12 @@ enum AudioProcessingChannels {
 }
 
 extension AudioProcessingChannelsExt on AudioProcessingChannels {
+  /// @nodoc
+  static AudioProcessingChannels fromValue(int value) {
+    return $enumDecode(_$AudioProcessingChannelsEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioProcessingChannelsEnumMap[this]!;
   }
@@ -223,6 +259,12 @@ enum AudioPcmFrameEnum {
 }
 
 extension AudioPcmFrameEnumExt on AudioPcmFrameEnum {
+  /// @nodoc
+  static AudioPcmFrameEnum fromValue(int value) {
+    return $enumDecode(_$AudioPcmFrameEnumEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioPcmFrameEnumEnumMap[this]!;
   }
@@ -241,6 +283,12 @@ enum AudioDualMonoMode {
 }
 
 extension AudioDualMonoModeExt on AudioDualMonoMode {
+  /// @nodoc
+  static AudioDualMonoMode fromValue(int value) {
+    return $enumDecode(_$AudioDualMonoModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioDualMonoModeEnumMap[this]!;
   }
@@ -269,6 +317,12 @@ enum VideoPixelFormat {
 }
 
 extension VideoPixelFormatExt on VideoPixelFormat {
+  /// @nodoc
+  static VideoPixelFormat fromValue(int value) {
+    return $enumDecode(_$VideoPixelFormatEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoPixelFormatEnumMap[this]!;
   }
@@ -285,6 +339,12 @@ enum RenderModeType {
 }
 
 extension RenderModeTypeExt on RenderModeType {
+  /// @nodoc
+  static RenderModeType fromValue(int value) {
+    return $enumDecode(_$RenderModeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RenderModeTypeEnumMap[this]!;
   }
@@ -299,6 +359,12 @@ enum EglContextType {
 }
 
 extension EglContextTypeExt on EglContextType {
+  /// @nodoc
+  static EglContextType fromValue(int value) {
+    return $enumDecode(_$EglContextTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$EglContextTypeEnumMap[this]!;
   }
@@ -315,6 +381,12 @@ enum VideoBufferType {
 }
 
 extension VideoBufferTypeExt on VideoBufferType {
+  /// @nodoc
+  static VideoBufferType fromValue(int value) {
+    return $enumDecode(_$VideoBufferTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoBufferTypeEnumMap[this]!;
   }
@@ -331,6 +403,12 @@ enum MediaPlayerSourceType {
 }
 
 extension MediaPlayerSourceTypeExt on MediaPlayerSourceType {
+  /// @nodoc
+  static MediaPlayerSourceType fromValue(int value) {
+    return $enumDecode(_$MediaPlayerSourceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaPlayerSourceTypeEnumMap[this]!;
   }
@@ -349,6 +427,12 @@ enum VideoModulePosition {
 }
 
 extension VideoModulePositionExt on VideoModulePosition {
+  /// @nodoc
+  static VideoModulePosition fromValue(int value) {
+    return $enumDecode(_$VideoModulePositionEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoModulePositionEnumMap[this]!;
   }
@@ -361,6 +445,12 @@ enum AudioFrameType {
 }
 
 extension AudioFrameTypeExt on AudioFrameType {
+  /// @nodoc
+  static AudioFrameType fromValue(int value) {
+    return $enumDecode(_$AudioFrameTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioFrameTypeEnumMap[this]!;
   }
@@ -401,6 +491,12 @@ enum VideoFrameProcessMode {
 }
 
 extension VideoFrameProcessModeExt on VideoFrameProcessMode {
+  /// @nodoc
+  static VideoFrameProcessMode fromValue(int value) {
+    return $enumDecode(_$VideoFrameProcessModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoFrameProcessModeEnumMap[this]!;
   }
@@ -417,6 +513,12 @@ enum ContentInspectResult {
 }
 
 extension ContentInspectResultExt on ContentInspectResult {
+  /// @nodoc
+  static ContentInspectResult fromValue(int value) {
+    return $enumDecode(_$ContentInspectResultEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ContentInspectResultEnumMap[this]!;
   }
@@ -435,6 +537,12 @@ enum ContentInspectDeviceType {
 }
 
 extension ContentInspectDeviceTypeExt on ContentInspectDeviceType {
+  /// @nodoc
+  static ContentInspectDeviceType fromValue(int value) {
+    return $enumDecode(_$ContentInspectDeviceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ContentInspectDeviceTypeEnumMap[this]!;
   }
@@ -451,6 +559,12 @@ enum ContentInspectType {
 }
 
 extension ContentInspectTypeExt on ContentInspectType {
+  /// @nodoc
+  static ContentInspectType fromValue(int value) {
+    return $enumDecode(_$ContentInspectTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ContentInspectTypeEnumMap[this]!;
   }
@@ -523,6 +637,12 @@ enum ExternalVideoSourceType {
 }
 
 extension ExternalVideoSourceTypeExt on ExternalVideoSourceType {
+  /// @nodoc
+  static ExternalVideoSourceType fromValue(int value) {
+    return $enumDecode(_$ExternalVideoSourceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ExternalVideoSourceTypeEnumMap[this]!;
   }

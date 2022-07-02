@@ -168,7 +168,7 @@ class _ApiCallExecutor {
         mainApiCallSendPort.send(0);
         debugPrint('[_ApiCallExecutor] disposeIrisRtcEngineEventHandler');
       } else if (request is _SetupIrisMediaPlayerEventHandlerRequest) {
-        executor.setupIrisMediaPlayerEventHandlerIfNeed();
+        executor.setupIrisMediaPlayerEventHandlerIfNeed(mainEventSendPort);
         mainApiCallSendPort.send(0);
         debugPrint('[_ApiCallExecutor] setupIrisMediaPlayerEventHandlerIfNeed');
       } else if (request is _DisposeIrisMediaPlayerEventHandlerRequest) {
@@ -311,19 +311,23 @@ class _ApiCallExecutorInternal {
     return _irisApiEnginePtr!.address;
   }
 
+  void _initIrisCEventHandlerIfNeed(SendPort sendPort) {
+    if (_irisCEventHandler == null) {
+      _irisCEventHandler = calloc<IrisCEventHandler>()
+        ..ref.OnEvent = _irisEvent.onEventPtr;
+      _irisEvent.setEventHandler(_SendableIrisEventHandler(sendPort));
+    }
+  }
+
   void setupIrisRtcEngineEventHandler(SendPort sendPort) {
     assert(_irisApiEnginePtr != null);
-    assert(_irisCEventHandler == null);
 
-    _irisCEventHandler = calloc<IrisCEventHandler>()
-      ..ref.OnEvent = _irisEvent.onEventPtr;
-    // ..ref.OnEventWithBuffer = _irisEvent!.onEventWithBufferPtr;
+    _initIrisCEventHandlerIfNeed(sendPort);
+    assert(_irisCEventHandler != null);
 
     _irisEventHandlerPtr =
         _nativeIrisApiEngineBinding.SetIrisRtcEngineEventHandler(
             _irisApiEnginePtr!, _irisCEventHandler!);
-
-    _irisEvent.setEventHandler(_SendableIrisEventHandler(sendPort));
   }
 
   void disposeIrisRtcEngineEventHandler() {
@@ -346,10 +350,13 @@ class _ApiCallExecutorInternal {
     }
   }
 
-  void setupIrisMediaPlayerEventHandlerIfNeed() {
+  void setupIrisMediaPlayerEventHandlerIfNeed(SendPort sendPort) {
     assert(_irisApiEnginePtr != null);
-    assert(_irisCEventHandler != null);
     if (_irisMediaPlayerEventHandlerPtr != null) return;
+
+    _initIrisCEventHandlerIfNeed(sendPort);
+    assert(_irisCEventHandler != null);
+
     _irisMediaPlayerEventHandlerPtr =
         _nativeIrisApiEngineBinding.SetIrisMediaPlayerEventHandler(
             _irisApiEnginePtr!, _irisCEventHandler!);

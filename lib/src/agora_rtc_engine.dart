@@ -18,6 +18,12 @@ enum MediaDeviceType {
 }
 
 extension MediaDeviceTypeExt on MediaDeviceType {
+  /// @nodoc
+  static MediaDeviceType fromValue(int value) {
+    return $enumDecode(_$MediaDeviceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaDeviceTypeEnumMap[this]!;
   }
@@ -40,6 +46,12 @@ enum AudioMixingStateType {
 }
 
 extension AudioMixingStateTypeExt on AudioMixingStateType {
+  /// @nodoc
+  static AudioMixingStateType fromValue(int value) {
+    return $enumDecode(_$AudioMixingStateTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioMixingStateTypeEnumMap[this]!;
   }
@@ -58,6 +70,12 @@ enum AudioMixingErrorType {
 }
 
 extension AudioMixingErrorTypeExt on AudioMixingErrorType {
+  /// @nodoc
+  static AudioMixingErrorType fromValue(int value) {
+    return $enumDecode(_$AudioMixingErrorTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioMixingErrorTypeEnumMap[this]!;
   }
@@ -90,6 +108,12 @@ enum InjectStreamStatus {
 }
 
 extension InjectStreamStatusExt on InjectStreamStatus {
+  /// @nodoc
+  static InjectStreamStatus fromValue(int value) {
+    return $enumDecode(_$InjectStreamStatusEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$InjectStreamStatusEnumMap[this]!;
   }
@@ -120,6 +144,12 @@ enum AudioEqualizationBandFrequency {
 }
 
 extension AudioEqualizationBandFrequencyExt on AudioEqualizationBandFrequency {
+  /// @nodoc
+  static AudioEqualizationBandFrequency fromValue(int value) {
+    return $enumDecode(_$AudioEqualizationBandFrequencyEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioEqualizationBandFrequencyEnumMap[this]!;
   }
@@ -140,6 +170,12 @@ enum AudioReverbType {
 }
 
 extension AudioReverbTypeExt on AudioReverbType {
+  /// @nodoc
+  static AudioReverbType fromValue(int value) {
+    return $enumDecode(_$AudioReverbTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioReverbTypeEnumMap[this]!;
   }
@@ -156,6 +192,12 @@ enum StreamFallbackOptions {
 }
 
 extension StreamFallbackOptionsExt on StreamFallbackOptions {
+  /// @nodoc
+  static StreamFallbackOptions fromValue(int value) {
+    return $enumDecode(_$StreamFallbackOptionsEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$StreamFallbackOptionsEnumMap[this]!;
   }
@@ -170,6 +212,12 @@ enum PriorityType {
 }
 
 extension PriorityTypeExt on PriorityType {
+  /// @nodoc
+  static PriorityType fromValue(int value) {
+    return $enumDecode(_$PriorityTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$PriorityTypeEnumMap[this]!;
   }
@@ -405,6 +453,12 @@ enum RtmpStreamLifeCycleType {
 }
 
 extension RtmpStreamLifeCycleTypeExt on RtmpStreamLifeCycleType {
+  /// @nodoc
+  static RtmpStreamLifeCycleType fromValue(int value) {
+    return $enumDecode(_$RtmpStreamLifeCycleTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RtmpStreamLifeCycleTypeEnumMap[this]!;
   }
@@ -478,6 +532,12 @@ enum CameraDirection {
 }
 
 extension CameraDirectionExt on CameraDirection {
+  /// @nodoc
+  static CameraDirection fromValue(int value) {
+    return $enumDecode(_$CameraDirectionEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$CameraDirectionEnumMap[this]!;
   }
@@ -494,6 +554,12 @@ enum CloudProxyType {
 }
 
 extension CloudProxyTypeExt on CloudProxyType {
+  /// @nodoc
+  static CloudProxyType fromValue(int value) {
+    return $enumDecode(_$CloudProxyTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$CloudProxyTypeEnumMap[this]!;
   }
@@ -608,6 +674,12 @@ enum ScreenCaptureSourceType {
 }
 
 extension ScreenCaptureSourceTypeExt on ScreenCaptureSourceType {
+  /// @nodoc
+  static ScreenCaptureSourceType fromValue(int value) {
+    return $enumDecode(_$ScreenCaptureSourceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ScreenCaptureSourceTypeEnumMap[this]!;
   }
@@ -757,6 +829,12 @@ enum LocalProxyMode {
 }
 
 extension LocalProxyModeExt on LocalProxyMode {
+  /// @nodoc
+  static LocalProxyMode fromValue(int value) {
+    return $enumDecode(_$LocalProxyModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LocalProxyModeEnumMap[this]!;
   }
@@ -1242,6 +1320,12 @@ enum MetadataType {
 }
 
 extension MetadataTypeExt on MetadataType {
+  /// @nodoc
+  static MetadataType fromValue(int value) {
+    return $enumDecode(_$MetadataTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MetadataTypeEnumMap[this]!;
   }
@@ -1258,6 +1342,12 @@ enum MaxMetadataSizeType {
 }
 
 extension MaxMetadataSizeTypeExt on MaxMetadataSizeType {
+  /// @nodoc
+  static MaxMetadataSizeType fromValue(int value) {
+    return $enumDecode(_$MaxMetadataSizeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MaxMetadataSizeTypeEnumMap[this]!;
   }
@@ -1297,6 +1387,12 @@ enum DirectCdnStreamingError {
 }
 
 extension DirectCdnStreamingErrorExt on DirectCdnStreamingError {
+  /// @nodoc
+  static DirectCdnStreamingError fromValue(int value) {
+    return $enumDecode(_$DirectCdnStreamingErrorEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$DirectCdnStreamingErrorEnumMap[this]!;
   }
@@ -1317,6 +1413,12 @@ enum DirectCdnStreamingState {
 }
 
 extension DirectCdnStreamingStateExt on DirectCdnStreamingState {
+  /// @nodoc
+  static DirectCdnStreamingState fromValue(int value) {
+    return $enumDecode(_$DirectCdnStreamingStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$DirectCdnStreamingStateEnumMap[this]!;
   }
@@ -1478,21 +1580,21 @@ abstract class RtcEngine {
 
   Future<void> adjustAudioMixingPublishVolume(int volume);
 
-  Future<void> getAudioMixingPublishVolume();
+  Future<int> getAudioMixingPublishVolume();
 
   Future<void> adjustAudioMixingPlayoutVolume(int volume);
 
-  Future<void> getAudioMixingPlayoutVolume();
+  Future<int> getAudioMixingPlayoutVolume();
 
-  Future<void> getAudioMixingDuration();
+  Future<int> getAudioMixingDuration();
 
-  Future<void> getAudioMixingCurrentPosition();
+  Future<int> getAudioMixingCurrentPosition();
 
   Future<void> setAudioMixingPosition(int pos);
 
   Future<void> setAudioMixingPitch(int pitch);
 
-  Future<void> getEffectsVolume();
+  Future<int> getEffectsVolume();
 
   Future<void> setEffectsVolume(int volume);
 
@@ -1516,7 +1618,7 @@ abstract class RtcEngine {
       required int gain,
       bool publish = false});
 
-  Future<void> getVolumeOfEffect(int soundId);
+  Future<int> getVolumeOfEffect(int soundId);
 
   Future<void> setVolumeOfEffect({required int soundId, required int volume});
 
@@ -1649,7 +1751,7 @@ abstract class RtcEngine {
 
   Future<void> adjustLoopbackRecordingVolume(int volume);
 
-  Future<void> getLoopbackRecordingVolume();
+  Future<int> getLoopbackRecordingVolume();
 
   Future<void> enableInEarMonitoring(
       {required bool enabled,
@@ -2025,6 +2127,12 @@ enum QualityReportFormatType {
 }
 
 extension QualityReportFormatTypeExt on QualityReportFormatType {
+  /// @nodoc
+  static QualityReportFormatType fromValue(int value) {
+    return $enumDecode(_$QualityReportFormatTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$QualityReportFormatTypeEnumMap[this]!;
   }
@@ -2045,6 +2153,12 @@ enum MediaDeviceStateType {
 }
 
 extension MediaDeviceStateTypeExt on MediaDeviceStateType {
+  /// @nodoc
+  static MediaDeviceStateType fromValue(int value) {
+    return $enumDecode(_$MediaDeviceStateTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaDeviceStateTypeEnumMap[this]!;
   }
@@ -2197,6 +2311,12 @@ enum VideoProfileType {
 }
 
 extension VideoProfileTypeExt on VideoProfileType {
+  /// @nodoc
+  static VideoProfileType fromValue(int value) {
+    return $enumDecode(_$VideoProfileTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoProfileTypeEnumMap[this]!;
   }

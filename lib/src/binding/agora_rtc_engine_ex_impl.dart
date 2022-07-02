@@ -273,7 +273,7 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    return result as ConnectionStateType;
+    return ConnectionStateTypeExt.fromValue(result);
   }
 
   @override
@@ -429,8 +429,12 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final userInfoResult = rm['userInfo'];
-    return UserInfo.fromJson(userInfoResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getUserInfoByUserAccountExJson =
+        RtcEngineExGetUserInfoByUserAccountExJson.fromJson(rm);
+    return getUserInfoByUserAccountExJson.userInfo;
   }
 
   @override
@@ -445,8 +449,12 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final userInfoResult = rm['userInfo'];
-    return UserInfo.fromJson(userInfoResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getUserInfoByUidExJson =
+        RtcEngineExGetUserInfoByUidExJson.fromJson(rm);
+    return getUserInfoByUidExJson.userInfo;
   }
 
   @override
@@ -536,7 +544,11 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final streamIdResult = rm['streamId'];
-    return streamIdResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final createDataStreamExJson =
+        RtcEngineExCreateDataStreamExJson.fromJson(rm);
+    return createDataStreamExJson.streamId;
   }
 }

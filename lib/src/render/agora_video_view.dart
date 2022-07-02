@@ -15,6 +15,7 @@ import 'package:meta/meta.dart';
 /// * Use [VideoViewController] to control the rendering of [RtcEngine].
 /// * Use [MediaPlayerController] to control the rendering of media player.
 ///
+/// key: The key of Flutter [Widget], see [Widget.key] for more detail
 class AgoraVideoView extends StatefulWidget {
   const AgoraVideoView({
     Key? key,

@@ -38,16 +38,16 @@ void main(List<String> arguments) {
     // path.join(srcDir, 'rtc_engine_event_handler.dart'),
     // path.join(srcDir, 'event_types.dart'),
     // path.join(srcDir, 'media_recorder.dart'),
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_base.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_log.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_media_base.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_media_player.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_media_player_source.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_base.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_log.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_media_base.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_media_player.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_media_player_source.dart',
 
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_rhythm_player.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_rtc_engine.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/agora_rtc_engine_ex.dart',
-    '/Users/fenglang/codes/aw/ng/agora_rtc_ng/lib/src/audio_device_manager.dart'
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_rhythm_player.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_rtc_engine.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/agora_rtc_engine_ex.dart',
+    '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/lib/src/audio_device_manager.dart'
   ];
 
   List<TemplatedTestCase> templatedTestCases = [
@@ -61,6 +61,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void rtcEngineSmokeTestCases() {
@@ -81,7 +82,16 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       areaCode: AreaCode.areaCodeGlob.value(),
     ));
 
-    {{TEST_CASE_BODY}}
+    try {
+      {{TEST_CASE_BODY}}
+    } catch (e) {
+      if (e is! AgoraRtcException) {
+        debugPrint('[{{TEST_CASE_NAME}}] error: \${e.toString()}');
+      }
+      expect(e is AgoraRtcException, true);
+      debugPrint(
+            '[{{TEST_CASE_NAME}}] errorcode: \${(e as AgoraRtcException).code}');
+    }
 
     await rtcEngine.release();
   },
@@ -90,7 +100,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 ''',
       methodInvokeObjectName: 'rtcEngine',
       outputDir:
-          '/Users/fenglang/codes/aw/ng/agora_rtc_ng/integration_test_app/integration_test/generated',
+          '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/integration_test_app/integration_test/generated',
       skipMemberFunctions: [
         'release',
         'registerAudioEncodedFrameObserver',
@@ -116,6 +126,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void rtcEngineExSmokeTestCases() {
@@ -136,7 +147,16 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       areaCode: AreaCode.areaCodeGlob.value(),
     ));
 
-    {{TEST_CASE_BODY}}
+    try {
+      {{TEST_CASE_BODY}}
+    } catch (e) {
+      if (e is! AgoraRtcException) {
+        debugPrint('[{{TEST_CASE_NAME}}] error: \${e.toString()}');
+      }
+      expect(e is AgoraRtcException, true);
+      debugPrint(
+        '[{{TEST_CASE_NAME}}] errorcode: \${(e as AgoraRtcException).code}');
+    }
 
     await rtcEngineEx.release();
   },
@@ -145,7 +165,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 ''',
       methodInvokeObjectName: 'rtcEngineEx',
       outputDir:
-          '/Users/fenglang/codes/aw/ng/agora_rtc_ng/integration_test_app/integration_test/generated',
+          '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/integration_test_app/integration_test/generated',
       skipMemberFunctions: [],
     ),
     TemplatedTestCase(
@@ -158,6 +178,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void audioDeviceManagerSmokeTestCases() {
@@ -180,7 +201,16 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 
     final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-    {{TEST_CASE_BODY}}
+    try {
+      {{TEST_CASE_BODY}}
+    } catch (e) {
+      if (e is! AgoraRtcException) {
+        debugPrint('[{{TEST_CASE_NAME}}] error: \${e.toString()}');
+      }
+      expect(e is AgoraRtcException, true);
+      debugPrint(
+        '[{{TEST_CASE_NAME}}] errorcode: \${(e as AgoraRtcException).code}');
+    }
 
     audioDeviceManager.release();
     await rtcEngine.release();
@@ -190,7 +220,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 ''',
       methodInvokeObjectName: 'audioDeviceManager',
       outputDir:
-          '/Users/fenglang/codes/aw/ng/agora_rtc_ng/integration_test_app/integration_test/generated',
+          '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/integration_test_app/integration_test/generated',
       skipMemberFunctions: [
         'release',
       ],
@@ -205,6 +235,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void videoDeviceManagerSmokeTestCases() {
@@ -227,7 +258,16 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 
     final videoDeviceManager = rtcEngine.getVideoDeviceManager();
 
-    {{TEST_CASE_BODY}}
+    try {
+      {{TEST_CASE_BODY}}
+    } catch (e) {
+      if (e is! AgoraRtcException) {
+        debugPrint('[{{TEST_CASE_NAME}}] error: \${e.toString()}');
+      }
+      expect(e is AgoraRtcException, true);
+      debugPrint(
+        '[{{TEST_CASE_NAME}}] errorcode: \${(e as AgoraRtcException).code}');
+    }
 
     videoDeviceManager.release();
     await rtcEngine.release();
@@ -237,7 +277,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 ''',
       methodInvokeObjectName: 'videoDeviceManager',
       outputDir:
-          '/Users/fenglang/codes/aw/ng/agora_rtc_ng/integration_test_app/integration_test/generated',
+          '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/integration_test_app/integration_test/generated',
       skipMemberFunctions: [
         'release',
       ],
@@ -252,6 +292,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void mediaPlayerControllerSmokeTestCases() {
@@ -275,7 +316,17 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
     final mediaPlayerController = await MediaPlayerController.create(
         rtcEngine: rtcEngine, canvas: const VideoCanvas(uid: 0));
 
-    {{TEST_CASE_BODY}}
+    
+    try {
+      {{TEST_CASE_BODY}}
+    } catch (e) {
+      if (e is! AgoraRtcException) {
+        debugPrint('[{{TEST_CASE_NAME}}] error: \${e.toString()}');
+      }
+      expect(e is AgoraRtcException, true);
+      debugPrint(
+        '[{{TEST_CASE_NAME}}] errorcode: \${(e as AgoraRtcException).code}');
+    }
 
     await mediaPlayerController.dispose();
     await rtcEngine.release();
@@ -285,7 +336,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 ''',
       methodInvokeObjectName: 'mediaPlayerController',
       outputDir:
-          '/Users/fenglang/codes/aw/ng/agora_rtc_ng/integration_test_app/integration_test/generated',
+          '/Users/fenglang/codes/aw/ng/agora_rtc_ng_flutter/integration_test_app/integration_test/generated',
       skipMemberFunctions: [
         'release',
         'setView',

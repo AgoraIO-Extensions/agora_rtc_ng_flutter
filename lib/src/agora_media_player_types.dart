@@ -40,6 +40,12 @@ enum MediaPlayerState {
 }
 
 extension MediaPlayerStateExt on MediaPlayerState {
+  /// @nodoc
+  static MediaPlayerState fromValue(int value) {
+    return $enumDecode(_$MediaPlayerStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaPlayerStateEnumMap[this]!;
   }
@@ -86,6 +92,12 @@ enum MediaPlayerError {
 }
 
 extension MediaPlayerErrorExt on MediaPlayerError {
+  /// @nodoc
+  static MediaPlayerError fromValue(int value) {
+    return $enumDecode(_$MediaPlayerErrorEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaPlayerErrorEnumMap[this]!;
   }
@@ -104,6 +116,12 @@ enum MediaStreamType {
 }
 
 extension MediaStreamTypeExt on MediaStreamType {
+  /// @nodoc
+  static MediaStreamType fromValue(int value) {
+    return $enumDecode(_$MediaStreamTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaStreamTypeEnumMap[this]!;
   }
@@ -138,6 +156,12 @@ enum MediaPlayerEvent {
 }
 
 extension MediaPlayerEventExt on MediaPlayerEvent {
+  /// @nodoc
+  static MediaPlayerEvent fromValue(int value) {
+    return $enumDecode(_$MediaPlayerEventEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaPlayerEventEnumMap[this]!;
   }
@@ -154,6 +178,12 @@ enum PlayerPreloadEvent {
 }
 
 extension PlayerPreloadEventExt on PlayerPreloadEvent {
+  /// @nodoc
+  static PlayerPreloadEvent fromValue(int value) {
+    return $enumDecode(_$PlayerPreloadEventEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$PlayerPreloadEventEnumMap[this]!;
   }
@@ -229,6 +259,12 @@ enum MediaPlayerMetadataType {
 }
 
 extension MediaPlayerMetadataTypeExt on MediaPlayerMetadataType {
+  /// @nodoc
+  static MediaPlayerMetadataType fromValue(int value) {
+    return $enumDecode(_$MediaPlayerMetadataTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MediaPlayerMetadataTypeEnumMap[this]!;
   }

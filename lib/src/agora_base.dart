@@ -18,6 +18,12 @@ enum ChannelProfileType {
 }
 
 extension ChannelProfileTypeExt on ChannelProfileType {
+  /// @nodoc
+  static ChannelProfileType fromValue(int value) {
+    return $enumDecode(_$ChannelProfileTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ChannelProfileTypeEnumMap[this]!;
   }
@@ -94,6 +100,12 @@ enum WarnCodeType {
 }
 
 extension WarnCodeTypeExt on WarnCodeType {
+  /// @nodoc
+  static WarnCodeType fromValue(int value) {
+    return $enumDecode(_$WarnCodeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$WarnCodeTypeEnumMap[this]!;
   }
@@ -424,6 +436,12 @@ enum ErrorCodeType {
 }
 
 extension ErrorCodeTypeExt on ErrorCodeType {
+  /// @nodoc
+  static ErrorCodeType fromValue(int value) {
+    return $enumDecode(_$ErrorCodeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ErrorCodeTypeEnumMap[this]!;
   }
@@ -445,6 +463,12 @@ enum AudioSessionOperationRestriction {
 
 extension AudioSessionOperationRestrictionExt
     on AudioSessionOperationRestriction {
+  /// @nodoc
+  static AudioSessionOperationRestriction fromValue(int value) {
+    return $enumDecode(_$AudioSessionOperationRestrictionEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioSessionOperationRestrictionEnumMap[this]!;
   }
@@ -461,6 +485,12 @@ enum UserOfflineReasonType {
 }
 
 extension UserOfflineReasonTypeExt on UserOfflineReasonType {
+  /// @nodoc
+  static UserOfflineReasonType fromValue(int value) {
+    return $enumDecode(_$UserOfflineReasonTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$UserOfflineReasonTypeEnumMap[this]!;
   }
@@ -493,6 +523,12 @@ enum InterfaceIdType {
 }
 
 extension InterfaceIdTypeExt on InterfaceIdType {
+  /// @nodoc
+  static InterfaceIdType fromValue(int value) {
+    return $enumDecode(_$InterfaceIdTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$InterfaceIdTypeEnumMap[this]!;
   }
@@ -521,6 +557,12 @@ enum QualityType {
 }
 
 extension QualityTypeExt on QualityType {
+  /// @nodoc
+  static QualityType fromValue(int value) {
+    return $enumDecode(_$QualityTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$QualityTypeEnumMap[this]!;
   }
@@ -535,6 +577,12 @@ enum FitModeType {
 }
 
 extension FitModeTypeExt on FitModeType {
+  /// @nodoc
+  static FitModeType fromValue(int value) {
+    return $enumDecode(_$FitModeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$FitModeTypeEnumMap[this]!;
   }
@@ -553,6 +601,12 @@ enum VideoOrientation {
 }
 
 extension VideoOrientationExt on VideoOrientation {
+  /// @nodoc
+  static VideoOrientation fromValue(int value) {
+    return $enumDecode(_$VideoOrientationEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoOrientationEnumMap[this]!;
   }
@@ -577,6 +631,12 @@ enum FrameRate {
 }
 
 extension FrameRateExt on FrameRate {
+  /// @nodoc
+  static FrameRate fromValue(int value) {
+    return $enumDecode(_$FrameRateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$FrameRateEnumMap[this]!;
   }
@@ -589,6 +649,12 @@ enum FrameWidth {
 }
 
 extension FrameWidthExt on FrameWidth {
+  /// @nodoc
+  static FrameWidth fromValue(int value) {
+    return $enumDecode(_$FrameWidthEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$FrameWidthEnumMap[this]!;
   }
@@ -601,6 +667,12 @@ enum FrameHeight {
 }
 
 extension FrameHeightExt on FrameHeight {
+  /// @nodoc
+  static FrameHeight fromValue(int value) {
+    return $enumDecode(_$FrameHeightEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$FrameHeightEnumMap[this]!;
   }
@@ -623,6 +695,12 @@ enum VideoFrameType {
 }
 
 extension VideoFrameTypeExt on VideoFrameType {
+  /// @nodoc
+  static VideoFrameType fromValue(int value) {
+    return $enumDecode(_$VideoFrameTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoFrameTypeEnumMap[this]!;
   }
@@ -639,6 +717,12 @@ enum OrientationMode {
 }
 
 extension OrientationModeExt on OrientationMode {
+  /// @nodoc
+  static OrientationMode fromValue(int value) {
+    return $enumDecode(_$OrientationModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$OrientationModeEnumMap[this]!;
   }
@@ -659,6 +743,12 @@ enum DegradationPreference {
 }
 
 extension DegradationPreferenceExt on DegradationPreference {
+  /// @nodoc
+  static DegradationPreference fromValue(int value) {
+    return $enumDecode(_$DegradationPreferenceEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$DegradationPreferenceEnumMap[this]!;
   }
@@ -708,6 +798,12 @@ enum VideoCodecType {
 }
 
 extension VideoCodecTypeExt on VideoCodecType {
+  /// @nodoc
+  static VideoCodecType fromValue(int value) {
+    return $enumDecode(_$VideoCodecTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoCodecTypeEnumMap[this]!;
   }
@@ -722,6 +818,12 @@ enum TCcMode {
 }
 
 extension TCcModeExt on TCcMode {
+  /// @nodoc
+  static TCcMode fromValue(int value) {
+    return $enumDecode(_$TCcModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$TCcModeEnumMap[this]!;
   }
@@ -765,6 +867,12 @@ enum AudioCodecType {
 }
 
 extension AudioCodecTypeExt on AudioCodecType {
+  /// @nodoc
+  static AudioCodecType fromValue(int value) {
+    return $enumDecode(_$AudioCodecTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioCodecTypeEnumMap[this]!;
   }
@@ -797,6 +905,12 @@ enum AudioEncodingType {
 }
 
 extension AudioEncodingTypeExt on AudioEncodingType {
+  /// @nodoc
+  static AudioEncodingType fromValue(int value) {
+    return $enumDecode(_$AudioEncodingTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioEncodingTypeEnumMap[this]!;
   }
@@ -811,6 +925,12 @@ enum WatermarkFitMode {
 }
 
 extension WatermarkFitModeExt on WatermarkFitMode {
+  /// @nodoc
+  static WatermarkFitMode fromValue(int value) {
+    return $enumDecode(_$WatermarkFitModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$WatermarkFitModeEnumMap[this]!;
   }
@@ -888,6 +1008,12 @@ enum H264PacketizeMode {
 }
 
 extension H264PacketizeModeExt on H264PacketizeMode {
+  /// @nodoc
+  static H264PacketizeMode fromValue(int value) {
+    return $enumDecode(_$H264PacketizeModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$H264PacketizeModeEnumMap[this]!;
   }
@@ -902,6 +1028,12 @@ enum VideoStreamType {
 }
 
 extension VideoStreamTypeExt on VideoStreamType {
+  /// @nodoc
+  static VideoStreamType fromValue(int value) {
+    return $enumDecode(_$VideoStreamTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoStreamTypeEnumMap[this]!;
   }
@@ -960,6 +1092,12 @@ enum VideoMirrorModeType {
 }
 
 extension VideoMirrorModeTypeExt on VideoMirrorModeType {
+  /// @nodoc
+  static VideoMirrorModeType fromValue(int value) {
+    return $enumDecode(_$VideoMirrorModeTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoMirrorModeTypeEnumMap[this]!;
   }
@@ -1223,6 +1361,12 @@ enum VideoSourceType {
 }
 
 extension VideoSourceTypeExt on VideoSourceType {
+  /// @nodoc
+  static VideoSourceType fromValue(int value) {
+    return $enumDecode(_$VideoSourceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoSourceTypeEnumMap[this]!;
   }
@@ -1237,6 +1381,12 @@ enum ClientRoleType {
 }
 
 extension ClientRoleTypeExt on ClientRoleType {
+  /// @nodoc
+  static ClientRoleType fromValue(int value) {
+    return $enumDecode(_$ClientRoleTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ClientRoleTypeEnumMap[this]!;
   }
@@ -1253,6 +1403,12 @@ enum QualityAdaptIndication {
 }
 
 extension QualityAdaptIndicationExt on QualityAdaptIndication {
+  /// @nodoc
+  static QualityAdaptIndication fromValue(int value) {
+    return $enumDecode(_$QualityAdaptIndicationEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$QualityAdaptIndicationEnumMap[this]!;
   }
@@ -1269,6 +1425,12 @@ enum AudienceLatencyLevelType {
 }
 
 extension AudienceLatencyLevelTypeExt on AudienceLatencyLevelType {
+  /// @nodoc
+  static AudienceLatencyLevelType fromValue(int value) {
+    return $enumDecode(_$AudienceLatencyLevelTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudienceLatencyLevelTypeEnumMap[this]!;
   }
@@ -1294,6 +1456,12 @@ enum ExperienceQualityType {
 }
 
 extension ExperienceQualityTypeExt on ExperienceQualityType {
+  /// @nodoc
+  static ExperienceQualityType fromValue(int value) {
+    return $enumDecode(_$ExperienceQualityTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ExperienceQualityTypeEnumMap[this]!;
   }
@@ -1371,6 +1539,12 @@ enum AudioProfileType {
 }
 
 extension AudioProfileTypeExt on AudioProfileType {
+  /// @nodoc
+  static AudioProfileType fromValue(int value) {
+    return $enumDecode(_$AudioProfileTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioProfileTypeEnumMap[this]!;
   }
@@ -1393,6 +1567,12 @@ enum AudioScenarioType {
 }
 
 extension AudioScenarioTypeExt on AudioScenarioType {
+  /// @nodoc
+  static AudioScenarioType fromValue(int value) {
+    return $enumDecode(_$AudioScenarioTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioScenarioTypeEnumMap[this]!;
   }
@@ -1424,6 +1604,12 @@ enum VideoFormatEnum {
 }
 
 extension VideoFormatEnumExt on VideoFormatEnum {
+  /// @nodoc
+  static VideoFormatEnum fromValue(int value) {
+    return $enumDecode(_$VideoFormatEnumEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoFormatEnumEnumMap[this]!;
   }
@@ -1440,6 +1626,12 @@ enum VideoContentHint {
 }
 
 extension VideoContentHintExt on VideoContentHint {
+  /// @nodoc
+  static VideoContentHint fromValue(int value) {
+    return $enumDecode(_$VideoContentHintEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoContentHintEnumMap[this]!;
   }
@@ -1458,6 +1650,12 @@ enum LocalAudioStreamState {
 }
 
 extension LocalAudioStreamStateExt on LocalAudioStreamState {
+  /// @nodoc
+  static LocalAudioStreamState fromValue(int value) {
+    return $enumDecode(_$LocalAudioStreamStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LocalAudioStreamStateEnumMap[this]!;
   }
@@ -1480,6 +1678,12 @@ enum LocalAudioStreamError {
 }
 
 extension LocalAudioStreamErrorExt on LocalAudioStreamError {
+  /// @nodoc
+  static LocalAudioStreamError fromValue(int value) {
+    return $enumDecode(_$LocalAudioStreamErrorEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LocalAudioStreamErrorEnumMap[this]!;
   }
@@ -1498,6 +1702,12 @@ enum LocalVideoStreamState {
 }
 
 extension LocalVideoStreamStateExt on LocalVideoStreamState {
+  /// @nodoc
+  static LocalVideoStreamState fromValue(int value) {
+    return $enumDecode(_$LocalVideoStreamStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LocalVideoStreamStateEnumMap[this]!;
   }
@@ -1540,6 +1750,12 @@ enum LocalVideoStreamError {
 }
 
 extension LocalVideoStreamErrorExt on LocalVideoStreamError {
+  /// @nodoc
+  static LocalVideoStreamError fromValue(int value) {
+    return $enumDecode(_$LocalVideoStreamErrorEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LocalVideoStreamErrorEnumMap[this]!;
   }
@@ -1560,6 +1776,12 @@ enum RemoteAudioState {
 }
 
 extension RemoteAudioStateExt on RemoteAudioState {
+  /// @nodoc
+  static RemoteAudioState fromValue(int value) {
+    return $enumDecode(_$RemoteAudioStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RemoteAudioStateEnumMap[this]!;
   }
@@ -1586,6 +1808,12 @@ enum RemoteAudioStateReason {
 }
 
 extension RemoteAudioStateReasonExt on RemoteAudioStateReason {
+  /// @nodoc
+  static RemoteAudioStateReason fromValue(int value) {
+    return $enumDecode(_$RemoteAudioStateReasonEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RemoteAudioStateReasonEnumMap[this]!;
   }
@@ -1606,6 +1834,12 @@ enum RemoteVideoState {
 }
 
 extension RemoteVideoStateExt on RemoteVideoState {
+  /// @nodoc
+  static RemoteVideoState fromValue(int value) {
+    return $enumDecode(_$RemoteVideoStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RemoteVideoStateEnumMap[this]!;
   }
@@ -1640,6 +1874,12 @@ enum RemoteVideoStateReason {
 }
 
 extension RemoteVideoStateReasonExt on RemoteVideoStateReason {
+  /// @nodoc
+  static RemoteVideoStateReason fromValue(int value) {
+    return $enumDecode(_$RemoteVideoStateReasonEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RemoteVideoStateReasonEnumMap[this]!;
   }
@@ -1658,6 +1898,12 @@ enum RemoteUserState {
 }
 
 extension RemoteUserStateExt on RemoteUserState {
+  /// @nodoc
+  static RemoteUserState fromValue(int value) {
+    return $enumDecode(_$RemoteUserStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RemoteUserStateEnumMap[this]!;
   }
@@ -1714,6 +1960,12 @@ enum RemoteVideoDownscaleLevel {
 }
 
 extension RemoteVideoDownscaleLevelExt on RemoteVideoDownscaleLevel {
+  /// @nodoc
+  static RemoteVideoDownscaleLevel fromValue(int value) {
+    return $enumDecode(_$RemoteVideoDownscaleLevelEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RemoteVideoDownscaleLevelEnumMap[this]!;
   }
@@ -1770,6 +2022,12 @@ enum AudioSampleRateType {
 }
 
 extension AudioSampleRateTypeExt on AudioSampleRateType {
+  /// @nodoc
+  static AudioSampleRateType fromValue(int value) {
+    return $enumDecode(_$AudioSampleRateTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioSampleRateTypeEnumMap[this]!;
   }
@@ -1784,6 +2042,12 @@ enum VideoCodecTypeForStream {
 }
 
 extension VideoCodecTypeForStreamExt on VideoCodecTypeForStream {
+  /// @nodoc
+  static VideoCodecTypeForStream fromValue(int value) {
+    return $enumDecode(_$VideoCodecTypeForStreamEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoCodecTypeForStreamEnumMap[this]!;
   }
@@ -1800,6 +2064,12 @@ enum VideoCodecProfileType {
 }
 
 extension VideoCodecProfileTypeExt on VideoCodecProfileType {
+  /// @nodoc
+  static VideoCodecProfileType fromValue(int value) {
+    return $enumDecode(_$VideoCodecProfileTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoCodecProfileTypeEnumMap[this]!;
   }
@@ -1816,6 +2086,12 @@ enum AudioCodecProfileType {
 }
 
 extension AudioCodecProfileTypeExt on AudioCodecProfileType {
+  /// @nodoc
+  static AudioCodecProfileType fromValue(int value) {
+    return $enumDecode(_$AudioCodecProfileTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioCodecProfileTypeEnumMap[this]!;
   }
@@ -1862,6 +2138,12 @@ enum RtmpStreamPublishState {
 }
 
 extension RtmpStreamPublishStateExt on RtmpStreamPublishState {
+  /// @nodoc
+  static RtmpStreamPublishState fromValue(int value) {
+    return $enumDecode(_$RtmpStreamPublishStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RtmpStreamPublishStateEnumMap[this]!;
   }
@@ -1904,6 +2186,12 @@ enum RtmpStreamPublishErrorType {
 }
 
 extension RtmpStreamPublishErrorTypeExt on RtmpStreamPublishErrorType {
+  /// @nodoc
+  static RtmpStreamPublishErrorType fromValue(int value) {
+    return $enumDecode(_$RtmpStreamPublishErrorTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RtmpStreamPublishErrorTypeEnumMap[this]!;
   }
@@ -1922,6 +2210,12 @@ enum RtmpStreamingEvent {
 }
 
 extension RtmpStreamingEventExt on RtmpStreamingEvent {
+  /// @nodoc
+  static RtmpStreamingEvent fromValue(int value) {
+    return $enumDecode(_$RtmpStreamingEventEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RtmpStreamingEventEnumMap[this]!;
   }
@@ -1985,6 +2279,12 @@ enum ConnectionStateType {
 }
 
 extension ConnectionStateTypeExt on ConnectionStateType {
+  /// @nodoc
+  static ConnectionStateType fromValue(int value) {
+    return $enumDecode(_$ConnectionStateTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ConnectionStateTypeEnumMap[this]!;
   }
@@ -2190,6 +2490,12 @@ enum LastmileProbeResultState {
 }
 
 extension LastmileProbeResultStateExt on LastmileProbeResultState {
+  /// @nodoc
+  static LastmileProbeResultState fromValue(int value) {
+    return $enumDecode(_$LastmileProbeResultStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LastmileProbeResultStateEnumMap[this]!;
   }
@@ -2276,6 +2582,12 @@ enum ConnectionChangedReasonType {
 }
 
 extension ConnectionChangedReasonTypeExt on ConnectionChangedReasonType {
+  /// @nodoc
+  static ConnectionChangedReasonType fromValue(int value) {
+    return $enumDecode(_$ConnectionChangedReasonTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ConnectionChangedReasonTypeEnumMap[this]!;
   }
@@ -2294,6 +2606,12 @@ enum ClientRoleChangeFailedReason {
 }
 
 extension ClientRoleChangeFailedReasonExt on ClientRoleChangeFailedReason {
+  /// @nodoc
+  static ClientRoleChangeFailedReason fromValue(int value) {
+    return $enumDecode(_$ClientRoleChangeFailedReasonEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ClientRoleChangeFailedReasonEnumMap[this]!;
   }
@@ -2318,6 +2636,12 @@ enum NetworkType {
 }
 
 extension NetworkTypeExt on NetworkType {
+  /// @nodoc
+  static NetworkType fromValue(int value) {
+    return $enumDecode(_$NetworkTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$NetworkTypeEnumMap[this]!;
   }
@@ -2334,6 +2658,12 @@ enum VideoViewSetupMode {
 }
 
 extension VideoViewSetupModeExt on VideoViewSetupMode {
+  /// @nodoc
+  static VideoViewSetupMode fromValue(int value) {
+    return $enumDecode(_$VideoViewSetupModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VideoViewSetupModeEnumMap[this]!;
   }
@@ -2413,6 +2743,12 @@ enum LighteningContrastLevel {
 }
 
 extension LighteningContrastLevelExt on LighteningContrastLevel {
+  /// @nodoc
+  static LighteningContrastLevel fromValue(int value) {
+    return $enumDecode(_$LighteningContrastLevelEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$LighteningContrastLevelEnumMap[this]!;
   }
@@ -2447,6 +2783,12 @@ enum BackgroundSourceType {
 }
 
 extension BackgroundSourceTypeExt on BackgroundSourceType {
+  /// @nodoc
+  static BackgroundSourceType fromValue(int value) {
+    return $enumDecode(_$BackgroundSourceTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$BackgroundSourceTypeEnumMap[this]!;
   }
@@ -2463,6 +2805,12 @@ enum BackgroundBlurDegree {
 }
 
 extension BackgroundBlurDegreeExt on BackgroundBlurDegree {
+  /// @nodoc
+  static BackgroundBlurDegree fromValue(int value) {
+    return $enumDecode(_$BackgroundBlurDegreeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$BackgroundBlurDegreeEnumMap[this]!;
   }
@@ -2531,6 +2879,12 @@ enum VoiceBeautifierPreset {
 }
 
 extension VoiceBeautifierPresetExt on VoiceBeautifierPreset {
+  /// @nodoc
+  static VoiceBeautifierPreset fromValue(int value) {
+    return $enumDecode(_$VoiceBeautifierPresetEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VoiceBeautifierPresetEnumMap[this]!;
   }
@@ -2579,6 +2933,12 @@ enum AudioEffectPreset {
 }
 
 extension AudioEffectPresetExt on AudioEffectPreset {
+  /// @nodoc
+  static AudioEffectPreset fromValue(int value) {
+    return $enumDecode(_$AudioEffectPresetEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioEffectPresetEnumMap[this]!;
   }
@@ -2599,6 +2959,12 @@ enum VoiceConversionPreset {
 }
 
 extension VoiceConversionPresetExt on VoiceConversionPreset {
+  /// @nodoc
+  static VoiceConversionPreset fromValue(int value) {
+    return $enumDecode(_$VoiceConversionPresetEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$VoiceConversionPresetEnumMap[this]!;
   }
@@ -2645,6 +3011,12 @@ enum AudioRecordingQualityType {
 }
 
 extension AudioRecordingQualityTypeExt on AudioRecordingQualityType {
+  /// @nodoc
+  static AudioRecordingQualityType fromValue(int value) {
+    return $enumDecode(_$AudioRecordingQualityTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioRecordingQualityTypeEnumMap[this]!;
   }
@@ -2661,6 +3033,12 @@ enum AudioFileRecordingType {
 }
 
 extension AudioFileRecordingTypeExt on AudioFileRecordingType {
+  /// @nodoc
+  static AudioFileRecordingType fromValue(int value) {
+    return $enumDecode(_$AudioFileRecordingTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioFileRecordingTypeEnumMap[this]!;
   }
@@ -2678,6 +3056,12 @@ enum AudioEncodedFrameObserverPosition {
 
 extension AudioEncodedFrameObserverPositionExt
     on AudioEncodedFrameObserverPosition {
+  /// @nodoc
+  static AudioEncodedFrameObserverPosition fromValue(int value) {
+    return $enumDecode(_$AudioEncodedFrameObserverPositionEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AudioEncodedFrameObserverPositionEnumMap[this]!;
   }
@@ -2740,6 +3124,12 @@ enum AreaCode {
 }
 
 extension AreaCodeExt on AreaCode {
+  /// @nodoc
+  static AreaCode fromValue(int value) {
+    return $enumDecode(_$AreaCodeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AreaCodeEnumMap[this]!;
   }
@@ -2760,6 +3150,12 @@ enum AreaCodeEx {
 }
 
 extension AreaCodeExExt on AreaCodeEx {
+  /// @nodoc
+  static AreaCodeEx fromValue(int value) {
+    return $enumDecode(_$AreaCodeExEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$AreaCodeExEnumMap[this]!;
   }
@@ -2794,6 +3190,12 @@ enum ChannelMediaRelayError {
 }
 
 extension ChannelMediaRelayErrorExt on ChannelMediaRelayError {
+  /// @nodoc
+  static ChannelMediaRelayError fromValue(int value) {
+    return $enumDecode(_$ChannelMediaRelayErrorEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ChannelMediaRelayErrorEnumMap[this]!;
   }
@@ -2836,6 +3238,12 @@ enum ChannelMediaRelayEvent {
 }
 
 extension ChannelMediaRelayEventExt on ChannelMediaRelayEvent {
+  /// @nodoc
+  static ChannelMediaRelayEvent fromValue(int value) {
+    return $enumDecode(_$ChannelMediaRelayEventEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ChannelMediaRelayEventEnumMap[this]!;
   }
@@ -2854,6 +3262,12 @@ enum ChannelMediaRelayState {
 }
 
 extension ChannelMediaRelayStateExt on ChannelMediaRelayState {
+  /// @nodoc
+  static ChannelMediaRelayState fromValue(int value) {
+    return $enumDecode(_$ChannelMediaRelayStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ChannelMediaRelayStateEnumMap[this]!;
   }
@@ -2969,6 +3383,12 @@ enum EncryptionMode {
 }
 
 extension EncryptionModeExt on EncryptionMode {
+  /// @nodoc
+  static EncryptionMode fromValue(int value) {
+    return $enumDecode(_$EncryptionModeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$EncryptionModeEnumMap[this]!;
   }
@@ -3001,6 +3421,12 @@ enum EncryptionErrorType {
 }
 
 extension EncryptionErrorTypeExt on EncryptionErrorType {
+  /// @nodoc
+  static EncryptionErrorType fromValue(int value) {
+    return $enumDecode(_$EncryptionErrorTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$EncryptionErrorTypeEnumMap[this]!;
   }
@@ -3017,6 +3443,12 @@ enum UploadErrorReason {
 }
 
 extension UploadErrorReasonExt on UploadErrorReason {
+  /// @nodoc
+  static UploadErrorReason fromValue(int value) {
+    return $enumDecode(_$UploadErrorReasonEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$UploadErrorReasonEnumMap[this]!;
   }
@@ -3031,6 +3463,12 @@ enum PermissionType {
 }
 
 extension PermissionTypeExt on PermissionType {
+  /// @nodoc
+  static PermissionType fromValue(int value) {
+    return $enumDecode(_$PermissionTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$PermissionTypeEnumMap[this]!;
   }
@@ -3043,6 +3481,12 @@ enum MaxUserAccountLengthType {
 }
 
 extension MaxUserAccountLengthTypeExt on MaxUserAccountLengthType {
+  /// @nodoc
+  static MaxUserAccountLengthType fromValue(int value) {
+    return $enumDecode(_$MaxUserAccountLengthTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MaxUserAccountLengthTypeEnumMap[this]!;
   }
@@ -3061,6 +3505,12 @@ enum StreamSubscribeState {
 }
 
 extension StreamSubscribeStateExt on StreamSubscribeState {
+  /// @nodoc
+  static StreamSubscribeState fromValue(int value) {
+    return $enumDecode(_$StreamSubscribeStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$StreamSubscribeStateEnumMap[this]!;
   }
@@ -3079,6 +3529,12 @@ enum StreamPublishState {
 }
 
 extension StreamPublishStateExt on StreamPublishState {
+  /// @nodoc
+  static StreamPublishState fromValue(int value) {
+    return $enumDecode(_$StreamPublishStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$StreamPublishStateEnumMap[this]!;
   }
@@ -3108,6 +3564,12 @@ enum EarMonitoringFilterType {
 }
 
 extension EarMonitoringFilterTypeExt on EarMonitoringFilterType {
+  /// @nodoc
+  static EarMonitoringFilterType fromValue(int value) {
+    return $enumDecode(_$EarMonitoringFilterTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$EarMonitoringFilterTypeEnumMap[this]!;
   }
@@ -3130,6 +3592,12 @@ enum ThreadPriorityType {
 }
 
 extension ThreadPriorityTypeExt on ThreadPriorityType {
+  /// @nodoc
+  static ThreadPriorityType fromValue(int value) {
+    return $enumDecode(_$ThreadPriorityTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$ThreadPriorityTypeEnumMap[this]!;
   }

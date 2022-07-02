@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void videoDeviceManagerSmokeTestCases() {
@@ -27,7 +28,16 @@ void videoDeviceManagerSmokeTestCases() {
 
       final videoDeviceManager = rtcEngine.getVideoDeviceManager();
 
-      await videoDeviceManager.enumerateVideoDevices();
+      try {
+        await videoDeviceManager.enumerateVideoDevices();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enumerateVideoDevices] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enumerateVideoDevices] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       videoDeviceManager.release();
       await rtcEngine.release();
@@ -52,10 +62,18 @@ void videoDeviceManagerSmokeTestCases() {
 
       final videoDeviceManager = rtcEngine.getVideoDeviceManager();
 
-      const String deviceIdUTF8 = "hello";
-      await videoDeviceManager.setDevice(
-        deviceIdUTF8,
-      );
+      try {
+        const String deviceIdUTF8 = "hello";
+        await videoDeviceManager.setDevice(
+          deviceIdUTF8,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[setDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       videoDeviceManager.release();
       await rtcEngine.release();
@@ -80,7 +98,15 @@ void videoDeviceManagerSmokeTestCases() {
 
       final videoDeviceManager = rtcEngine.getVideoDeviceManager();
 
-      await videoDeviceManager.getDevice();
+      try {
+        await videoDeviceManager.getDevice();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[getDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       videoDeviceManager.release();
       await rtcEngine.release();
@@ -105,10 +131,19 @@ void videoDeviceManagerSmokeTestCases() {
 
       final videoDeviceManager = rtcEngine.getVideoDeviceManager();
 
-      const int hwnd = 10;
-      await videoDeviceManager.startDeviceTest(
-        hwnd,
-      );
+      try {
+        const int hwnd = 10;
+        await videoDeviceManager.startDeviceTest(
+          hwnd,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startDeviceTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startDeviceTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       videoDeviceManager.release();
       await rtcEngine.release();
@@ -133,7 +168,16 @@ void videoDeviceManagerSmokeTestCases() {
 
       final videoDeviceManager = rtcEngine.getVideoDeviceManager();
 
-      await videoDeviceManager.stopDeviceTest();
+      try {
+        await videoDeviceManager.stopDeviceTest();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopDeviceTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopDeviceTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       videoDeviceManager.release();
       await rtcEngine.release();

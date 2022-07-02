@@ -145,8 +145,11 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final durationResult = rm['duration'];
-    return durationResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getDurationJson = MediaPlayerGetDurationJson.fromJson(rm);
+    return getDurationJson.duration;
   }
 
   @override
@@ -160,8 +163,11 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final posResult = rm['pos'];
-    return posResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getPlayPositionJson = MediaPlayerGetPlayPositionJson.fromJson(rm);
+    return getPlayPositionJson.pos;
   }
 
   @override
@@ -175,8 +181,11 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final countResult = rm['count'];
-    return countResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getStreamCountJson = MediaPlayerGetStreamCountJson.fromJson(rm);
+    return getStreamCountJson.count;
   }
 
   @override
@@ -190,8 +199,11 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final infoResult = rm['info'];
-    return PlayerStreamInfo.fromJson(infoResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getStreamInfoJson = MediaPlayerGetStreamInfoJson.fromJson(rm);
+    return getStreamInfoJson.info;
   }
 
   @override
@@ -361,7 +373,7 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    return result as MediaPlayerState;
+    return MediaPlayerStateExt.fromValue(result);
   }
 
   @override
@@ -391,8 +403,11 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final muteResult = rm['mute'];
-    return muteResult as bool;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getMuteJson = MediaPlayerGetMuteJson.fromJson(rm);
+    return getMuteJson.mute;
   }
 
   @override
@@ -422,8 +437,11 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final volumeResult = rm['volume'];
-    return volumeResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getPlayoutVolumeJson = MediaPlayerGetPlayoutVolumeJson.fromJson(rm);
+    return getPlayoutVolumeJson.volume;
   }
 
   @override
@@ -453,8 +471,12 @@ class MediaPlayerImpl implements MediaPlayer {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final volumeResult = rm['volume'];
-    return volumeResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getPublishSignalVolumeJson =
+        MediaPlayerGetPublishSignalVolumeJson.fromJson(rm);
+    return getPublishSignalVolumeJson.volume;
   }
 
   @override

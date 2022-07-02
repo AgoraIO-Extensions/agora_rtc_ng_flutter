@@ -8,6 +8,12 @@ enum MaxDeviceIdLengthType {
 }
 
 extension MaxDeviceIdLengthTypeExt on MaxDeviceIdLengthType {
+  /// @nodoc
+  static MaxDeviceIdLengthType fromValue(int value) {
+    return $enumDecode(_$MaxDeviceIdLengthTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$MaxDeviceIdLengthTypeEnumMap[this]!;
   }

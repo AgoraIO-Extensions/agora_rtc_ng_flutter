@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void audioDeviceManagerSmokeTestCases() {
@@ -27,7 +28,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.enumeratePlaybackDevices();
+      try {
+        await audioDeviceManager.enumeratePlaybackDevices();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enumeratePlaybackDevices] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enumeratePlaybackDevices] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -52,7 +62,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.enumerateRecordingDevices();
+      try {
+        await audioDeviceManager.enumerateRecordingDevices();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enumerateRecordingDevices] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enumerateRecordingDevices] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -77,10 +96,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const String deviceId = "hello";
-      await audioDeviceManager.setPlaybackDevice(
-        deviceId,
-      );
+      try {
+        const String deviceId = "hello";
+        await audioDeviceManager.setPlaybackDevice(
+          deviceId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setPlaybackDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setPlaybackDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -105,7 +133,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getPlaybackDevice();
+      try {
+        await audioDeviceManager.getPlaybackDevice();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getPlaybackDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getPlaybackDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -130,7 +167,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getPlaybackDeviceInfo();
+      try {
+        await audioDeviceManager.getPlaybackDeviceInfo();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getPlaybackDeviceInfo] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getPlaybackDeviceInfo] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -155,10 +201,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const int volume = 10;
-      await audioDeviceManager.setPlaybackDeviceVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await audioDeviceManager.setPlaybackDeviceVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setPlaybackDeviceVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setPlaybackDeviceVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -183,7 +238,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getPlaybackDeviceVolume();
+      try {
+        await audioDeviceManager.getPlaybackDeviceVolume();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getPlaybackDeviceVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getPlaybackDeviceVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -208,10 +272,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const String deviceId = "hello";
-      await audioDeviceManager.setRecordingDevice(
-        deviceId,
-      );
+      try {
+        const String deviceId = "hello";
+        await audioDeviceManager.setRecordingDevice(
+          deviceId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRecordingDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRecordingDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -236,7 +309,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getRecordingDevice();
+      try {
+        await audioDeviceManager.getRecordingDevice();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getRecordingDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getRecordingDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -261,7 +343,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getRecordingDeviceInfo();
+      try {
+        await audioDeviceManager.getRecordingDeviceInfo();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getRecordingDeviceInfo] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getRecordingDeviceInfo] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -286,10 +377,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const int volume = 10;
-      await audioDeviceManager.setRecordingDeviceVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await audioDeviceManager.setRecordingDeviceVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRecordingDeviceVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRecordingDeviceVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -314,7 +414,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getRecordingDeviceVolume();
+      try {
+        await audioDeviceManager.getRecordingDeviceVolume();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getRecordingDeviceVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getRecordingDeviceVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -339,10 +448,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const bool mute = true;
-      await audioDeviceManager.setPlaybackDeviceMute(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await audioDeviceManager.setPlaybackDeviceMute(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setPlaybackDeviceMute] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setPlaybackDeviceMute] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -367,7 +485,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getPlaybackDeviceMute();
+      try {
+        await audioDeviceManager.getPlaybackDeviceMute();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getPlaybackDeviceMute] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getPlaybackDeviceMute] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -392,10 +519,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const bool mute = true;
-      await audioDeviceManager.setRecordingDeviceMute(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await audioDeviceManager.setRecordingDeviceMute(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRecordingDeviceMute] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRecordingDeviceMute] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -420,7 +556,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.getRecordingDeviceMute();
+      try {
+        await audioDeviceManager.getRecordingDeviceMute();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getRecordingDeviceMute] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getRecordingDeviceMute] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -445,10 +590,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const String testAudioFilePath = "hello";
-      await audioDeviceManager.startPlaybackDeviceTest(
-        testAudioFilePath,
-      );
+      try {
+        const String testAudioFilePath = "hello";
+        await audioDeviceManager.startPlaybackDeviceTest(
+          testAudioFilePath,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startPlaybackDeviceTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startPlaybackDeviceTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -473,7 +627,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.stopPlaybackDeviceTest();
+      try {
+        await audioDeviceManager.stopPlaybackDeviceTest();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopPlaybackDeviceTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopPlaybackDeviceTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -498,10 +661,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const int indicationInterval = 10;
-      await audioDeviceManager.startRecordingDeviceTest(
-        indicationInterval,
-      );
+      try {
+        const int indicationInterval = 10;
+        await audioDeviceManager.startRecordingDeviceTest(
+          indicationInterval,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startRecordingDeviceTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startRecordingDeviceTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -526,7 +698,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.stopRecordingDeviceTest();
+      try {
+        await audioDeviceManager.stopRecordingDeviceTest();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopRecordingDeviceTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopRecordingDeviceTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -551,10 +732,19 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      const int indicationInterval = 10;
-      await audioDeviceManager.startAudioDeviceLoopbackTest(
-        indicationInterval,
-      );
+      try {
+        const int indicationInterval = 10;
+        await audioDeviceManager.startAudioDeviceLoopbackTest(
+          indicationInterval,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startAudioDeviceLoopbackTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startAudioDeviceLoopbackTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();
@@ -579,7 +769,16 @@ void audioDeviceManagerSmokeTestCases() {
 
       final audioDeviceManager = rtcEngine.getAudioDeviceManager();
 
-      await audioDeviceManager.stopAudioDeviceLoopbackTest();
+      try {
+        await audioDeviceManager.stopAudioDeviceLoopbackTest();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopAudioDeviceLoopbackTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopAudioDeviceLoopbackTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       audioDeviceManager.release();
       await rtcEngine.release();

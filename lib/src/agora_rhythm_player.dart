@@ -16,6 +16,12 @@ enum RhythmPlayerStateType {
 }
 
 extension RhythmPlayerStateTypeExt on RhythmPlayerStateType {
+  /// @nodoc
+  static RhythmPlayerStateType fromValue(int value) {
+    return $enumDecode(_$RhythmPlayerStateTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RhythmPlayerStateTypeEnumMap[this]!;
   }
@@ -36,6 +42,12 @@ enum RhythmPlayerErrorType {
 }
 
 extension RhythmPlayerErrorTypeExt on RhythmPlayerErrorType {
+  /// @nodoc
+  static RhythmPlayerErrorType fromValue(int value) {
+    return $enumDecode(_$RhythmPlayerErrorTypeEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$RhythmPlayerErrorTypeEnumMap[this]!;
   }

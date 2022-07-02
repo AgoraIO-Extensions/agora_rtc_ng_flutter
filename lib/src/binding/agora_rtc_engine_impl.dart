@@ -48,8 +48,11 @@ class VideoDeviceManagerImpl implements VideoDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final deviceIdUTF8Result = rm['deviceIdUTF8'];
-    return deviceIdUTF8Result as String;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getDeviceJson = VideoDeviceManagerGetDeviceJson.fromJson(rm);
+    return getDeviceJson.deviceIdUTF8;
   }
 
   @override
@@ -778,7 +781,7 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> getAudioMixingPublishVolume() async {
+  Future<int> getAudioMixingPublishVolume() async {
     const apiType = 'RtcEngine_getAudioMixingPublishVolume';
     final param = createParams({});
     final callApiResult =
@@ -788,9 +791,7 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
@@ -810,7 +811,7 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> getAudioMixingPlayoutVolume() async {
+  Future<int> getAudioMixingPlayoutVolume() async {
     const apiType = 'RtcEngine_getAudioMixingPlayoutVolume';
     final param = createParams({});
     final callApiResult =
@@ -820,13 +821,11 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
-  Future<void> getAudioMixingDuration() async {
+  Future<int> getAudioMixingDuration() async {
     const apiType = 'RtcEngine_getAudioMixingDuration';
     final param = createParams({});
     final callApiResult =
@@ -836,13 +835,11 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
-  Future<void> getAudioMixingCurrentPosition() async {
+  Future<int> getAudioMixingCurrentPosition() async {
     const apiType = 'RtcEngine_getAudioMixingCurrentPosition';
     final param = createParams({});
     final callApiResult =
@@ -852,9 +849,7 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
@@ -890,7 +885,7 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> getEffectsVolume() async {
+  Future<int> getEffectsVolume() async {
     const apiType = 'RtcEngine_getEffectsVolume';
     final param = createParams({});
     final callApiResult =
@@ -900,9 +895,7 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
@@ -1002,7 +995,7 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> getVolumeOfEffect(int soundId) async {
+  Future<int> getVolumeOfEffect(int soundId) async {
     const apiType = 'RtcEngine_getVolumeOfEffect';
     final param = createParams({'soundId': soundId});
     final callApiResult =
@@ -1012,9 +1005,7 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
@@ -1862,7 +1853,7 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> getLoopbackRecordingVolume() async {
+  Future<int> getLoopbackRecordingVolume() async {
     const apiType = 'RtcEngine_getLoopbackRecordingVolume';
     final param = createParams({});
     final callApiResult =
@@ -1872,9 +1863,7 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+    return result as int;
   }
 
   @override
@@ -2024,8 +2013,12 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final valueResult = rm['value'];
-    return valueResult as String;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getExtensionPropertyJson =
+        RtcEngineGetExtensionPropertyJson.fromJson(rm);
+    return getExtensionPropertyJson.value;
   }
 
   @override
@@ -2433,8 +2426,11 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final deviceInfoResult = rm['deviceInfo'];
-    return DeviceInfo.fromJson(deviceInfoResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getAudioDeviceInfoJson = RtcEngineGetAudioDeviceInfoJson.fromJson(rm);
+    return getAudioDeviceInfoJson.deviceInfo;
   }
 
   @override
@@ -2536,8 +2532,11 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final callIdResult = rm['callId'];
-    return callIdResult as String;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getCallIdJson = RtcEngineGetCallIdJson.fromJson(rm);
+    return getCallIdJson.callId;
   }
 
   @override
@@ -2924,7 +2923,7 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    return result as ConnectionStateType;
+    return ConnectionStateTypeExt.fromValue(result);
   }
 
   @override
@@ -3327,8 +3326,12 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final userInfoResult = rm['userInfo'];
-    return UserInfo.fromJson(userInfoResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getUserInfoByUserAccountJson =
+        RtcEngineGetUserInfoByUserAccountJson.fromJson(rm);
+    return getUserInfoByUserAccountJson.userInfo;
   }
 
   @override
@@ -3342,8 +3345,11 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final userInfoResult = rm['userInfo'];
-    return UserInfo.fromJson(userInfoResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getUserInfoByUidJson = RtcEngineGetUserInfoByUidJson.fromJson(rm);
+    return getUserInfoByUidJson.userInfo;
   }
 
   @override
@@ -3713,8 +3719,12 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final optionsResult = rm['options'];
-    return AdvancedAudioOptions.fromJson(optionsResult);
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final setAdvancedAudioOptionsJson =
+        RtcEngineSetAdvancedAudioOptionsJson.fromJson(rm);
+    return setAdvancedAudioOptionsJson.options;
   }
 
   @override
@@ -3983,8 +3993,11 @@ class RtcEngineImpl implements RtcEngine {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final streamIdResult = rm['streamId'];
-    return streamIdResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final createDataStreamJson = RtcEngineCreateDataStreamJson.fromJson(rm);
+    return createDataStreamJson.streamId;
   }
 
   @override

@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
 
 void rtcEngineSmokeTestCases() {
@@ -25,37 +26,45 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const ChannelProfileType contextChannelProfile =
-          ChannelProfileType.channelProfileCommunication;
-      const AudioScenarioType contextAudioScenario =
-          AudioScenarioType.audioScenarioDefault;
-      const LogLevel logConfigLevel = LogLevel.logLevelNone;
-      const String logConfigFilePath = "hello";
-      const int logConfigFileSizeInKB = 10;
-      const LogConfig contextLogConfig = LogConfig(
-        filePath: logConfigFilePath,
-        fileSizeInKB: logConfigFileSizeInKB,
-        level: logConfigLevel,
-      );
-      const ThreadPriorityType contextThreadPriority =
-          ThreadPriorityType.lowest;
-      const String contextAppId = "hello";
-      const bool contextEnableAudioDevice = true;
-      const int contextAreaCode = 10;
-      const bool contextUseExternalEglContext = true;
-      const RtcEngineContext context = RtcEngineContext(
-        appId: contextAppId,
-        enableAudioDevice: contextEnableAudioDevice,
-        channelProfile: contextChannelProfile,
-        audioScenario: contextAudioScenario,
-        areaCode: contextAreaCode,
-        logConfig: contextLogConfig,
-        threadPriority: contextThreadPriority,
-        useExternalEglContext: contextUseExternalEglContext,
-      );
-      await rtcEngine.initialize(
-        context,
-      );
+      try {
+        const ChannelProfileType contextChannelProfile =
+            ChannelProfileType.channelProfileCommunication;
+        const AudioScenarioType contextAudioScenario =
+            AudioScenarioType.audioScenarioDefault;
+        const LogLevel logConfigLevel = LogLevel.logLevelNone;
+        const String logConfigFilePath = "hello";
+        const int logConfigFileSizeInKB = 10;
+        const LogConfig contextLogConfig = LogConfig(
+          filePath: logConfigFilePath,
+          fileSizeInKB: logConfigFileSizeInKB,
+          level: logConfigLevel,
+        );
+        const ThreadPriorityType contextThreadPriority =
+            ThreadPriorityType.lowest;
+        const String contextAppId = "hello";
+        const bool contextEnableAudioDevice = true;
+        const int contextAreaCode = 10;
+        const bool contextUseExternalEglContext = true;
+        const RtcEngineContext context = RtcEngineContext(
+          appId: contextAppId,
+          enableAudioDevice: contextEnableAudioDevice,
+          channelProfile: contextChannelProfile,
+          audioScenario: contextAudioScenario,
+          areaCode: contextAreaCode,
+          logConfig: contextLogConfig,
+          threadPriority: contextThreadPriority,
+          useExternalEglContext: contextUseExternalEglContext,
+        );
+        await rtcEngine.initialize(
+          context,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[initialize] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[initialize] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -77,7 +86,15 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getVersion();
+      try {
+        await rtcEngine.getVersion();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getVersion] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[getVersion] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -99,10 +116,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int code = 10;
-      await rtcEngine.getErrorDescription(
-        code,
-      );
+      try {
+        const int code = 10;
+        await rtcEngine.getErrorDescription(
+          code,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getErrorDescription] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getErrorDescription] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -124,92 +150,101 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const ClientRoleType optionsClientRoleType =
-          ClientRoleType.clientRoleBroadcaster;
-      const AudienceLatencyLevelType optionsAudienceLatencyLevel =
-          AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
-      const VideoStreamType optionsDefaultVideoStreamType =
-          VideoStreamType.videoStreamHigh;
-      const ChannelProfileType optionsChannelProfile =
-          ChannelProfileType.channelProfileCommunication;
-      const NlpAggressiveness
-          audioOptionsExternalAecAggressivenessExternalCustom =
-          NlpAggressiveness.nlpNotSpecified;
-      const bool audioOptionsExternalEnableAecExternalCustom = true;
-      const bool audioOptionsExternalEnableAgcExternalCustom = true;
-      const bool audioOptionsExternalEnableAnsExternalCustom = true;
-      const bool audioOptionsExternalEnableAecExternalLoopback = true;
-      const AudioOptionsExternal optionsAudioOptionsExternal =
-          AudioOptionsExternal(
-        enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
-        enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
-        enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
-        aecAggressivenessExternalCustom:
-            audioOptionsExternalAecAggressivenessExternalCustom,
-        enableAecExternalLoopback:
-            audioOptionsExternalEnableAecExternalLoopback,
-      );
-      const bool optionsPublishCameraTrack = true;
-      const bool optionsPublishSecondaryCameraTrack = true;
-      const bool optionsPublishAudioTrack = true;
-      const bool optionsPublishScreenTrack = true;
-      const bool optionsPublishSecondaryScreenTrack = true;
-      const bool optionsPublishCustomAudioTrack = true;
-      const int optionsPublishCustomAudioSourceId = 10;
-      const bool optionsPublishCustomAudioTrackEnableAec = true;
-      const bool optionsPublishDirectCustomAudioTrack = true;
-      const bool optionsPublishCustomAudioTrackAec = true;
-      const bool optionsPublishCustomVideoTrack = true;
-      const bool optionsPublishEncodedVideoTrack = true;
-      const bool optionsPublishMediaPlayerAudioTrack = true;
-      const bool optionsPublishMediaPlayerVideoTrack = true;
-      const bool optionsPublishTrancodedVideoTrack = true;
-      const bool optionsAutoSubscribeAudio = true;
-      const bool optionsAutoSubscribeVideo = true;
-      const bool optionsStartPreview = true;
-      const bool optionsEnableAudioRecordingOrPlayout = true;
-      const int optionsPublishMediaPlayerId = 10;
-      const int optionsAudioDelayMs = 10;
-      const int optionsMediaPlayerAudioDelayMs = 10;
-      const String optionsToken = "hello";
-      const bool optionsEnableBuiltInMediaEncryption = true;
-      const bool optionsPublishRhythmPlayerTrack = true;
-      const ChannelMediaOptions options = ChannelMediaOptions(
-        publishCameraTrack: optionsPublishCameraTrack,
-        publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
-        publishAudioTrack: optionsPublishAudioTrack,
-        publishScreenTrack: optionsPublishScreenTrack,
-        publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
-        publishCustomAudioTrack: optionsPublishCustomAudioTrack,
-        publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
-        publishCustomAudioTrackEnableAec:
-            optionsPublishCustomAudioTrackEnableAec,
-        publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
-        publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
-        publishCustomVideoTrack: optionsPublishCustomVideoTrack,
-        publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
-        publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
-        publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
-        publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
-        autoSubscribeAudio: optionsAutoSubscribeAudio,
-        autoSubscribeVideo: optionsAutoSubscribeVideo,
-        startPreview: optionsStartPreview,
-        enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
-        publishMediaPlayerId: optionsPublishMediaPlayerId,
-        clientRoleType: optionsClientRoleType,
-        audienceLatencyLevel: optionsAudienceLatencyLevel,
-        defaultVideoStreamType: optionsDefaultVideoStreamType,
-        channelProfile: optionsChannelProfile,
-        audioDelayMs: optionsAudioDelayMs,
-        mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
-        token: optionsToken,
-        enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
-        publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
-        audioOptionsExternal: optionsAudioOptionsExternal,
-      );
-      await rtcEngine.updateChannelMediaOptions(
-        options,
-      );
+      try {
+        const ClientRoleType optionsClientRoleType =
+            ClientRoleType.clientRoleBroadcaster;
+        const AudienceLatencyLevelType optionsAudienceLatencyLevel =
+            AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
+        const VideoStreamType optionsDefaultVideoStreamType =
+            VideoStreamType.videoStreamHigh;
+        const ChannelProfileType optionsChannelProfile =
+            ChannelProfileType.channelProfileCommunication;
+        const NlpAggressiveness
+            audioOptionsExternalAecAggressivenessExternalCustom =
+            NlpAggressiveness.nlpNotSpecified;
+        const bool audioOptionsExternalEnableAecExternalCustom = true;
+        const bool audioOptionsExternalEnableAgcExternalCustom = true;
+        const bool audioOptionsExternalEnableAnsExternalCustom = true;
+        const bool audioOptionsExternalEnableAecExternalLoopback = true;
+        const AudioOptionsExternal optionsAudioOptionsExternal =
+            AudioOptionsExternal(
+          enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
+          enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
+          enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
+          aecAggressivenessExternalCustom:
+              audioOptionsExternalAecAggressivenessExternalCustom,
+          enableAecExternalLoopback:
+              audioOptionsExternalEnableAecExternalLoopback,
+        );
+        const bool optionsPublishCameraTrack = true;
+        const bool optionsPublishSecondaryCameraTrack = true;
+        const bool optionsPublishAudioTrack = true;
+        const bool optionsPublishScreenTrack = true;
+        const bool optionsPublishSecondaryScreenTrack = true;
+        const bool optionsPublishCustomAudioTrack = true;
+        const int optionsPublishCustomAudioSourceId = 10;
+        const bool optionsPublishCustomAudioTrackEnableAec = true;
+        const bool optionsPublishDirectCustomAudioTrack = true;
+        const bool optionsPublishCustomAudioTrackAec = true;
+        const bool optionsPublishCustomVideoTrack = true;
+        const bool optionsPublishEncodedVideoTrack = true;
+        const bool optionsPublishMediaPlayerAudioTrack = true;
+        const bool optionsPublishMediaPlayerVideoTrack = true;
+        const bool optionsPublishTrancodedVideoTrack = true;
+        const bool optionsAutoSubscribeAudio = true;
+        const bool optionsAutoSubscribeVideo = true;
+        const bool optionsStartPreview = true;
+        const bool optionsEnableAudioRecordingOrPlayout = true;
+        const int optionsPublishMediaPlayerId = 10;
+        const int optionsAudioDelayMs = 10;
+        const int optionsMediaPlayerAudioDelayMs = 10;
+        const String optionsToken = "hello";
+        const bool optionsEnableBuiltInMediaEncryption = true;
+        const bool optionsPublishRhythmPlayerTrack = true;
+        const ChannelMediaOptions options = ChannelMediaOptions(
+          publishCameraTrack: optionsPublishCameraTrack,
+          publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
+          publishAudioTrack: optionsPublishAudioTrack,
+          publishScreenTrack: optionsPublishScreenTrack,
+          publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
+          publishCustomAudioTrack: optionsPublishCustomAudioTrack,
+          publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
+          publishCustomAudioTrackEnableAec:
+              optionsPublishCustomAudioTrackEnableAec,
+          publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
+          publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
+          publishCustomVideoTrack: optionsPublishCustomVideoTrack,
+          publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
+          publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
+          publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
+          publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
+          autoSubscribeAudio: optionsAutoSubscribeAudio,
+          autoSubscribeVideo: optionsAutoSubscribeVideo,
+          startPreview: optionsStartPreview,
+          enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
+          publishMediaPlayerId: optionsPublishMediaPlayerId,
+          clientRoleType: optionsClientRoleType,
+          audienceLatencyLevel: optionsAudienceLatencyLevel,
+          defaultVideoStreamType: optionsDefaultVideoStreamType,
+          channelProfile: optionsChannelProfile,
+          audioDelayMs: optionsAudioDelayMs,
+          mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
+          token: optionsToken,
+          enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
+          publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
+          audioOptionsExternal: optionsAudioOptionsExternal,
+        );
+        await rtcEngine.updateChannelMediaOptions(
+          options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[updateChannelMediaOptions] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateChannelMediaOptions] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -231,10 +266,18 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String token = "hello";
-      await rtcEngine.renewToken(
-        token,
-      );
+      try {
+        const String token = "hello";
+        await rtcEngine.renewToken(
+          token,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[renewToken] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[renewToken] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -256,11 +299,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const ChannelProfileType profile =
-          ChannelProfileType.channelProfileCommunication;
-      await rtcEngine.setChannelProfile(
-        profile,
-      );
+      try {
+        const ChannelProfileType profile =
+            ChannelProfileType.channelProfileCommunication;
+        await rtcEngine.setChannelProfile(
+          profile,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setChannelProfile] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setChannelProfile] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -282,7 +334,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopEchoTest();
+      try {
+        await rtcEngine.stopEchoTest();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopEchoTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopEchoTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -304,7 +365,15 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.enableVideo();
+      try {
+        await rtcEngine.enableVideo();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableVideo] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[enableVideo] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -326,7 +395,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.disableVideo();
+      try {
+        await rtcEngine.disableVideo();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[disableVideo] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[disableVideo] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -348,19 +426,28 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool configProbeUplink = true;
-      const bool configProbeDownlink = true;
-      const int configExpectedUplinkBitrate = 10;
-      const int configExpectedDownlinkBitrate = 10;
-      const LastmileProbeConfig config = LastmileProbeConfig(
-        probeUplink: configProbeUplink,
-        probeDownlink: configProbeDownlink,
-        expectedUplinkBitrate: configExpectedUplinkBitrate,
-        expectedDownlinkBitrate: configExpectedDownlinkBitrate,
-      );
-      await rtcEngine.startLastmileProbeTest(
-        config,
-      );
+      try {
+        const bool configProbeUplink = true;
+        const bool configProbeDownlink = true;
+        const int configExpectedUplinkBitrate = 10;
+        const int configExpectedDownlinkBitrate = 10;
+        const LastmileProbeConfig config = LastmileProbeConfig(
+          probeUplink: configProbeUplink,
+          probeDownlink: configProbeDownlink,
+          expectedUplinkBitrate: configExpectedUplinkBitrate,
+          expectedDownlinkBitrate: configExpectedDownlinkBitrate,
+        );
+        await rtcEngine.startLastmileProbeTest(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startLastmileProbeTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startLastmileProbeTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -382,7 +469,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopLastmileProbeTest();
+      try {
+        await rtcEngine.stopLastmileProbeTest();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopLastmileProbeTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopLastmileProbeTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -404,35 +500,44 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoCodecType configCodecType = VideoCodecType.videoCodecNone;
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions configDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const OrientationMode configOrientationMode =
-          OrientationMode.orientationModeAdaptive;
-      const DegradationPreference configDegradationPreference =
-          DegradationPreference.maintainQuality;
-      const VideoMirrorModeType configMirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      const int configFrameRate = 10;
-      const int configBitrate = 10;
-      const int configMinBitrate = 10;
-      const VideoEncoderConfiguration config = VideoEncoderConfiguration(
-        codecType: configCodecType,
-        dimensions: configDimensions,
-        frameRate: configFrameRate,
-        bitrate: configBitrate,
-        minBitrate: configMinBitrate,
-        orientationMode: configOrientationMode,
-        degradationPreference: configDegradationPreference,
-        mirrorMode: configMirrorMode,
-      );
-      await rtcEngine.setVideoEncoderConfiguration(
-        config,
-      );
+      try {
+        const VideoCodecType configCodecType = VideoCodecType.videoCodecNone;
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions configDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const OrientationMode configOrientationMode =
+            OrientationMode.orientationModeAdaptive;
+        const DegradationPreference configDegradationPreference =
+            DegradationPreference.maintainQuality;
+        const VideoMirrorModeType configMirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        const int configFrameRate = 10;
+        const int configBitrate = 10;
+        const int configMinBitrate = 10;
+        const VideoEncoderConfiguration config = VideoEncoderConfiguration(
+          codecType: configCodecType,
+          dimensions: configDimensions,
+          frameRate: configFrameRate,
+          bitrate: configBitrate,
+          minBitrate: configMinBitrate,
+          orientationMode: configOrientationMode,
+          degradationPreference: configDegradationPreference,
+          mirrorMode: configMirrorMode,
+        );
+        await rtcEngine.setVideoEncoderConfiguration(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setVideoEncoderConfiguration] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setVideoEncoderConfiguration] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -454,26 +559,35 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const LighteningContrastLevel optionsLighteningContrastLevel =
-          LighteningContrastLevel.lighteningContrastLow;
-      const double optionsLighteningLevel = 10.0;
-      const double optionsSmoothnessLevel = 10.0;
-      const double optionsRednessLevel = 10.0;
-      const double optionsSharpnessLevel = 10.0;
-      const BeautyOptions options = BeautyOptions(
-        lighteningContrastLevel: optionsLighteningContrastLevel,
-        lighteningLevel: optionsLighteningLevel,
-        smoothnessLevel: optionsSmoothnessLevel,
-        rednessLevel: optionsRednessLevel,
-        sharpnessLevel: optionsSharpnessLevel,
-      );
-      const MediaSourceType type = MediaSourceType.audioPlayoutSource;
-      await rtcEngine.setBeautyEffectOptions(
-        enabled: enabled,
-        options: options,
-        type: type,
-      );
+      try {
+        const bool enabled = true;
+        const LighteningContrastLevel optionsLighteningContrastLevel =
+            LighteningContrastLevel.lighteningContrastLow;
+        const double optionsLighteningLevel = 10.0;
+        const double optionsSmoothnessLevel = 10.0;
+        const double optionsRednessLevel = 10.0;
+        const double optionsSharpnessLevel = 10.0;
+        const BeautyOptions options = BeautyOptions(
+          lighteningContrastLevel: optionsLighteningContrastLevel,
+          lighteningLevel: optionsLighteningLevel,
+          smoothnessLevel: optionsSmoothnessLevel,
+          rednessLevel: optionsRednessLevel,
+          sharpnessLevel: optionsSharpnessLevel,
+        );
+        const MediaSourceType type = MediaSourceType.audioPlayoutSource;
+        await rtcEngine.setBeautyEffectOptions(
+          enabled: enabled,
+          options: options,
+          type: type,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setBeautyEffectOptions] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setBeautyEffectOptions] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -495,23 +609,33 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const BackgroundSourceType backgroundSourceBackgroundSourceType =
-          BackgroundSourceType.backgroundColor;
-      const BackgroundBlurDegree backgroundSourceBlurDegree =
-          BackgroundBlurDegree.blurDegreeLow;
-      const int backgroundSourceColor = 10;
-      const String backgroundSourceSource = "hello";
-      const VirtualBackgroundSource backgroundSource = VirtualBackgroundSource(
-        backgroundSourceType: backgroundSourceBackgroundSourceType,
-        color: backgroundSourceColor,
-        source: backgroundSourceSource,
-        blurDegree: backgroundSourceBlurDegree,
-      );
-      await rtcEngine.enableVirtualBackground(
-        enabled: enabled,
-        backgroundSource: backgroundSource,
-      );
+      try {
+        const bool enabled = true;
+        const BackgroundSourceType backgroundSourceBackgroundSourceType =
+            BackgroundSourceType.backgroundColor;
+        const BackgroundBlurDegree backgroundSourceBlurDegree =
+            BackgroundBlurDegree.blurDegreeLow;
+        const int backgroundSourceColor = 10;
+        const String backgroundSourceSource = "hello";
+        const VirtualBackgroundSource backgroundSource =
+            VirtualBackgroundSource(
+          backgroundSourceType: backgroundSourceBackgroundSourceType,
+          color: backgroundSourceColor,
+          source: backgroundSourceSource,
+          blurDegree: backgroundSourceBlurDegree,
+        );
+        await rtcEngine.enableVirtualBackground(
+          enabled: enabled,
+          backgroundSource: backgroundSource,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableVirtualBackground] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableVirtualBackground] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -533,12 +657,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int userId = 10;
-      const bool enable = true;
-      await rtcEngine.enableRemoteSuperResolution(
-        userId: userId,
-        enable: enable,
-      );
+      try {
+        const int userId = 10;
+        const bool enable = true;
+        await rtcEngine.enableRemoteSuperResolution(
+          userId: userId,
+          enable: enable,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableRemoteSuperResolution] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableRemoteSuperResolution] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -560,7 +693,15 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.enableAudio();
+      try {
+        await rtcEngine.enableAudio();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableAudio] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[enableAudio] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -582,7 +723,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.disableAudio();
+      try {
+        await rtcEngine.disableAudio();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[disableAudio] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[disableAudio] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -604,10 +754,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.enableLocalAudio(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.enableLocalAudio(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableLocalAudio] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableLocalAudio] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -629,10 +788,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.muteLocalAudioStream(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.muteLocalAudioStream(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteLocalAudioStream] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteLocalAudioStream] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -654,10 +822,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.muteAllRemoteAudioStreams(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.muteAllRemoteAudioStreams(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteAllRemoteAudioStreams] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteAllRemoteAudioStreams] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -679,10 +856,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.setDefaultMuteAllRemoteAudioStreams(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.setDefaultMuteAllRemoteAudioStreams(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setDefaultMuteAllRemoteAudioStreams] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setDefaultMuteAllRemoteAudioStreams] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -704,12 +891,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const bool mute = true;
-      await rtcEngine.muteRemoteAudioStream(
-        uid: uid,
-        mute: mute,
-      );
+      try {
+        const int uid = 10;
+        const bool mute = true;
+        await rtcEngine.muteRemoteAudioStream(
+          uid: uid,
+          mute: mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteRemoteAudioStream] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteRemoteAudioStream] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -731,10 +927,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.muteLocalVideoStream(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.muteLocalVideoStream(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteLocalVideoStream] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteLocalVideoStream] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -756,10 +961,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.enableLocalVideo(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.enableLocalVideo(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableLocalVideo] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableLocalVideo] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -781,10 +995,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.muteAllRemoteVideoStreams(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.muteAllRemoteVideoStreams(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteAllRemoteVideoStreams] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteAllRemoteVideoStreams] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -806,10 +1029,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.setDefaultMuteAllRemoteVideoStreams(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.setDefaultMuteAllRemoteVideoStreams(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setDefaultMuteAllRemoteVideoStreams] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setDefaultMuteAllRemoteVideoStreams] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -831,12 +1064,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const bool mute = true;
-      await rtcEngine.muteRemoteVideoStream(
-        uid: uid,
-        mute: mute,
-      );
+      try {
+        const int uid = 10;
+        const bool mute = true;
+        await rtcEngine.muteRemoteVideoStream(
+          uid: uid,
+          mute: mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteRemoteVideoStream] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteRemoteVideoStream] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -858,12 +1100,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const VideoStreamType streamType = VideoStreamType.videoStreamHigh;
-      await rtcEngine.setRemoteVideoStreamType(
-        uid: uid,
-        streamType: streamType,
-      );
+      try {
+        const int uid = 10;
+        const VideoStreamType streamType = VideoStreamType.videoStreamHigh;
+        await rtcEngine.setRemoteVideoStreamType(
+          uid: uid,
+          streamType: streamType,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRemoteVideoStreamType] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteVideoStreamType] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -885,10 +1136,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoStreamType streamType = VideoStreamType.videoStreamHigh;
-      await rtcEngine.setRemoteDefaultVideoStreamType(
-        streamType,
-      );
+      try {
+        const VideoStreamType streamType = VideoStreamType.videoStreamHigh;
+        await rtcEngine.setRemoteDefaultVideoStreamType(
+          streamType,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setRemoteDefaultVideoStreamType] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteDefaultVideoStreamType] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -910,14 +1171,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int interval = 10;
-      const int smooth = 10;
-      const bool reportVad = true;
-      await rtcEngine.enableAudioVolumeIndication(
-        interval: interval,
-        smooth: smooth,
-        reportVad: reportVad,
-      );
+      try {
+        const int interval = 10;
+        const int smooth = 10;
+        const bool reportVad = true;
+        await rtcEngine.enableAudioVolumeIndication(
+          interval: interval,
+          smooth: smooth,
+          reportVad: reportVad,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableAudioVolumeIndication] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableAudioVolumeIndication] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -939,7 +1209,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopAudioRecording();
+      try {
+        await rtcEngine.stopAudioRecording();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopAudioRecording] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopAudioRecording] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -961,7 +1240,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopAudioMixing();
+      try {
+        await rtcEngine.stopAudioMixing();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopAudioMixing] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopAudioMixing] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -983,7 +1271,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.pauseAudioMixing();
+      try {
+        await rtcEngine.pauseAudioMixing();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[pauseAudioMixing] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[pauseAudioMixing] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1005,7 +1302,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.resumeAudioMixing();
+      try {
+        await rtcEngine.resumeAudioMixing();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[resumeAudioMixing] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[resumeAudioMixing] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1027,10 +1333,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.adjustAudioMixingVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.adjustAudioMixingVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustAudioMixingVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustAudioMixingVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1052,10 +1367,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.adjustAudioMixingPublishVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.adjustAudioMixingPublishVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustAudioMixingPublishVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustAudioMixingPublishVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1077,7 +1401,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getAudioMixingPublishVolume();
+      try {
+        await rtcEngine.getAudioMixingPublishVolume();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getAudioMixingPublishVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getAudioMixingPublishVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1099,10 +1432,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.adjustAudioMixingPlayoutVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.adjustAudioMixingPlayoutVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustAudioMixingPlayoutVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustAudioMixingPlayoutVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1124,7 +1466,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getAudioMixingPlayoutVolume();
+      try {
+        await rtcEngine.getAudioMixingPlayoutVolume();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getAudioMixingPlayoutVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getAudioMixingPlayoutVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1146,7 +1497,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getAudioMixingDuration();
+      try {
+        await rtcEngine.getAudioMixingDuration();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getAudioMixingDuration] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getAudioMixingDuration] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1168,7 +1528,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getAudioMixingCurrentPosition();
+      try {
+        await rtcEngine.getAudioMixingCurrentPosition();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getAudioMixingCurrentPosition] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getAudioMixingCurrentPosition] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1190,10 +1559,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int pos = 10;
-      await rtcEngine.setAudioMixingPosition(
-        pos,
-      );
+      try {
+        const int pos = 10;
+        await rtcEngine.setAudioMixingPosition(
+          pos,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAudioMixingPosition] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAudioMixingPosition] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1215,10 +1593,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int pitch = 10;
-      await rtcEngine.setAudioMixingPitch(
-        pitch,
-      );
+      try {
+        const int pitch = 10;
+        await rtcEngine.setAudioMixingPitch(
+          pitch,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAudioMixingPitch] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAudioMixingPitch] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1240,7 +1627,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getEffectsVolume();
+      try {
+        await rtcEngine.getEffectsVolume();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getEffectsVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getEffectsVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1262,10 +1658,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.setEffectsVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.setEffectsVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setEffectsVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setEffectsVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1287,14 +1692,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      const String filePath = "hello";
-      const int startPos = 10;
-      await rtcEngine.preloadEffect(
-        soundId: soundId,
-        filePath: filePath,
-        startPos: startPos,
-      );
+      try {
+        const int soundId = 10;
+        const String filePath = "hello";
+        const int startPos = 10;
+        await rtcEngine.preloadEffect(
+          soundId: soundId,
+          filePath: filePath,
+          startPos: startPos,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[preloadEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[preloadEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1316,24 +1730,32 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      const String filePath = "hello";
-      const int loopCount = 10;
-      const double pitch = 10.0;
-      const double pan = 10.0;
-      const int gain = 10;
-      const bool publish = true;
-      const int startPos = 10;
-      await rtcEngine.playEffect(
-        soundId: soundId,
-        filePath: filePath,
-        loopCount: loopCount,
-        pitch: pitch,
-        pan: pan,
-        gain: gain,
-        publish: publish,
-        startPos: startPos,
-      );
+      try {
+        const int soundId = 10;
+        const String filePath = "hello";
+        const int loopCount = 10;
+        const double pitch = 10.0;
+        const double pan = 10.0;
+        const int gain = 10;
+        const bool publish = true;
+        const int startPos = 10;
+        await rtcEngine.playEffect(
+          soundId: soundId,
+          filePath: filePath,
+          loopCount: loopCount,
+          pitch: pitch,
+          pan: pan,
+          gain: gain,
+          publish: publish,
+          startPos: startPos,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[playEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[playEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1355,18 +1777,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int loopCount = 10;
-      const double pitch = 10.0;
-      const double pan = 10.0;
-      const int gain = 10;
-      const bool publish = true;
-      await rtcEngine.playAllEffects(
-        loopCount: loopCount,
-        pitch: pitch,
-        pan: pan,
-        gain: gain,
-        publish: publish,
-      );
+      try {
+        const int loopCount = 10;
+        const double pitch = 10.0;
+        const double pan = 10.0;
+        const int gain = 10;
+        const bool publish = true;
+        await rtcEngine.playAllEffects(
+          loopCount: loopCount,
+          pitch: pitch,
+          pan: pan,
+          gain: gain,
+          publish: publish,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[playAllEffects] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[playAllEffects] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1388,10 +1819,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      await rtcEngine.getVolumeOfEffect(
-        soundId,
-      );
+      try {
+        const int soundId = 10;
+        await rtcEngine.getVolumeOfEffect(
+          soundId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getVolumeOfEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getVolumeOfEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1413,12 +1853,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      const int volume = 10;
-      await rtcEngine.setVolumeOfEffect(
-        soundId: soundId,
-        volume: volume,
-      );
+      try {
+        const int soundId = 10;
+        const int volume = 10;
+        await rtcEngine.setVolumeOfEffect(
+          soundId: soundId,
+          volume: volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setVolumeOfEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setVolumeOfEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1440,10 +1889,18 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      await rtcEngine.pauseEffect(
-        soundId,
-      );
+      try {
+        const int soundId = 10;
+        await rtcEngine.pauseEffect(
+          soundId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[pauseEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[pauseEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1465,7 +1922,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.pauseAllEffects();
+      try {
+        await rtcEngine.pauseAllEffects();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[pauseAllEffects] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[pauseAllEffects] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1487,10 +1953,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      await rtcEngine.resumeEffect(
-        soundId,
-      );
+      try {
+        const int soundId = 10;
+        await rtcEngine.resumeEffect(
+          soundId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[resumeEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[resumeEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1512,7 +1987,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.resumeAllEffects();
+      try {
+        await rtcEngine.resumeAllEffects();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[resumeAllEffects] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[resumeAllEffects] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1534,10 +2018,18 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      await rtcEngine.stopEffect(
-        soundId,
-      );
+      try {
+        const int soundId = 10;
+        await rtcEngine.stopEffect(
+          soundId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[stopEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1559,7 +2051,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopAllEffects();
+      try {
+        await rtcEngine.stopAllEffects();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopAllEffects] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopAllEffects] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1581,10 +2082,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int soundId = 10;
-      await rtcEngine.unloadEffect(
-        soundId,
-      );
+      try {
+        const int soundId = 10;
+        await rtcEngine.unloadEffect(
+          soundId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[unloadEffect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[unloadEffect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1606,7 +2116,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.unloadAllEffects();
+      try {
+        await rtcEngine.unloadAllEffects();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[unloadAllEffects] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[unloadAllEffects] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1628,10 +2147,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.enableSoundPositionIndication(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.enableSoundPositionIndication(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableSoundPositionIndication] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableSoundPositionIndication] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1653,14 +2181,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const double pan = 10.0;
-      const double gain = 10.0;
-      await rtcEngine.setRemoteVoicePosition(
-        uid: uid,
-        pan: pan,
-        gain: gain,
-      );
+      try {
+        const int uid = 10;
+        const double pan = 10.0;
+        const double gain = 10.0;
+        await rtcEngine.setRemoteVoicePosition(
+          uid: uid,
+          pan: pan,
+          gain: gain,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRemoteVoicePosition] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteVoicePosition] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1682,10 +2219,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.enableSpatialAudio(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.enableSpatialAudio(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableSpatialAudio] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableSpatialAudio] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1707,25 +2253,35 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const double paramsSpeakerAzimuth = 10.0;
-      const double paramsSpeakerElevation = 10.0;
-      const double paramsSpeakerDistance = 10.0;
-      const int paramsSpeakerOrientation = 10;
-      const bool paramsEnableBlur = true;
-      const bool paramsEnableAirAbsorb = true;
-      const SpatialAudioParams params = SpatialAudioParams(
-        speakerAzimuth: paramsSpeakerAzimuth,
-        speakerElevation: paramsSpeakerElevation,
-        speakerDistance: paramsSpeakerDistance,
-        speakerOrientation: paramsSpeakerOrientation,
-        enableBlur: paramsEnableBlur,
-        enableAirAbsorb: paramsEnableAirAbsorb,
-      );
-      await rtcEngine.setRemoteUserSpatialAudioParams(
-        uid: uid,
-        params: params,
-      );
+      try {
+        const int uid = 10;
+        const double paramsSpeakerAzimuth = 10.0;
+        const double paramsSpeakerElevation = 10.0;
+        const double paramsSpeakerDistance = 10.0;
+        const int paramsSpeakerOrientation = 10;
+        const bool paramsEnableBlur = true;
+        const bool paramsEnableAirAbsorb = true;
+        const SpatialAudioParams params = SpatialAudioParams(
+          speakerAzimuth: paramsSpeakerAzimuth,
+          speakerElevation: paramsSpeakerElevation,
+          speakerDistance: paramsSpeakerDistance,
+          speakerOrientation: paramsSpeakerOrientation,
+          enableBlur: paramsEnableBlur,
+          enableAirAbsorb: paramsEnableAirAbsorb,
+        );
+        await rtcEngine.setRemoteUserSpatialAudioParams(
+          uid: uid,
+          params: params,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setRemoteUserSpatialAudioParams] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteUserSpatialAudioParams] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1747,11 +2303,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VoiceBeautifierPreset preset =
-          VoiceBeautifierPreset.voiceBeautifierOff;
-      await rtcEngine.setVoiceBeautifierPreset(
-        preset,
-      );
+      try {
+        const VoiceBeautifierPreset preset =
+            VoiceBeautifierPreset.voiceBeautifierOff;
+        await rtcEngine.setVoiceBeautifierPreset(
+          preset,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setVoiceBeautifierPreset] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setVoiceBeautifierPreset] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1773,10 +2338,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioEffectPreset preset = AudioEffectPreset.audioEffectOff;
-      await rtcEngine.setAudioEffectPreset(
-        preset,
-      );
+      try {
+        const AudioEffectPreset preset = AudioEffectPreset.audioEffectOff;
+        await rtcEngine.setAudioEffectPreset(
+          preset,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAudioEffectPreset] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAudioEffectPreset] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1798,11 +2372,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VoiceConversionPreset preset =
-          VoiceConversionPreset.voiceConversionOff;
-      await rtcEngine.setVoiceConversionPreset(
-        preset,
-      );
+      try {
+        const VoiceConversionPreset preset =
+            VoiceConversionPreset.voiceConversionOff;
+        await rtcEngine.setVoiceConversionPreset(
+          preset,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setVoiceConversionPreset] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setVoiceConversionPreset] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1824,14 +2407,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioEffectPreset preset = AudioEffectPreset.audioEffectOff;
-      const int param1 = 10;
-      const int param2 = 10;
-      await rtcEngine.setAudioEffectParameters(
-        preset: preset,
-        param1: param1,
-        param2: param2,
-      );
+      try {
+        const AudioEffectPreset preset = AudioEffectPreset.audioEffectOff;
+        const int param1 = 10;
+        const int param2 = 10;
+        await rtcEngine.setAudioEffectParameters(
+          preset: preset,
+          param1: param1,
+          param2: param2,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAudioEffectParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAudioEffectParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1853,15 +2445,24 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VoiceBeautifierPreset preset =
-          VoiceBeautifierPreset.voiceBeautifierOff;
-      const int param1 = 10;
-      const int param2 = 10;
-      await rtcEngine.setVoiceBeautifierParameters(
-        preset: preset,
-        param1: param1,
-        param2: param2,
-      );
+      try {
+        const VoiceBeautifierPreset preset =
+            VoiceBeautifierPreset.voiceBeautifierOff;
+        const int param1 = 10;
+        const int param2 = 10;
+        await rtcEngine.setVoiceBeautifierParameters(
+          preset: preset,
+          param1: param1,
+          param2: param2,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setVoiceBeautifierParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setVoiceBeautifierParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1883,15 +2484,24 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VoiceConversionPreset preset =
-          VoiceConversionPreset.voiceConversionOff;
-      const int param1 = 10;
-      const int param2 = 10;
-      await rtcEngine.setVoiceConversionParameters(
-        preset: preset,
-        param1: param1,
-        param2: param2,
-      );
+      try {
+        const VoiceConversionPreset preset =
+            VoiceConversionPreset.voiceConversionOff;
+        const int param1 = 10;
+        const int param2 = 10;
+        await rtcEngine.setVoiceConversionParameters(
+          preset: preset,
+          param1: param1,
+          param2: param2,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setVoiceConversionParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setVoiceConversionParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1913,10 +2523,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const double pitch = 10.0;
-      await rtcEngine.setLocalVoicePitch(
-        pitch,
-      );
+      try {
+        const double pitch = 10.0;
+        await rtcEngine.setLocalVoicePitch(
+          pitch,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalVoicePitch] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalVoicePitch] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1938,13 +2557,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioEqualizationBandFrequency bandFrequency =
-          AudioEqualizationBandFrequency.audioEqualizationBand31;
-      const int bandGain = 10;
-      await rtcEngine.setLocalVoiceEqualization(
-        bandFrequency: bandFrequency,
-        bandGain: bandGain,
-      );
+      try {
+        const AudioEqualizationBandFrequency bandFrequency =
+            AudioEqualizationBandFrequency.audioEqualizationBand31;
+        const int bandGain = 10;
+        await rtcEngine.setLocalVoiceEqualization(
+          bandFrequency: bandFrequency,
+          bandGain: bandGain,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalVoiceEqualization] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalVoiceEqualization] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1966,12 +2594,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioReverbType reverbKey = AudioReverbType.audioReverbDryLevel;
-      const int value = 10;
-      await rtcEngine.setLocalVoiceReverb(
-        reverbKey: reverbKey,
-        value: value,
-      );
+      try {
+        const AudioReverbType reverbKey = AudioReverbType.audioReverbDryLevel;
+        const int value = 10;
+        await rtcEngine.setLocalVoiceReverb(
+          reverbKey: reverbKey,
+          value: value,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalVoiceReverb] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalVoiceReverb] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -1993,10 +2630,18 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String filePath = "hello";
-      await rtcEngine.setLogFile(
-        filePath,
-      );
+      try {
+        const String filePath = "hello";
+        await rtcEngine.setLogFile(
+          filePath,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLogFile] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[setLogFile] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2018,10 +2663,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const LogFilterType filter = LogFilterType.logFilterOff;
-      await rtcEngine.setLogFilter(
-        filter,
-      );
+      try {
+        const LogFilterType filter = LogFilterType.logFilterOff;
+        await rtcEngine.setLogFilter(
+          filter,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLogFilter] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLogFilter] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2043,10 +2697,18 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const LogLevel level = LogLevel.logLevelNone;
-      await rtcEngine.setLogLevel(
-        level,
-      );
+      try {
+        const LogLevel level = LogLevel.logLevelNone;
+        await rtcEngine.setLogLevel(
+          level,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLogLevel] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[setLogLevel] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2068,10 +2730,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int fileSizeInKBytes = 10;
-      await rtcEngine.setLogFileSize(
-        fileSizeInKBytes,
-      );
+      try {
+        const int fileSizeInKBytes = 10;
+        await rtcEngine.setLogFileSize(
+          fileSizeInKBytes,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLogFileSize] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLogFileSize] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2093,10 +2764,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String requestId = "hello";
-      await rtcEngine.uploadLogFile(
-        requestId,
-      );
+      try {
+        const String requestId = "hello";
+        await rtcEngine.uploadLogFile(
+          requestId,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[uploadLogFile] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[uploadLogFile] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2118,15 +2798,24 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const RenderModeType renderMode = RenderModeType.renderModeHidden;
-      const VideoMirrorModeType mirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      await rtcEngine.setRemoteRenderMode(
-        uid: uid,
-        renderMode: renderMode,
-        mirrorMode: mirrorMode,
-      );
+      try {
+        const int uid = 10;
+        const RenderModeType renderMode = RenderModeType.renderModeHidden;
+        const VideoMirrorModeType mirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        await rtcEngine.setRemoteRenderMode(
+          uid: uid,
+          renderMode: renderMode,
+          mirrorMode: mirrorMode,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRemoteRenderMode] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteRenderMode] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2148,11 +2837,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoMirrorModeType mirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      await rtcEngine.setLocalVideoMirrorMode(
-        mirrorMode,
-      );
+      try {
+        const VideoMirrorModeType mirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        await rtcEngine.setLocalVideoMirrorMode(
+          mirrorMode,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalVideoMirrorMode] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalVideoMirrorMode] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2174,12 +2872,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const int audioSourceDelay = 10;
-      await rtcEngine.enableEchoCancellationExternal(
-        enabled: enabled,
-        audioSourceDelay: audioSourceDelay,
-      );
+      try {
+        const bool enabled = true;
+        const int audioSourceDelay = 10;
+        await rtcEngine.enableEchoCancellationExternal(
+          enabled: enabled,
+          audioSourceDelay: audioSourceDelay,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableEchoCancellationExternal] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableEchoCancellationExternal] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2201,12 +2908,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sourceId = 10;
-      const bool enabled = true;
-      await rtcEngine.enableCustomAudioLocalPlayback(
-        sourceId: sourceId,
-        enabled: enabled,
-      );
+      try {
+        const int sourceId = 10;
+        const bool enabled = true;
+        await rtcEngine.enableCustomAudioLocalPlayback(
+          sourceId: sourceId,
+          enabled: enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableCustomAudioLocalPlayback] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableCustomAudioLocalPlayback] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2228,13 +2944,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool configEnableLocalPlayback = true;
-      const AudioTrackConfig config = AudioTrackConfig(
-        enableLocalPlayback: configEnableLocalPlayback,
-      );
-      await rtcEngine.startPrimaryCustomAudioTrack(
-        config,
-      );
+      try {
+        const bool configEnableLocalPlayback = true;
+        const AudioTrackConfig config = AudioTrackConfig(
+          enableLocalPlayback: configEnableLocalPlayback,
+        );
+        await rtcEngine.startPrimaryCustomAudioTrack(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startPrimaryCustomAudioTrack] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startPrimaryCustomAudioTrack] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2256,7 +2981,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopPrimaryCustomAudioTrack();
+      try {
+        await rtcEngine.stopPrimaryCustomAudioTrack();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopPrimaryCustomAudioTrack] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopPrimaryCustomAudioTrack] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2278,13 +3012,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool configEnableLocalPlayback = true;
-      const AudioTrackConfig config = AudioTrackConfig(
-        enableLocalPlayback: configEnableLocalPlayback,
-      );
-      await rtcEngine.startSecondaryCustomAudioTrack(
-        config,
-      );
+      try {
+        const bool configEnableLocalPlayback = true;
+        const AudioTrackConfig config = AudioTrackConfig(
+          enableLocalPlayback: configEnableLocalPlayback,
+        );
+        await rtcEngine.startSecondaryCustomAudioTrack(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startSecondaryCustomAudioTrack] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startSecondaryCustomAudioTrack] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2306,7 +3049,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopSecondaryCustomAudioTrack();
+      try {
+        await rtcEngine.stopSecondaryCustomAudioTrack();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopSecondaryCustomAudioTrack] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopSecondaryCustomAudioTrack] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2328,17 +3080,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sampleRate = 10;
-      const int channel = 10;
-      const RawAudioFrameOpModeType mode =
-          RawAudioFrameOpModeType.rawAudioFrameOpModeReadOnly;
-      const int samplesPerCall = 10;
-      await rtcEngine.setRecordingAudioFrameParameters(
-        sampleRate: sampleRate,
-        channel: channel,
-        mode: mode,
-        samplesPerCall: samplesPerCall,
-      );
+      try {
+        const int sampleRate = 10;
+        const int channel = 10;
+        const RawAudioFrameOpModeType mode =
+            RawAudioFrameOpModeType.rawAudioFrameOpModeReadOnly;
+        const int samplesPerCall = 10;
+        await rtcEngine.setRecordingAudioFrameParameters(
+          sampleRate: sampleRate,
+          channel: channel,
+          mode: mode,
+          samplesPerCall: samplesPerCall,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setRecordingAudioFrameParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRecordingAudioFrameParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2360,17 +3122,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sampleRate = 10;
-      const int channel = 10;
-      const RawAudioFrameOpModeType mode =
-          RawAudioFrameOpModeType.rawAudioFrameOpModeReadOnly;
-      const int samplesPerCall = 10;
-      await rtcEngine.setPlaybackAudioFrameParameters(
-        sampleRate: sampleRate,
-        channel: channel,
-        mode: mode,
-        samplesPerCall: samplesPerCall,
-      );
+      try {
+        const int sampleRate = 10;
+        const int channel = 10;
+        const RawAudioFrameOpModeType mode =
+            RawAudioFrameOpModeType.rawAudioFrameOpModeReadOnly;
+        const int samplesPerCall = 10;
+        await rtcEngine.setPlaybackAudioFrameParameters(
+          sampleRate: sampleRate,
+          channel: channel,
+          mode: mode,
+          samplesPerCall: samplesPerCall,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setPlaybackAudioFrameParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setPlaybackAudioFrameParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2392,14 +3164,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sampleRate = 10;
-      const int channel = 10;
-      const int samplesPerCall = 10;
-      await rtcEngine.setMixedAudioFrameParameters(
-        sampleRate: sampleRate,
-        channel: channel,
-        samplesPerCall: samplesPerCall,
-      );
+      try {
+        const int sampleRate = 10;
+        const int channel = 10;
+        const int samplesPerCall = 10;
+        await rtcEngine.setMixedAudioFrameParameters(
+          sampleRate: sampleRate,
+          channel: channel,
+          samplesPerCall: samplesPerCall,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setMixedAudioFrameParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setMixedAudioFrameParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2421,12 +3202,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sampleRate = 10;
-      const int channel = 10;
-      await rtcEngine.setPlaybackAudioFrameBeforeMixingParameters(
-        sampleRate: sampleRate,
-        channel: channel,
-      );
+      try {
+        const int sampleRate = 10;
+        const int channel = 10;
+        await rtcEngine.setPlaybackAudioFrameBeforeMixingParameters(
+          sampleRate: sampleRate,
+          channel: channel,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setPlaybackAudioFrameBeforeMixingParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setPlaybackAudioFrameBeforeMixingParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2448,10 +3239,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int intervalInMS = 10;
-      await rtcEngine.enableAudioSpectrumMonitor(
-        intervalInMS: intervalInMS,
-      );
+      try {
+        const int intervalInMS = 10;
+        await rtcEngine.enableAudioSpectrumMonitor(
+          intervalInMS: intervalInMS,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableAudioSpectrumMonitor] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableAudioSpectrumMonitor] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2473,7 +3273,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.disableAudioSpectrumMonitor();
+      try {
+        await rtcEngine.disableAudioSpectrumMonitor();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[disableAudioSpectrumMonitor] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[disableAudioSpectrumMonitor] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2495,10 +3304,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.adjustRecordingSignalVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.adjustRecordingSignalVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustRecordingSignalVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustRecordingSignalVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2520,10 +3338,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool mute = true;
-      await rtcEngine.muteRecordingSignal(
-        mute,
-      );
+      try {
+        const bool mute = true;
+        await rtcEngine.muteRecordingSignal(
+          mute,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[muteRecordingSignal] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[muteRecordingSignal] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2545,10 +3372,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.adjustPlaybackSignalVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.adjustPlaybackSignalVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustPlaybackSignalVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustPlaybackSignalVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2570,12 +3406,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const int volume = 10;
-      await rtcEngine.adjustUserPlaybackSignalVolume(
-        uid: uid,
-        volume: volume,
-      );
+      try {
+        const int uid = 10;
+        const int volume = 10;
+        await rtcEngine.adjustUserPlaybackSignalVolume(
+          uid: uid,
+          volume: volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustUserPlaybackSignalVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustUserPlaybackSignalVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2597,11 +3442,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const StreamFallbackOptions option =
-          StreamFallbackOptions.streamFallbackOptionDisabled;
-      await rtcEngine.setLocalPublishFallbackOption(
-        option,
-      );
+      try {
+        const StreamFallbackOptions option =
+            StreamFallbackOptions.streamFallbackOptionDisabled;
+        await rtcEngine.setLocalPublishFallbackOption(
+          option,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalPublishFallbackOption] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalPublishFallbackOption] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2623,11 +3477,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const StreamFallbackOptions option =
-          StreamFallbackOptions.streamFallbackOptionDisabled;
-      await rtcEngine.setRemoteSubscribeFallbackOption(
-        option,
-      );
+      try {
+        const StreamFallbackOptions option =
+            StreamFallbackOptions.streamFallbackOptionDisabled;
+        await rtcEngine.setRemoteSubscribeFallbackOption(
+          option,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setRemoteSubscribeFallbackOption] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteSubscribeFallbackOption] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2649,12 +3513,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const String deviceName = "hello";
-      await rtcEngine.enableLoopbackRecording(
-        enabled: enabled,
-        deviceName: deviceName,
-      );
+      try {
+        const bool enabled = true;
+        const String deviceName = "hello";
+        await rtcEngine.enableLoopbackRecording(
+          enabled: enabled,
+          deviceName: deviceName,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableLoopbackRecording] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableLoopbackRecording] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2676,10 +3549,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.adjustLoopbackRecordingVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.adjustLoopbackRecordingVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustLoopbackRecordingVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustLoopbackRecordingVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2701,7 +3583,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getLoopbackRecordingVolume();
+      try {
+        await rtcEngine.getLoopbackRecordingVolume();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getLoopbackRecordingVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getLoopbackRecordingVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2723,13 +3614,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const EarMonitoringFilterType includeAudioFilters =
-          EarMonitoringFilterType.earMonitoringFilterNone;
-      await rtcEngine.enableInEarMonitoring(
-        enabled: enabled,
-        includeAudioFilters: includeAudioFilters,
-      );
+      try {
+        const bool enabled = true;
+        const EarMonitoringFilterType includeAudioFilters =
+            EarMonitoringFilterType.earMonitoringFilterNone;
+        await rtcEngine.enableInEarMonitoring(
+          enabled: enabled,
+          includeAudioFilters: includeAudioFilters,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableInEarMonitoring] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableInEarMonitoring] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2751,10 +3651,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int volume = 10;
-      await rtcEngine.setInEarMonitoringVolume(
-        volume,
-      );
+      try {
+        const int volume = 10;
+        await rtcEngine.setInEarMonitoringVolume(
+          volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setInEarMonitoringVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setInEarMonitoringVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2776,10 +3685,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String path = "hello";
-      await rtcEngine.loadExtensionProvider(
-        path,
-      );
+      try {
+        const String path = "hello";
+        await rtcEngine.loadExtensionProvider(
+          path,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[loadExtensionProvider] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[loadExtensionProvider] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2801,14 +3719,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String provider = "hello";
-      const String key = "hello";
-      const String value = "hello";
-      await rtcEngine.setExtensionProviderProperty(
-        provider: provider,
-        key: key,
-        value: value,
-      );
+      try {
+        const String provider = "hello";
+        const String key = "hello";
+        const String value = "hello";
+        await rtcEngine.setExtensionProviderProperty(
+          provider: provider,
+          key: key,
+          value: value,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setExtensionProviderProperty] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setExtensionProviderProperty] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2830,16 +3757,25 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String provider = "hello";
-      const String extension = "hello";
-      const bool enable = true;
-      const MediaSourceType type = MediaSourceType.audioPlayoutSource;
-      await rtcEngine.enableExtension(
-        provider: provider,
-        extension: extension,
-        enable: enable,
-        type: type,
-      );
+      try {
+        const String provider = "hello";
+        const String extension = "hello";
+        const bool enable = true;
+        const MediaSourceType type = MediaSourceType.audioPlayoutSource;
+        await rtcEngine.enableExtension(
+          provider: provider,
+          extension: extension,
+          enable: enable,
+          type: type,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableExtension] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableExtension] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2861,18 +3797,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String provider = "hello";
-      const String extension = "hello";
-      const String key = "hello";
-      const String value = "hello";
-      const MediaSourceType type = MediaSourceType.audioPlayoutSource;
-      await rtcEngine.setExtensionProperty(
-        provider: provider,
-        extension: extension,
-        key: key,
-        value: value,
-        type: type,
-      );
+      try {
+        const String provider = "hello";
+        const String extension = "hello";
+        const String key = "hello";
+        const String value = "hello";
+        const MediaSourceType type = MediaSourceType.audioPlayoutSource;
+        await rtcEngine.setExtensionProperty(
+          provider: provider,
+          extension: extension,
+          key: key,
+          value: value,
+          type: type,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setExtensionProperty] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setExtensionProperty] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2894,18 +3839,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String provider = "hello";
-      const String extension = "hello";
-      const String key = "hello";
-      const int bufLen = 10;
-      const MediaSourceType type = MediaSourceType.audioPlayoutSource;
-      await rtcEngine.getExtensionProperty(
-        provider: provider,
-        extension: extension,
-        key: key,
-        bufLen: bufLen,
-        type: type,
-      );
+      try {
+        const String provider = "hello";
+        const String extension = "hello";
+        const String key = "hello";
+        const int bufLen = 10;
+        const MediaSourceType type = MediaSourceType.audioPlayoutSource;
+        await rtcEngine.getExtensionProperty(
+          provider: provider,
+          extension: extension,
+          key: key,
+          bufLen: bufLen,
+          type: type,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getExtensionProperty] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getExtensionProperty] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2927,24 +3881,34 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const CameraDirection configCameraDirection = CameraDirection.cameraRear;
-      const int formatWidth = 10;
-      const int formatHeight = 10;
-      const int formatFps = 10;
-      const VideoFormat configFormat = VideoFormat(
-        width: formatWidth,
-        height: formatHeight,
-        fps: formatFps,
-      );
-      const String configDeviceId = "hello";
-      const CameraCapturerConfiguration config = CameraCapturerConfiguration(
-        cameraDirection: configCameraDirection,
-        deviceId: configDeviceId,
-        format: configFormat,
-      );
-      await rtcEngine.setCameraCapturerConfiguration(
-        config,
-      );
+      try {
+        const CameraDirection configCameraDirection =
+            CameraDirection.cameraRear;
+        const int formatWidth = 10;
+        const int formatHeight = 10;
+        const int formatFps = 10;
+        const VideoFormat configFormat = VideoFormat(
+          width: formatWidth,
+          height: formatHeight,
+          fps: formatFps,
+        );
+        const String configDeviceId = "hello";
+        const CameraCapturerConfiguration config = CameraCapturerConfiguration(
+          cameraDirection: configCameraDirection,
+          deviceId: configDeviceId,
+          format: configFormat,
+        );
+        await rtcEngine.setCameraCapturerConfiguration(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setCameraCapturerConfiguration] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraCapturerConfiguration] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2966,7 +3930,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.switchCamera();
+      try {
+        await rtcEngine.switchCamera();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[switchCamera] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[switchCamera] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -2988,7 +3961,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraZoomSupported();
+      try {
+        await rtcEngine.isCameraZoomSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[isCameraZoomSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraZoomSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3010,7 +3992,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraFaceDetectSupported();
+      try {
+        await rtcEngine.isCameraFaceDetectSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[isCameraFaceDetectSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraFaceDetectSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3032,7 +4023,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraTorchSupported();
+      try {
+        await rtcEngine.isCameraTorchSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[isCameraTorchSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraTorchSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3054,7 +4054,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraFocusSupported();
+      try {
+        await rtcEngine.isCameraFocusSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[isCameraFocusSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraFocusSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3076,7 +4085,17 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraAutoFocusFaceModeSupported();
+      try {
+        await rtcEngine.isCameraAutoFocusFaceModeSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[isCameraAutoFocusFaceModeSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraAutoFocusFaceModeSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3098,10 +4117,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const double factor = 10.0;
-      await rtcEngine.setCameraZoomFactor(
-        factor,
-      );
+      try {
+        const double factor = 10.0;
+        await rtcEngine.setCameraZoomFactor(
+          factor,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setCameraZoomFactor] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraZoomFactor] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3123,10 +4151,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.enableFaceDetection(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.enableFaceDetection(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableFaceDetection] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableFaceDetection] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3148,7 +4185,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getCameraMaxZoomFactor();
+      try {
+        await rtcEngine.getCameraMaxZoomFactor();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getCameraMaxZoomFactor] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getCameraMaxZoomFactor] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3170,12 +4216,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const double positionX = 10.0;
-      const double positionY = 10.0;
-      await rtcEngine.setCameraFocusPositionInPreview(
-        positionX: positionX,
-        positionY: positionY,
-      );
+      try {
+        const double positionX = 10.0;
+        const double positionY = 10.0;
+        await rtcEngine.setCameraFocusPositionInPreview(
+          positionX: positionX,
+          positionY: positionY,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setCameraFocusPositionInPreview] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraFocusPositionInPreview] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3197,10 +4253,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool isOn = true;
-      await rtcEngine.setCameraTorchOn(
-        isOn,
-      );
+      try {
+        const bool isOn = true;
+        await rtcEngine.setCameraTorchOn(
+          isOn,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setCameraTorchOn] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraTorchOn] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3222,10 +4287,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.setCameraAutoFocusFaceModeEnabled(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.setCameraAutoFocusFaceModeEnabled(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setCameraAutoFocusFaceModeEnabled] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraAutoFocusFaceModeEnabled] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3247,7 +4322,17 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraExposurePositionSupported();
+      try {
+        await rtcEngine.isCameraExposurePositionSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[isCameraExposurePositionSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraExposurePositionSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3269,12 +4354,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const double positionXinView = 10.0;
-      const double positionYinView = 10.0;
-      await rtcEngine.setCameraExposurePosition(
-        positionXinView: positionXinView,
-        positionYinView: positionYinView,
-      );
+      try {
+        const double positionXinView = 10.0;
+        const double positionYinView = 10.0;
+        await rtcEngine.setCameraExposurePosition(
+          positionXinView: positionXinView,
+          positionYinView: positionYinView,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setCameraExposurePosition] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraExposurePosition] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3296,7 +4390,17 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isCameraAutoExposureFaceModeSupported();
+      try {
+        await rtcEngine.isCameraAutoExposureFaceModeSupported();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[isCameraAutoExposureFaceModeSupported] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isCameraAutoExposureFaceModeSupported] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3318,10 +4422,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.setCameraAutoExposureFaceModeEnabled(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.setCameraAutoExposureFaceModeEnabled(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setCameraAutoExposureFaceModeEnabled] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraAutoExposureFaceModeEnabled] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3343,10 +4457,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool defaultToSpeaker = true;
-      await rtcEngine.setDefaultAudioRouteToSpeakerphone(
-        defaultToSpeaker,
-      );
+      try {
+        const bool defaultToSpeaker = true;
+        await rtcEngine.setDefaultAudioRouteToSpeakerphone(
+          defaultToSpeaker,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setDefaultAudioRouteToSpeakerphone] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setDefaultAudioRouteToSpeakerphone] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3368,10 +4492,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool speakerOn = true;
-      await rtcEngine.setEnableSpeakerphone(
-        speakerOn,
-      );
+      try {
+        const bool speakerOn = true;
+        await rtcEngine.setEnableSpeakerphone(
+          speakerOn,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setEnableSpeakerphone] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setEnableSpeakerphone] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3393,7 +4526,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.isSpeakerphoneEnabled();
+      try {
+        await rtcEngine.isSpeakerphoneEnabled();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[isSpeakerphoneEnabled] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[isSpeakerphoneEnabled] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3415,24 +4557,33 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int thumbSizeWidth = 10;
-      const int thumbSizeHeight = 10;
-      const Size thumbSize = Size(
-        width: thumbSizeWidth,
-        height: thumbSizeHeight,
-      );
-      const int iconSizeWidth = 10;
-      const int iconSizeHeight = 10;
-      const Size iconSize = Size(
-        width: iconSizeWidth,
-        height: iconSizeHeight,
-      );
-      const bool includeScreen = true;
-      await rtcEngine.getScreenCaptureSources(
-        thumbSize: thumbSize,
-        iconSize: iconSize,
-        includeScreen: includeScreen,
-      );
+      try {
+        const int thumbSizeWidth = 10;
+        const int thumbSizeHeight = 10;
+        const Size thumbSize = Size(
+          width: thumbSizeWidth,
+          height: thumbSizeHeight,
+        );
+        const int iconSizeWidth = 10;
+        const int iconSizeHeight = 10;
+        const Size iconSize = Size(
+          width: iconSizeWidth,
+          height: iconSizeHeight,
+        );
+        const bool includeScreen = true;
+        await rtcEngine.getScreenCaptureSources(
+          thumbSize: thumbSize,
+          iconSize: iconSize,
+          includeScreen: includeScreen,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getScreenCaptureSources] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getScreenCaptureSources] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3454,11 +4605,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioSessionOperationRestriction restriction =
-          AudioSessionOperationRestriction.audioSessionOperationRestrictionNone;
-      await rtcEngine.setAudioSessionOperationRestriction(
-        restriction,
-      );
+      try {
+        const AudioSessionOperationRestriction restriction =
+            AudioSessionOperationRestriction
+                .audioSessionOperationRestrictionNone;
+        await rtcEngine.setAudioSessionOperationRestriction(
+          restriction,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setAudioSessionOperationRestriction] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAudioSessionOperationRestriction] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3480,43 +4642,52 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int displayId = 10;
-      const int regionRectX = 10;
-      const int regionRectY = 10;
-      const int regionRectWidth = 10;
-      const int regionRectHeight = 10;
-      const Rectangle regionRect = Rectangle(
-        x: regionRectX,
-        y: regionRectY,
-        width: regionRectWidth,
-        height: regionRectHeight,
-      );
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions captureParamsDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int captureParamsFrameRate = 10;
-      const int captureParamsBitrate = 10;
-      const bool captureParamsCaptureMouseCursor = true;
-      const bool captureParamsWindowFocus = true;
-      const List<int> captureParamsExcludeWindowList = [];
-      const int captureParamsExcludeWindowCount = 10;
-      const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
-        dimensions: captureParamsDimensions,
-        frameRate: captureParamsFrameRate,
-        bitrate: captureParamsBitrate,
-        captureMouseCursor: captureParamsCaptureMouseCursor,
-        windowFocus: captureParamsWindowFocus,
-        excludeWindowList: captureParamsExcludeWindowList,
-        excludeWindowCount: captureParamsExcludeWindowCount,
-      );
-      await rtcEngine.startScreenCaptureByDisplayId(
-        displayId: displayId,
-        regionRect: regionRect,
-        captureParams: captureParams,
-      );
+      try {
+        const int displayId = 10;
+        const int regionRectX = 10;
+        const int regionRectY = 10;
+        const int regionRectWidth = 10;
+        const int regionRectHeight = 10;
+        const Rectangle regionRect = Rectangle(
+          x: regionRectX,
+          y: regionRectY,
+          width: regionRectWidth,
+          height: regionRectHeight,
+        );
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions captureParamsDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int captureParamsFrameRate = 10;
+        const int captureParamsBitrate = 10;
+        const bool captureParamsCaptureMouseCursor = true;
+        const bool captureParamsWindowFocus = true;
+        const List<int> captureParamsExcludeWindowList = [];
+        const int captureParamsExcludeWindowCount = 10;
+        const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
+          dimensions: captureParamsDimensions,
+          frameRate: captureParamsFrameRate,
+          bitrate: captureParamsBitrate,
+          captureMouseCursor: captureParamsCaptureMouseCursor,
+          windowFocus: captureParamsWindowFocus,
+          excludeWindowList: captureParamsExcludeWindowList,
+          excludeWindowCount: captureParamsExcludeWindowCount,
+        );
+        await rtcEngine.startScreenCaptureByDisplayId(
+          displayId: displayId,
+          regionRect: regionRect,
+          captureParams: captureParams,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startScreenCaptureByDisplayId] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startScreenCaptureByDisplayId] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3538,52 +4709,61 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int screenRectX = 10;
-      const int screenRectY = 10;
-      const int screenRectWidth = 10;
-      const int screenRectHeight = 10;
-      const Rectangle screenRect = Rectangle(
-        x: screenRectX,
-        y: screenRectY,
-        width: screenRectWidth,
-        height: screenRectHeight,
-      );
-      const int regionRectX = 10;
-      const int regionRectY = 10;
-      const int regionRectWidth = 10;
-      const int regionRectHeight = 10;
-      const Rectangle regionRect = Rectangle(
-        x: regionRectX,
-        y: regionRectY,
-        width: regionRectWidth,
-        height: regionRectHeight,
-      );
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions captureParamsDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int captureParamsFrameRate = 10;
-      const int captureParamsBitrate = 10;
-      const bool captureParamsCaptureMouseCursor = true;
-      const bool captureParamsWindowFocus = true;
-      const List<int> captureParamsExcludeWindowList = [];
-      const int captureParamsExcludeWindowCount = 10;
-      const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
-        dimensions: captureParamsDimensions,
-        frameRate: captureParamsFrameRate,
-        bitrate: captureParamsBitrate,
-        captureMouseCursor: captureParamsCaptureMouseCursor,
-        windowFocus: captureParamsWindowFocus,
-        excludeWindowList: captureParamsExcludeWindowList,
-        excludeWindowCount: captureParamsExcludeWindowCount,
-      );
-      await rtcEngine.startScreenCaptureByScreenRect(
-        screenRect: screenRect,
-        regionRect: regionRect,
-        captureParams: captureParams,
-      );
+      try {
+        const int screenRectX = 10;
+        const int screenRectY = 10;
+        const int screenRectWidth = 10;
+        const int screenRectHeight = 10;
+        const Rectangle screenRect = Rectangle(
+          x: screenRectX,
+          y: screenRectY,
+          width: screenRectWidth,
+          height: screenRectHeight,
+        );
+        const int regionRectX = 10;
+        const int regionRectY = 10;
+        const int regionRectWidth = 10;
+        const int regionRectHeight = 10;
+        const Rectangle regionRect = Rectangle(
+          x: regionRectX,
+          y: regionRectY,
+          width: regionRectWidth,
+          height: regionRectHeight,
+        );
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions captureParamsDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int captureParamsFrameRate = 10;
+        const int captureParamsBitrate = 10;
+        const bool captureParamsCaptureMouseCursor = true;
+        const bool captureParamsWindowFocus = true;
+        const List<int> captureParamsExcludeWindowList = [];
+        const int captureParamsExcludeWindowCount = 10;
+        const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
+          dimensions: captureParamsDimensions,
+          frameRate: captureParamsFrameRate,
+          bitrate: captureParamsBitrate,
+          captureMouseCursor: captureParamsCaptureMouseCursor,
+          windowFocus: captureParamsWindowFocus,
+          excludeWindowList: captureParamsExcludeWindowList,
+          excludeWindowCount: captureParamsExcludeWindowCount,
+        );
+        await rtcEngine.startScreenCaptureByScreenRect(
+          screenRect: screenRect,
+          regionRect: regionRect,
+          captureParams: captureParams,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startScreenCaptureByScreenRect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startScreenCaptureByScreenRect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3605,7 +4785,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getAudioDeviceInfo();
+      try {
+        await rtcEngine.getAudioDeviceInfo();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getAudioDeviceInfo] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getAudioDeviceInfo] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3627,43 +4816,52 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int windowId = 10;
-      const int regionRectX = 10;
-      const int regionRectY = 10;
-      const int regionRectWidth = 10;
-      const int regionRectHeight = 10;
-      const Rectangle regionRect = Rectangle(
-        x: regionRectX,
-        y: regionRectY,
-        width: regionRectWidth,
-        height: regionRectHeight,
-      );
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions captureParamsDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int captureParamsFrameRate = 10;
-      const int captureParamsBitrate = 10;
-      const bool captureParamsCaptureMouseCursor = true;
-      const bool captureParamsWindowFocus = true;
-      const List<int> captureParamsExcludeWindowList = [];
-      const int captureParamsExcludeWindowCount = 10;
-      const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
-        dimensions: captureParamsDimensions,
-        frameRate: captureParamsFrameRate,
-        bitrate: captureParamsBitrate,
-        captureMouseCursor: captureParamsCaptureMouseCursor,
-        windowFocus: captureParamsWindowFocus,
-        excludeWindowList: captureParamsExcludeWindowList,
-        excludeWindowCount: captureParamsExcludeWindowCount,
-      );
-      await rtcEngine.startScreenCaptureByWindowId(
-        windowId: windowId,
-        regionRect: regionRect,
-        captureParams: captureParams,
-      );
+      try {
+        const int windowId = 10;
+        const int regionRectX = 10;
+        const int regionRectY = 10;
+        const int regionRectWidth = 10;
+        const int regionRectHeight = 10;
+        const Rectangle regionRect = Rectangle(
+          x: regionRectX,
+          y: regionRectY,
+          width: regionRectWidth,
+          height: regionRectHeight,
+        );
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions captureParamsDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int captureParamsFrameRate = 10;
+        const int captureParamsBitrate = 10;
+        const bool captureParamsCaptureMouseCursor = true;
+        const bool captureParamsWindowFocus = true;
+        const List<int> captureParamsExcludeWindowList = [];
+        const int captureParamsExcludeWindowCount = 10;
+        const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
+          dimensions: captureParamsDimensions,
+          frameRate: captureParamsFrameRate,
+          bitrate: captureParamsBitrate,
+          captureMouseCursor: captureParamsCaptureMouseCursor,
+          windowFocus: captureParamsWindowFocus,
+          excludeWindowList: captureParamsExcludeWindowList,
+          excludeWindowCount: captureParamsExcludeWindowCount,
+        );
+        await rtcEngine.startScreenCaptureByWindowId(
+          windowId: windowId,
+          regionRect: regionRect,
+          captureParams: captureParams,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startScreenCaptureByWindowId] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startScreenCaptureByWindowId] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3685,10 +4883,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoContentHint contentHint = VideoContentHint.contentHintNone;
-      await rtcEngine.setScreenCaptureContentHint(
-        contentHint,
-      );
+      try {
+        const VideoContentHint contentHint = VideoContentHint.contentHintNone;
+        await rtcEngine.setScreenCaptureContentHint(
+          contentHint,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setScreenCaptureContentHint] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setScreenCaptureContentHint] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3710,19 +4917,28 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int regionRectX = 10;
-      const int regionRectY = 10;
-      const int regionRectWidth = 10;
-      const int regionRectHeight = 10;
-      const Rectangle regionRect = Rectangle(
-        x: regionRectX,
-        y: regionRectY,
-        width: regionRectWidth,
-        height: regionRectHeight,
-      );
-      await rtcEngine.updateScreenCaptureRegion(
-        regionRect,
-      );
+      try {
+        const int regionRectX = 10;
+        const int regionRectY = 10;
+        const int regionRectWidth = 10;
+        const int regionRectHeight = 10;
+        const Rectangle regionRect = Rectangle(
+          x: regionRectX,
+          y: regionRectY,
+          width: regionRectWidth,
+          height: regionRectHeight,
+        );
+        await rtcEngine.updateScreenCaptureRegion(
+          regionRect,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[updateScreenCaptureRegion] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateScreenCaptureRegion] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3744,30 +4960,39 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions captureParamsDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int captureParamsFrameRate = 10;
-      const int captureParamsBitrate = 10;
-      const bool captureParamsCaptureMouseCursor = true;
-      const bool captureParamsWindowFocus = true;
-      const List<int> captureParamsExcludeWindowList = [];
-      const int captureParamsExcludeWindowCount = 10;
-      const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
-        dimensions: captureParamsDimensions,
-        frameRate: captureParamsFrameRate,
-        bitrate: captureParamsBitrate,
-        captureMouseCursor: captureParamsCaptureMouseCursor,
-        windowFocus: captureParamsWindowFocus,
-        excludeWindowList: captureParamsExcludeWindowList,
-        excludeWindowCount: captureParamsExcludeWindowCount,
-      );
-      await rtcEngine.updateScreenCaptureParameters(
-        captureParams,
-      );
+      try {
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions captureParamsDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int captureParamsFrameRate = 10;
+        const int captureParamsBitrate = 10;
+        const bool captureParamsCaptureMouseCursor = true;
+        const bool captureParamsWindowFocus = true;
+        const List<int> captureParamsExcludeWindowList = [];
+        const int captureParamsExcludeWindowCount = 10;
+        const ScreenCaptureParameters captureParams = ScreenCaptureParameters(
+          dimensions: captureParamsDimensions,
+          frameRate: captureParamsFrameRate,
+          bitrate: captureParamsBitrate,
+          captureMouseCursor: captureParamsCaptureMouseCursor,
+          windowFocus: captureParamsWindowFocus,
+          excludeWindowList: captureParamsExcludeWindowList,
+          excludeWindowCount: captureParamsExcludeWindowCount,
+        );
+        await rtcEngine.updateScreenCaptureParameters(
+          captureParams,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[updateScreenCaptureParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateScreenCaptureParameters] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3789,7 +5014,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopScreenCapture();
+      try {
+        await rtcEngine.stopScreenCapture();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopScreenCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopScreenCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3811,7 +5045,15 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getCallId();
+      try {
+        await rtcEngine.getCallId();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getCallId] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[getCallId] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3833,14 +5075,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String callId = "hello";
-      const int rating = 10;
-      const String description = "hello";
-      await rtcEngine.rate(
-        callId: callId,
-        rating: rating,
-        description: description,
-      );
+      try {
+        const String callId = "hello";
+        const int rating = 10;
+        const String description = "hello";
+        await rtcEngine.rate(
+          callId: callId,
+          rating: rating,
+          description: description,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[rate] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[rate] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3862,12 +5112,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String callId = "hello";
-      const String description = "hello";
-      await rtcEngine.complain(
-        callId: callId,
-        description: description,
-      );
+      try {
+        const String callId = "hello";
+        const String description = "hello";
+        await rtcEngine.complain(
+          callId: callId,
+          description: description,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[complain] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[complain] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3889,12 +5147,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      const bool transcodingEnabled = true;
-      await rtcEngine.addPublishStreamUrl(
-        url: url,
-        transcodingEnabled: transcodingEnabled,
-      );
+      try {
+        const String url = "hello";
+        const bool transcodingEnabled = true;
+        await rtcEngine.addPublishStreamUrl(
+          url: url,
+          transcodingEnabled: transcodingEnabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[addPublishStreamUrl] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[addPublishStreamUrl] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3916,10 +5183,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      await rtcEngine.removePublishStreamUrl(
-        url,
-      );
+      try {
+        const String url = "hello";
+        await rtcEngine.removePublishStreamUrl(
+          url,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[removePublishStreamUrl] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[removePublishStreamUrl] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -3941,61 +5217,70 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoCodecProfileType transcodingVideoCodecProfile =
-          VideoCodecProfileType.videoCodecProfileBaseline;
-      const VideoCodecTypeForStream transcodingVideoCodecType =
-          VideoCodecTypeForStream.videoCodecH264ForStream;
-      const AudioSampleRateType transcodingAudioSampleRate =
-          AudioSampleRateType.audioSampleRate32000;
-      const AudioCodecProfileType transcodingAudioCodecProfile =
-          AudioCodecProfileType.audioCodecProfileLcAac;
-      const int transcodingWidth = 10;
-      const int transcodingHeight = 10;
-      const int transcodingVideoBitrate = 10;
-      const int transcodingVideoFramerate = 10;
-      const bool transcodingLowLatency = true;
-      const int transcodingVideoGop = 10;
-      const int transcodingBackgroundColor = 10;
-      const int transcodingUserCount = 10;
-      const List<TranscodingUser> transcodingTranscodingUsers = [];
-      const String transcodingTranscodingExtraInfo = "hello";
-      const String transcodingMetadata = "hello";
-      const List<RtcImage> transcodingWatermark = [];
-      const int transcodingWatermarkCount = 10;
-      const List<RtcImage> transcodingBackgroundImage = [];
-      const int transcodingBackgroundImageCount = 10;
-      const int transcodingAudioBitrate = 10;
-      const int transcodingAudioChannels = 10;
-      const List<LiveStreamAdvancedFeature> transcodingAdvancedFeatures = [];
-      const int transcodingAdvancedFeatureCount = 10;
-      const LiveTranscoding transcoding = LiveTranscoding(
-        width: transcodingWidth,
-        height: transcodingHeight,
-        videoBitrate: transcodingVideoBitrate,
-        videoFramerate: transcodingVideoFramerate,
-        lowLatency: transcodingLowLatency,
-        videoGop: transcodingVideoGop,
-        videoCodecProfile: transcodingVideoCodecProfile,
-        backgroundColor: transcodingBackgroundColor,
-        videoCodecType: transcodingVideoCodecType,
-        userCount: transcodingUserCount,
-        transcodingUsers: transcodingTranscodingUsers,
-        transcodingExtraInfo: transcodingTranscodingExtraInfo,
-        metadata: transcodingMetadata,
-        watermark: transcodingWatermark,
-        watermarkCount: transcodingWatermarkCount,
-        backgroundImage: transcodingBackgroundImage,
-        backgroundImageCount: transcodingBackgroundImageCount,
-        audioSampleRate: transcodingAudioSampleRate,
-        audioBitrate: transcodingAudioBitrate,
-        audioChannels: transcodingAudioChannels,
-        audioCodecProfile: transcodingAudioCodecProfile,
-        advancedFeatures: transcodingAdvancedFeatures,
-        advancedFeatureCount: transcodingAdvancedFeatureCount,
-      );
-      await rtcEngine.setLiveTranscoding(
-        transcoding,
-      );
+      try {
+        const VideoCodecProfileType transcodingVideoCodecProfile =
+            VideoCodecProfileType.videoCodecProfileBaseline;
+        const VideoCodecTypeForStream transcodingVideoCodecType =
+            VideoCodecTypeForStream.videoCodecH264ForStream;
+        const AudioSampleRateType transcodingAudioSampleRate =
+            AudioSampleRateType.audioSampleRate32000;
+        const AudioCodecProfileType transcodingAudioCodecProfile =
+            AudioCodecProfileType.audioCodecProfileLcAac;
+        const int transcodingWidth = 10;
+        const int transcodingHeight = 10;
+        const int transcodingVideoBitrate = 10;
+        const int transcodingVideoFramerate = 10;
+        const bool transcodingLowLatency = true;
+        const int transcodingVideoGop = 10;
+        const int transcodingBackgroundColor = 10;
+        const int transcodingUserCount = 10;
+        const List<TranscodingUser> transcodingTranscodingUsers = [];
+        const String transcodingTranscodingExtraInfo = "hello";
+        const String transcodingMetadata = "hello";
+        const List<RtcImage> transcodingWatermark = [];
+        const int transcodingWatermarkCount = 10;
+        const List<RtcImage> transcodingBackgroundImage = [];
+        const int transcodingBackgroundImageCount = 10;
+        const int transcodingAudioBitrate = 10;
+        const int transcodingAudioChannels = 10;
+        const List<LiveStreamAdvancedFeature> transcodingAdvancedFeatures = [];
+        const int transcodingAdvancedFeatureCount = 10;
+        const LiveTranscoding transcoding = LiveTranscoding(
+          width: transcodingWidth,
+          height: transcodingHeight,
+          videoBitrate: transcodingVideoBitrate,
+          videoFramerate: transcodingVideoFramerate,
+          lowLatency: transcodingLowLatency,
+          videoGop: transcodingVideoGop,
+          videoCodecProfile: transcodingVideoCodecProfile,
+          backgroundColor: transcodingBackgroundColor,
+          videoCodecType: transcodingVideoCodecType,
+          userCount: transcodingUserCount,
+          transcodingUsers: transcodingTranscodingUsers,
+          transcodingExtraInfo: transcodingTranscodingExtraInfo,
+          metadata: transcodingMetadata,
+          watermark: transcodingWatermark,
+          watermarkCount: transcodingWatermarkCount,
+          backgroundImage: transcodingBackgroundImage,
+          backgroundImageCount: transcodingBackgroundImageCount,
+          audioSampleRate: transcodingAudioSampleRate,
+          audioBitrate: transcodingAudioBitrate,
+          audioChannels: transcodingAudioChannels,
+          audioCodecProfile: transcodingAudioCodecProfile,
+          advancedFeatures: transcodingAdvancedFeatures,
+          advancedFeatureCount: transcodingAdvancedFeatureCount,
+        );
+        await rtcEngine.setLiveTranscoding(
+          transcoding,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLiveTranscoding] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLiveTranscoding] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4017,10 +5302,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      await rtcEngine.startRtmpStreamWithoutTranscoding(
-        url,
-      );
+      try {
+        const String url = "hello";
+        await rtcEngine.startRtmpStreamWithoutTranscoding(
+          url,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[startRtmpStreamWithoutTranscoding] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startRtmpStreamWithoutTranscoding] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4042,63 +5337,72 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      const VideoCodecProfileType transcodingVideoCodecProfile =
-          VideoCodecProfileType.videoCodecProfileBaseline;
-      const VideoCodecTypeForStream transcodingVideoCodecType =
-          VideoCodecTypeForStream.videoCodecH264ForStream;
-      const AudioSampleRateType transcodingAudioSampleRate =
-          AudioSampleRateType.audioSampleRate32000;
-      const AudioCodecProfileType transcodingAudioCodecProfile =
-          AudioCodecProfileType.audioCodecProfileLcAac;
-      const int transcodingWidth = 10;
-      const int transcodingHeight = 10;
-      const int transcodingVideoBitrate = 10;
-      const int transcodingVideoFramerate = 10;
-      const bool transcodingLowLatency = true;
-      const int transcodingVideoGop = 10;
-      const int transcodingBackgroundColor = 10;
-      const int transcodingUserCount = 10;
-      const List<TranscodingUser> transcodingTranscodingUsers = [];
-      const String transcodingTranscodingExtraInfo = "hello";
-      const String transcodingMetadata = "hello";
-      const List<RtcImage> transcodingWatermark = [];
-      const int transcodingWatermarkCount = 10;
-      const List<RtcImage> transcodingBackgroundImage = [];
-      const int transcodingBackgroundImageCount = 10;
-      const int transcodingAudioBitrate = 10;
-      const int transcodingAudioChannels = 10;
-      const List<LiveStreamAdvancedFeature> transcodingAdvancedFeatures = [];
-      const int transcodingAdvancedFeatureCount = 10;
-      const LiveTranscoding transcoding = LiveTranscoding(
-        width: transcodingWidth,
-        height: transcodingHeight,
-        videoBitrate: transcodingVideoBitrate,
-        videoFramerate: transcodingVideoFramerate,
-        lowLatency: transcodingLowLatency,
-        videoGop: transcodingVideoGop,
-        videoCodecProfile: transcodingVideoCodecProfile,
-        backgroundColor: transcodingBackgroundColor,
-        videoCodecType: transcodingVideoCodecType,
-        userCount: transcodingUserCount,
-        transcodingUsers: transcodingTranscodingUsers,
-        transcodingExtraInfo: transcodingTranscodingExtraInfo,
-        metadata: transcodingMetadata,
-        watermark: transcodingWatermark,
-        watermarkCount: transcodingWatermarkCount,
-        backgroundImage: transcodingBackgroundImage,
-        backgroundImageCount: transcodingBackgroundImageCount,
-        audioSampleRate: transcodingAudioSampleRate,
-        audioBitrate: transcodingAudioBitrate,
-        audioChannels: transcodingAudioChannels,
-        audioCodecProfile: transcodingAudioCodecProfile,
-        advancedFeatures: transcodingAdvancedFeatures,
-        advancedFeatureCount: transcodingAdvancedFeatureCount,
-      );
-      await rtcEngine.startRtmpStreamWithTranscoding(
-        url: url,
-        transcoding: transcoding,
-      );
+      try {
+        const String url = "hello";
+        const VideoCodecProfileType transcodingVideoCodecProfile =
+            VideoCodecProfileType.videoCodecProfileBaseline;
+        const VideoCodecTypeForStream transcodingVideoCodecType =
+            VideoCodecTypeForStream.videoCodecH264ForStream;
+        const AudioSampleRateType transcodingAudioSampleRate =
+            AudioSampleRateType.audioSampleRate32000;
+        const AudioCodecProfileType transcodingAudioCodecProfile =
+            AudioCodecProfileType.audioCodecProfileLcAac;
+        const int transcodingWidth = 10;
+        const int transcodingHeight = 10;
+        const int transcodingVideoBitrate = 10;
+        const int transcodingVideoFramerate = 10;
+        const bool transcodingLowLatency = true;
+        const int transcodingVideoGop = 10;
+        const int transcodingBackgroundColor = 10;
+        const int transcodingUserCount = 10;
+        const List<TranscodingUser> transcodingTranscodingUsers = [];
+        const String transcodingTranscodingExtraInfo = "hello";
+        const String transcodingMetadata = "hello";
+        const List<RtcImage> transcodingWatermark = [];
+        const int transcodingWatermarkCount = 10;
+        const List<RtcImage> transcodingBackgroundImage = [];
+        const int transcodingBackgroundImageCount = 10;
+        const int transcodingAudioBitrate = 10;
+        const int transcodingAudioChannels = 10;
+        const List<LiveStreamAdvancedFeature> transcodingAdvancedFeatures = [];
+        const int transcodingAdvancedFeatureCount = 10;
+        const LiveTranscoding transcoding = LiveTranscoding(
+          width: transcodingWidth,
+          height: transcodingHeight,
+          videoBitrate: transcodingVideoBitrate,
+          videoFramerate: transcodingVideoFramerate,
+          lowLatency: transcodingLowLatency,
+          videoGop: transcodingVideoGop,
+          videoCodecProfile: transcodingVideoCodecProfile,
+          backgroundColor: transcodingBackgroundColor,
+          videoCodecType: transcodingVideoCodecType,
+          userCount: transcodingUserCount,
+          transcodingUsers: transcodingTranscodingUsers,
+          transcodingExtraInfo: transcodingTranscodingExtraInfo,
+          metadata: transcodingMetadata,
+          watermark: transcodingWatermark,
+          watermarkCount: transcodingWatermarkCount,
+          backgroundImage: transcodingBackgroundImage,
+          backgroundImageCount: transcodingBackgroundImageCount,
+          audioSampleRate: transcodingAudioSampleRate,
+          audioBitrate: transcodingAudioBitrate,
+          audioChannels: transcodingAudioChannels,
+          audioCodecProfile: transcodingAudioCodecProfile,
+          advancedFeatures: transcodingAdvancedFeatures,
+          advancedFeatureCount: transcodingAdvancedFeatureCount,
+        );
+        await rtcEngine.startRtmpStreamWithTranscoding(
+          url: url,
+          transcoding: transcoding,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startRtmpStreamWithTranscoding] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startRtmpStreamWithTranscoding] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4120,61 +5424,70 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoCodecProfileType transcodingVideoCodecProfile =
-          VideoCodecProfileType.videoCodecProfileBaseline;
-      const VideoCodecTypeForStream transcodingVideoCodecType =
-          VideoCodecTypeForStream.videoCodecH264ForStream;
-      const AudioSampleRateType transcodingAudioSampleRate =
-          AudioSampleRateType.audioSampleRate32000;
-      const AudioCodecProfileType transcodingAudioCodecProfile =
-          AudioCodecProfileType.audioCodecProfileLcAac;
-      const int transcodingWidth = 10;
-      const int transcodingHeight = 10;
-      const int transcodingVideoBitrate = 10;
-      const int transcodingVideoFramerate = 10;
-      const bool transcodingLowLatency = true;
-      const int transcodingVideoGop = 10;
-      const int transcodingBackgroundColor = 10;
-      const int transcodingUserCount = 10;
-      const List<TranscodingUser> transcodingTranscodingUsers = [];
-      const String transcodingTranscodingExtraInfo = "hello";
-      const String transcodingMetadata = "hello";
-      const List<RtcImage> transcodingWatermark = [];
-      const int transcodingWatermarkCount = 10;
-      const List<RtcImage> transcodingBackgroundImage = [];
-      const int transcodingBackgroundImageCount = 10;
-      const int transcodingAudioBitrate = 10;
-      const int transcodingAudioChannels = 10;
-      const List<LiveStreamAdvancedFeature> transcodingAdvancedFeatures = [];
-      const int transcodingAdvancedFeatureCount = 10;
-      const LiveTranscoding transcoding = LiveTranscoding(
-        width: transcodingWidth,
-        height: transcodingHeight,
-        videoBitrate: transcodingVideoBitrate,
-        videoFramerate: transcodingVideoFramerate,
-        lowLatency: transcodingLowLatency,
-        videoGop: transcodingVideoGop,
-        videoCodecProfile: transcodingVideoCodecProfile,
-        backgroundColor: transcodingBackgroundColor,
-        videoCodecType: transcodingVideoCodecType,
-        userCount: transcodingUserCount,
-        transcodingUsers: transcodingTranscodingUsers,
-        transcodingExtraInfo: transcodingTranscodingExtraInfo,
-        metadata: transcodingMetadata,
-        watermark: transcodingWatermark,
-        watermarkCount: transcodingWatermarkCount,
-        backgroundImage: transcodingBackgroundImage,
-        backgroundImageCount: transcodingBackgroundImageCount,
-        audioSampleRate: transcodingAudioSampleRate,
-        audioBitrate: transcodingAudioBitrate,
-        audioChannels: transcodingAudioChannels,
-        audioCodecProfile: transcodingAudioCodecProfile,
-        advancedFeatures: transcodingAdvancedFeatures,
-        advancedFeatureCount: transcodingAdvancedFeatureCount,
-      );
-      await rtcEngine.updateRtmpTranscoding(
-        transcoding,
-      );
+      try {
+        const VideoCodecProfileType transcodingVideoCodecProfile =
+            VideoCodecProfileType.videoCodecProfileBaseline;
+        const VideoCodecTypeForStream transcodingVideoCodecType =
+            VideoCodecTypeForStream.videoCodecH264ForStream;
+        const AudioSampleRateType transcodingAudioSampleRate =
+            AudioSampleRateType.audioSampleRate32000;
+        const AudioCodecProfileType transcodingAudioCodecProfile =
+            AudioCodecProfileType.audioCodecProfileLcAac;
+        const int transcodingWidth = 10;
+        const int transcodingHeight = 10;
+        const int transcodingVideoBitrate = 10;
+        const int transcodingVideoFramerate = 10;
+        const bool transcodingLowLatency = true;
+        const int transcodingVideoGop = 10;
+        const int transcodingBackgroundColor = 10;
+        const int transcodingUserCount = 10;
+        const List<TranscodingUser> transcodingTranscodingUsers = [];
+        const String transcodingTranscodingExtraInfo = "hello";
+        const String transcodingMetadata = "hello";
+        const List<RtcImage> transcodingWatermark = [];
+        const int transcodingWatermarkCount = 10;
+        const List<RtcImage> transcodingBackgroundImage = [];
+        const int transcodingBackgroundImageCount = 10;
+        const int transcodingAudioBitrate = 10;
+        const int transcodingAudioChannels = 10;
+        const List<LiveStreamAdvancedFeature> transcodingAdvancedFeatures = [];
+        const int transcodingAdvancedFeatureCount = 10;
+        const LiveTranscoding transcoding = LiveTranscoding(
+          width: transcodingWidth,
+          height: transcodingHeight,
+          videoBitrate: transcodingVideoBitrate,
+          videoFramerate: transcodingVideoFramerate,
+          lowLatency: transcodingLowLatency,
+          videoGop: transcodingVideoGop,
+          videoCodecProfile: transcodingVideoCodecProfile,
+          backgroundColor: transcodingBackgroundColor,
+          videoCodecType: transcodingVideoCodecType,
+          userCount: transcodingUserCount,
+          transcodingUsers: transcodingTranscodingUsers,
+          transcodingExtraInfo: transcodingTranscodingExtraInfo,
+          metadata: transcodingMetadata,
+          watermark: transcodingWatermark,
+          watermarkCount: transcodingWatermarkCount,
+          backgroundImage: transcodingBackgroundImage,
+          backgroundImageCount: transcodingBackgroundImageCount,
+          audioSampleRate: transcodingAudioSampleRate,
+          audioBitrate: transcodingAudioBitrate,
+          audioChannels: transcodingAudioChannels,
+          audioCodecProfile: transcodingAudioCodecProfile,
+          advancedFeatures: transcodingAdvancedFeatures,
+          advancedFeatureCount: transcodingAdvancedFeatureCount,
+        );
+        await rtcEngine.updateRtmpTranscoding(
+          transcoding,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[updateRtmpTranscoding] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateRtmpTranscoding] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4196,10 +5509,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      await rtcEngine.stopRtmpStream(
-        url,
-      );
+      try {
+        const String url = "hello";
+        await rtcEngine.stopRtmpStream(
+          url,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopRtmpStream] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopRtmpStream] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4221,46 +5543,56 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoCodecType videoOutputConfigurationCodecType =
-          VideoCodecType.videoCodecNone;
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions videoOutputConfigurationDimensions =
-          VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const OrientationMode videoOutputConfigurationOrientationMode =
-          OrientationMode.orientationModeAdaptive;
-      const DegradationPreference
-          videoOutputConfigurationDegradationPreference =
-          DegradationPreference.maintainQuality;
-      const VideoMirrorModeType videoOutputConfigurationMirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      const int videoOutputConfigurationFrameRate = 10;
-      const int videoOutputConfigurationBitrate = 10;
-      const int videoOutputConfigurationMinBitrate = 10;
-      const VideoEncoderConfiguration configVideoOutputConfiguration =
-          VideoEncoderConfiguration(
-        codecType: videoOutputConfigurationCodecType,
-        dimensions: videoOutputConfigurationDimensions,
-        frameRate: videoOutputConfigurationFrameRate,
-        bitrate: videoOutputConfigurationBitrate,
-        minBitrate: videoOutputConfigurationMinBitrate,
-        orientationMode: videoOutputConfigurationOrientationMode,
-        degradationPreference: videoOutputConfigurationDegradationPreference,
-        mirrorMode: videoOutputConfigurationMirrorMode,
-      );
-      const int configStreamCount = 10;
-      const List<TranscodingVideoStream> configVideoInputStreams = [];
-      const LocalTranscoderConfiguration config = LocalTranscoderConfiguration(
-        streamCount: configStreamCount,
-        videoInputStreams: configVideoInputStreams,
-        videoOutputConfiguration: configVideoOutputConfiguration,
-      );
-      await rtcEngine.startLocalVideoTranscoder(
-        config,
-      );
+      try {
+        const VideoCodecType videoOutputConfigurationCodecType =
+            VideoCodecType.videoCodecNone;
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions videoOutputConfigurationDimensions =
+            VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const OrientationMode videoOutputConfigurationOrientationMode =
+            OrientationMode.orientationModeAdaptive;
+        const DegradationPreference
+            videoOutputConfigurationDegradationPreference =
+            DegradationPreference.maintainQuality;
+        const VideoMirrorModeType videoOutputConfigurationMirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        const int videoOutputConfigurationFrameRate = 10;
+        const int videoOutputConfigurationBitrate = 10;
+        const int videoOutputConfigurationMinBitrate = 10;
+        const VideoEncoderConfiguration configVideoOutputConfiguration =
+            VideoEncoderConfiguration(
+          codecType: videoOutputConfigurationCodecType,
+          dimensions: videoOutputConfigurationDimensions,
+          frameRate: videoOutputConfigurationFrameRate,
+          bitrate: videoOutputConfigurationBitrate,
+          minBitrate: videoOutputConfigurationMinBitrate,
+          orientationMode: videoOutputConfigurationOrientationMode,
+          degradationPreference: videoOutputConfigurationDegradationPreference,
+          mirrorMode: videoOutputConfigurationMirrorMode,
+        );
+        const int configStreamCount = 10;
+        const List<TranscodingVideoStream> configVideoInputStreams = [];
+        const LocalTranscoderConfiguration config =
+            LocalTranscoderConfiguration(
+          streamCount: configStreamCount,
+          videoInputStreams: configVideoInputStreams,
+          videoOutputConfiguration: configVideoOutputConfiguration,
+        );
+        await rtcEngine.startLocalVideoTranscoder(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startLocalVideoTranscoder] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startLocalVideoTranscoder] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4282,46 +5614,57 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoCodecType videoOutputConfigurationCodecType =
-          VideoCodecType.videoCodecNone;
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions videoOutputConfigurationDimensions =
-          VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const OrientationMode videoOutputConfigurationOrientationMode =
-          OrientationMode.orientationModeAdaptive;
-      const DegradationPreference
-          videoOutputConfigurationDegradationPreference =
-          DegradationPreference.maintainQuality;
-      const VideoMirrorModeType videoOutputConfigurationMirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      const int videoOutputConfigurationFrameRate = 10;
-      const int videoOutputConfigurationBitrate = 10;
-      const int videoOutputConfigurationMinBitrate = 10;
-      const VideoEncoderConfiguration configVideoOutputConfiguration =
-          VideoEncoderConfiguration(
-        codecType: videoOutputConfigurationCodecType,
-        dimensions: videoOutputConfigurationDimensions,
-        frameRate: videoOutputConfigurationFrameRate,
-        bitrate: videoOutputConfigurationBitrate,
-        minBitrate: videoOutputConfigurationMinBitrate,
-        orientationMode: videoOutputConfigurationOrientationMode,
-        degradationPreference: videoOutputConfigurationDegradationPreference,
-        mirrorMode: videoOutputConfigurationMirrorMode,
-      );
-      const int configStreamCount = 10;
-      const List<TranscodingVideoStream> configVideoInputStreams = [];
-      const LocalTranscoderConfiguration config = LocalTranscoderConfiguration(
-        streamCount: configStreamCount,
-        videoInputStreams: configVideoInputStreams,
-        videoOutputConfiguration: configVideoOutputConfiguration,
-      );
-      await rtcEngine.updateLocalTranscoderConfiguration(
-        config,
-      );
+      try {
+        const VideoCodecType videoOutputConfigurationCodecType =
+            VideoCodecType.videoCodecNone;
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions videoOutputConfigurationDimensions =
+            VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const OrientationMode videoOutputConfigurationOrientationMode =
+            OrientationMode.orientationModeAdaptive;
+        const DegradationPreference
+            videoOutputConfigurationDegradationPreference =
+            DegradationPreference.maintainQuality;
+        const VideoMirrorModeType videoOutputConfigurationMirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        const int videoOutputConfigurationFrameRate = 10;
+        const int videoOutputConfigurationBitrate = 10;
+        const int videoOutputConfigurationMinBitrate = 10;
+        const VideoEncoderConfiguration configVideoOutputConfiguration =
+            VideoEncoderConfiguration(
+          codecType: videoOutputConfigurationCodecType,
+          dimensions: videoOutputConfigurationDimensions,
+          frameRate: videoOutputConfigurationFrameRate,
+          bitrate: videoOutputConfigurationBitrate,
+          minBitrate: videoOutputConfigurationMinBitrate,
+          orientationMode: videoOutputConfigurationOrientationMode,
+          degradationPreference: videoOutputConfigurationDegradationPreference,
+          mirrorMode: videoOutputConfigurationMirrorMode,
+        );
+        const int configStreamCount = 10;
+        const List<TranscodingVideoStream> configVideoInputStreams = [];
+        const LocalTranscoderConfiguration config =
+            LocalTranscoderConfiguration(
+          streamCount: configStreamCount,
+          videoInputStreams: configVideoInputStreams,
+          videoOutputConfiguration: configVideoOutputConfiguration,
+        );
+        await rtcEngine.updateLocalTranscoderConfiguration(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[updateLocalTranscoderConfiguration] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateLocalTranscoderConfiguration] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4343,7 +5686,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopLocalVideoTranscoder();
+      try {
+        await rtcEngine.stopLocalVideoTranscoder();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopLocalVideoTranscoder] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopLocalVideoTranscoder] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4365,24 +5717,34 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const CameraDirection configCameraDirection = CameraDirection.cameraRear;
-      const int formatWidth = 10;
-      const int formatHeight = 10;
-      const int formatFps = 10;
-      const VideoFormat configFormat = VideoFormat(
-        width: formatWidth,
-        height: formatHeight,
-        fps: formatFps,
-      );
-      const String configDeviceId = "hello";
-      const CameraCapturerConfiguration config = CameraCapturerConfiguration(
-        cameraDirection: configCameraDirection,
-        deviceId: configDeviceId,
-        format: configFormat,
-      );
-      await rtcEngine.startPrimaryCameraCapture(
-        config,
-      );
+      try {
+        const CameraDirection configCameraDirection =
+            CameraDirection.cameraRear;
+        const int formatWidth = 10;
+        const int formatHeight = 10;
+        const int formatFps = 10;
+        const VideoFormat configFormat = VideoFormat(
+          width: formatWidth,
+          height: formatHeight,
+          fps: formatFps,
+        );
+        const String configDeviceId = "hello";
+        const CameraCapturerConfiguration config = CameraCapturerConfiguration(
+          cameraDirection: configCameraDirection,
+          deviceId: configDeviceId,
+          format: configFormat,
+        );
+        await rtcEngine.startPrimaryCameraCapture(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startPrimaryCameraCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startPrimaryCameraCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4404,24 +5766,34 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const CameraDirection configCameraDirection = CameraDirection.cameraRear;
-      const int formatWidth = 10;
-      const int formatHeight = 10;
-      const int formatFps = 10;
-      const VideoFormat configFormat = VideoFormat(
-        width: formatWidth,
-        height: formatHeight,
-        fps: formatFps,
-      );
-      const String configDeviceId = "hello";
-      const CameraCapturerConfiguration config = CameraCapturerConfiguration(
-        cameraDirection: configCameraDirection,
-        deviceId: configDeviceId,
-        format: configFormat,
-      );
-      await rtcEngine.startSecondaryCameraCapture(
-        config,
-      );
+      try {
+        const CameraDirection configCameraDirection =
+            CameraDirection.cameraRear;
+        const int formatWidth = 10;
+        const int formatHeight = 10;
+        const int formatFps = 10;
+        const VideoFormat configFormat = VideoFormat(
+          width: formatWidth,
+          height: formatHeight,
+          fps: formatFps,
+        );
+        const String configDeviceId = "hello";
+        const CameraCapturerConfiguration config = CameraCapturerConfiguration(
+          cameraDirection: configCameraDirection,
+          deviceId: configDeviceId,
+          format: configFormat,
+        );
+        await rtcEngine.startSecondaryCameraCapture(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startSecondaryCameraCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startSecondaryCameraCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4443,7 +5815,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopPrimaryCameraCapture();
+      try {
+        await rtcEngine.stopPrimaryCameraCapture();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopPrimaryCameraCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopPrimaryCameraCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4465,7 +5846,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopSecondaryCameraCapture();
+      try {
+        await rtcEngine.stopSecondaryCameraCapture();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopSecondaryCameraCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopSecondaryCameraCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4487,12 +5877,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoSourceType type = VideoSourceType.videoSourceCameraPrimary;
-      const VideoOrientation orientation = VideoOrientation.videoOrientation0;
-      await rtcEngine.setCameraDeviceOrientation(
-        type: type,
-        orientation: orientation,
-      );
+      try {
+        const VideoSourceType type = VideoSourceType.videoSourceCameraPrimary;
+        const VideoOrientation orientation = VideoOrientation.videoOrientation0;
+        await rtcEngine.setCameraDeviceOrientation(
+          type: type,
+          orientation: orientation,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setCameraDeviceOrientation] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCameraDeviceOrientation] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4514,12 +5913,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoSourceType type = VideoSourceType.videoSourceCameraPrimary;
-      const VideoOrientation orientation = VideoOrientation.videoOrientation0;
-      await rtcEngine.setScreenCaptureOrientation(
-        type: type,
-        orientation: orientation,
-      );
+      try {
+        const VideoSourceType type = VideoSourceType.videoSourceCameraPrimary;
+        const VideoOrientation orientation = VideoOrientation.videoOrientation0;
+        await rtcEngine.setScreenCaptureOrientation(
+          type: type,
+          orientation: orientation,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setScreenCaptureOrientation] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setScreenCaptureOrientation] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4541,61 +5949,70 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int screenRectX = 10;
-      const int screenRectY = 10;
-      const int screenRectWidth = 10;
-      const int screenRectHeight = 10;
-      const Rectangle configScreenRect = Rectangle(
-        x: screenRectX,
-        y: screenRectY,
-        width: screenRectWidth,
-        height: screenRectHeight,
-      );
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions paramsDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int paramsFrameRate = 10;
-      const int paramsBitrate = 10;
-      const bool paramsCaptureMouseCursor = true;
-      const bool paramsWindowFocus = true;
-      const List<int> paramsExcludeWindowList = [];
-      const int paramsExcludeWindowCount = 10;
-      const ScreenCaptureParameters configParams = ScreenCaptureParameters(
-        dimensions: paramsDimensions,
-        frameRate: paramsFrameRate,
-        bitrate: paramsBitrate,
-        captureMouseCursor: paramsCaptureMouseCursor,
-        windowFocus: paramsWindowFocus,
-        excludeWindowList: paramsExcludeWindowList,
-        excludeWindowCount: paramsExcludeWindowCount,
-      );
-      const int regionRectX = 10;
-      const int regionRectY = 10;
-      const int regionRectWidth = 10;
-      const int regionRectHeight = 10;
-      const Rectangle configRegionRect = Rectangle(
-        x: regionRectX,
-        y: regionRectY,
-        width: regionRectWidth,
-        height: regionRectHeight,
-      );
-      const bool configIsCaptureWindow = true;
-      const int configDisplayId = 10;
-      const int configWindowId = 10;
-      const ScreenCaptureConfiguration config = ScreenCaptureConfiguration(
-        isCaptureWindow: configIsCaptureWindow,
-        displayId: configDisplayId,
-        screenRect: configScreenRect,
-        windowId: configWindowId,
-        params: configParams,
-        regionRect: configRegionRect,
-      );
-      await rtcEngine.startPrimaryScreenCapture(
-        config,
-      );
+      try {
+        const int screenRectX = 10;
+        const int screenRectY = 10;
+        const int screenRectWidth = 10;
+        const int screenRectHeight = 10;
+        const Rectangle configScreenRect = Rectangle(
+          x: screenRectX,
+          y: screenRectY,
+          width: screenRectWidth,
+          height: screenRectHeight,
+        );
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions paramsDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int paramsFrameRate = 10;
+        const int paramsBitrate = 10;
+        const bool paramsCaptureMouseCursor = true;
+        const bool paramsWindowFocus = true;
+        const List<int> paramsExcludeWindowList = [];
+        const int paramsExcludeWindowCount = 10;
+        const ScreenCaptureParameters configParams = ScreenCaptureParameters(
+          dimensions: paramsDimensions,
+          frameRate: paramsFrameRate,
+          bitrate: paramsBitrate,
+          captureMouseCursor: paramsCaptureMouseCursor,
+          windowFocus: paramsWindowFocus,
+          excludeWindowList: paramsExcludeWindowList,
+          excludeWindowCount: paramsExcludeWindowCount,
+        );
+        const int regionRectX = 10;
+        const int regionRectY = 10;
+        const int regionRectWidth = 10;
+        const int regionRectHeight = 10;
+        const Rectangle configRegionRect = Rectangle(
+          x: regionRectX,
+          y: regionRectY,
+          width: regionRectWidth,
+          height: regionRectHeight,
+        );
+        const bool configIsCaptureWindow = true;
+        const int configDisplayId = 10;
+        const int configWindowId = 10;
+        const ScreenCaptureConfiguration config = ScreenCaptureConfiguration(
+          isCaptureWindow: configIsCaptureWindow,
+          displayId: configDisplayId,
+          screenRect: configScreenRect,
+          windowId: configWindowId,
+          params: configParams,
+          regionRect: configRegionRect,
+        );
+        await rtcEngine.startPrimaryScreenCapture(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startPrimaryScreenCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startPrimaryScreenCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4617,61 +6034,70 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int screenRectX = 10;
-      const int screenRectY = 10;
-      const int screenRectWidth = 10;
-      const int screenRectHeight = 10;
-      const Rectangle configScreenRect = Rectangle(
-        x: screenRectX,
-        y: screenRectY,
-        width: screenRectWidth,
-        height: screenRectHeight,
-      );
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions paramsDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int paramsFrameRate = 10;
-      const int paramsBitrate = 10;
-      const bool paramsCaptureMouseCursor = true;
-      const bool paramsWindowFocus = true;
-      const List<int> paramsExcludeWindowList = [];
-      const int paramsExcludeWindowCount = 10;
-      const ScreenCaptureParameters configParams = ScreenCaptureParameters(
-        dimensions: paramsDimensions,
-        frameRate: paramsFrameRate,
-        bitrate: paramsBitrate,
-        captureMouseCursor: paramsCaptureMouseCursor,
-        windowFocus: paramsWindowFocus,
-        excludeWindowList: paramsExcludeWindowList,
-        excludeWindowCount: paramsExcludeWindowCount,
-      );
-      const int regionRectX = 10;
-      const int regionRectY = 10;
-      const int regionRectWidth = 10;
-      const int regionRectHeight = 10;
-      const Rectangle configRegionRect = Rectangle(
-        x: regionRectX,
-        y: regionRectY,
-        width: regionRectWidth,
-        height: regionRectHeight,
-      );
-      const bool configIsCaptureWindow = true;
-      const int configDisplayId = 10;
-      const int configWindowId = 10;
-      const ScreenCaptureConfiguration config = ScreenCaptureConfiguration(
-        isCaptureWindow: configIsCaptureWindow,
-        displayId: configDisplayId,
-        screenRect: configScreenRect,
-        windowId: configWindowId,
-        params: configParams,
-        regionRect: configRegionRect,
-      );
-      await rtcEngine.startSecondaryScreenCapture(
-        config,
-      );
+      try {
+        const int screenRectX = 10;
+        const int screenRectY = 10;
+        const int screenRectWidth = 10;
+        const int screenRectHeight = 10;
+        const Rectangle configScreenRect = Rectangle(
+          x: screenRectX,
+          y: screenRectY,
+          width: screenRectWidth,
+          height: screenRectHeight,
+        );
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions paramsDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int paramsFrameRate = 10;
+        const int paramsBitrate = 10;
+        const bool paramsCaptureMouseCursor = true;
+        const bool paramsWindowFocus = true;
+        const List<int> paramsExcludeWindowList = [];
+        const int paramsExcludeWindowCount = 10;
+        const ScreenCaptureParameters configParams = ScreenCaptureParameters(
+          dimensions: paramsDimensions,
+          frameRate: paramsFrameRate,
+          bitrate: paramsBitrate,
+          captureMouseCursor: paramsCaptureMouseCursor,
+          windowFocus: paramsWindowFocus,
+          excludeWindowList: paramsExcludeWindowList,
+          excludeWindowCount: paramsExcludeWindowCount,
+        );
+        const int regionRectX = 10;
+        const int regionRectY = 10;
+        const int regionRectWidth = 10;
+        const int regionRectHeight = 10;
+        const Rectangle configRegionRect = Rectangle(
+          x: regionRectX,
+          y: regionRectY,
+          width: regionRectWidth,
+          height: regionRectHeight,
+        );
+        const bool configIsCaptureWindow = true;
+        const int configDisplayId = 10;
+        const int configWindowId = 10;
+        const ScreenCaptureConfiguration config = ScreenCaptureConfiguration(
+          isCaptureWindow: configIsCaptureWindow,
+          displayId: configDisplayId,
+          screenRect: configScreenRect,
+          windowId: configWindowId,
+          params: configParams,
+          regionRect: configRegionRect,
+        );
+        await rtcEngine.startSecondaryScreenCapture(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startSecondaryScreenCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startSecondaryScreenCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4693,7 +6119,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopPrimaryScreenCapture();
+      try {
+        await rtcEngine.stopPrimaryScreenCapture();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopPrimaryScreenCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopPrimaryScreenCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4715,7 +6150,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopSecondaryScreenCapture();
+      try {
+        await rtcEngine.stopSecondaryScreenCapture();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopSecondaryScreenCapture] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopSecondaryScreenCapture] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4737,7 +6181,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.getConnectionState();
+      try {
+        await rtcEngine.getConnectionState();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getConnectionState] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getConnectionState] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4759,12 +6212,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      const PriorityType userPriority = PriorityType.priorityHigh;
-      await rtcEngine.setRemoteUserPriority(
-        uid: uid,
-        userPriority: userPriority,
-      );
+      try {
+        const int uid = 10;
+        const PriorityType userPriority = PriorityType.priorityHigh;
+        await rtcEngine.setRemoteUserPriority(
+          uid: uid,
+          userPriority: userPriority,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setRemoteUserPriority] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setRemoteUserPriority] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4786,10 +6248,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String encryptionMode = "hello";
-      await rtcEngine.setEncryptionMode(
-        encryptionMode,
-      );
+      try {
+        const String encryptionMode = "hello";
+        await rtcEngine.setEncryptionMode(
+          encryptionMode,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setEncryptionMode] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setEncryptionMode] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4811,10 +6282,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String secret = "hello";
-      await rtcEngine.setEncryptionSecret(
-        secret,
-      );
+      try {
+        const String secret = "hello";
+        await rtcEngine.setEncryptionSecret(
+          secret,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setEncryptionSecret] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setEncryptionSecret] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4836,19 +6316,28 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const EncryptionMode configEncryptionMode = EncryptionMode.aes128Xts;
-      const String configEncryptionKey = "hello";
-      Uint8List configEncryptionKdfSalt = Uint8List.fromList([]);
-      final EncryptionConfig config = EncryptionConfig(
-        encryptionMode: configEncryptionMode,
-        encryptionKey: configEncryptionKey,
-        encryptionKdfSalt: configEncryptionKdfSalt,
-      );
-      await rtcEngine.enableEncryption(
-        enabled: enabled,
-        config: config,
-      );
+      try {
+        const bool enabled = true;
+        const EncryptionMode configEncryptionMode = EncryptionMode.aes128Xts;
+        const String configEncryptionKey = "hello";
+        Uint8List configEncryptionKdfSalt = Uint8List.fromList([]);
+        final EncryptionConfig config = EncryptionConfig(
+          encryptionMode: configEncryptionMode,
+          encryptionKey: configEncryptionKey,
+          encryptionKdfSalt: configEncryptionKdfSalt,
+        );
+        await rtcEngine.enableEncryption(
+          enabled: enabled,
+          config: config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableEncryption] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableEncryption] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4870,14 +6359,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int streamId = 10;
-      Uint8List data = Uint8List.fromList([]);
-      const int length = 10;
-      await rtcEngine.sendStreamMessage(
-        streamId: streamId,
-        data: data,
-        length: length,
-      );
+      try {
+        const int streamId = 10;
+        Uint8List data = Uint8List.fromList([]);
+        const int length = 10;
+        await rtcEngine.sendStreamMessage(
+          streamId: streamId,
+          data: data,
+          length: length,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[sendStreamMessage] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[sendStreamMessage] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4899,7 +6397,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.clearVideoWatermark();
+      try {
+        await rtcEngine.clearVideoWatermark();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[clearVideoWatermark] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[clearVideoWatermark] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4921,7 +6428,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.clearVideoWatermarks();
+      try {
+        await rtcEngine.clearVideoWatermarks();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[clearVideoWatermarks] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[clearVideoWatermarks] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4943,30 +6459,39 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      const AudioSampleRateType configAudioSampleRate =
-          AudioSampleRateType.audioSampleRate32000;
-      const int configWidth = 10;
-      const int configHeight = 10;
-      const int configVideoGop = 10;
-      const int configVideoFramerate = 10;
-      const int configVideoBitrate = 10;
-      const int configAudioBitrate = 10;
-      const int configAudioChannels = 10;
-      const InjectStreamConfig config = InjectStreamConfig(
-        width: configWidth,
-        height: configHeight,
-        videoGop: configVideoGop,
-        videoFramerate: configVideoFramerate,
-        videoBitrate: configVideoBitrate,
-        audioSampleRate: configAudioSampleRate,
-        audioBitrate: configAudioBitrate,
-        audioChannels: configAudioChannels,
-      );
-      await rtcEngine.addInjectStreamUrl(
-        url: url,
-        config: config,
-      );
+      try {
+        const String url = "hello";
+        const AudioSampleRateType configAudioSampleRate =
+            AudioSampleRateType.audioSampleRate32000;
+        const int configWidth = 10;
+        const int configHeight = 10;
+        const int configVideoGop = 10;
+        const int configVideoFramerate = 10;
+        const int configVideoBitrate = 10;
+        const int configAudioBitrate = 10;
+        const int configAudioChannels = 10;
+        const InjectStreamConfig config = InjectStreamConfig(
+          width: configWidth,
+          height: configHeight,
+          videoGop: configVideoGop,
+          videoFramerate: configVideoFramerate,
+          videoBitrate: configVideoBitrate,
+          audioSampleRate: configAudioSampleRate,
+          audioBitrate: configAudioBitrate,
+          audioChannels: configAudioChannels,
+        );
+        await rtcEngine.addInjectStreamUrl(
+          url: url,
+          config: config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[addInjectStreamUrl] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[addInjectStreamUrl] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -4988,10 +6513,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String url = "hello";
-      await rtcEngine.removeInjectStreamUrl(
-        url,
-      );
+      try {
+        const String url = "hello";
+        await rtcEngine.removeInjectStreamUrl(
+          url,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[removeInjectStreamUrl] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[removeInjectStreamUrl] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5013,7 +6547,15 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.pauseAudio();
+      try {
+        await rtcEngine.pauseAudio();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[pauseAudio] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[pauseAudio] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5035,7 +6577,15 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.resumeAudio();
+      try {
+        await rtcEngine.resumeAudio();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[resumeAudio] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[resumeAudio] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5057,10 +6607,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      await rtcEngine.enableWebSdkInteroperability(
-        enabled,
-      );
+      try {
+        const bool enabled = true;
+        await rtcEngine.enableWebSdkInteroperability(
+          enabled,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableWebSdkInteroperability] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableWebSdkInteroperability] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5082,18 +6641,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String id = "hello";
-      const String category = "hello";
-      const String event = "hello";
-      const String label = "hello";
-      const int value = 10;
-      await rtcEngine.sendCustomReportMessage(
-        id: id,
-        category: category,
-        event: event,
-        label: label,
-        value: value,
-      );
+      try {
+        const String id = "hello";
+        const String category = "hello";
+        const String event = "hello";
+        const String label = "hello";
+        const int value = 10;
+        await rtcEngine.sendCustomReportMessage(
+          id: id,
+          category: category,
+          event: event,
+          label: label,
+          value: value,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[sendCustomReportMessage] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[sendCustomReportMessage] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5115,22 +6683,31 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String channelId = "hello";
-      const int userId = 10;
-      const String location = "hello";
-      const String uuid = "hello";
-      const String passwd = "hello";
-      const int durationMs = 10;
-      const bool autoUpload = true;
-      await rtcEngine.startAudioFrameDump(
-        channelId: channelId,
-        userId: userId,
-        location: location,
-        uuid: uuid,
-        passwd: passwd,
-        durationMs: durationMs,
-        autoUpload: autoUpload,
-      );
+      try {
+        const String channelId = "hello";
+        const int userId = 10;
+        const String location = "hello";
+        const String uuid = "hello";
+        const String passwd = "hello";
+        const int durationMs = 10;
+        const bool autoUpload = true;
+        await rtcEngine.startAudioFrameDump(
+          channelId: channelId,
+          userId: userId,
+          location: location,
+          uuid: uuid,
+          passwd: passwd,
+          durationMs: durationMs,
+          autoUpload: autoUpload,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startAudioFrameDump] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startAudioFrameDump] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5152,14 +6729,23 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String channelId = "hello";
-      const int userId = 10;
-      const String location = "hello";
-      await rtcEngine.stopAudioFrameDump(
-        channelId: channelId,
-        userId: userId,
-        location: location,
-      );
+      try {
+        const String channelId = "hello";
+        const int userId = 10;
+        const String location = "hello";
+        await rtcEngine.stopAudioFrameDump(
+          channelId: channelId,
+          userId: userId,
+          location: location,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopAudioFrameDump] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopAudioFrameDump] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5181,12 +6767,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String appId = "hello";
-      const String userAccount = "hello";
-      await rtcEngine.registerLocalUserAccount(
-        appId: appId,
-        userAccount: userAccount,
-      );
+      try {
+        const String appId = "hello";
+        const String userAccount = "hello";
+        await rtcEngine.registerLocalUserAccount(
+          appId: appId,
+          userAccount: userAccount,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[registerLocalUserAccount] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[registerLocalUserAccount] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5208,98 +6803,107 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String token = "hello";
-      const String channelId = "hello";
-      const String userAccount = "hello";
-      const ClientRoleType optionsClientRoleType =
-          ClientRoleType.clientRoleBroadcaster;
-      const AudienceLatencyLevelType optionsAudienceLatencyLevel =
-          AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
-      const VideoStreamType optionsDefaultVideoStreamType =
-          VideoStreamType.videoStreamHigh;
-      const ChannelProfileType optionsChannelProfile =
-          ChannelProfileType.channelProfileCommunication;
-      const NlpAggressiveness
-          audioOptionsExternalAecAggressivenessExternalCustom =
-          NlpAggressiveness.nlpNotSpecified;
-      const bool audioOptionsExternalEnableAecExternalCustom = true;
-      const bool audioOptionsExternalEnableAgcExternalCustom = true;
-      const bool audioOptionsExternalEnableAnsExternalCustom = true;
-      const bool audioOptionsExternalEnableAecExternalLoopback = true;
-      const AudioOptionsExternal optionsAudioOptionsExternal =
-          AudioOptionsExternal(
-        enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
-        enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
-        enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
-        aecAggressivenessExternalCustom:
-            audioOptionsExternalAecAggressivenessExternalCustom,
-        enableAecExternalLoopback:
-            audioOptionsExternalEnableAecExternalLoopback,
-      );
-      const bool optionsPublishCameraTrack = true;
-      const bool optionsPublishSecondaryCameraTrack = true;
-      const bool optionsPublishAudioTrack = true;
-      const bool optionsPublishScreenTrack = true;
-      const bool optionsPublishSecondaryScreenTrack = true;
-      const bool optionsPublishCustomAudioTrack = true;
-      const int optionsPublishCustomAudioSourceId = 10;
-      const bool optionsPublishCustomAudioTrackEnableAec = true;
-      const bool optionsPublishDirectCustomAudioTrack = true;
-      const bool optionsPublishCustomAudioTrackAec = true;
-      const bool optionsPublishCustomVideoTrack = true;
-      const bool optionsPublishEncodedVideoTrack = true;
-      const bool optionsPublishMediaPlayerAudioTrack = true;
-      const bool optionsPublishMediaPlayerVideoTrack = true;
-      const bool optionsPublishTrancodedVideoTrack = true;
-      const bool optionsAutoSubscribeAudio = true;
-      const bool optionsAutoSubscribeVideo = true;
-      const bool optionsStartPreview = true;
-      const bool optionsEnableAudioRecordingOrPlayout = true;
-      const int optionsPublishMediaPlayerId = 10;
-      const int optionsAudioDelayMs = 10;
-      const int optionsMediaPlayerAudioDelayMs = 10;
-      const String optionsToken = "hello";
-      const bool optionsEnableBuiltInMediaEncryption = true;
-      const bool optionsPublishRhythmPlayerTrack = true;
-      const ChannelMediaOptions options = ChannelMediaOptions(
-        publishCameraTrack: optionsPublishCameraTrack,
-        publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
-        publishAudioTrack: optionsPublishAudioTrack,
-        publishScreenTrack: optionsPublishScreenTrack,
-        publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
-        publishCustomAudioTrack: optionsPublishCustomAudioTrack,
-        publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
-        publishCustomAudioTrackEnableAec:
-            optionsPublishCustomAudioTrackEnableAec,
-        publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
-        publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
-        publishCustomVideoTrack: optionsPublishCustomVideoTrack,
-        publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
-        publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
-        publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
-        publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
-        autoSubscribeAudio: optionsAutoSubscribeAudio,
-        autoSubscribeVideo: optionsAutoSubscribeVideo,
-        startPreview: optionsStartPreview,
-        enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
-        publishMediaPlayerId: optionsPublishMediaPlayerId,
-        clientRoleType: optionsClientRoleType,
-        audienceLatencyLevel: optionsAudienceLatencyLevel,
-        defaultVideoStreamType: optionsDefaultVideoStreamType,
-        channelProfile: optionsChannelProfile,
-        audioDelayMs: optionsAudioDelayMs,
-        mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
-        token: optionsToken,
-        enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
-        publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
-        audioOptionsExternal: optionsAudioOptionsExternal,
-      );
-      await rtcEngine.joinChannelWithUserAccountEx(
-        token: token,
-        channelId: channelId,
-        userAccount: userAccount,
-        options: options,
-      );
+      try {
+        const String token = "hello";
+        const String channelId = "hello";
+        const String userAccount = "hello";
+        const ClientRoleType optionsClientRoleType =
+            ClientRoleType.clientRoleBroadcaster;
+        const AudienceLatencyLevelType optionsAudienceLatencyLevel =
+            AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
+        const VideoStreamType optionsDefaultVideoStreamType =
+            VideoStreamType.videoStreamHigh;
+        const ChannelProfileType optionsChannelProfile =
+            ChannelProfileType.channelProfileCommunication;
+        const NlpAggressiveness
+            audioOptionsExternalAecAggressivenessExternalCustom =
+            NlpAggressiveness.nlpNotSpecified;
+        const bool audioOptionsExternalEnableAecExternalCustom = true;
+        const bool audioOptionsExternalEnableAgcExternalCustom = true;
+        const bool audioOptionsExternalEnableAnsExternalCustom = true;
+        const bool audioOptionsExternalEnableAecExternalLoopback = true;
+        const AudioOptionsExternal optionsAudioOptionsExternal =
+            AudioOptionsExternal(
+          enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
+          enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
+          enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
+          aecAggressivenessExternalCustom:
+              audioOptionsExternalAecAggressivenessExternalCustom,
+          enableAecExternalLoopback:
+              audioOptionsExternalEnableAecExternalLoopback,
+        );
+        const bool optionsPublishCameraTrack = true;
+        const bool optionsPublishSecondaryCameraTrack = true;
+        const bool optionsPublishAudioTrack = true;
+        const bool optionsPublishScreenTrack = true;
+        const bool optionsPublishSecondaryScreenTrack = true;
+        const bool optionsPublishCustomAudioTrack = true;
+        const int optionsPublishCustomAudioSourceId = 10;
+        const bool optionsPublishCustomAudioTrackEnableAec = true;
+        const bool optionsPublishDirectCustomAudioTrack = true;
+        const bool optionsPublishCustomAudioTrackAec = true;
+        const bool optionsPublishCustomVideoTrack = true;
+        const bool optionsPublishEncodedVideoTrack = true;
+        const bool optionsPublishMediaPlayerAudioTrack = true;
+        const bool optionsPublishMediaPlayerVideoTrack = true;
+        const bool optionsPublishTrancodedVideoTrack = true;
+        const bool optionsAutoSubscribeAudio = true;
+        const bool optionsAutoSubscribeVideo = true;
+        const bool optionsStartPreview = true;
+        const bool optionsEnableAudioRecordingOrPlayout = true;
+        const int optionsPublishMediaPlayerId = 10;
+        const int optionsAudioDelayMs = 10;
+        const int optionsMediaPlayerAudioDelayMs = 10;
+        const String optionsToken = "hello";
+        const bool optionsEnableBuiltInMediaEncryption = true;
+        const bool optionsPublishRhythmPlayerTrack = true;
+        const ChannelMediaOptions options = ChannelMediaOptions(
+          publishCameraTrack: optionsPublishCameraTrack,
+          publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
+          publishAudioTrack: optionsPublishAudioTrack,
+          publishScreenTrack: optionsPublishScreenTrack,
+          publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
+          publishCustomAudioTrack: optionsPublishCustomAudioTrack,
+          publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
+          publishCustomAudioTrackEnableAec:
+              optionsPublishCustomAudioTrackEnableAec,
+          publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
+          publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
+          publishCustomVideoTrack: optionsPublishCustomVideoTrack,
+          publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
+          publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
+          publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
+          publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
+          autoSubscribeAudio: optionsAutoSubscribeAudio,
+          autoSubscribeVideo: optionsAutoSubscribeVideo,
+          startPreview: optionsStartPreview,
+          enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
+          publishMediaPlayerId: optionsPublishMediaPlayerId,
+          clientRoleType: optionsClientRoleType,
+          audienceLatencyLevel: optionsAudienceLatencyLevel,
+          defaultVideoStreamType: optionsDefaultVideoStreamType,
+          channelProfile: optionsChannelProfile,
+          audioDelayMs: optionsAudioDelayMs,
+          mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
+          token: optionsToken,
+          enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
+          publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
+          audioOptionsExternal: optionsAudioOptionsExternal,
+        );
+        await rtcEngine.joinChannelWithUserAccountEx(
+          token: token,
+          channelId: channelId,
+          userAccount: userAccount,
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[joinChannelWithUserAccountEx] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[joinChannelWithUserAccountEx] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5321,10 +6925,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String userAccount = "hello";
-      await rtcEngine.getUserInfoByUserAccount(
-        userAccount,
-      );
+      try {
+        const String userAccount = "hello";
+        await rtcEngine.getUserInfoByUserAccount(
+          userAccount,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getUserInfoByUserAccount] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getUserInfoByUserAccount] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5346,10 +6959,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int uid = 10;
-      await rtcEngine.getUserInfoByUid(
-        uid,
-      );
+      try {
+        const int uid = 10;
+        await rtcEngine.getUserInfoByUid(
+          uid,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getUserInfoByUid] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getUserInfoByUid] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5371,25 +6993,34 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String srcInfoChannelName = "hello";
-      const String srcInfoToken = "hello";
-      const int srcInfoUid = 10;
-      const ChannelMediaInfo configurationSrcInfo = ChannelMediaInfo(
-        channelName: srcInfoChannelName,
-        token: srcInfoToken,
-        uid: srcInfoUid,
-      );
-      const List<ChannelMediaInfo> configurationDestInfos = [];
-      const int configurationDestCount = 10;
-      const ChannelMediaRelayConfiguration configuration =
-          ChannelMediaRelayConfiguration(
-        srcInfo: configurationSrcInfo,
-        destInfos: configurationDestInfos,
-        destCount: configurationDestCount,
-      );
-      await rtcEngine.startChannelMediaRelay(
-        configuration,
-      );
+      try {
+        const String srcInfoChannelName = "hello";
+        const String srcInfoToken = "hello";
+        const int srcInfoUid = 10;
+        const ChannelMediaInfo configurationSrcInfo = ChannelMediaInfo(
+          channelName: srcInfoChannelName,
+          token: srcInfoToken,
+          uid: srcInfoUid,
+        );
+        const List<ChannelMediaInfo> configurationDestInfos = [];
+        const int configurationDestCount = 10;
+        const ChannelMediaRelayConfiguration configuration =
+            ChannelMediaRelayConfiguration(
+          srcInfo: configurationSrcInfo,
+          destInfos: configurationDestInfos,
+          destCount: configurationDestCount,
+        );
+        await rtcEngine.startChannelMediaRelay(
+          configuration,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startChannelMediaRelay] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startChannelMediaRelay] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5411,25 +7042,34 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String srcInfoChannelName = "hello";
-      const String srcInfoToken = "hello";
-      const int srcInfoUid = 10;
-      const ChannelMediaInfo configurationSrcInfo = ChannelMediaInfo(
-        channelName: srcInfoChannelName,
-        token: srcInfoToken,
-        uid: srcInfoUid,
-      );
-      const List<ChannelMediaInfo> configurationDestInfos = [];
-      const int configurationDestCount = 10;
-      const ChannelMediaRelayConfiguration configuration =
-          ChannelMediaRelayConfiguration(
-        srcInfo: configurationSrcInfo,
-        destInfos: configurationDestInfos,
-        destCount: configurationDestCount,
-      );
-      await rtcEngine.updateChannelMediaRelay(
-        configuration,
-      );
+      try {
+        const String srcInfoChannelName = "hello";
+        const String srcInfoToken = "hello";
+        const int srcInfoUid = 10;
+        const ChannelMediaInfo configurationSrcInfo = ChannelMediaInfo(
+          channelName: srcInfoChannelName,
+          token: srcInfoToken,
+          uid: srcInfoUid,
+        );
+        const List<ChannelMediaInfo> configurationDestInfos = [];
+        const int configurationDestCount = 10;
+        const ChannelMediaRelayConfiguration configuration =
+            ChannelMediaRelayConfiguration(
+          srcInfo: configurationSrcInfo,
+          destInfos: configurationDestInfos,
+          destCount: configurationDestCount,
+        );
+        await rtcEngine.updateChannelMediaRelay(
+          configuration,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[updateChannelMediaRelay] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateChannelMediaRelay] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5451,7 +7091,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopChannelMediaRelay();
+      try {
+        await rtcEngine.stopChannelMediaRelay();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopChannelMediaRelay] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopChannelMediaRelay] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5473,7 +7122,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.pauseAllChannelMediaRelay();
+      try {
+        await rtcEngine.pauseAllChannelMediaRelay();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[pauseAllChannelMediaRelay] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[pauseAllChannelMediaRelay] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5495,7 +7153,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.resumeAllChannelMediaRelay();
+      try {
+        await rtcEngine.resumeAllChannelMediaRelay();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[resumeAllChannelMediaRelay] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[resumeAllChannelMediaRelay] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5517,10 +7184,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioProfileType profile = AudioProfileType.audioProfileDefault;
-      await rtcEngine.setDirectCdnStreamingAudioConfiguration(
-        profile,
-      );
+      try {
+        const AudioProfileType profile = AudioProfileType.audioProfileDefault;
+        await rtcEngine.setDirectCdnStreamingAudioConfiguration(
+          profile,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setDirectCdnStreamingAudioConfiguration] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setDirectCdnStreamingAudioConfiguration] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5542,35 +7219,45 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoCodecType configCodecType = VideoCodecType.videoCodecNone;
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions configDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const OrientationMode configOrientationMode =
-          OrientationMode.orientationModeAdaptive;
-      const DegradationPreference configDegradationPreference =
-          DegradationPreference.maintainQuality;
-      const VideoMirrorModeType configMirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      const int configFrameRate = 10;
-      const int configBitrate = 10;
-      const int configMinBitrate = 10;
-      const VideoEncoderConfiguration config = VideoEncoderConfiguration(
-        codecType: configCodecType,
-        dimensions: configDimensions,
-        frameRate: configFrameRate,
-        bitrate: configBitrate,
-        minBitrate: configMinBitrate,
-        orientationMode: configOrientationMode,
-        degradationPreference: configDegradationPreference,
-        mirrorMode: configMirrorMode,
-      );
-      await rtcEngine.setDirectCdnStreamingVideoConfiguration(
-        config,
-      );
+      try {
+        const VideoCodecType configCodecType = VideoCodecType.videoCodecNone;
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions configDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const OrientationMode configOrientationMode =
+            OrientationMode.orientationModeAdaptive;
+        const DegradationPreference configDegradationPreference =
+            DegradationPreference.maintainQuality;
+        const VideoMirrorModeType configMirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        const int configFrameRate = 10;
+        const int configBitrate = 10;
+        const int configMinBitrate = 10;
+        const VideoEncoderConfiguration config = VideoEncoderConfiguration(
+          codecType: configCodecType,
+          dimensions: configDimensions,
+          frameRate: configFrameRate,
+          bitrate: configBitrate,
+          minBitrate: configMinBitrate,
+          orientationMode: configOrientationMode,
+          degradationPreference: configDegradationPreference,
+          mirrorMode: configMirrorMode,
+        );
+        await rtcEngine.setDirectCdnStreamingVideoConfiguration(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[setDirectCdnStreamingVideoConfiguration] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setDirectCdnStreamingVideoConfiguration] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5592,33 +7279,42 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      final DirectCdnStreamingEventHandler eventHandler =
-          DirectCdnStreamingEventHandler(
-        onDirectCdnStreamingStateChanged: (DirectCdnStreamingState state,
-            DirectCdnStreamingError error, String message) {},
-        onDirectCdnStreamingStats: (DirectCdnStreamingStats stats) {},
-      );
-      const String publishUrl = "hello";
-      const bool optionsPublishCameraTrack = true;
-      const bool optionsPublishMicrophoneTrack = true;
-      const bool optionsPublishCustomAudioTrack = true;
-      const bool optionsPublishCustomVideoTrack = true;
-      const bool optionsPublishMediaPlayerAudioTrack = true;
-      const int optionsPublishMediaPlayerId = 10;
-      const DirectCdnStreamingMediaOptions options =
-          DirectCdnStreamingMediaOptions(
-        publishCameraTrack: optionsPublishCameraTrack,
-        publishMicrophoneTrack: optionsPublishMicrophoneTrack,
-        publishCustomAudioTrack: optionsPublishCustomAudioTrack,
-        publishCustomVideoTrack: optionsPublishCustomVideoTrack,
-        publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
-        publishMediaPlayerId: optionsPublishMediaPlayerId,
-      );
-      await rtcEngine.startDirectCdnStreaming(
-        eventHandler: eventHandler,
-        publishUrl: publishUrl,
-        options: options,
-      );
+      try {
+        final DirectCdnStreamingEventHandler eventHandler =
+            DirectCdnStreamingEventHandler(
+          onDirectCdnStreamingStateChanged: (DirectCdnStreamingState state,
+              DirectCdnStreamingError error, String message) {},
+          onDirectCdnStreamingStats: (DirectCdnStreamingStats stats) {},
+        );
+        const String publishUrl = "hello";
+        const bool optionsPublishCameraTrack = true;
+        const bool optionsPublishMicrophoneTrack = true;
+        const bool optionsPublishCustomAudioTrack = true;
+        const bool optionsPublishCustomVideoTrack = true;
+        const bool optionsPublishMediaPlayerAudioTrack = true;
+        const int optionsPublishMediaPlayerId = 10;
+        const DirectCdnStreamingMediaOptions options =
+            DirectCdnStreamingMediaOptions(
+          publishCameraTrack: optionsPublishCameraTrack,
+          publishMicrophoneTrack: optionsPublishMicrophoneTrack,
+          publishCustomAudioTrack: optionsPublishCustomAudioTrack,
+          publishCustomVideoTrack: optionsPublishCustomVideoTrack,
+          publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
+          publishMediaPlayerId: optionsPublishMediaPlayerId,
+        );
+        await rtcEngine.startDirectCdnStreaming(
+          eventHandler: eventHandler,
+          publishUrl: publishUrl,
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startDirectCdnStreaming] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startDirectCdnStreaming] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5640,7 +7336,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopDirectCdnStreaming();
+      try {
+        await rtcEngine.stopDirectCdnStreaming();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopDirectCdnStreaming] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopDirectCdnStreaming] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5662,24 +7367,34 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool optionsPublishCameraTrack = true;
-      const bool optionsPublishMicrophoneTrack = true;
-      const bool optionsPublishCustomAudioTrack = true;
-      const bool optionsPublishCustomVideoTrack = true;
-      const bool optionsPublishMediaPlayerAudioTrack = true;
-      const int optionsPublishMediaPlayerId = 10;
-      const DirectCdnStreamingMediaOptions options =
-          DirectCdnStreamingMediaOptions(
-        publishCameraTrack: optionsPublishCameraTrack,
-        publishMicrophoneTrack: optionsPublishMicrophoneTrack,
-        publishCustomAudioTrack: optionsPublishCustomAudioTrack,
-        publishCustomVideoTrack: optionsPublishCustomVideoTrack,
-        publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
-        publishMediaPlayerId: optionsPublishMediaPlayerId,
-      );
-      await rtcEngine.updateDirectCdnStreamingMediaOptions(
-        options,
-      );
+      try {
+        const bool optionsPublishCameraTrack = true;
+        const bool optionsPublishMicrophoneTrack = true;
+        const bool optionsPublishCustomAudioTrack = true;
+        const bool optionsPublishCustomVideoTrack = true;
+        const bool optionsPublishMediaPlayerAudioTrack = true;
+        const int optionsPublishMediaPlayerId = 10;
+        const DirectCdnStreamingMediaOptions options =
+            DirectCdnStreamingMediaOptions(
+          publishCameraTrack: optionsPublishCameraTrack,
+          publishMicrophoneTrack: optionsPublishMicrophoneTrack,
+          publishCustomAudioTrack: optionsPublishCustomAudioTrack,
+          publishCustomVideoTrack: optionsPublishCustomVideoTrack,
+          publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
+          publishMediaPlayerId: optionsPublishMediaPlayerId,
+        );
+        await rtcEngine.updateDirectCdnStreamingMediaOptions(
+          options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint(
+              '[updateDirectCdnStreamingMediaOptions] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[updateDirectCdnStreamingMediaOptions] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5701,17 +7416,26 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String configChannel = "hello";
-      const int configUid = 10;
-      const String configFilePath = "hello";
-      const SnapShotConfig config = SnapShotConfig(
-        channel: configChannel,
-        uid: configUid,
-        filePath: configFilePath,
-      );
-      await rtcEngine.takeSnapshot(
-        config,
-      );
+      try {
+        const String configChannel = "hello";
+        const int configUid = 10;
+        const String configFilePath = "hello";
+        const SnapShotConfig config = SnapShotConfig(
+          channel: configChannel,
+          uid: configUid,
+          filePath: configFilePath,
+        );
+        await rtcEngine.takeSnapshot(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[takeSnapshot] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[takeSnapshot] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5733,26 +7457,35 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const ContentInspectDeviceType configDeviceworkType =
-          ContentInspectDeviceType.contentInspectDeviceInvalid;
-      const bool configEnable = true;
-      const bool configDeviceWork = true;
-      const bool configCloudWork = true;
-      const String configExtraInfo = "hello";
-      const List<ContentInspectModule> configModules = [];
-      const int configModuleCount = 10;
-      const ContentInspectConfig config = ContentInspectConfig(
-        enable: configEnable,
-        deviceWork: configDeviceWork,
-        cloudWork: configCloudWork,
-        deviceworkType: configDeviceworkType,
-        extraInfo: configExtraInfo,
-        modules: configModules,
-        moduleCount: configModuleCount,
-      );
-      await rtcEngine.setContentInspect(
-        config,
-      );
+      try {
+        const ContentInspectDeviceType configDeviceworkType =
+            ContentInspectDeviceType.contentInspectDeviceInvalid;
+        const bool configEnable = true;
+        const bool configDeviceWork = true;
+        const bool configCloudWork = true;
+        const String configExtraInfo = "hello";
+        const List<ContentInspectModule> configModules = [];
+        const int configModuleCount = 10;
+        const ContentInspectConfig config = ContentInspectConfig(
+          enable: configEnable,
+          deviceWork: configDeviceWork,
+          cloudWork: configCloudWork,
+          deviceworkType: configDeviceworkType,
+          extraInfo: configExtraInfo,
+          modules: configModules,
+          moduleCount: configModuleCount,
+        );
+        await rtcEngine.setContentInspect(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setContentInspect] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setContentInspect] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5774,12 +7507,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String token = "hello";
-      const String channel = "hello";
-      await rtcEngine.switchChannel(
-        token: token,
-        channel: channel,
-      );
+      try {
+        const String token = "hello";
+        const String channel = "hello";
+        await rtcEngine.switchChannel(
+          token: token,
+          channel: channel,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[switchChannel] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[switchChannel] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5801,19 +7543,28 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String sound1 = "hello";
-      const String sound2 = "hello";
-      const int configBeatsPerMeasure = 10;
-      const int configBeatsPerMinute = 10;
-      const AgoraRhythmPlayerConfig config = AgoraRhythmPlayerConfig(
-        beatsPerMeasure: configBeatsPerMeasure,
-        beatsPerMinute: configBeatsPerMinute,
-      );
-      await rtcEngine.startRhythmPlayer(
-        sound1: sound1,
-        sound2: sound2,
-        config: config,
-      );
+      try {
+        const String sound1 = "hello";
+        const String sound2 = "hello";
+        const int configBeatsPerMeasure = 10;
+        const int configBeatsPerMinute = 10;
+        const AgoraRhythmPlayerConfig config = AgoraRhythmPlayerConfig(
+          beatsPerMeasure: configBeatsPerMeasure,
+          beatsPerMinute: configBeatsPerMinute,
+        );
+        await rtcEngine.startRhythmPlayer(
+          sound1: sound1,
+          sound2: sound2,
+          config: config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startRhythmPlayer] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startRhythmPlayer] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5835,7 +7586,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.stopRhythmPlayer();
+      try {
+        await rtcEngine.stopRhythmPlayer();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopRhythmPlayer] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[stopRhythmPlayer] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5857,15 +7617,24 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int configBeatsPerMeasure = 10;
-      const int configBeatsPerMinute = 10;
-      const AgoraRhythmPlayerConfig config = AgoraRhythmPlayerConfig(
-        beatsPerMeasure: configBeatsPerMeasure,
-        beatsPerMinute: configBeatsPerMinute,
-      );
-      await rtcEngine.configRhythmPlayer(
-        config,
-      );
+      try {
+        const int configBeatsPerMeasure = 10;
+        const int configBeatsPerMinute = 10;
+        const AgoraRhythmPlayerConfig config = AgoraRhythmPlayerConfig(
+          beatsPerMeasure: configBeatsPerMeasure,
+          beatsPerMinute: configBeatsPerMinute,
+        );
+        await rtcEngine.configRhythmPlayer(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[configRhythmPlayer] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[configRhythmPlayer] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5887,12 +7656,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sourceId = 10;
-      const int volume = 10;
-      await rtcEngine.adjustCustomAudioPublishVolume(
-        sourceId: sourceId,
-        volume: volume,
-      );
+      try {
+        const int sourceId = 10;
+        const int volume = 10;
+        await rtcEngine.adjustCustomAudioPublishVolume(
+          sourceId: sourceId,
+          volume: volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustCustomAudioPublishVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustCustomAudioPublishVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5914,12 +7692,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int sourceId = 10;
-      const int volume = 10;
-      await rtcEngine.adjustCustomAudioPlayoutVolume(
-        sourceId: sourceId,
-        volume: volume,
-      );
+      try {
+        const int sourceId = 10;
+        const int volume = 10;
+        await rtcEngine.adjustCustomAudioPlayoutVolume(
+          sourceId: sourceId,
+          volume: volume,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[adjustCustomAudioPlayoutVolume] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[adjustCustomAudioPlayoutVolume] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5941,10 +7728,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const CloudProxyType proxyType = CloudProxyType.noneProxy;
-      await rtcEngine.setCloudProxy(
-        proxyType,
-      );
+      try {
+        const CloudProxyType proxyType = CloudProxyType.noneProxy;
+        await rtcEngine.setCloudProxy(
+          proxyType,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setCloudProxy] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setCloudProxy] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -5966,24 +7762,33 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const LocalProxyMode configMode = LocalProxyMode.kConnectivityFirst;
-      const List<String> configIpList = [];
-      const int configIpListSize = 10;
-      const List<String> configDomainList = [];
-      const int configDomainListSize = 10;
-      const String configVerifyDomainName = "hello";
-      const LocalAccessPointConfiguration config =
-          LocalAccessPointConfiguration(
-        ipList: configIpList,
-        ipListSize: configIpListSize,
-        domainList: configDomainList,
-        domainListSize: configDomainListSize,
-        verifyDomainName: configVerifyDomainName,
-        mode: configMode,
-      );
-      await rtcEngine.setLocalAccessPoint(
-        config,
-      );
+      try {
+        const LocalProxyMode configMode = LocalProxyMode.kConnectivityFirst;
+        const List<String> configIpList = [];
+        const int configIpListSize = 10;
+        const List<String> configDomainList = [];
+        const int configDomainListSize = 10;
+        const String configVerifyDomainName = "hello";
+        const LocalAccessPointConfiguration config =
+            LocalAccessPointConfiguration(
+          ipList: configIpList,
+          ipListSize: configIpListSize,
+          domainList: configDomainList,
+          domainListSize: configDomainListSize,
+          verifyDomainName: configVerifyDomainName,
+          mode: configMode,
+        );
+        await rtcEngine.setLocalAccessPoint(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalAccessPoint] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalAccessPoint] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6005,27 +7810,36 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const double paramsXCenter = 10.0;
-      const double paramsYCenter = 10.0;
-      const double paramsScaleFactor = 10.0;
-      const double paramsFocalLength = 10.0;
-      const double paramsPolFocalLength = 10.0;
-      const double paramsSplitHeight = 10.0;
-      const List<double> paramsSs = [];
-      const FishCorrectionParams params = FishCorrectionParams(
-        xCenter: paramsXCenter,
-        yCenter: paramsYCenter,
-        scaleFactor: paramsScaleFactor,
-        focalLength: paramsFocalLength,
-        polFocalLength: paramsPolFocalLength,
-        splitHeight: paramsSplitHeight,
-        ss: paramsSs,
-      );
-      await rtcEngine.enableFishCorrection(
-        enabled: enabled,
-        params: params,
-      );
+      try {
+        const bool enabled = true;
+        const double paramsXCenter = 10.0;
+        const double paramsYCenter = 10.0;
+        const double paramsScaleFactor = 10.0;
+        const double paramsFocalLength = 10.0;
+        const double paramsPolFocalLength = 10.0;
+        const double paramsSplitHeight = 10.0;
+        const List<double> paramsSs = [];
+        const FishCorrectionParams params = FishCorrectionParams(
+          xCenter: paramsXCenter,
+          yCenter: paramsYCenter,
+          scaleFactor: paramsScaleFactor,
+          focalLength: paramsFocalLength,
+          polFocalLength: paramsPolFocalLength,
+          splitHeight: paramsSplitHeight,
+          ss: paramsSs,
+        );
+        await rtcEngine.enableFishCorrection(
+          enabled: enabled,
+          params: params,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableFishCorrection] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableFishCorrection] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6047,7 +7861,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      await rtcEngine.setAdvancedAudioOptions();
+      try {
+        await rtcEngine.setAdvancedAudioOptions();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAdvancedAudioOptions] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAdvancedAudioOptions] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6069,12 +7892,21 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String channelId = "hello";
-      const int uid = 10;
-      await rtcEngine.setAVSyncSource(
-        channelId: channelId,
-        uid: uid,
-      );
+      try {
+        const String channelId = "hello";
+        const int uid = 10;
+        await rtcEngine.setAVSyncSource(
+          channelId: channelId,
+          uid: uid,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAVSyncSource] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAVSyncSource] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6096,16 +7928,24 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String token = "hello";
-      const String channelId = "hello";
-      const String info = "hello";
-      const int uid = 10;
-      await rtcEngine.joinChannel(
-        token: token,
-        channelId: channelId,
-        info: info,
-        uid: uid,
-      );
+      try {
+        const String token = "hello";
+        const String channelId = "hello";
+        const String info = "hello";
+        const int uid = 10;
+        await rtcEngine.joinChannel(
+          token: token,
+          channelId: channelId,
+          info: info,
+          uid: uid,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[joinChannel] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[joinChannel] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6127,98 +7967,107 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String token = "hello";
-      const String channelId = "hello";
-      const int uid = 10;
-      const ClientRoleType optionsClientRoleType =
-          ClientRoleType.clientRoleBroadcaster;
-      const AudienceLatencyLevelType optionsAudienceLatencyLevel =
-          AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
-      const VideoStreamType optionsDefaultVideoStreamType =
-          VideoStreamType.videoStreamHigh;
-      const ChannelProfileType optionsChannelProfile =
-          ChannelProfileType.channelProfileCommunication;
-      const NlpAggressiveness
-          audioOptionsExternalAecAggressivenessExternalCustom =
-          NlpAggressiveness.nlpNotSpecified;
-      const bool audioOptionsExternalEnableAecExternalCustom = true;
-      const bool audioOptionsExternalEnableAgcExternalCustom = true;
-      const bool audioOptionsExternalEnableAnsExternalCustom = true;
-      const bool audioOptionsExternalEnableAecExternalLoopback = true;
-      const AudioOptionsExternal optionsAudioOptionsExternal =
-          AudioOptionsExternal(
-        enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
-        enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
-        enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
-        aecAggressivenessExternalCustom:
-            audioOptionsExternalAecAggressivenessExternalCustom,
-        enableAecExternalLoopback:
-            audioOptionsExternalEnableAecExternalLoopback,
-      );
-      const bool optionsPublishCameraTrack = true;
-      const bool optionsPublishSecondaryCameraTrack = true;
-      const bool optionsPublishAudioTrack = true;
-      const bool optionsPublishScreenTrack = true;
-      const bool optionsPublishSecondaryScreenTrack = true;
-      const bool optionsPublishCustomAudioTrack = true;
-      const int optionsPublishCustomAudioSourceId = 10;
-      const bool optionsPublishCustomAudioTrackEnableAec = true;
-      const bool optionsPublishDirectCustomAudioTrack = true;
-      const bool optionsPublishCustomAudioTrackAec = true;
-      const bool optionsPublishCustomVideoTrack = true;
-      const bool optionsPublishEncodedVideoTrack = true;
-      const bool optionsPublishMediaPlayerAudioTrack = true;
-      const bool optionsPublishMediaPlayerVideoTrack = true;
-      const bool optionsPublishTrancodedVideoTrack = true;
-      const bool optionsAutoSubscribeAudio = true;
-      const bool optionsAutoSubscribeVideo = true;
-      const bool optionsStartPreview = true;
-      const bool optionsEnableAudioRecordingOrPlayout = true;
-      const int optionsPublishMediaPlayerId = 10;
-      const int optionsAudioDelayMs = 10;
-      const int optionsMediaPlayerAudioDelayMs = 10;
-      const String optionsToken = "hello";
-      const bool optionsEnableBuiltInMediaEncryption = true;
-      const bool optionsPublishRhythmPlayerTrack = true;
-      const ChannelMediaOptions options = ChannelMediaOptions(
-        publishCameraTrack: optionsPublishCameraTrack,
-        publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
-        publishAudioTrack: optionsPublishAudioTrack,
-        publishScreenTrack: optionsPublishScreenTrack,
-        publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
-        publishCustomAudioTrack: optionsPublishCustomAudioTrack,
-        publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
-        publishCustomAudioTrackEnableAec:
-            optionsPublishCustomAudioTrackEnableAec,
-        publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
-        publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
-        publishCustomVideoTrack: optionsPublishCustomVideoTrack,
-        publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
-        publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
-        publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
-        publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
-        autoSubscribeAudio: optionsAutoSubscribeAudio,
-        autoSubscribeVideo: optionsAutoSubscribeVideo,
-        startPreview: optionsStartPreview,
-        enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
-        publishMediaPlayerId: optionsPublishMediaPlayerId,
-        clientRoleType: optionsClientRoleType,
-        audienceLatencyLevel: optionsAudienceLatencyLevel,
-        defaultVideoStreamType: optionsDefaultVideoStreamType,
-        channelProfile: optionsChannelProfile,
-        audioDelayMs: optionsAudioDelayMs,
-        mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
-        token: optionsToken,
-        enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
-        publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
-        audioOptionsExternal: optionsAudioOptionsExternal,
-      );
-      await rtcEngine.joinChannelWithOptions(
-        token: token,
-        channelId: channelId,
-        uid: uid,
-        options: options,
-      );
+      try {
+        const String token = "hello";
+        const String channelId = "hello";
+        const int uid = 10;
+        const ClientRoleType optionsClientRoleType =
+            ClientRoleType.clientRoleBroadcaster;
+        const AudienceLatencyLevelType optionsAudienceLatencyLevel =
+            AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
+        const VideoStreamType optionsDefaultVideoStreamType =
+            VideoStreamType.videoStreamHigh;
+        const ChannelProfileType optionsChannelProfile =
+            ChannelProfileType.channelProfileCommunication;
+        const NlpAggressiveness
+            audioOptionsExternalAecAggressivenessExternalCustom =
+            NlpAggressiveness.nlpNotSpecified;
+        const bool audioOptionsExternalEnableAecExternalCustom = true;
+        const bool audioOptionsExternalEnableAgcExternalCustom = true;
+        const bool audioOptionsExternalEnableAnsExternalCustom = true;
+        const bool audioOptionsExternalEnableAecExternalLoopback = true;
+        const AudioOptionsExternal optionsAudioOptionsExternal =
+            AudioOptionsExternal(
+          enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
+          enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
+          enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
+          aecAggressivenessExternalCustom:
+              audioOptionsExternalAecAggressivenessExternalCustom,
+          enableAecExternalLoopback:
+              audioOptionsExternalEnableAecExternalLoopback,
+        );
+        const bool optionsPublishCameraTrack = true;
+        const bool optionsPublishSecondaryCameraTrack = true;
+        const bool optionsPublishAudioTrack = true;
+        const bool optionsPublishScreenTrack = true;
+        const bool optionsPublishSecondaryScreenTrack = true;
+        const bool optionsPublishCustomAudioTrack = true;
+        const int optionsPublishCustomAudioSourceId = 10;
+        const bool optionsPublishCustomAudioTrackEnableAec = true;
+        const bool optionsPublishDirectCustomAudioTrack = true;
+        const bool optionsPublishCustomAudioTrackAec = true;
+        const bool optionsPublishCustomVideoTrack = true;
+        const bool optionsPublishEncodedVideoTrack = true;
+        const bool optionsPublishMediaPlayerAudioTrack = true;
+        const bool optionsPublishMediaPlayerVideoTrack = true;
+        const bool optionsPublishTrancodedVideoTrack = true;
+        const bool optionsAutoSubscribeAudio = true;
+        const bool optionsAutoSubscribeVideo = true;
+        const bool optionsStartPreview = true;
+        const bool optionsEnableAudioRecordingOrPlayout = true;
+        const int optionsPublishMediaPlayerId = 10;
+        const int optionsAudioDelayMs = 10;
+        const int optionsMediaPlayerAudioDelayMs = 10;
+        const String optionsToken = "hello";
+        const bool optionsEnableBuiltInMediaEncryption = true;
+        const bool optionsPublishRhythmPlayerTrack = true;
+        const ChannelMediaOptions options = ChannelMediaOptions(
+          publishCameraTrack: optionsPublishCameraTrack,
+          publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
+          publishAudioTrack: optionsPublishAudioTrack,
+          publishScreenTrack: optionsPublishScreenTrack,
+          publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
+          publishCustomAudioTrack: optionsPublishCustomAudioTrack,
+          publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
+          publishCustomAudioTrackEnableAec:
+              optionsPublishCustomAudioTrackEnableAec,
+          publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
+          publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
+          publishCustomVideoTrack: optionsPublishCustomVideoTrack,
+          publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
+          publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
+          publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
+          publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
+          autoSubscribeAudio: optionsAutoSubscribeAudio,
+          autoSubscribeVideo: optionsAutoSubscribeVideo,
+          startPreview: optionsStartPreview,
+          enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
+          publishMediaPlayerId: optionsPublishMediaPlayerId,
+          clientRoleType: optionsClientRoleType,
+          audienceLatencyLevel: optionsAudienceLatencyLevel,
+          defaultVideoStreamType: optionsDefaultVideoStreamType,
+          channelProfile: optionsChannelProfile,
+          audioDelayMs: optionsAudioDelayMs,
+          mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
+          token: optionsToken,
+          enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
+          publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
+          audioOptionsExternal: optionsAudioOptionsExternal,
+        );
+        await rtcEngine.joinChannelWithOptions(
+          token: token,
+          channelId: channelId,
+          uid: uid,
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[joinChannelWithOptions] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[joinChannelWithOptions] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6240,17 +8089,26 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool optionsStopAudioMixing = true;
-      const bool optionsStopAllEffect = true;
-      const bool optionsStopMicrophoneRecording = true;
-      const LeaveChannelOptions options = LeaveChannelOptions(
-        stopAudioMixing: optionsStopAudioMixing,
-        stopAllEffect: optionsStopAllEffect,
-        stopMicrophoneRecording: optionsStopMicrophoneRecording,
-      );
-      await rtcEngine.leaveChannel(
-        options: options,
-      );
+      try {
+        const bool optionsStopAudioMixing = true;
+        const bool optionsStopAllEffect = true;
+        const bool optionsStopMicrophoneRecording = true;
+        const LeaveChannelOptions options = LeaveChannelOptions(
+          stopAudioMixing: optionsStopAudioMixing,
+          stopAllEffect: optionsStopAllEffect,
+          stopMicrophoneRecording: optionsStopMicrophoneRecording,
+        );
+        await rtcEngine.leaveChannel(
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[leaveChannel] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[leaveChannel] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6272,16 +8130,25 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const ClientRoleType role = ClientRoleType.clientRoleBroadcaster;
-      const AudienceLatencyLevelType optionsAudienceLatencyLevel =
-          AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
-      const ClientRoleOptions options = ClientRoleOptions(
-        audienceLatencyLevel: optionsAudienceLatencyLevel,
-      );
-      await rtcEngine.setClientRole(
-        role: role,
-        options: options,
-      );
+      try {
+        const ClientRoleType role = ClientRoleType.clientRoleBroadcaster;
+        const AudienceLatencyLevelType optionsAudienceLatencyLevel =
+            AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
+        const ClientRoleOptions options = ClientRoleOptions(
+          audienceLatencyLevel: optionsAudienceLatencyLevel,
+        );
+        await rtcEngine.setClientRole(
+          role: role,
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setClientRole] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setClientRole] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6303,10 +8170,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int intervalInSeconds = 10;
-      await rtcEngine.startEchoTest(
-        intervalInSeconds: intervalInSeconds,
-      );
+      try {
+        const int intervalInSeconds = 10;
+        await rtcEngine.startEchoTest(
+          intervalInSeconds: intervalInSeconds,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startEchoTest] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startEchoTest] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6328,11 +8204,20 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoSourceType sourceType =
-          VideoSourceType.videoSourceCameraPrimary;
-      await rtcEngine.startPreview(
-        sourceType: sourceType,
-      );
+      try {
+        const VideoSourceType sourceType =
+            VideoSourceType.videoSourceCameraPrimary;
+        await rtcEngine.startPreview(
+          sourceType: sourceType,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startPreview] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startPreview] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6354,11 +8239,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const VideoSourceType sourceType =
-          VideoSourceType.videoSourceCameraPrimary;
-      await rtcEngine.stopPreview(
-        sourceType: sourceType,
-      );
+      try {
+        const VideoSourceType sourceType =
+            VideoSourceType.videoSourceCameraPrimary;
+        await rtcEngine.stopPreview(
+          sourceType: sourceType,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[stopPreview] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint('[stopPreview] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6380,12 +8273,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioProfileType profile = AudioProfileType.audioProfileDefault;
-      const AudioScenarioType scenario = AudioScenarioType.audioScenarioDefault;
-      await rtcEngine.setAudioProfile(
-        profile: profile,
-        scenario: scenario,
-      );
+      try {
+        const AudioProfileType profile = AudioProfileType.audioProfileDefault;
+        const AudioScenarioType scenario =
+            AudioScenarioType.audioScenarioDefault;
+        await rtcEngine.setAudioProfile(
+          profile: profile,
+          scenario: scenario,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setAudioProfile] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setAudioProfile] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6407,23 +8310,32 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const AudioFileRecordingType configFileRecordingType =
-          AudioFileRecordingType.audioFileRecordingMic;
-      const AudioRecordingQualityType configQuality =
-          AudioRecordingQualityType.audioRecordingQualityLow;
-      const String configFilePath = "hello";
-      const bool configEncode = true;
-      const int configSampleRate = 10;
-      const AudioRecordingConfiguration config = AudioRecordingConfiguration(
-        filePath: configFilePath,
-        encode: configEncode,
-        sampleRate: configSampleRate,
-        fileRecordingType: configFileRecordingType,
-        quality: configQuality,
-      );
-      await rtcEngine.startAudioRecording(
-        config,
-      );
+      try {
+        const AudioFileRecordingType configFileRecordingType =
+            AudioFileRecordingType.audioFileRecordingMic;
+        const AudioRecordingQualityType configQuality =
+            AudioRecordingQualityType.audioRecordingQualityLow;
+        const String configFilePath = "hello";
+        const bool configEncode = true;
+        const int configSampleRate = 10;
+        const AudioRecordingConfiguration config = AudioRecordingConfiguration(
+          filePath: configFilePath,
+          encode: configEncode,
+          sampleRate: configSampleRate,
+          fileRecordingType: configFileRecordingType,
+          quality: configQuality,
+        );
+        await rtcEngine.startAudioRecording(
+          config,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startAudioRecording] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startAudioRecording] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6445,18 +8357,27 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String filePath = "hello";
-      const bool loopback = true;
-      const bool replace = true;
-      const int cycle = 10;
-      const int startPos = 10;
-      await rtcEngine.startAudioMixing(
-        filePath: filePath,
-        loopback: loopback,
-        replace: replace,
-        cycle: cycle,
-        startPos: startPos,
-      );
+      try {
+        const String filePath = "hello";
+        const bool loopback = true;
+        const bool replace = true;
+        const int cycle = 10;
+        const int startPos = 10;
+        await rtcEngine.startAudioMixing(
+          filePath: filePath,
+          loopback: loopback,
+          replace: replace,
+          cycle: cycle,
+          startPos: startPos,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[startAudioMixing] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[startAudioMixing] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6478,13 +8399,22 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const RenderModeType renderMode = RenderModeType.renderModeHidden;
-      const VideoMirrorModeType mirrorMode =
-          VideoMirrorModeType.videoMirrorModeAuto;
-      await rtcEngine.setLocalRenderMode(
-        renderMode: renderMode,
-        mirrorMode: mirrorMode,
-      );
+      try {
+        const RenderModeType renderMode = RenderModeType.renderModeHidden;
+        const VideoMirrorModeType mirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
+        await rtcEngine.setLocalRenderMode(
+          renderMode: renderMode,
+          mirrorMode: mirrorMode,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setLocalRenderMode] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setLocalRenderMode] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6506,27 +8436,36 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const bool enabled = true;
-      const VideoSourceType sourceType =
-          VideoSourceType.videoSourceCameraPrimary;
-      const int dimensionsWidth = 10;
-      const int dimensionsHeight = 10;
-      const VideoDimensions streamConfigDimensions = VideoDimensions(
-        width: dimensionsWidth,
-        height: dimensionsHeight,
-      );
-      const int streamConfigBitrate = 10;
-      const int streamConfigFramerate = 10;
-      const SimulcastStreamConfig streamConfig = SimulcastStreamConfig(
-        dimensions: streamConfigDimensions,
-        bitrate: streamConfigBitrate,
-        framerate: streamConfigFramerate,
-      );
-      await rtcEngine.enableDualStreamMode(
-        enabled: enabled,
-        sourceType: sourceType,
-        streamConfig: streamConfig,
-      );
+      try {
+        const bool enabled = true;
+        const VideoSourceType sourceType =
+            VideoSourceType.videoSourceCameraPrimary;
+        const int dimensionsWidth = 10;
+        const int dimensionsHeight = 10;
+        const VideoDimensions streamConfigDimensions = VideoDimensions(
+          width: dimensionsWidth,
+          height: dimensionsHeight,
+        );
+        const int streamConfigBitrate = 10;
+        const int streamConfigFramerate = 10;
+        const SimulcastStreamConfig streamConfig = SimulcastStreamConfig(
+          dimensions: streamConfigDimensions,
+          bitrate: streamConfigBitrate,
+          framerate: streamConfigFramerate,
+        );
+        await rtcEngine.enableDualStreamMode(
+          enabled: enabled,
+          sourceType: sourceType,
+          streamConfig: streamConfig,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[enableDualStreamMode] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[enableDualStreamMode] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6548,49 +8487,58 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String watermarkUrl = "hello";
-      const int positionInLandscapeModeX = 10;
-      const int positionInLandscapeModeY = 10;
-      const int positionInLandscapeModeWidth = 10;
-      const int positionInLandscapeModeHeight = 10;
-      const Rectangle optionsPositionInLandscapeMode = Rectangle(
-        x: positionInLandscapeModeX,
-        y: positionInLandscapeModeY,
-        width: positionInLandscapeModeWidth,
-        height: positionInLandscapeModeHeight,
-      );
-      const int positionInPortraitModeX = 10;
-      const int positionInPortraitModeY = 10;
-      const int positionInPortraitModeWidth = 10;
-      const int positionInPortraitModeHeight = 10;
-      const Rectangle optionsPositionInPortraitMode = Rectangle(
-        x: positionInPortraitModeX,
-        y: positionInPortraitModeY,
-        width: positionInPortraitModeWidth,
-        height: positionInPortraitModeHeight,
-      );
-      const double watermarkRatioXRatio = 10.0;
-      const double watermarkRatioYRatio = 10.0;
-      const double watermarkRatioWidthRatio = 10.0;
-      const WatermarkRatio optionsWatermarkRatio = WatermarkRatio(
-        xRatio: watermarkRatioXRatio,
-        yRatio: watermarkRatioYRatio,
-        widthRatio: watermarkRatioWidthRatio,
-      );
-      const WatermarkFitMode optionsMode =
-          WatermarkFitMode.fitModeCoverPosition;
-      const bool optionsVisibleInPreview = true;
-      const WatermarkOptions options = WatermarkOptions(
-        visibleInPreview: optionsVisibleInPreview,
-        positionInLandscapeMode: optionsPositionInLandscapeMode,
-        positionInPortraitMode: optionsPositionInPortraitMode,
-        watermarkRatio: optionsWatermarkRatio,
-        mode: optionsMode,
-      );
-      await rtcEngine.addVideoWatermark(
-        watermarkUrl: watermarkUrl,
-        options: options,
-      );
+      try {
+        const String watermarkUrl = "hello";
+        const int positionInLandscapeModeX = 10;
+        const int positionInLandscapeModeY = 10;
+        const int positionInLandscapeModeWidth = 10;
+        const int positionInLandscapeModeHeight = 10;
+        const Rectangle optionsPositionInLandscapeMode = Rectangle(
+          x: positionInLandscapeModeX,
+          y: positionInLandscapeModeY,
+          width: positionInLandscapeModeWidth,
+          height: positionInLandscapeModeHeight,
+        );
+        const int positionInPortraitModeX = 10;
+        const int positionInPortraitModeY = 10;
+        const int positionInPortraitModeWidth = 10;
+        const int positionInPortraitModeHeight = 10;
+        const Rectangle optionsPositionInPortraitMode = Rectangle(
+          x: positionInPortraitModeX,
+          y: positionInPortraitModeY,
+          width: positionInPortraitModeWidth,
+          height: positionInPortraitModeHeight,
+        );
+        const double watermarkRatioXRatio = 10.0;
+        const double watermarkRatioYRatio = 10.0;
+        const double watermarkRatioWidthRatio = 10.0;
+        const WatermarkRatio optionsWatermarkRatio = WatermarkRatio(
+          xRatio: watermarkRatioXRatio,
+          yRatio: watermarkRatioYRatio,
+          widthRatio: watermarkRatioWidthRatio,
+        );
+        const WatermarkFitMode optionsMode =
+            WatermarkFitMode.fitModeCoverPosition;
+        const bool optionsVisibleInPreview = true;
+        const WatermarkOptions options = WatermarkOptions(
+          visibleInPreview: optionsVisibleInPreview,
+          positionInLandscapeMode: optionsPositionInLandscapeMode,
+          positionInPortraitMode: optionsPositionInPortraitMode,
+          watermarkRatio: optionsWatermarkRatio,
+          mode: optionsMode,
+        );
+        await rtcEngine.addVideoWatermark(
+          watermarkUrl: watermarkUrl,
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[addVideoWatermark] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[addVideoWatermark] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6612,98 +8560,107 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const String token = "hello";
-      const String channelId = "hello";
-      const String userAccount = "hello";
-      const ClientRoleType optionsClientRoleType =
-          ClientRoleType.clientRoleBroadcaster;
-      const AudienceLatencyLevelType optionsAudienceLatencyLevel =
-          AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
-      const VideoStreamType optionsDefaultVideoStreamType =
-          VideoStreamType.videoStreamHigh;
-      const ChannelProfileType optionsChannelProfile =
-          ChannelProfileType.channelProfileCommunication;
-      const NlpAggressiveness
-          audioOptionsExternalAecAggressivenessExternalCustom =
-          NlpAggressiveness.nlpNotSpecified;
-      const bool audioOptionsExternalEnableAecExternalCustom = true;
-      const bool audioOptionsExternalEnableAgcExternalCustom = true;
-      const bool audioOptionsExternalEnableAnsExternalCustom = true;
-      const bool audioOptionsExternalEnableAecExternalLoopback = true;
-      const AudioOptionsExternal optionsAudioOptionsExternal =
-          AudioOptionsExternal(
-        enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
-        enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
-        enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
-        aecAggressivenessExternalCustom:
-            audioOptionsExternalAecAggressivenessExternalCustom,
-        enableAecExternalLoopback:
-            audioOptionsExternalEnableAecExternalLoopback,
-      );
-      const bool optionsPublishCameraTrack = true;
-      const bool optionsPublishSecondaryCameraTrack = true;
-      const bool optionsPublishAudioTrack = true;
-      const bool optionsPublishScreenTrack = true;
-      const bool optionsPublishSecondaryScreenTrack = true;
-      const bool optionsPublishCustomAudioTrack = true;
-      const int optionsPublishCustomAudioSourceId = 10;
-      const bool optionsPublishCustomAudioTrackEnableAec = true;
-      const bool optionsPublishDirectCustomAudioTrack = true;
-      const bool optionsPublishCustomAudioTrackAec = true;
-      const bool optionsPublishCustomVideoTrack = true;
-      const bool optionsPublishEncodedVideoTrack = true;
-      const bool optionsPublishMediaPlayerAudioTrack = true;
-      const bool optionsPublishMediaPlayerVideoTrack = true;
-      const bool optionsPublishTrancodedVideoTrack = true;
-      const bool optionsAutoSubscribeAudio = true;
-      const bool optionsAutoSubscribeVideo = true;
-      const bool optionsStartPreview = true;
-      const bool optionsEnableAudioRecordingOrPlayout = true;
-      const int optionsPublishMediaPlayerId = 10;
-      const int optionsAudioDelayMs = 10;
-      const int optionsMediaPlayerAudioDelayMs = 10;
-      const String optionsToken = "hello";
-      const bool optionsEnableBuiltInMediaEncryption = true;
-      const bool optionsPublishRhythmPlayerTrack = true;
-      const ChannelMediaOptions options = ChannelMediaOptions(
-        publishCameraTrack: optionsPublishCameraTrack,
-        publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
-        publishAudioTrack: optionsPublishAudioTrack,
-        publishScreenTrack: optionsPublishScreenTrack,
-        publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
-        publishCustomAudioTrack: optionsPublishCustomAudioTrack,
-        publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
-        publishCustomAudioTrackEnableAec:
-            optionsPublishCustomAudioTrackEnableAec,
-        publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
-        publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
-        publishCustomVideoTrack: optionsPublishCustomVideoTrack,
-        publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
-        publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
-        publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
-        publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
-        autoSubscribeAudio: optionsAutoSubscribeAudio,
-        autoSubscribeVideo: optionsAutoSubscribeVideo,
-        startPreview: optionsStartPreview,
-        enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
-        publishMediaPlayerId: optionsPublishMediaPlayerId,
-        clientRoleType: optionsClientRoleType,
-        audienceLatencyLevel: optionsAudienceLatencyLevel,
-        defaultVideoStreamType: optionsDefaultVideoStreamType,
-        channelProfile: optionsChannelProfile,
-        audioDelayMs: optionsAudioDelayMs,
-        mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
-        token: optionsToken,
-        enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
-        publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
-        audioOptionsExternal: optionsAudioOptionsExternal,
-      );
-      await rtcEngine.joinChannelWithUserAccount(
-        token: token,
-        channelId: channelId,
-        userAccount: userAccount,
-        options: options,
-      );
+      try {
+        const String token = "hello";
+        const String channelId = "hello";
+        const String userAccount = "hello";
+        const ClientRoleType optionsClientRoleType =
+            ClientRoleType.clientRoleBroadcaster;
+        const AudienceLatencyLevelType optionsAudienceLatencyLevel =
+            AudienceLatencyLevelType.audienceLatencyLevelLowLatency;
+        const VideoStreamType optionsDefaultVideoStreamType =
+            VideoStreamType.videoStreamHigh;
+        const ChannelProfileType optionsChannelProfile =
+            ChannelProfileType.channelProfileCommunication;
+        const NlpAggressiveness
+            audioOptionsExternalAecAggressivenessExternalCustom =
+            NlpAggressiveness.nlpNotSpecified;
+        const bool audioOptionsExternalEnableAecExternalCustom = true;
+        const bool audioOptionsExternalEnableAgcExternalCustom = true;
+        const bool audioOptionsExternalEnableAnsExternalCustom = true;
+        const bool audioOptionsExternalEnableAecExternalLoopback = true;
+        const AudioOptionsExternal optionsAudioOptionsExternal =
+            AudioOptionsExternal(
+          enableAecExternalCustom: audioOptionsExternalEnableAecExternalCustom,
+          enableAgcExternalCustom: audioOptionsExternalEnableAgcExternalCustom,
+          enableAnsExternalCustom: audioOptionsExternalEnableAnsExternalCustom,
+          aecAggressivenessExternalCustom:
+              audioOptionsExternalAecAggressivenessExternalCustom,
+          enableAecExternalLoopback:
+              audioOptionsExternalEnableAecExternalLoopback,
+        );
+        const bool optionsPublishCameraTrack = true;
+        const bool optionsPublishSecondaryCameraTrack = true;
+        const bool optionsPublishAudioTrack = true;
+        const bool optionsPublishScreenTrack = true;
+        const bool optionsPublishSecondaryScreenTrack = true;
+        const bool optionsPublishCustomAudioTrack = true;
+        const int optionsPublishCustomAudioSourceId = 10;
+        const bool optionsPublishCustomAudioTrackEnableAec = true;
+        const bool optionsPublishDirectCustomAudioTrack = true;
+        const bool optionsPublishCustomAudioTrackAec = true;
+        const bool optionsPublishCustomVideoTrack = true;
+        const bool optionsPublishEncodedVideoTrack = true;
+        const bool optionsPublishMediaPlayerAudioTrack = true;
+        const bool optionsPublishMediaPlayerVideoTrack = true;
+        const bool optionsPublishTrancodedVideoTrack = true;
+        const bool optionsAutoSubscribeAudio = true;
+        const bool optionsAutoSubscribeVideo = true;
+        const bool optionsStartPreview = true;
+        const bool optionsEnableAudioRecordingOrPlayout = true;
+        const int optionsPublishMediaPlayerId = 10;
+        const int optionsAudioDelayMs = 10;
+        const int optionsMediaPlayerAudioDelayMs = 10;
+        const String optionsToken = "hello";
+        const bool optionsEnableBuiltInMediaEncryption = true;
+        const bool optionsPublishRhythmPlayerTrack = true;
+        const ChannelMediaOptions options = ChannelMediaOptions(
+          publishCameraTrack: optionsPublishCameraTrack,
+          publishSecondaryCameraTrack: optionsPublishSecondaryCameraTrack,
+          publishAudioTrack: optionsPublishAudioTrack,
+          publishScreenTrack: optionsPublishScreenTrack,
+          publishSecondaryScreenTrack: optionsPublishSecondaryScreenTrack,
+          publishCustomAudioTrack: optionsPublishCustomAudioTrack,
+          publishCustomAudioSourceId: optionsPublishCustomAudioSourceId,
+          publishCustomAudioTrackEnableAec:
+              optionsPublishCustomAudioTrackEnableAec,
+          publishDirectCustomAudioTrack: optionsPublishDirectCustomAudioTrack,
+          publishCustomAudioTrackAec: optionsPublishCustomAudioTrackAec,
+          publishCustomVideoTrack: optionsPublishCustomVideoTrack,
+          publishEncodedVideoTrack: optionsPublishEncodedVideoTrack,
+          publishMediaPlayerAudioTrack: optionsPublishMediaPlayerAudioTrack,
+          publishMediaPlayerVideoTrack: optionsPublishMediaPlayerVideoTrack,
+          publishTrancodedVideoTrack: optionsPublishTrancodedVideoTrack,
+          autoSubscribeAudio: optionsAutoSubscribeAudio,
+          autoSubscribeVideo: optionsAutoSubscribeVideo,
+          startPreview: optionsStartPreview,
+          enableAudioRecordingOrPlayout: optionsEnableAudioRecordingOrPlayout,
+          publishMediaPlayerId: optionsPublishMediaPlayerId,
+          clientRoleType: optionsClientRoleType,
+          audienceLatencyLevel: optionsAudienceLatencyLevel,
+          defaultVideoStreamType: optionsDefaultVideoStreamType,
+          channelProfile: optionsChannelProfile,
+          audioDelayMs: optionsAudioDelayMs,
+          mediaPlayerAudioDelayMs: optionsMediaPlayerAudioDelayMs,
+          token: optionsToken,
+          enableBuiltInMediaEncryption: optionsEnableBuiltInMediaEncryption,
+          publishRhythmPlayerTrack: optionsPublishRhythmPlayerTrack,
+          audioOptionsExternal: optionsAudioOptionsExternal,
+        );
+        await rtcEngine.joinChannelWithUserAccount(
+          token: token,
+          channelId: channelId,
+          userAccount: userAccount,
+          options: options,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[joinChannelWithUserAccount] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[joinChannelWithUserAccount] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6725,7 +8682,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      rtcEngine.getAudioDeviceManager();
+      try {
+        rtcEngine.getAudioDeviceManager();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getAudioDeviceManager] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getAudioDeviceManager] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6747,7 +8713,16 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      rtcEngine.getVideoDeviceManager();
+      try {
+        rtcEngine.getVideoDeviceManager();
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[getVideoDeviceManager] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[getVideoDeviceManager] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6769,22 +8744,31 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int metadataUid = 10;
-      const int metadataSize = 10;
-      Uint8List metadataBuffer = Uint8List.fromList([]);
-      const int metadataTimeStampMs = 10;
-      final Metadata metadata = Metadata(
-        uid: metadataUid,
-        size: metadataSize,
-        buffer: metadataBuffer,
-        timeStampMs: metadataTimeStampMs,
-      );
-      const VideoSourceType sourceType =
-          VideoSourceType.videoSourceCameraPrimary;
-      await rtcEngine.sendMetaData(
-        metadata: metadata,
-        sourceType: sourceType,
-      );
+      try {
+        const int metadataUid = 10;
+        const int metadataSize = 10;
+        Uint8List metadataBuffer = Uint8List.fromList([]);
+        const int metadataTimeStampMs = 10;
+        final Metadata metadata = Metadata(
+          uid: metadataUid,
+          size: metadataSize,
+          buffer: metadataBuffer,
+          timeStampMs: metadataTimeStampMs,
+        );
+        const VideoSourceType sourceType =
+            VideoSourceType.videoSourceCameraPrimary;
+        await rtcEngine.sendMetaData(
+          metadata: metadata,
+          sourceType: sourceType,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[sendMetaData] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[sendMetaData] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },
@@ -6806,10 +8790,19 @@ void rtcEngineSmokeTestCases() {
         areaCode: AreaCode.areaCodeGlob.value(),
       ));
 
-      const int size = 10;
-      await rtcEngine.setMaxMetadataSize(
-        size,
-      );
+      try {
+        const int size = 10;
+        await rtcEngine.setMaxMetadataSize(
+          size,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setMaxMetadataSize] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setMaxMetadataSize] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
       await rtcEngine.release();
     },

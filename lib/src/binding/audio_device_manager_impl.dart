@@ -62,8 +62,12 @@ class AudioDeviceManagerImpl implements AudioDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final deviceIdResult = rm['deviceId'];
-    return deviceIdResult as String;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getPlaybackDeviceJson =
+        AudioDeviceManagerGetPlaybackDeviceJson.fromJson(rm);
+    return getPlaybackDeviceJson.deviceId;
   }
 
   @override
@@ -107,8 +111,12 @@ class AudioDeviceManagerImpl implements AudioDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final volumeResult = rm['volume'];
-    return volumeResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getPlaybackDeviceVolumeJson =
+        AudioDeviceManagerGetPlaybackDeviceVolumeJson.fromJson(rm);
+    return getPlaybackDeviceVolumeJson.volume;
   }
 
   @override
@@ -138,8 +146,12 @@ class AudioDeviceManagerImpl implements AudioDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final deviceIdResult = rm['deviceId'];
-    return deviceIdResult as String;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getRecordingDeviceJson =
+        AudioDeviceManagerGetRecordingDeviceJson.fromJson(rm);
+    return getRecordingDeviceJson.deviceId;
   }
 
   @override
@@ -183,8 +195,12 @@ class AudioDeviceManagerImpl implements AudioDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final volumeResult = rm['volume'];
-    return volumeResult as int;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getRecordingDeviceVolumeJson =
+        AudioDeviceManagerGetRecordingDeviceVolumeJson.fromJson(rm);
+    return getRecordingDeviceVolumeJson.volume;
   }
 
   @override
@@ -214,8 +230,12 @@ class AudioDeviceManagerImpl implements AudioDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final muteResult = rm['mute'];
-    return muteResult as bool;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getPlaybackDeviceMuteJson =
+        AudioDeviceManagerGetPlaybackDeviceMuteJson.fromJson(rm);
+    return getPlaybackDeviceMuteJson.mute;
   }
 
   @override
@@ -245,8 +265,12 @@ class AudioDeviceManagerImpl implements AudioDeviceManager {
     }
     final rm = callApiResult.data;
     final result = rm['result'];
-    final muteResult = rm['mute'];
-    return muteResult as bool;
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getRecordingDeviceMuteJson =
+        AudioDeviceManagerGetRecordingDeviceMuteJson.fromJson(rm);
+    return getRecordingDeviceMuteJson.mute;
   }
 
   @override

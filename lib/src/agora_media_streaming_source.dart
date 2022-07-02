@@ -50,6 +50,12 @@ enum StreamingSrcErr {
 }
 
 extension StreamingSrcErrExt on StreamingSrcErr {
+  /// @nodoc
+  static StreamingSrcErr fromValue(int value) {
+    return $enumDecode(_$StreamingSrcErrEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$StreamingSrcErrEnumMap[this]!;
   }
@@ -74,6 +80,12 @@ enum StreamingSrcState {
 }
 
 extension StreamingSrcStateExt on StreamingSrcState {
+  /// @nodoc
+  static StreamingSrcState fromValue(int value) {
+    return $enumDecode(_$StreamingSrcStateEnumMap, value);
+  }
+
+  /// @nodoc
   int value() {
     return _$StreamingSrcStateEnumMap[this]!;
   }

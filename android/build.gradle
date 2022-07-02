@@ -39,7 +39,10 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-    //    main.jniLibs.srcDirs += 'libs'
+        
+        if (isDev(project)) {
+           main.jniLibs.srcDirs += 'libs'
+        }
     }
 
     defaultConfig {
@@ -50,8 +53,16 @@ android {
 }
 
 dependencies {
-    // implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+  if (isDev(project)) {
+    api fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+  } else {
+     api 'io.agora.rtc:iris-rtc-beta:3.8.201.3' 
+  }
+   
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
 
-    api 'io.agora.rtc:iris-rtc-beta:3.8.201.3' 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+static boolean isDev(Project project) {
+  def devFile = project.file('.plugin_dev')
+  return devFile.exists()
 }
