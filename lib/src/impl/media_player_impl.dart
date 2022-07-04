@@ -21,7 +21,9 @@ import 'video_view_controller_impl.dart';
 class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
     with VideoViewControllerBaseMixin
     implements MediaPlayer, MediaPlayerController, IrisEventHandler {
-  MediaPlayerImpl._(this._mediaPlayerId);
+  MediaPlayerImpl._(this._mediaPlayerId) {
+    apiCaller.addEventHandler(this);
+  }
 
   // static MediaPlayerImpl? _instance;
 
@@ -34,10 +36,27 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
 
     final instance = MediaPlayerImpl._(mediaPlayerId);
     // apiCaller.setupIrisMediaPlayerEventHandlerIfNeed();
-    apiCaller.addEventHandler(instance);
+
     // _mediaPlayerId = super.getMediaPlayerId();
 
     return instance;
+  }
+
+  static Future<MediaPlayerController> createMediaPlayerController({
+    required RtcEngine rtcEngine,
+    required VideoCanvas canvas,
+    bool useFlutterTexture = false,
+    bool useAndroidSurfaceView = false,
+  }) async {
+    final mp = await rtcEngine.createMediaPlayer();
+    final mediaPlayer = mp as MediaPlayerImpl;
+    mediaPlayer.rtcEngine = rtcEngine;
+    mediaPlayer.canvas = canvas;
+    mediaPlayer.connection = null;
+    mediaPlayer.useFlutterTexture = useFlutterTexture;
+    mediaPlayer.useAndroidSurfaceView = useAndroidSurfaceView;
+
+    return mediaPlayer;
   }
 
   @protected
