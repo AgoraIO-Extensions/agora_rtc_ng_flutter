@@ -18,7 +18,7 @@ dependencies:
   iris_event:
     git:
       url: https://github.com/AgoraIO-Community/agora_rtc_ng_flutter.git
-      path: iris_event
+      path: internal/packages/iris_event
       ref: dev/6.0.0
 
 
