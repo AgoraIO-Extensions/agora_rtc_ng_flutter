@@ -65,9 +65,6 @@ EXPORT void OnEvent(const char *event,
         type_data_array[i] = cbuffer;
     }
 
-    // elements[0] = &cstream_id;
-    // elements[1] = &cbytes;
-
     Dart_CObject dbuffer;
     dbuffer.type = Dart_CObject_kArray;
     dbuffer.value.as_array.length = buffer_count;
@@ -89,14 +86,3 @@ EXPORT void OnEvent(const char *event,
     }
     delete[] type_data_array;
 }
-
-// DART_EXPORT void OnEventWithBuffer(const char *event,
-//                        const char *data,
-//                        const void *buffer,
-//                        unsigned int length)
-// {
-//     if (dart_send_port_ == -1)
-//     {
-//         return;
-//     }
-// }

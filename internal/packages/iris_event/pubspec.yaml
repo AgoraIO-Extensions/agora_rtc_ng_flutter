@@ -1,6 +1,6 @@
 name: iris_event
-description: A new flutter plugin project.
-version: 0.0.1
+description: iris_event is a bridge of iris event handling, which is used internally, NOTE that you should not use it.
+version: 1.0.0
 homepage:
 
 environment:
