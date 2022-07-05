@@ -82,7 +82,6 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
 
 set(BUNDLED_LIBRARIES
   "${IRIS_SDK_BIN_PATH}/AgoraRtcWrapper.dll"
-  "${RTC_SDK_BIN_PATH}/agora_rtc_sdk.lib"
   )
 
 file(GLOB RTC_DLLS ${RTC_SDK_BIN_PATH}/*.dll)
@@ -91,6 +90,13 @@ foreach (RTC_DLL ${RTC_DLLS})
     
     list(APPEND BUNDLED_LIBRARIES ${RTC_DLL})
 endforeach (RTC_DLL ${RTC_DLLS})
+
+file(GLOB RTC_LIBS ${RTC_SDK_BIN_PATH}/*.lib)
+foreach (RTC_LIB ${RTC_LIBS})
+    message("Add bundled library: ${RTC_LIB}")
+    
+    list(APPEND BUNDLED_LIBRARIES ${RTC_LIB})
+endforeach (RTC_LIB ${RTC_LIBS})
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
