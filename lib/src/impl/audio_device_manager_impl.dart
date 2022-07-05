@@ -46,7 +46,7 @@ class AudioDeviceManagerImpl extends audio_device_manager_impl_binding
     final result = rm['result'];
 
     final List<AudioDeviceInfo> deviceInfoList = [];
-    deviceInfoList.fill(result);
+    deviceInfoList.fill(rm);
 
     return deviceInfoList;
   }
@@ -64,7 +64,7 @@ class AudioDeviceManagerImpl extends audio_device_manager_impl_binding
     final result = rm['result'];
 
     final List<AudioDeviceInfo> deviceInfoList = [];
-    deviceInfoList.fill(result);
+    deviceInfoList.fill(rm);
 
     return deviceInfoList;
   }
@@ -81,7 +81,7 @@ class AudioDeviceManagerImpl extends audio_device_manager_impl_binding
     final rm = callApiResult.data;
     final result = rm['result'];
 
-    return AudioDeviceInfo.fromJson(result);
+    return AudioDeviceInfo.fromJson(rm);
   }
 
   @override
@@ -96,7 +96,7 @@ class AudioDeviceManagerImpl extends audio_device_manager_impl_binding
     final rm = callApiResult.data;
     final result = rm['result'];
 
-    return AudioDeviceInfo.fromJson(result);
+    return AudioDeviceInfo.fromJson(rm);
   }
 
   @override

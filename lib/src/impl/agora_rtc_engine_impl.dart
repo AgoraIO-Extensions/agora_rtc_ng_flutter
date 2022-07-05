@@ -531,7 +531,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<void> stopDirectCdnStreaming() async {
-    super.stopDirectCdnStreaming();
+    await super.stopDirectCdnStreaming();
 
     _directCdnStreamingEventHandler = null;
   }

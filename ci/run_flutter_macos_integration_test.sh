@@ -18,5 +18,5 @@ for filename in integration_test/*.dart; do
     if [[ "$filename" == *.generated.dart  ]]; then
         continue
     fi
-    flutter test $filename --dart-define=TEST_APP_ID="${TEST_APP_ID}"
+    flutter test $filename --dart-define=TEST_APP_ID="${TEST_APP_ID}" -d macos
 done
