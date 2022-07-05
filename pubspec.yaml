@@ -1,6 +1,7 @@
 name: agora_rtc_ng
-description: A new flutter plugin project.
-version: 0.0.1
+description: Flutter plugin of Agora RTC SDK, allow you to simply integrate Agora Video
+  Calling or Live Video Streaming to your app with just a few lines of code.
+version: 6.0.0
 homepage:
 
 environment:
