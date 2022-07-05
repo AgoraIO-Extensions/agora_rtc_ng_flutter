@@ -2,7 +2,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// RtmpStreaming Example
@@ -24,7 +23,6 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
   late TextEditingController _rtmpUrlController;
   bool _isStreaming = false;
   int _remoteUid = 0;
-  // late RtcVideoViewController _localVideoController;
 
   @override
   void initState() {
@@ -51,12 +49,6 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
       appId: config.appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
-
-    // _localVideoController = RtcVideoViewController(
-    //   canvas: const VideoCanvas(uid: 0),
-    //   channelId: _channelIdController!.text,
-    // );
-    // await _localVideoController.initialize(_engine);
 
     _engine.registerEventHandler(RtcEngineEventHandler(
       onWarning: (warn, msg) {
@@ -195,12 +187,10 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
         if (!_isReadyPreview) return Container();
         return Stack(
           children: [
-            Container(
-              child: AgoraVideoView(
-                controller: VideoViewController(
-                  rtcEngine: _engine,
-                  canvas: VideoCanvas(uid: 0),
-                ),
+            AgoraVideoView(
+              controller: VideoViewController(
+                rtcEngine: _engine,
+                canvas: const VideoCanvas(uid: 0),
               ),
             ),
             if (_remoteUid != 0)

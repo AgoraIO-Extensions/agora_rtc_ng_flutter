@@ -6,7 +6,6 @@ import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 
@@ -45,7 +44,6 @@ class _State extends State<TakeSnapshot> {
   }
 
   Future<void> _dispose() async {
-    // await _localVideoController.dispose();
     await _engine.release();
   }
 

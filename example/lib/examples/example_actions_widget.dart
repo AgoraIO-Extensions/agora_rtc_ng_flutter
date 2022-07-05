@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 typedef ExampleActionsBuilder = Widget Function(
     BuildContext context, bool isLayoutHorizontal);
@@ -29,7 +27,7 @@ class ExampleActionsWidget extends StatelessWidget {
       return displayContentBuilder(context, isLayoutHorizontal);
     }
 
-    final actionsTitle = Text(
+    const actionsTitle = Text(
       'Actions',
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
     );
@@ -44,7 +42,7 @@ class ExampleActionsWidget extends StatelessWidget {
             flex: 1,
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.fromLTRB(16, 24, 16, 24),
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -73,7 +71,7 @@ class ExampleActionsWidget extends StatelessWidget {
       children: [
         SizedBox.expand(
           child: Container(
-            padding: EdgeInsets.only(bottom: 150),
+            padding: const EdgeInsets.only(bottom: 150),
             child: displayContentBuilder(context, isLayoutHorizontal),
           ),
         ),
@@ -95,7 +93,7 @@ class ExampleActionsWidget extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   ]),
-              padding: EdgeInsets.fromLTRB(16, 24, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
               child: SingleChildScrollView(
                 controller: scrollController,
                 child: Column(

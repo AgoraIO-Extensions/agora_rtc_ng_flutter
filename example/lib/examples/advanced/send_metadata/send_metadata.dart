@@ -5,7 +5,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// StreamMessage Example
@@ -24,7 +23,6 @@ class _State extends State<SendMetadata> {
   Set<int> remoteUids = {};
   late final TextEditingController _channelIdController;
   final TextEditingController _controller = TextEditingController();
-  // late RtcVideoViewController _localVideoController;
 
   @override
   void initState() {
@@ -41,7 +39,6 @@ class _State extends State<SendMetadata> {
   }
 
   Future<void> _dispose() async {
-    // await _localVideoController.dispose();
     _engine.release();
   }
 
@@ -51,12 +48,6 @@ class _State extends State<SendMetadata> {
       appId: config.appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
-
-    // _localVideoController = RtcVideoViewController(
-    //   canvas: const VideoCanvas(uid: 0),
-    //   channelId: _controller.text,
-    // );
-    // await _localVideoController.initialize(_engine);
 
     _engine.registerEventHandler(RtcEngineEventHandler(
       onWarning: (warn, msg) {
@@ -152,16 +143,12 @@ class _State extends State<SendMetadata> {
     }
 
     try {
-      // final streamId = await _engine.createDataStream2(
-      //     DataStreamConfig(syncWithAudio: false, ordered: false));
       final data = Uint8List.fromList(utf8.encode(_controller.text));
 
       await _engine.sendMetaData(
           metadata: Metadata(buffer: data, size: data.length),
           sourceType: VideoSourceType.videoSourceCamera);
 
-      // _engine.sendStreamMessage(
-      //     streamId: streamId, data: data, length: data.length);
       _controller.clear();
     } catch (e) {
       logSink.log('sendMetaData error: ${e.toString()}');
@@ -190,7 +177,7 @@ class _State extends State<SendMetadata> {
           children: [
             AgoraVideoView(
               controller: VideoViewController(
-                  rtcEngine: _engine, canvas: VideoCanvas(uid: 0)),
+                  rtcEngine: _engine, canvas: const VideoCanvas(uid: 0)),
             ),
             Align(
               alignment: Alignment.topLeft,
@@ -241,38 +228,5 @@ class _State extends State<SendMetadata> {
         );
       },
     );
-  }
-
-  Widget _renderVideo() {
-    final views = <Widget>[
-      SizedBox(
-        height: 120,
-        width: 120,
-        child: AgoraVideoView(
-          controller: VideoViewController(
-              rtcEngine: _engine, canvas: VideoCanvas(uid: 0)),
-        ),
-      ),
-    ];
-    if (remoteUids.isNotEmpty) {
-      views.addAll(remoteUids.map((uid) {
-        return SizedBox(
-          height: 120,
-          width: 120,
-          child: AgoraVideoView(
-            controller: VideoViewController.remote(
-              rtcEngine: _engine,
-              canvas: VideoCanvas(uid: uid),
-              connection: RtcConnection(channelId: _controller.text),
-            ),
-          ),
-        );
-      }));
-    } else {
-      views.add(Container(
-        color: Colors.grey[200],
-      ));
-    }
-    return Wrap(children: views);
   }
 }

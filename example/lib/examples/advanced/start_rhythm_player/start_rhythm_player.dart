@@ -1,12 +1,10 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,20 +23,17 @@ class _State extends State<StartRhythmPlayer> {
   late final RtcEngine _engine;
 
   bool isJoined = false;
-  late TextEditingController _controller0, _remoteUidController;
+  late TextEditingController _controller0;
 
   final Set<int> _remoteUids = {};
-  int _selectedRemoteUid = 0;
 
   double _beatsPerMeasure = 4;
   double _beatsPerMinute = 60;
-  bool _isStaredRhythmPlayer = false;
 
   @override
   void initState() {
     super.initState();
     _controller0 = TextEditingController(text: config.channelId);
-    _remoteUidController = TextEditingController(text: '0');
     _initEngine();
   }
 
@@ -142,7 +137,6 @@ class _State extends State<StartRhythmPlayer> {
     await _engine.stopRhythmPlayer();
     await _engine.leaveChannel();
     setState(() {
-      _isStaredRhythmPlayer = false;
       _beatsPerMeasure = 4;
       _beatsPerMinute = 60;
     });

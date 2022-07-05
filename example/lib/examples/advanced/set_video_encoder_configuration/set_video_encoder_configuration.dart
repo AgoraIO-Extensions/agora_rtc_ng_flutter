@@ -2,9 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 /// SetVideoEncoderConfiguration Example
 class SetVideoEncoderConfiguration extends StatefulWidget {
@@ -23,9 +21,9 @@ class _SetVideoEncoderConfigurationState
   bool isJoined = false;
   bool switchCamera = true;
   late TextEditingController _channelIdController;
-  int _remoteUid = 0;
+  final int _remoteUid = 0;
   int _selectedDimensionIndex = 0;
-  List<VideoDimensions> dimensions = [
+  List<VideoDimensions> dimensions = const [
     VideoDimensions(width: 640, height: 480),
     VideoDimensions(width: 480, height: 480),
     VideoDimensions(width: 480, height: 240),
@@ -130,7 +128,7 @@ class _SetVideoEncoderConfigurationState
         value: i,
         child: Text(
           'width: ${e.width}, height: ${e.height}',
-          style: TextStyle(fontSize: 13),
+          style: const TextStyle(fontSize: 13),
         ),
       ));
     }
@@ -140,11 +138,10 @@ class _SetVideoEncoderConfigurationState
         if (!_isReadyPreview) return Container();
         return Stack(
           children: [
-            Container(
-                child: AgoraVideoView(
+            AgoraVideoView(
               controller: VideoViewController(
-                  rtcEngine: _engine, canvas: VideoCanvas(uid: 0)),
-            )),
+                  rtcEngine: _engine, canvas: const VideoCanvas(uid: 0)),
+            ),
             if (_remoteUid != 0)
               Align(
                 alignment: Alignment.topLeft,
@@ -204,35 +201,6 @@ class _SetVideoEncoderConfigurationState
           ],
         );
       },
-    );
-  }
-
-  Widget _renderVideo() {
-    return Expanded(
-      child: Stack(
-        children: [
-          Container(
-              child: AgoraVideoView(
-            controller: VideoViewController(
-                rtcEngine: _engine, canvas: VideoCanvas(uid: 0)),
-          )),
-          if (_remoteUid != 0)
-            Align(
-              alignment: Alignment.topLeft,
-              child: SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: AgoraVideoView(
-                    controller: VideoViewController.remote(
-                      rtcEngine: _engine,
-                      canvas: VideoCanvas(uid: _remoteUid),
-                      connection:
-                          RtcConnection(channelId: _channelIdController.text),
-                    ),
-                  )),
-            ),
-        ],
-      ),
     );
   }
 }

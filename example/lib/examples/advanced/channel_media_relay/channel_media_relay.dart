@@ -2,7 +2,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// ChannelMediaRelay Example
@@ -18,12 +17,11 @@ class _State extends State<ChannelMediaRelay> {
   late final RtcEngine _engine;
   bool _isReadyPreview = false;
   bool isJoined = false;
-  int _myUid = 1000;
+  final int _myUid = 1000;
   int? remoteUid;
   bool isRelaying = false;
   late final TextEditingController _channelMediaRelayController;
   late final TextEditingController _channelController;
-  // late RtcVideoViewController _localVideoController;
 
   @override
   void initState() {
@@ -40,7 +38,6 @@ class _State extends State<ChannelMediaRelay> {
   }
 
   Future<void> _dispose() async {
-    // await _localVideoController.dispose();
     await _engine.leaveChannel();
     await _engine.release();
   }
@@ -51,12 +48,6 @@ class _State extends State<ChannelMediaRelay> {
       appId: config.appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
-
-    // _localVideoController = RtcVideoViewController(
-    //   canvas: const VideoCanvas(uid: 0),
-    //   channelId: _channelController.text,
-    // );
-    // await _localVideoController.initialize(await _engine);
 
     _engine.registerEventHandler(RtcEngineEventHandler(
       onWarning: (warn, msg) {
@@ -226,52 +217,6 @@ class _State extends State<ChannelMediaRelay> {
         );
       },
     );
-
-    // return Stack(
-    //   children: [
-    //     Column(
-    //       children: [
-    //         !isJoined
-    //             ? Column(
-    //                 children: [
-    //                   TextField(
-    //                     controller: _channelController,
-    //                     readOnly: isJoined,
-    //                   ),
-    //                   Row(
-    //                     children: [
-    //                       Expanded(
-    //                         flex: 1,
-    //                         child: ElevatedButton(
-    //                           onPressed: _initEngine,
-    //                           child: const Text('Join channel'),
-    //                         ),
-    //                       )
-    //                     ],
-    //                   ),
-    //                 ],
-    //               )
-    //             : _renderVideo(),
-    //         if (isJoined)
-    //           Row(
-    //             mainAxisSize: MainAxisSize.max,
-    //             children: [
-    //               Expanded(
-    //                   child: TextField(
-    //                       controller: _channelMediaRelayController,
-    //                       decoration: const InputDecoration(
-    //                         hintText: 'Enter target relay channel name',
-    //                       ))),
-    //               ElevatedButton(
-    //                 onPressed: _onPressRelayOrStop,
-    //                 child: Text(!isRelaying ? 'Relay' : 'Stop'),
-    //               ),
-    //             ],
-    //           )
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 
   Widget _renderVideo(bool isLayoutHorizontal) {
@@ -306,7 +251,7 @@ class _State extends State<ChannelMediaRelay> {
                     )
                   : Container(
                       color: Colors.grey[200],
-                      child: SizedBox.expand(
+                      child: const SizedBox.expand(
                         child: Center(
                           child: Text('The remote relay view'),
                         ),
@@ -339,7 +284,7 @@ class _State extends State<ChannelMediaRelay> {
                   )
                 : Container(
                     color: Colors.grey[200],
-                    child: SizedBox.expand(
+                    child: const SizedBox.expand(
                       child: Center(
                         child: Text('The remote relay view'),
                       ),

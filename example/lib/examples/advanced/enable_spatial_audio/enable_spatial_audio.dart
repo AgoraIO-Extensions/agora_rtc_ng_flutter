@@ -131,7 +131,7 @@ class _State extends State<EnableSpatialAudio> {
       children: [
         Row(
           children: [
-            Text('Remote Uids: '),
+            const Text('Remote Uids: '),
             DropdownButton<int>(
                 items: _remoteUids.map((uid) {
                   return DropdownMenuItem(
@@ -147,7 +147,7 @@ class _State extends State<EnableSpatialAudio> {
                 }),
           ],
         ),
-        Text('The options can be set after remote user joined'),
+        const Text('The options can be set after remote user joined'),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

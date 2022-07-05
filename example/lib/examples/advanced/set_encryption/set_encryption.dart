@@ -8,7 +8,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// SetEncryption Example
@@ -195,7 +194,7 @@ class _SetEncryptionState extends State<SetEncryption> {
           dropDownMenus.add(DropdownMenuItem(
             child: Text(
               '$v',
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
             value: v,
           ));
@@ -214,7 +213,7 @@ class _SetEncryptionState extends State<SetEncryption> {
               //   });
               // },
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             const Text('Encryption Mode: '),
@@ -235,7 +234,7 @@ class _SetEncryptionState extends State<SetEncryption> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             const Text('Input Encryption Key: '),
@@ -253,7 +252,7 @@ class _SetEncryptionState extends State<SetEncryption> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             const Text('Input EncryptionKdfSalt: '),

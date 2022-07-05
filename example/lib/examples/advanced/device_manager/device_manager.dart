@@ -2,7 +2,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// DeviceManager Example
@@ -25,7 +24,6 @@ class _State extends State<DeviceManager> {
   late TextEditingController _controller;
   late String _selectedDeviceId;
   bool _isSetVideoDeviceEnabled = false;
-  // late RtcVideoViewController _localVideoController;
 
   @override
   void initState() {
@@ -42,7 +40,6 @@ class _State extends State<DeviceManager> {
 
   Future<void> _dispose() async {
     _controller.dispose();
-    // await _localVideoController.dispose();
     await _engine.leaveChannel();
     await _engine.release();
   }
@@ -53,12 +50,6 @@ class _State extends State<DeviceManager> {
       appId: config.appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
-
-    // _localVideoController = RtcVideoViewController(
-    //   canvas: const VideoCanvas(uid: 0),
-    //   channelId: _controller!.text,
-    // );
-    // await _localVideoController.initialize(_engine);
 
     _engine.registerEventHandler(RtcEngineEventHandler(
       onWarning: (warn, msg) {
@@ -129,7 +120,7 @@ class _State extends State<DeviceManager> {
       dropDownMenus.add(DropdownMenuItem(
         child: Text(
           v.deviceName!,
-          style: TextStyle(fontSize: 13),
+          style: const TextStyle(fontSize: 13),
         ),
         value: v.deviceId,
       ));
@@ -191,11 +182,11 @@ class _State extends State<DeviceManager> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             _devicesDropDown(),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
@@ -210,87 +201,5 @@ class _State extends State<DeviceManager> {
         );
       },
     );
-
-    // return Stack(
-    //   children: [
-    //     Column(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         TextField(
-    //           controller: _controller,
-    //           decoration: const InputDecoration(hintText: 'Channel ID'),
-    //           onChanged: (text) {
-    //             setState(() {
-    //               channelId = text;
-    //             });
-    //           },
-    //         ),
-    //         Row(
-    //           children: [
-    //             Expanded(
-    //               flex: 1,
-    //               child: ElevatedButton(
-    //                 onPressed: isJoined ? _leaveChannel : _joinChannel,
-    //                 child: Text('${isJoined ? 'Leave' : 'Join'} channel'),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //         _devicesDropDown(),
-    //         ElevatedButton(
-    //           onPressed: _isSetVideoDeviceEnabled
-    //               ? () {
-    //                   _setVideoDevice(_selectedDeviceId);
-    //                 }
-    //               : null,
-    //           child: const Text('Set video device'),
-    //         ),
-    //         _renderVideo(),
-    //       ],
-    //     ),
-    //     // if (kIsWeb || (Platform.isWindows || Platform.isMacOS))
-    //     //   Align(
-    //     //     alignment: Alignment.bottomRight,
-    //     //     child: Column(
-    //     //       mainAxisSize: MainAxisSize.min,
-    //     //       children: [
-    //     //         ElevatedButton(
-    //     //           onPressed: _enumerateVideoDevices,
-    //     //           child: const Text('Enumerate video devices'),
-    //     //         ),
-    //     //         ElevatedButton(
-    //     //           onPressed: _isSetVideoDeviceEnabled
-    //     //               ? () {
-    //     //                   _setVideoDevice(_selectedDeviceId);
-    //     //                 }
-    //     //               : null,
-    //     //           child: const Text('Set video device'),
-    //     //         ),
-    //     //       ],
-    //     //     ),
-    //     //   )
-    //   ],
-    // );
-  }
-
-  _renderVideo() {
-    return Expanded(
-        child: Stack(
-      children: [
-        Row(
-          children: [
-            Expanded(
-                flex: 1,
-                child: AgoraVideoView(
-                  controller: VideoViewController(
-                    rtcEngine: _engine,
-                    canvas: const VideoCanvas(uid: 0),
-                  ),
-                )),
-          ],
-        ),
-      ],
-    ));
   }
 }

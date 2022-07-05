@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
@@ -7,10 +6,9 @@ import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 /// StartLocalVideoTranscoder Example
 class StartLocalVideoTranscoder extends StatefulWidget {
@@ -35,7 +33,6 @@ class _State extends State<StartLocalVideoTranscoder> {
   List<TranscodingVideoStream> transcodingVideoStreams = [];
   List<VideoDeviceInfo> _videoDevices = [];
   bool _isStartLocalvideoTranscoder = false;
-  bool _isPrimaryCameraSource = false;
   bool _isSecondaryCameraSource = false;
   bool _isPrimaryScreenSource = false;
   bool _isMediaPlayerSource = false;
@@ -118,7 +115,7 @@ class _State extends State<StartLocalVideoTranscoder> {
     ));
 
     _mediaPlayerController = await MediaPlayerController.create(
-        rtcEngine: _engine, canvas: VideoCanvas(uid: 0));
+        rtcEngine: _engine, canvas: const VideoCanvas(uid: 0));
 
     _videoDeviceManager = _engine.getVideoDeviceManager();
 
@@ -127,16 +124,9 @@ class _State extends State<StartLocalVideoTranscoder> {
       _videoDevices = await _videoDeviceManager.enumerateVideoDevices();
     }
 
-    // _localVideoController = RtcVideoViewController(
-    //   canvas: const VideoCanvas(uid: 0),
-    //   channelId: _controller.text,
-    // );
-    // await _localVideoController.initialize(_engine);
-
     await _engine.enableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
-    // Future.delayed(Duration(seconds: 5), () {
     await _engine.startPreview();
 
     setState(() {
@@ -199,13 +189,13 @@ class _State extends State<StartLocalVideoTranscoder> {
   Future<void> _startLocalVideoTranscoder() async {
     if (!(defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS)) {
-      transcodingVideoStreams.add(TranscodingVideoStream(
+      transcodingVideoStreams.add(const TranscodingVideoStream(
           sourceType: MediaSourceType.primaryCameraSource,
           width: 640,
           height: 320));
 
       final config = CameraCapturerConfiguration(
-        format: VideoFormat(width: 640, height: 320, fps: 30),
+        format: const VideoFormat(width: 640, height: 320, fps: 30),
         deviceId: _videoDevices[0].deviceId,
       );
       await _engine.startPrimaryCameraCapture(config);
@@ -219,7 +209,6 @@ class _State extends State<StartLocalVideoTranscoder> {
     await _engine.stopPrimaryCameraCapture();
     await _engine.stopLocalVideoTranscoder();
     transcodingVideoStreams.clear();
-    _isPrimaryCameraSource = false;
     _isSecondaryCameraSource = false;
     _isPrimaryScreenSource = false;
     _isMediaPlayerSource = false;
@@ -234,10 +223,10 @@ class _State extends State<StartLocalVideoTranscoder> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Text('Start Primary Camera Source By Default'),
+        const Text('Start Primary Camera Source By Default'),
         ElevatedButton(
           onPressed: () {
             _isStartLocalvideoTranscoder = !_isStartLocalvideoTranscoder;
@@ -272,14 +261,16 @@ class _State extends State<StartLocalVideoTranscoder> {
                               element.sourceType ==
                               MediaSourceType.secondaryCameraSource);
                         } else {
-                          transcodingVideoStreams.add(TranscodingVideoStream(
-                              sourceType: MediaSourceType.secondaryCameraSource,
-                              width: 360,
-                              height: 240));
+                          transcodingVideoStreams.add(
+                              const TranscodingVideoStream(
+                                  sourceType:
+                                      MediaSourceType.secondaryCameraSource,
+                                  width: 360,
+                                  height: 240));
 
                           final config = CameraCapturerConfiguration(
-                            format:
-                                VideoFormat(width: 640, height: 320, fps: 30),
+                            format: const VideoFormat(
+                                width: 640, height: 320, fps: 30),
                             deviceId: _videoDevices[1].deviceId,
                           );
                           await _engine.startSecondaryCameraCapture(config);
@@ -296,7 +287,7 @@ class _State extends State<StartLocalVideoTranscoder> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Wrap(
@@ -304,34 +295,30 @@ class _State extends State<StartLocalVideoTranscoder> {
               const Text('PrimaryScreenSource:'),
               Switch(
                 value: _isPrimaryScreenSource,
-                onChanged: _isStartLocalvideoTranscoder &&
-                        _videoDevices.length >= 2
-                    ? (v) async {
-                        if (!v) {
-                          transcodingVideoStreams.removeWhere((element) =>
-                              element.sourceType ==
-                              MediaSourceType.primaryScreenSource);
-                        } else {
-                          transcodingVideoStreams.add(TranscodingVideoStream(
-                              sourceType: MediaSourceType.primaryScreenSource,
-                              width: 640,
-                              height: 320));
-                        }
+                onChanged:
+                    _isStartLocalvideoTranscoder && _videoDevices.length >= 2
+                        ? (v) async {
+                            if (!v) {
+                              transcodingVideoStreams.removeWhere((element) =>
+                                  element.sourceType ==
+                                  MediaSourceType.primaryScreenSource);
+                            } else {
+                              transcodingVideoStreams.add(
+                                  const TranscodingVideoStream(
+                                      sourceType:
+                                          MediaSourceType.primaryScreenSource,
+                                      width: 640,
+                                      height: 320));
+                            }
 
-                        // final config = CameraCapturerConfiguration(
-                        //   format: VideoFormat(width: 640, height: 320, fps: 30),
-                        //   deviceId: _videoDevices[1].deviceId,
-                        // );
-                        // await _engine.startSecondaryCameraCapture(config);
+                            await _engine.updateLocalTranscoderConfiguration(
+                                _createLocalTranscoderConfiguration());
 
-                        await _engine.updateLocalTranscoderConfiguration(
-                            _createLocalTranscoderConfiguration());
-
-                        setState(() {
-                          _isPrimaryScreenSource = !_isPrimaryScreenSource;
-                        });
-                      }
-                    : null,
+                            setState(() {
+                              _isPrimaryScreenSource = !_isPrimaryScreenSource;
+                            });
+                          }
+                        : null,
               )
             ],
           ),
@@ -381,12 +368,6 @@ class _State extends State<StartLocalVideoTranscoder> {
                         ));
                       }
 
-                      // final config = CameraCapturerConfiguration(
-                      //   format: VideoFormat(width: 640, height: 320, fps: 30),
-                      //   deviceId: _videoDevices[1].deviceId,
-                      // );
-                      // _engine.startSecondaryCameraCapture(config);
-
                       await _engine.updateLocalTranscoderConfiguration(
                           _createLocalTranscoderConfiguration());
 
@@ -409,7 +390,7 @@ class _State extends State<StartLocalVideoTranscoder> {
             controller: _mediaPlayerController,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Wrap(
@@ -433,12 +414,6 @@ class _State extends State<StartLocalVideoTranscoder> {
                             height: 200));
                       }
 
-                      // final config = CameraCapturerConfiguration(
-                      //   format: VideoFormat(width: 640, height: 320, fps: 30),
-                      //   deviceId: _videoDevices[1].deviceId,
-                      // );
-                      // _engine.startSecondaryCameraCapture(config);
-
                       await _engine.updateLocalTranscoderConfiguration(
                           _createLocalTranscoderConfiguration());
 
@@ -456,7 +431,7 @@ class _State extends State<StartLocalVideoTranscoder> {
             width: 100,
             child: Image.file(File(_pngFilePath)),
           ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Wrap(
@@ -480,12 +455,6 @@ class _State extends State<StartLocalVideoTranscoder> {
                             height: 200));
                       }
 
-                      // final config = CameraCapturerConfiguration(
-                      //   format: VideoFormat(width: 640, height: 320, fps: 30),
-                      //   deviceId: _videoDevices[1].deviceId,
-                      // );
-                      // _engine.startSecondaryCameraCapture(config);
-
                       await _engine.updateLocalTranscoderConfiguration(
                           _createLocalTranscoderConfiguration());
 
@@ -503,7 +472,7 @@ class _State extends State<StartLocalVideoTranscoder> {
             width: 100,
             child: Image.file(File(_jpgFilePath)),
           ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Wrap(
@@ -527,12 +496,6 @@ class _State extends State<StartLocalVideoTranscoder> {
                           height: 240,
                         ));
                       }
-
-                      // final config = CameraCapturerConfiguration(
-                      //   format: VideoFormat(width: 640, height: 320, fps: 30),
-                      //   deviceId: _videoDevices[1].deviceId,
-                      // );
-                      // _engine.startSecondaryCameraCapture(config);
 
                       await _engine.updateLocalTranscoderConfiguration(
                           _createLocalTranscoderConfiguration());
@@ -622,6 +585,5 @@ class _State extends State<StartLocalVideoTranscoder> {
         );
       },
     );
-    // if (!_isInit) return Container();
   }
 }

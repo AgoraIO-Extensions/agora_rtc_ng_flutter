@@ -2,9 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 /// SendMultiCameraStream Example
 class SendMultiCameraStream extends StatefulWidget {
@@ -23,12 +21,7 @@ class _State extends State<SendMultiCameraStream> {
   Set<int> remoteUid = {};
   late TextEditingController _controller;
   List<VideoDeviceInfo> _videoDeviceInfos = [];
-  late VideoDeviceInfo _primaryCameraDevice;
-  late VideoDeviceInfo _secondaryCameraDevice;
-  bool _isStartPrimaryCameraDevice = false;
   bool _isStartSecondaryCameraDevice = false;
-  // late RtcVideoViewController _localVideoController;
-  // late RtcVideoViewController _remoteVideoController;
 
   @override
   void initState() {
@@ -107,14 +100,6 @@ class _State extends State<SendMultiCameraStream> {
 
     _videoDeviceManager = _engine.getVideoDeviceManager();
     _videoDeviceInfos = await _videoDeviceManager.enumerateVideoDevices();
-    // _primaryCameraDevice = _videoDeviceInfos[0];
-    // _secondaryCameraDevice = _primaryCameraDevice;
-
-    // _localVideoController = RtcVideoViewController(
-    //   canvas: const VideoCanvas(uid: 0),
-    //   channelId: _controller.text,
-    // );
-    // await _localVideoController.initialize(_engine);
 
     await _engine.enableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
@@ -128,7 +113,6 @@ class _State extends State<SendMultiCameraStream> {
       ),
     ));
 
-    // Future.delayed(Duration(seconds: 5), () {
     await _engine.startPreview();
 
     setState(() {
@@ -140,7 +124,7 @@ class _State extends State<SendMultiCameraStream> {
     await _engine.joinChannelEx(
         token: '',
         connection: RtcConnection(channelId: _controller.text, localUid: 1000),
-        options: ChannelMediaOptions(
+        options: const ChannelMediaOptions(
             publishCameraTrack: true,
             clientRoleType: ClientRoleType.clientRoleBroadcaster,
             channelProfile: ChannelProfileType.channelProfileLiveBroadcasting));
@@ -150,7 +134,7 @@ class _State extends State<SendMultiCameraStream> {
           token: '',
           connection:
               RtcConnection(channelId: _controller.text, localUid: 1001),
-          options: ChannelMediaOptions(
+          options: const ChannelMediaOptions(
             publishCameraTrack: false,
             publishSecondaryCameraTrack: true,
             clientRoleType: ClientRoleType.clientRoleBroadcaster,
@@ -160,16 +144,6 @@ class _State extends State<SendMultiCameraStream> {
   }
 
   void _leaveChannel() async {
-    // if (_isStartPrimaryCameraDevice) {
-    //   await _engine.stopPrimaryCameraCapture();
-    //   _isStartPrimaryCameraDevice = false;
-    // }
-    // if (_isStartSecondaryCameraDevice) {
-    //   await _engine.stopSecondaryCameraCapture();
-    //   _isStartSecondaryCameraDevice = false;
-    // }
-    // _primaryCameraDevice = _videoDeviceInfos[0];
-    // _secondaryCameraDevice = _primaryCameraDevice;
     await _engine.stopSecondaryCameraCapture();
     await _engine.stopPrimaryCameraCapture();
     await _engine.leaveChannel();
@@ -245,7 +219,7 @@ class _State extends State<SendMultiCameraStream> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(

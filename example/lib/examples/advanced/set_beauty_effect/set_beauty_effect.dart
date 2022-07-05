@@ -20,7 +20,7 @@ class _State extends State<SetBeautyEffect> {
   late final RtcEngine _engine;
   bool _isReadyPreview = false;
   bool isJoined = false;
-  late TextEditingController _channelIdController, _remoteUidController;
+  late TextEditingController _channelIdController;
   double _lighteningLevel = 0.0;
   double _smoothnessLevel = 0.0;
   double _rednessLevel = 0.0;
@@ -38,7 +38,6 @@ class _State extends State<SetBeautyEffect> {
   void initState() {
     super.initState();
     _channelIdController = TextEditingController(text: config.channelId);
-    _remoteUidController = TextEditingController(text: '0');
     _initEngine();
   }
 

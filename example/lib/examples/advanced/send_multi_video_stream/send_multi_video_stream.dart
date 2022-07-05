@@ -2,8 +2,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// SendMultiVideoStream Example
@@ -23,7 +21,6 @@ class _State extends State<SendMultiVideoStream> {
   late final TextEditingController _textEditingController;
 
   bool _isUrlOpened = false;
-  String _openedUrl = '';
   bool _isPlaying = false;
   bool isJoined = false;
 
@@ -101,7 +98,6 @@ class _State extends State<SendMultiVideoStream> {
             (MediaPlayerState state, MediaPlayerError ec) {
           logSink.log('[onPlayerSourceStateChanged] state: $state ec: $ec');
           if (state == MediaPlayerState.playerStateOpenCompleted) {
-            _openedUrl = _textEditingController.text;
             debugPrint('src ${_mediaPlayerController.getPlaySrc()}');
             _mediaPlayerController.play();
             setState(() {
@@ -252,14 +248,14 @@ class _State extends State<SendMultiVideoStream> {
               Expanded(
                 child: TextField(
                   controller: _textEditingController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Media URL',
                   ),
                 ),
               ),
               ElevatedButton(
                 onPressed: !isJoined ? _open : null,
-                child: Text('${_isPlaying ? "Stop" : "Play"}'),
+                child: Text(_isPlaying ? "Stop" : "Play"),
               ),
             ]),
             Row(

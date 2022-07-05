@@ -1,14 +1,8 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-const String _kDefaultAppGroup = 'io.agora';
 
 /// ScreenSharing Example
 class ScreenSharing extends StatefulWidget {
@@ -101,7 +95,8 @@ class _State extends State<ScreenSharing> {
         items: _screenCaptureSourceInfos.map((info) {
           return DropdownMenuItem(
             value: info,
-            child: Text('${info.sourceName}', style: TextStyle(fontSize: 10)),
+            child: Text('${info.sourceName}',
+                style: const TextStyle(fontSize: 10)),
           );
         }).toList(),
         value: _selectedScreenCaptureSourceInfo,
@@ -118,7 +113,7 @@ class _State extends State<ScreenSharing> {
     await _engine.joinChannelEx(
         token: '',
         connection: RtcConnection(channelId: _controller.text, localUid: 1000),
-        options: ChannelMediaOptions(
+        options: const ChannelMediaOptions(
           publishCameraTrack: true,
           publishAudioTrack: false,
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
@@ -127,7 +122,7 @@ class _State extends State<ScreenSharing> {
     await _engine.joinChannelEx(
         token: '',
         connection: RtcConnection(channelId: _controller.text, localUid: 1001),
-        options: ChannelMediaOptions(
+        options: const ChannelMediaOptions(
           publishScreenTrack: true,
           publishCameraTrack: false,
           publishAudioTrack: false,
@@ -144,8 +139,8 @@ class _State extends State<ScreenSharing> {
     final windowId = _selectedScreenCaptureSourceInfo.sourceId;
     await _engine.startScreenCaptureByWindowId(
       windowId: windowId!,
-      regionRect: Rectangle(),
-      captureParams: ScreenCaptureParameters(
+      regionRect: const Rectangle(),
+      captureParams: const ScreenCaptureParameters(
         captureMouseCursor: true,
         frameRate: 30,
       ),
@@ -177,7 +172,7 @@ class _State extends State<ScreenSharing> {
               child: AgoraVideoView(
                   controller: VideoViewController(
                 rtcEngine: _engine,
-                canvas: VideoCanvas(
+                canvas: const VideoCanvas(
                   uid: 0,
                 ),
               )),
@@ -191,14 +186,14 @@ class _State extends State<ScreenSharing> {
                   ? AgoraVideoView(
                       controller: VideoViewController(
                       rtcEngine: _engine,
-                      canvas: VideoCanvas(
+                      canvas: const VideoCanvas(
                         uid: 0,
                         sourceType: VideoSourceType.videoSourceScreen,
                       ),
                     ))
                   : Container(
                       color: Colors.grey[200],
-                      child: Center(
+                      child: const Center(
                         child: Text('Screen Sharing View'),
                       ),
                     ),
@@ -288,99 +283,5 @@ class _State extends State<ScreenSharing> {
         );
       },
     );
-    // return Stack(
-    //   children: [
-    //     Column(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         TextField(
-    //           controller: _controller,
-    //           decoration: const InputDecoration(hintText: 'Channel ID'),
-    //         ),
-    //         Row(
-    //           children: [
-    //             Expanded(
-    //               flex: 1,
-    //               child: ElevatedButton(
-    //                 onPressed: isJoined ? _leaveChannel : _joinChannel,
-    //                 child: Text('${isJoined ? 'Leave' : 'Join'} channel'),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //         _createDropdownButton(),
-    //         Row(
-    //           children: [
-    //             Expanded(
-    //               flex: 1,
-    //               child: ElevatedButton(
-    //                 onPressed:
-    //                     _isScreenShared ? _stopScreenShare : _startScreenShare,
-    //                 child: Text(
-    //                     '${_isScreenShared ? 'Stop' : 'Start'} screen share'),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //         _renderVideo(),
-    //       ],
-    //     ),
-    //   ],
-    // );
-  }
-
-  Widget _renderVideo() {
-    return Expanded(
-        child: Stack(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: AgoraVideoView(
-                  controller: VideoViewController(
-                rtcEngine: _engine,
-                canvas: VideoCanvas(
-                  uid: 0,
-                ),
-              )),
-            ),
-            if (_isScreenShared)
-              Expanded(
-                flex: 1,
-                child: AgoraVideoView(
-                    controller: VideoViewController(
-                  rtcEngine: _engine,
-                  canvas: VideoCanvas(
-                    uid: 0,
-                    sourceType: VideoSourceType.videoSourceScreen,
-                  ),
-                )),
-              ),
-          ],
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.of(remoteUid.map(
-                (e) => SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: AgoraVideoView(
-                      controller: VideoViewController.remote(
-                        rtcEngine: _engine,
-                        canvas: VideoCanvas(uid: e),
-                        connection: RtcConnection(channelId: _controller.text),
-                      ),
-                    )),
-              )),
-            ),
-          ),
-        )
-      ],
-    ));
   }
 }

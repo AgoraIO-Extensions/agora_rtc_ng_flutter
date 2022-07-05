@@ -2,7 +2,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 const _channelId0 = 'channel0';
@@ -112,13 +111,9 @@ class _State extends State<JoinMultipleChannel> {
     await _engine.startPreview();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
-    _channel0 = const RtcConnection(
-        channelId: _channelId0,
-        localUid: 1000); //await RtcChannel.create(_channelId0);
+    _channel0 = const RtcConnection(channelId: _channelId0, localUid: 1000);
 
-    _channel1 = const RtcConnection(
-        channelId: _channelId1,
-        localUid: 1001); //await RtcChannel.create(_channelId1);
+    _channel1 = const RtcConnection(channelId: _channelId1, localUid: 1001);
 
     setState(() {
       _isReadyPreview = true;
