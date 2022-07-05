@@ -56,7 +56,8 @@ dependencies {
   if (isDev(project)) {
     api fileTree(dir: "libs", include: ["*.jar", "*.aar"])
   } else {
-     api 'io.agora.rtc:iris-rtc-beta:3.8.201.3' 
+     api 'io.agora.rtc:iris-rtc:3.8.201'
+     api 'io.agora.rtc:agora-special-full:3.8.201.2.2'
   }
    
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
