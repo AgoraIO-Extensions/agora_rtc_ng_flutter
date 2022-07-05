@@ -25,19 +25,12 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
     apiCaller.addEventHandler(this);
   }
 
-  // static MediaPlayerImpl? _instance;
-
   final int _mediaPlayerId;
 
   final Set<MediaPlayerSourceObserver> _mediaPlayerSourceObservers = {};
 
   factory MediaPlayerImpl.create(int mediaPlayerId) {
-    // if (_instance != null) return _instance!;
-
     final instance = MediaPlayerImpl._(mediaPlayerId);
-    // apiCaller.setupIrisMediaPlayerEventHandlerIfNeed();
-
-    // _mediaPlayerId = super.getMediaPlayerId();
 
     return instance;
   }
@@ -70,7 +63,6 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
 
   @override
   int getMediaPlayerId() {
-    // _mediaPlayerId = super.getMediaPlayerId();
     return _mediaPlayerId;
   }
 
@@ -92,10 +84,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
   }
 
   void destroy() {
-    // apiCaller.disposeIrisMediaPlayerEventHandlerIfNeed();
     apiCaller.removeEventHandler(this);
 
-    // _instance = null;
     _mediaPlayerSourceObservers.clear();
   }
 
@@ -152,9 +142,6 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
 
   @override
   bool get useAndroidSurfaceView => _useAndroidSurfaceView!;
-
-  // @override
-  // int getTextureId();
 
   @override
   Future<int> createTextureRender(

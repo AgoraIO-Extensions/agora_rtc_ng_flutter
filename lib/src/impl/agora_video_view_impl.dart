@@ -6,22 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'agora_rtc_renderer.dart';
 
 class AgoraVideoViewState extends State<AgoraVideoView> with RtcRenderMixin {
-  // int _mediaPlayerViewId = kMediaPlayerNotInit;
-  // int _nativeViewIntPtr = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // _mediaPlayerViewId = widget.mediaPlayerController.getMediaPlayerId();
-  }
-
-  @override
-  void didUpdateWidget(covariant AgoraVideoView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // _mediaPlayerViewId = widget.mediaPlayerController.getMediaPlayerId();
-  }
-
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.macOS ||
@@ -43,12 +27,6 @@ class AgoraVideoViewState extends State<AgoraVideoView> with RtcRenderMixin {
     return AgoraRtcRenderPlatformView(
         key: widget.key, controller: widget.controller);
   }
-
-  // Future<void> _setView() async {
-  //   _nativeViewIntPtr =
-  //       (await getMethodChannel()!.invokeMethod<int>('getNativeViewPtr'))!;
-  //   widget.mediaPlayerController.setView(_nativeViewIntPtr);
-  // }
 }
 
 class AgoraRtcRenderPlatformView extends StatefulWidget {
@@ -94,7 +72,7 @@ class _AgoraRtcRenderPlatformViewState extends State<AgoraRtcRenderPlatformView>
   @override
   void dispose() {
     super.dispose();
-    debugPrint('_AgoraRtcRenderPlatformViewState dispose');
+
     _disposeRender();
   }
 
@@ -102,8 +80,6 @@ class _AgoraRtcRenderPlatformViewState extends State<AgoraRtcRenderPlatformView>
   void didUpdateWidget(covariant AgoraRtcRenderPlatformView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    debugPrint(
-        'didUpdateWidget oldWidget.controller.isSame(widget.controller): ${oldWidget.controller.isSame(widget.controller)}');
     _didUpdateWidget(oldWidget);
   }
 
@@ -130,11 +106,9 @@ class _AgoraRtcRenderPlatformViewState extends State<AgoraRtcRenderPlatformView>
         (await getMethodChannel()!.invokeMethod<int>('getNativeViewPtr'))!;
     if (!mounted) return;
     widget.controller.setupView(_nativeViewIntPtr);
-    // widget.controller._rtcEngine?.startPreview();
   }
 
   Future<void> _disposeRender() async {
-    // if (!mounted) return;
     await widget.controller.disposeRender();
     await getMethodChannel()!.invokeMethod<int>('deleteNativeViewPtr');
   }
@@ -154,8 +128,6 @@ class AgoraRtcRenderTexture extends StatefulWidget {
 
 class _AgoraRtcRenderTextureState extends State<AgoraRtcRenderTexture>
     with RtcRenderMixin {
-  // int textureId = kTextureNotInit;
-
   @override
   void initState() {
     super.initState();
@@ -165,7 +137,6 @@ class _AgoraRtcRenderTextureState extends State<AgoraRtcRenderTexture>
   Future<void> _initialize() async {
     final oldTextureId = widget.controller.getTextureId();
     await widget.controller.initialize();
-    // textureId = widget.controller.getTextureId();
     if (oldTextureId != widget.controller.getTextureId()) {
       setState(() {});
     }
@@ -175,8 +146,6 @@ class _AgoraRtcRenderTextureState extends State<AgoraRtcRenderTexture>
   void didUpdateWidget(covariant AgoraRtcRenderTexture oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    debugPrint(
-        'didUpdateWidget oldWidget.controller.isSame(widget.controller): ${oldWidget.controller.isSame(widget.controller)}');
     _didUpdateWidget(oldWidget);
   }
 
@@ -184,7 +153,6 @@ class _AgoraRtcRenderTextureState extends State<AgoraRtcRenderTexture>
       covariant AgoraRtcRenderTexture oldWidget) async {
     if (!oldWidget.controller.isSame(widget.controller)) {
       oldWidget.controller.dispose();
-      // textureId = kTextureNotInit;
       if (!mounted) return;
       _initialize();
     } else {
@@ -195,14 +163,11 @@ class _AgoraRtcRenderTextureState extends State<AgoraRtcRenderTexture>
   @override
   void dispose() {
     super.dispose();
-    debugPrint('_AgoraRtcRenderTextureState dispose');
     widget.controller.disposeRender();
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        'build widget.controller.getTextureId(): ${widget.controller.getTextureId()}');
     if (widget.controller.getTextureId() != kTextureNotInit) {
       return buildTexure(widget.controller.getTextureId());
     }

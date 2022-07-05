@@ -62,7 +62,4 @@ class VideoViewController
         ? VideoSourceType.videoSourceCamera.value()
         : VideoSourceType.videoSourceRemote.value();
   }
-
-  // @override
-  // int get textureId => super.textureId;
 }

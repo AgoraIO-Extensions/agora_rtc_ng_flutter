@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:agora_rtc_ng/src/agora_base.dart';
-import 'package:agora_rtc_ng/src/agora_media_base.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine_ext.dart';
@@ -41,36 +40,6 @@ extension ThumbImageBufferExt on ThumbImageBuffer {
     );
   }
 }
-
-// extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
-//   bool eventIntercept(String event, String eventData, List<Uint8List> buffers) {
-//     switch (event) {
-//       case 'onStreamMessage':
-//         if (onStreamMessage == null) break;
-//         final jsonMap = jsonDecode(eventData);
-//         RtcEngineEventHandlerOnStreamMessageJson paramJson =
-//             RtcEngineEventHandlerOnStreamMessageJson.fromJson(jsonMap);
-//         int? userId = paramJson.userId;
-//         int? streamId = paramJson.streamId;
-//         Uint8List? data = buffers[0];
-//         int? length = paramJson.length;
-//         int? sentTs = paramJson.sentTs;
-//         if (userId == null ||
-//             streamId == null ||
-//             data == null ||
-//             length == null ||
-//             sentTs == null) {
-//           break;
-//         }
-//         onStreamMessage!(userId, streamId, data, length, sentTs);
-
-//         return true;
-//       default:
-//         break;
-//     }
-//     return false;
-//   }
-// }
 
 extension RtcEngineEventHandlerExExt on RtcEngineEventHandler {
   bool eventIntercept(String event, String eventData, List<Uint8List> buffers) {
@@ -138,18 +107,15 @@ extension MetadataObserverExt on MetadataObserver {
 
 class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     implements RtcEngineEx, IrisEventHandler {
-  RtcEngineImpl._() {}
+  RtcEngineImpl._();
 
   static RtcEngineImpl? _instance;
-  Completer<void>? _shouldWaitForPreviousRelease;
   final Set<RtcEngineEventHandler> _rtcEngineEventHandlers = {};
   final Set<MetadataObserver> _metadataObservers = {};
   DirectCdnStreamingEventHandler? _directCdnStreamingEventHandler;
 
   final GlobalVideoViewController _globalVideoViewController =
       const GlobalVideoViewController();
-
-  // int get irisRtcEngineIntPtr => apiCaller.irisApiEngineIntPtr;
 
   int _mediaPlayerCount = 0;
 
@@ -159,11 +125,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   static RtcEngineEx create() {
     if (_instance != null) return _instance!;
 
-    // apiCaller.setupIrisRtcEngineEventHandler();
-
     _instance = RtcEngineImpl._();
-
-    // _instance = newInstance;
 
     return _instance!;
   }
@@ -175,12 +137,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<void> initialize(RtcEngineContext context) async {
-    // if (_instance != null) {
-    //   if (_instance!._shouldWaitForPreviousRelease != null) {
-    //     await _instance!._shouldWaitForPreviousRelease!.future;
-    //   }
-    // }
-
     await apiCaller.initilize();
     await super.initialize(context);
 
@@ -194,8 +150,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<void> release({bool sync = false}) async {
-    // _shouldWaitForPreviousRelease = Completer();
-
     if (_rtcEngineEventHandlers.isNotEmpty) {
       apiCaller.removeEventHandler(this);
       _rtcEngineEventHandlers.clear();
@@ -214,19 +168,11 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
     await apiCaller.dispose();
     _instance = null;
-    // _shouldWaitForPreviousRelease!.complete();
-    // _shouldWaitForPreviousRelease = null;
   }
 
   @override
   void onEvent(String event, String data, List<Uint8List> buffers) {
-    debugPrint('onEvent: event: $event, data: $data');
     for (final eh in _rtcEngineEventHandlers) {
-      // if (eh is RtcEngineEventHandlerEx) {
-      //   if (!eh.eventIntercept(event, data, buffers)) {
-      //     event_ex.RtcEngineEventHandlerExExt(eh).process(event, data, buffers);
-      //   }
-      // }
       if (!eh.eventIntercept(event, data, buffers)) {
         eh.process(event, data, buffers);
       }
@@ -374,8 +320,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-
-    // (mediaPlayer as MediaPlayerImpl).destroy();
   }
 
   @override
@@ -408,9 +352,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     const apiType = 'RtcEngine_enableEncryption';
     final configJsonMap = config.toJson();
     if (config.encryptionKdfSalt != null) {
-      configJsonMap['encryptionKdfSalt'] =
-          // uint8ListToPtr(config.encryptionKdfSalt!).address;
-          config.encryptionKdfSalt!;
+      configJsonMap['encryptionKdfSalt'] = config.encryptionKdfSalt!;
     }
 
     final param = createParams({'enabled': enabled, 'config': configJsonMap});
@@ -435,9 +377,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     const apiType = 'RtcEngineEx_enableEncryptionEx';
     final configJsonMap = config.toJson();
     if (config.encryptionKdfSalt != null) {
-      configJsonMap['encryptionKdfSalt'] =
-          // uint8ListToPtr(config.encryptionKdfSalt!).address;
-          config.encryptionKdfSalt!;
+      configJsonMap['encryptionKdfSalt'] = config.encryptionKdfSalt!;
     }
 
     final param = createParams({
@@ -542,7 +482,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       throw AgoraRtcException(code: callApiResult.irisReturnCode);
     }
     final rm = callApiResult.data;
-    // final rm = await apiCaller.callIrisApi(apiType, jsonEncode(param));
     final result = rm['result'];
     if (result < 0) {
       throw AgoraRtcException(code: result);
@@ -566,24 +505,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
     _metadataObservers.remove(observer);
   }
-
-  // @override
-  // Future<void> takeSnapshot(SnapShotConfig config) async {
-
-  //   const apiType = 'RtcEngine_takeSnapshot';
-  //   final param = createParams({'config': config.toJson()});
-
-  //   final callApiResult =
-  //       await apiCaller.callIrisApi(apiType, jsonEncode(param));
-  //   if (callApiResult.irisReturnCode < 0) {
-  //     throw AgoraRtcException(code: callApiResult.irisReturnCode);
-  //   }
-  //   final rm = callApiResult.data;
-  //   final result = rm['result'];
-  //   if (result < 0) {
-  //     throw AgoraRtcException(code: result);
-  //   }
-  // }
 
   @override
   Future<void> startDirectCdnStreaming(
@@ -917,10 +838,8 @@ class VideoDeviceManagerImpl extends rtc_engine_binding.VideoDeviceManagerImpl
     final rm = callApiResult.data;
     final result = rm['result'];
 
-    // final devices = rm['devices'];
     final devicesList = List.from(result);
     final List<VideoDeviceInfo> deviceInfoList = [];
-    // deviceInfoList.fill(rm);
     for (final d in devicesList) {
       final dm = Map<String, dynamic>.from(d);
 

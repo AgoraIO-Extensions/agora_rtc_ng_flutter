@@ -55,44 +55,16 @@ class _HtmlElementViewController extends PlatformViewController
 }
 
 mixin RtcRenderMixin<T extends StatefulWidget> on State<T> {
-  // static Map<int, MethodChannel> _methodChannels = {};
-
   MethodChannel? _methodChannel;
 
   int? _viewId;
-
-  // MethodChannel? _getMethodChannel(int viewId) {
-  //   return _methodChannels[viewId];
-  // }
 
   @protected
   MethodChannel? getMethodChannel() {
     return _methodChannel;
   }
 
-  // static Future<T?> _invokeMethod<T>(int? viewId, int apiType,
-  //     [Map<String, dynamic>? arguments]) async {
-  //   final ret = await _methodChannels[viewId]?.invokeMethod<T>('callApi', {
-  //     'apiType': apiType,
-  //     'params': jsonEncode(arguments),
-  //   });
-  //   return ret;
-  // }
-
-  // @protected
-  // Future<T?> invokeMethod<T>(int? viewId, int apiType,
-  //     [Map<String, dynamic>? arguments]) async {
-  //   return _invokeMethod<T>(viewId, apiType, arguments);
-  // }
-
-  // void removeChannel(int viewId) {
-  //   _methodChannels.remove(viewId);
-  // }
-
   void maybeCreateChannel(int viewId, String viewType) {
-    // _methodChannels.putIfAbsent(
-    //     viewId, () => MethodChannel('agora_rtc_ng/${viewType}_$viewId'));
-
     _methodChannel = MethodChannel('agora_rtc_ng/${viewType}_$viewId');
   }
 
@@ -159,7 +131,6 @@ mixin RtcRenderMixin<T extends StatefulWidget> on State<T> {
 
   @protected
   Widget buildTexure(int textureId) {
-    debugPrint('buildTexure: ${textureId}');
     return Texture(textureId: textureId);
   }
 
@@ -182,14 +153,6 @@ mixin RtcRenderMixin<T extends StatefulWidget> on State<T> {
       });
       return controller;
     };
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // if (_viewId != null) {
-    //   removeChannel(_viewId!);
-    // }
   }
 }
 
@@ -224,31 +187,6 @@ class RtcRenderer extends StatefulWidget {
 
 class RtcRendererState<T extends RtcRenderer> extends State<T>
     with RtcRenderMixin {
-  @override
-  void didUpdateWidget(covariant T oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // _setupVideo();
-  }
-
-  // void _setupVideo() {
-  //   invokeMethod(_viewId, _getApiType(widget.canvas, widget.connection).index, {
-  //     'canvas': widget.canvas.toJson(),
-  //     'connection': widget.connection?.toJson(),
-  //   });
-  // }
-
-  // _ApiTypeEngine _getApiType(
-  //   VideoCanvas canvas,
-  //   RtcConnection? connection,
-  // ) {
-  //   _ApiTypeEngine apiType = canvas.uid == 0
-  //       ? _ApiTypeEngine.kEngineSetupLocalVideo
-  //       : (connection == null
-  //           ? _ApiTypeEngine.kEngineSetupRemoteVideo
-  //           : _ApiTypeEngine.kEngineSetupRemoteVideoEx);
-  //   return apiType;
-  // }
-
   Map<String, dynamic> superCreationParams(
     String viewType,
     VideoCanvas canvas,
@@ -257,7 +195,6 @@ class RtcRendererState<T extends RtcRenderer> extends State<T>
     return {
       'viewType': viewType,
       'callApi': {
-        // 'apiType': _getApiType(canvas, connection).index,
         'params': jsonEncode({
           'canvas': canvas.toJson(),
           'connection': connection?.toJson(),

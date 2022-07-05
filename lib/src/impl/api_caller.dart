@@ -10,7 +10,6 @@ import 'package:async/async.dart';
 import 'package:agora_rtc_ng/src/impl/native_iris_api_engine_bindings.dart';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iris_event/iris_event.dart';
 
 const int kBasicResultLength = 64 * 1024;
@@ -57,8 +56,6 @@ ffi.DynamicLibrary _loadAgoraFpaServiceLib() {
   return ffi.DynamicLibrary.process();
 }
 
-// ApiCaller _defaultApiCaller =
-//     ApiCaller(NativeIrisApiEngineBinding(_loadAgoraFpaServiceLib()));
 ApiCaller _defaultApiCaller = ApiCaller();
 ApiCaller get apiCaller => _defaultApiCaller;
 

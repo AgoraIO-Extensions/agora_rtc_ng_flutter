@@ -15,15 +15,11 @@ abstract class MediaPlayerController extends MediaPlayer
     bool useFlutterTexture = false,
     bool useAndroidSurfaceView = false,
   }) async {
-    // this.rtcEngine = rtcEngine;
-    final mp = await rtcEngine.createMediaPlayer();
-    final mediaPlayer = mp as MediaPlayerImpl;
-    mediaPlayer.rtcEngine = rtcEngine;
-    mediaPlayer.canvas = canvas;
-    mediaPlayer.connection = null;
-    mediaPlayer.useFlutterTexture = useFlutterTexture;
-    mediaPlayer.useAndroidSurfaceView = useAndroidSurfaceView;
-
-    return mediaPlayer;
+    return MediaPlayerImpl.createMediaPlayerController(
+      rtcEngine: rtcEngine,
+      canvas: canvas,
+      useFlutterTexture: useFlutterTexture,
+      useAndroidSurfaceView: useAndroidSurfaceView,
+    );
   }
 }
