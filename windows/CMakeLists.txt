@@ -80,28 +80,22 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
   flutter_wrapper_plugin 
   ${IRIS_SDK_BIN_PATH}/AgoraRtcWrapper.lib)
 
+set(BUNDLED_LIBRARIES
+  "${IRIS_SDK_BIN_PATH}/AgoraRtcWrapper.dll"
+  "${RTC_SDK_BIN_PATH}/agora_rtc_sdk.lib"
+  )
+
+file(GLOB RTC_DLLS ${RTC_SDK_BIN_PATH}/*.dll)
+foreach (RTC_DLL ${RTC_DLLS})
+    message("Add bundled library: ${RTC_DLL}")
+    
+    list(APPEND BUNDLED_LIBRARIES ${RTC_DLL})
+endforeach (RTC_DLL ${RTC_DLLS})
+
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 set(agora_rtc_ng_bundled_libraries
-  # "${IRIS_SDK_BIN_PATH}/AgoraRtcScreenSharing.exe"
-  "${CMAKE_CURRENT_SOURCE_DIR}/../iris_event/windows/iris_event_handler.dll"
-  "${IRIS_SDK_BIN_PATH}/AgoraRtcWrapper.dll"
-  "${RTC_SDK_BIN_PATH}/agora_rtc_sdk.dll"
-  "${RTC_SDK_BIN_PATH}/av1.dll"
-  "${RTC_SDK_BIN_PATH}/bequic.dll"
-  # "${RTC_SDK_BIN_PATH}/libagora_ai_denoise_extension.dll"
-  "${RTC_SDK_BIN_PATH}/libagora_pvc_extension.dll"
-  "${RTC_SDK_BIN_PATH}/libagora_dav1d_extension.dll"
-  "${RTC_SDK_BIN_PATH}/libagora_quality_education_video_process.dll"
-  "${RTC_SDK_BIN_PATH}/libagora_segmentation_extension.dll"
-  "${RTC_SDK_BIN_PATH}/libagora_video_process_extension.dll"
-  "${RTC_SDK_BIN_PATH}/libagora-wgc.dll"
-  # "${RTC_SDK_BIN_PATH}/libagora-core.dll"
-  # "${RTC_SDK_BIN_PATH}/libagora_fdkaac.dll"
-  "${RTC_SDK_BIN_PATH}/libagora-ffmpeg.dll"
-  # "${RTC_SDK_BIN_PATH}/libagora_mpg123.dll"
-  # "${RTC_SDK_BIN_PATH}/libagora-soundtouch.dll"
-  # "${RTC_SDK_BIN_PATH}/libhwcodec.dll"
+  ${BUNDLED_LIBRARIES}
   PARENT_SCOPE
 )

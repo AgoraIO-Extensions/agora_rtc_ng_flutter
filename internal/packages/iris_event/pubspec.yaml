@@ -1,5 +1,5 @@
 name: iris_event
-description: iris_event is a bridge of iris event handling, which is used internally, NOTE that you should not use it.
+description: iris_event is a bridge of iris event handling, which is only used internally, NOTE that you should not use it.
 version: 1.0.0
 homepage:
 
