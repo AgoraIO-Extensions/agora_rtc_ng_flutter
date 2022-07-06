@@ -3,9 +3,9 @@
 set -e
 set -x
 
-flutter packages get
+# flutter packages get
 
-bash integration_test_app/iris_integration_test/build-ios.sh
+# bash integration_test_app/iris_integration_test/build-ios.sh
 
 pushd integration_test_app
 
