@@ -91,4 +91,4 @@ To help work on this sdk, please refer to [CONTRIBUTING.md](https://github.com/A
 
 ## License
 
-The sample projects are under the MIT license.
+The project is under the MIT license.
