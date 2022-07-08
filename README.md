@@ -67,10 +67,10 @@ The [agora_rtc_ng](https://pub.dev/packages/agora_rtc_ng) supports Android/iOS/m
 
 ## API Reference Resources
 
-* [Flutter](https://docs.agora.io/en/Video/API%20Reference/flutter/index.html)
-* [Android](https://docs.agora.io/en/Video/API%20Reference/java/index.html)
-* [iOS/macOS](https://docs.agora.io/en/Video/API%20Reference/oc/docs/headers/Agora-Objective-C-API-Overview.html)
-* [Windows](https://docs.agora.io/en/Video/API%20Reference/cpp/index.html)
+* [Flutter](https://docs.agora.io/en/video-call-4.x-beta/API%20Reference/flutter_ng/API/rtc_api_overview_ng.html)
+* [Android](https://docs-preprod.agora.io/cn/video-call-4.x-beta/API%20Reference/java_ng/API/rtc_api_overview_ng.html)
+* [iOS/macOS](https://docs-preprod.agora.io/cn/video-call-4.x-beta/API%20Reference/mac_ng/API/rtc_api_overview_ng.html)
+* [Windows](https://docs-preprod.agora.io/cn/video-call-4.x-beta/API%20Reference/windows_ng/API/rtc_api_overview_ng.html)
 * [Web](https://docs.agora.io/en/Video/API%20Reference/web_ng/index.html)
 
 ## Feedback
