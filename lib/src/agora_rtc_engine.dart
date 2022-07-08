@@ -2504,7 +2504,7 @@ abstract class VideoDeviceManager {
   Future<void> release();
 }
 
-/// @nodoc
+/// Definition of RtcEngineContext.
 @JsonSerializable(explicitToJson: true)
 class RtcEngineContext {
   /// Construct the [RtcEngineContext].
@@ -2518,7 +2518,7 @@ class RtcEngineContext {
       this.threadPriority,
       this.useExternalEglContext});
 
-  /// @nodoc
+  /// The App ID issued by Agora for your project. Only users in apps with the same App ID can join the same channel and communicate with each other. An App ID can only be used to create one RtcEngine instance. To change your App ID, call release to destroy the current RtcEngine instance, and then create a new one.
   @JsonKey(name: 'appId')
   final String? appId;
 
@@ -2526,19 +2526,29 @@ class RtcEngineContext {
   @JsonKey(name: 'enableAudioDevice')
   final bool? enableAudioDevice;
 
-  /// @nodoc
+  /// The channel profile. See ChannelProfileType .
   @JsonKey(name: 'channelProfile')
   final ChannelProfileType? channelProfile;
 
-  /// @nodoc
+  /// The audio scenario. Under different audio scenarios, the device uses different volume types.
   @JsonKey(name: 'audioScenario')
   final AudioScenarioType? audioScenario;
 
-  /// @nodoc
+  /// The region for connection. This is an advanced feature and applies to scenarios that have regional restrictions. For the regions that Agora supports, see AreaCode . The area codes support bitwise operation.After specifying the region, the app integrated with the Agora SDK connects to the Agora servers within that region.
   @JsonKey(name: 'areaCode')
   final int? areaCode;
 
-  /// @nodoc
+  /// The SDK log files are: agorasdk.log, agorasdk.1.log, agorasdk.2.log, agorasdk.3.log, and agorasdk.4.log.
+  /// The API call log files are: agoraapi.log, agoraapi.1.log, agoraapi.2.log, agoraapi.3.log, and agoraapi.4.log.
+  /// The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.
+  /// The SDK writes the latest logs in agorasdk.log or agoraapi.log.
+  /// When agorasdk.log is full, the SDK processes the log files in the following order:
+  /// Delete the agorasdk.4.log file (if any).
+  /// Rename agorasdk.3.log to agorasdk.4.log.
+  /// Rename agorasdk.2.log to agorasdk.3.log.
+  /// Rename agorasdk.1.log to agorasdk.2.log.
+  /// Create a new agorasdk.log file. The overwrite rules for the agoraapi.log file are the same as for agorasdk.log. The log files that the SDK outputs. See LogConfig .
+  /// By default, the SDK generates five SDK log files and five API call log files with the following rules:
   @JsonKey(name: 'logConfig')
   final LogConfig? logConfig;
 
