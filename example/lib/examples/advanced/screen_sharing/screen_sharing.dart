@@ -2,6 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// ScreenSharing Example
@@ -20,8 +21,7 @@ class _State extends State<ScreenSharing> {
   bool isJoined = false;
   List<int> remoteUid = [];
   late TextEditingController _controller;
-  List<ScreenCaptureSourceInfo> _screenCaptureSourceInfos = [];
-  late ScreenCaptureSourceInfo _selectedScreenCaptureSourceInfo;
+
   bool _isScreenShared = false;
 
   @override
@@ -43,11 +43,9 @@ class _State extends State<ScreenSharing> {
       appId: config.appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
+    await _engine.setLogLevel(LogLevel.logLevelError);
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -69,6 +67,11 @@ class _State extends State<ScreenSharing> {
           LocalVideoStreamState state, LocalVideoStreamError errorCode) {},
     ));
 
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await _engine.loadExtensionProvider(
+          path: 'agora_screen_capture_extension');
+    }
+
     await _engine.enableVideo();
     await _engine.startPreview();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
@@ -76,37 +79,6 @@ class _State extends State<ScreenSharing> {
     setState(() {
       _isReadyPreview = true;
     });
-
-    await _initScreenCaptureSourceInfos();
-  }
-
-  Future<void> _initScreenCaptureSourceInfos() async {
-    Size thumbSize = const Size(width: 360, height: 240);
-    Size iconSize = const Size(width: 360, height: 240);
-    _screenCaptureSourceInfos = await _engine.getScreenCaptureSources(
-        thumbSize: thumbSize, iconSize: iconSize, includeScreen: true);
-    _selectedScreenCaptureSourceInfo = _screenCaptureSourceInfos[0];
-    setState(() {});
-  }
-
-  Widget _createDropdownButton() {
-    if (_screenCaptureSourceInfos.isEmpty) return Container();
-    return DropdownButton<ScreenCaptureSourceInfo>(
-        items: _screenCaptureSourceInfos.map((info) {
-          return DropdownMenuItem(
-            value: info,
-            child: Text('${info.sourceName}',
-                style: const TextStyle(fontSize: 10)),
-          );
-        }).toList(),
-        value: _selectedScreenCaptureSourceInfo,
-        onChanged: _isScreenShared
-            ? null
-            : (v) {
-                setState(() {
-                  _selectedScreenCaptureSourceInfo = v!;
-                });
-              });
   }
 
   void _joinChannel() async {
@@ -115,7 +87,7 @@ class _State extends State<ScreenSharing> {
         connection: RtcConnection(channelId: _controller.text, localUid: 1000),
         options: const ChannelMediaOptions(
           publishCameraTrack: true,
-          publishAudioTrack: false,
+          publishMicrophoneTrack: false,
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
         ));
 
@@ -125,39 +97,18 @@ class _State extends State<ScreenSharing> {
         options: const ChannelMediaOptions(
           publishScreenTrack: true,
           publishCameraTrack: false,
-          publishAudioTrack: false,
+          publishMicrophoneTrack: false,
+          publishScreenCaptureAudio: true,
+          publishScreenCaptureVideo: true,
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
         ));
   }
 
   _leaveChannel() async {
-    _stopScreenShare();
+    await _engine.stopScreenCapture();
     await _engine.leaveChannel();
   }
 
-  Future<void> _startScreenShare() async {
-    final windowId = _selectedScreenCaptureSourceInfo.sourceId;
-    await _engine.startScreenCaptureByWindowId(
-      windowId: windowId!,
-      regionRect: const Rectangle(),
-      captureParams: const ScreenCaptureParameters(
-        captureMouseCursor: true,
-        frameRate: 30,
-      ),
-    );
-    setState(() {
-      _isScreenShared = !_isScreenShared;
-    });
-  }
-
-  Future<void> _stopScreenShare() async {
-    if (!_isScreenShared) return;
-
-    await _engine.stopScreenCapture();
-    setState(() {
-      _isScreenShared = !_isScreenShared;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +193,7 @@ class _State extends State<ScreenSharing> {
         );
       },
       actionsBuilder: (context, isLayoutHorizontal) {
+        if (!_isReadyPreview) return Container();
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,26 +214,249 @@ class _State extends State<ScreenSharing> {
                 )
               ],
             ),
-            _createDropdownButton(),
-            if (_screenCaptureSourceInfos.isNotEmpty)
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: ElevatedButton(
-                      onPressed: _isScreenShared
-                          ? _stopScreenShare
-                          : _startScreenShare,
-                      child: Text(
-                          '${_isScreenShared ? 'Stop' : 'Start'} screen share'),
-                    ),
-                  )
-                ],
-              ),
-            // _renderVideo(),
+            if (defaultTargetPlatform == TargetPlatform.android)
+              ScreenShareMobile(
+                  rtcEngine: _engine,
+                  isScreenShared: _isScreenShared,
+                  onStartScreenShared: () {
+                    setState(() {
+                      _isScreenShared = !_isScreenShared;
+                    });
+                  },
+                  onStopScreenShare: () {
+                    setState(() {
+                      _isScreenShared = !_isScreenShared;
+                    });
+                  }),
+            if (defaultTargetPlatform == TargetPlatform.windows ||
+                defaultTargetPlatform == TargetPlatform.macOS)
+              ScreenShareDesktop(
+                  rtcEngine: _engine,
+                  isScreenShared: _isScreenShared,
+                  onStartScreenShared: () {
+                    setState(() {
+                      _isScreenShared = !_isScreenShared;
+                    });
+                  },
+                  onStopScreenShare: () {
+                    setState(() {
+                      _isScreenShared = !_isScreenShared;
+                    });
+                  }),
           ],
         );
       },
     );
   }
+}
+
+class ScreenShareMobile extends StatefulWidget {
+  const ScreenShareMobile(
+      {Key? key,
+      required this.rtcEngine,
+      required this.isScreenShared,
+      required this.onStartScreenShared,
+      required this.onStopScreenShare})
+      : super(key: key);
+
+  final RtcEngine rtcEngine;
+  final bool isScreenShared;
+  final VoidCallback onStartScreenShared;
+  final VoidCallback onStopScreenShare;
+
+  @override
+  State<ScreenShareMobile> createState() => _ScreenShareMobileState();
+}
+
+class _ScreenShareMobileState extends State<ScreenShareMobile>
+    implements ScreenShareInterface {
+  @override
+  bool get isScreenShared => widget.isScreenShared;
+
+  @override
+  void onStartScreenShared() {
+    widget.onStartScreenShared();
+  }
+
+  @override
+  void onStopScreenShare() {
+    widget.onStopScreenShare();
+  }
+
+  @override
+  RtcEngine get rtcEngine => widget.rtcEngine;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: ElevatedButton(
+            onPressed: !isScreenShared ? startScreenShare : stopScreenShare,
+            child: Text('${isScreenShared ? 'Stop' : 'Start'} screen share'),
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  void startScreenShare() async {
+    if (isScreenShared) return;
+
+    await rtcEngine.startScreenCapture(
+        const ScreenCaptureParameters2(captureAudio: true, captureVideo: true));
+    await rtcEngine.startPreview(sourceType: VideoSourceType.videoSourceScreen);
+    onStartScreenShared();
+  }
+
+  @override
+  void stopScreenShare() async {
+    if (!isScreenShared) return;
+
+    await rtcEngine.stopScreenCapture();
+    onStopScreenShare();
+  }
+}
+
+class ScreenShareDesktop extends StatefulWidget {
+  const ScreenShareDesktop(
+      {Key? key,
+      required this.rtcEngine,
+      required this.isScreenShared,
+      required this.onStartScreenShared,
+      required this.onStopScreenShare})
+      : super(key: key);
+
+  final RtcEngine rtcEngine;
+  final bool isScreenShared;
+  final VoidCallback onStartScreenShared;
+  final VoidCallback onStopScreenShare;
+
+  @override
+  State<ScreenShareDesktop> createState() => _ScreenShareDesktopState();
+}
+
+class _ScreenShareDesktopState extends State<ScreenShareDesktop>
+    implements ScreenShareInterface {
+  List<ScreenCaptureSourceInfo> _screenCaptureSourceInfos = [];
+  late ScreenCaptureSourceInfo _selectedScreenCaptureSourceInfo;
+
+  @override
+  bool get isScreenShared => widget.isScreenShared;
+
+  @override
+  void onStartScreenShared() {
+    widget.onStartScreenShared();
+  }
+
+  @override
+  void onStopScreenShare() {
+    widget.onStopScreenShare();
+  }
+
+  @override
+  RtcEngine get rtcEngine => widget.rtcEngine;
+
+  Future<void> _initScreenCaptureSourceInfos() async {
+    SIZE thumbSize = const SIZE(width: 360, height: 240);
+    SIZE iconSize = const SIZE(width: 360, height: 240);
+    _screenCaptureSourceInfos = await rtcEngine.getScreenCaptureSources(
+        thumbSize: thumbSize, iconSize: iconSize, includeScreen: true);
+    _selectedScreenCaptureSourceInfo = _screenCaptureSourceInfos[0];
+    setState(() {});
+  }
+
+  Widget _createDropdownButton() {
+    if (_screenCaptureSourceInfos.isEmpty) return Container();
+    return DropdownButton<ScreenCaptureSourceInfo>(
+        items: _screenCaptureSourceInfos.map((info) {
+          return DropdownMenuItem(
+            value: info,
+            child: Text('${info.sourceName}',
+                style: const TextStyle(fontSize: 10)),
+          );
+        }).toList(),
+        value: _selectedScreenCaptureSourceInfo,
+        onChanged: isScreenShared
+            ? null
+            : (v) {
+                setState(() {
+                  _selectedScreenCaptureSourceInfo = v!;
+                });
+              });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _initScreenCaptureSourceInfos();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _createDropdownButton(),
+        if (_screenCaptureSourceInfos.isNotEmpty)
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: ElevatedButton(
+                  onPressed:
+                      !isScreenShared ? startScreenShare : stopScreenShare,
+                  child:
+                      Text('${isScreenShared ? 'Stop' : 'Start'} screen share'),
+                ),
+              )
+            ],
+          ),
+      ],
+    );
+  }
+
+  @override
+  void startScreenShare() async {
+    if (isScreenShared) return;
+
+    final windowId = _selectedScreenCaptureSourceInfo.sourceId;
+    await rtcEngine.startScreenCaptureByWindowId(
+      windowId: windowId!,
+      regionRect: const Rectangle(),
+      captureParams: const ScreenCaptureParameters(
+        captureMouseCursor: true,
+        frameRate: 30,
+      ),
+    );
+
+    onStartScreenShared();
+  }
+
+  @override
+  void stopScreenShare() async {
+    if (!isScreenShared) return;
+
+    await rtcEngine.stopScreenCapture();
+    onStopScreenShare();
+  }
+}
+
+abstract class ScreenShareInterface {
+  void onStartScreenShared();
+
+  void onStopScreenShare();
+
+  bool get isScreenShared;
+
+  RtcEngine get rtcEngine;
+
+  void startScreenShare();
+
+  void stopScreenShare();
 }

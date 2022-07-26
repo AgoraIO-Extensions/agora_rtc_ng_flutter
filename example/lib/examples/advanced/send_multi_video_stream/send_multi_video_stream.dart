@@ -56,9 +56,6 @@ class _State extends State<SendMultiVideoStream> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -83,12 +80,13 @@ class _State extends State<SendMultiVideoStream> {
 
     await _engine.startPreview();
 
-    _mediaPlayerController = await MediaPlayerController.create(
+    _mediaPlayerController = MediaPlayerController(
         rtcEngine: _engine,
         canvas: const VideoCanvas(
           uid: 0,
           sourceType: VideoSourceType.videoSourceMediaPlayer,
         ));
+    await _mediaPlayerController.initialize();
     _mediaPlayerController.registerPlayerSourceObserver(
       MediaPlayerSourceObserver(
         onCompleted: () {
@@ -149,7 +147,7 @@ class _State extends State<SendMultiVideoStream> {
       ),
       options: const ChannelMediaOptions(
         clientRoleType: ClientRoleType.clientRoleBroadcaster,
-        publishAudioTrack: true,
+        publishMicrophoneTrack: true,
         publishCameraTrack: true,
       ),
     );

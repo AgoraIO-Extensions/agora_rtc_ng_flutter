@@ -51,9 +51,6 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -121,9 +118,6 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
   Future<void> _startTranscoding({bool isRemoteUser = false}) async {
     if (_isStreaming && !isRemoteUser) return;
     final streamUrl = _rtmpUrlController.text;
-    if (_isStreaming && isRemoteUser) {
-      await _engine.removePublishStreamUrl(streamUrl);
-    }
 
     _isStreaming = true;
 

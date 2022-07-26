@@ -62,8 +62,8 @@ class _State extends State<StartLocalVideoTranscoder> {
   }
 
   Future<void> _dispose() async {
-    // await _localVideoController.dispose();
     _stopLocalVideoTranscoder();
+    await _mediaPlayerController.dispose();
     await _engine.leaveChannel();
     await _engine.release();
   }
@@ -76,9 +76,6 @@ class _State extends State<StartLocalVideoTranscoder> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -114,8 +111,9 @@ class _State extends State<StartLocalVideoTranscoder> {
       },
     ));
 
-    _mediaPlayerController = await MediaPlayerController.create(
+    _mediaPlayerController = MediaPlayerController(
         rtcEngine: _engine, canvas: const VideoCanvas(uid: 0));
+    await _mediaPlayerController.initialize();
 
     _videoDeviceManager = _engine.getVideoDeviceManager();
 

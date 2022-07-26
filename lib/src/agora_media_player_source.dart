@@ -1,8 +1,9 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 
 /// Provides callbacks for media players.
+///
 class MediaPlayerSourceObserver {
-  /// Construct the [MediaPlayerSourceObserver].
+  /// @nodoc
   const MediaPlayerSourceObserver({
     this.onPlayerSourceStateChanged,
     this.onPositionChanged,
@@ -20,26 +21,23 @@ class MediaPlayerSourceObserver {
   /// Reports the playback state change.
   /// When the state of the media player changes, the SDK triggers this callback to report the current playback state.
   ///
-  /// * [state] The playback state, see MediaPlayerState .None
-  ///
-  /// * [ec] The error code. See MediaPlayerError .None
+  /// *[state]The playback state, see MediaPlayerState .
+  /// *[ec]The error code. See MediaPlayerError .
   final void Function(MediaPlayerState state, MediaPlayerError ec)?
       onPlayerSourceStateChanged;
 
   /// Reports the current playback progress.
   /// When playing media files, the SDK triggers this callback every one second to report current playback progress.
   ///
-  /// * [position] The playback position (ms) of media files.None
-  final void Function(int position)? onPositionChanged;
+  /// *[position]The playback position (ms) of media files.
+  final void Function(int positionMs)? onPositionChanged;
 
   /// Reports the playback event.
   /// After calling the seek method, the SDK triggers the callback to report the results of the seek operation.
   ///
-  /// * [eventCode] The playback event. See MediaPlayerEvent .None
-  ///
-  /// * [elapsedTime] The time (ms) when the event occurs.None
-  ///
-  /// * [message] Information about the event.None
+  /// *[eventCode]The playback event. See MediaPlayerEvent .
+  /// *[elapsedTime]The time (ms) when the event occurs.
+  /// *[message]Information about the event.
   final void Function(
           MediaPlayerEvent eventCode, int elapsedTime, String message)?
       onPlayerEvent;
@@ -47,9 +45,8 @@ class MediaPlayerSourceObserver {
   /// Occurs when the media metadata is received.
   /// The callback occurs when the player receives the media metadata and reports the detailed information of the media metadata.
   ///
-  /// * [data] The detailed data of the media metadata.None
-  ///
-  /// * [length] The data length (bytes).None
+  /// *[data]The detailed data of the media metadata.
+  /// *[length]The data length (bytes).
   final void Function(Uint8List data, int length)? onMetaData;
 
   /// @nodoc
@@ -58,7 +55,7 @@ class MediaPlayerSourceObserver {
   /// @nodoc
   final void Function(String src, PlayerPreloadEvent event)? onPreloadEvent;
 
-  /// /// @nodoc
+  /// @nodoc
   final void Function()? onCompleted;
 
   /// @nodoc

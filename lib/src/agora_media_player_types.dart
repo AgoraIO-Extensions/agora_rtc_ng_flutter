@@ -5,6 +5,7 @@ part 'agora_media_player_types.g.dart';
 const kMaxCharBufferLength = 50;
 
 /// The playback state.
+///
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerState {
   /// 0: The default state.
@@ -73,7 +74,7 @@ enum MediaPlayerState {
   playerStateFailed,
 }
 
-/// Extensions functions of [MediaPlayerState].
+/// @nodoc
 extension MediaPlayerStateExt on MediaPlayerState {
   /// @nodoc
   static MediaPlayerState fromValue(int value) {
@@ -87,6 +88,7 @@ extension MediaPlayerStateExt on MediaPlayerState {
 }
 
 /// Error codes of the media player.
+///
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerError {
   /// 0: No error.
@@ -162,7 +164,7 @@ enum MediaPlayerError {
   playerErrorUnknown,
 }
 
-/// Extensions functions of [MediaPlayerError].
+/// @nodoc
 extension MediaPlayerErrorExt on MediaPlayerError {
   /// @nodoc
   static MediaPlayerError fromValue(int value) {
@@ -176,6 +178,7 @@ extension MediaPlayerErrorExt on MediaPlayerError {
 }
 
 /// The type of the media stream.
+///
 @JsonEnum(alwaysCreate: true)
 enum MediaStreamType {
   /// 0: The type is unknown.
@@ -195,7 +198,7 @@ enum MediaStreamType {
   streamTypeSubtitle,
 }
 
-/// Extensions functions of [MediaStreamType].
+/// @nodoc
 extension MediaStreamTypeExt on MediaStreamType {
   /// @nodoc
   static MediaStreamType fromValue(int value) {
@@ -209,6 +212,7 @@ extension MediaStreamTypeExt on MediaStreamType {
 }
 
 /// Media player events.
+///
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerEvent {
   /// 0: The player begins to seek to a new playback position.
@@ -258,9 +262,29 @@ enum MediaPlayerEvent {
   /// 13: The first video frame is rendered.
   @JsonValue(13)
   playerEventFirstDisplayed,
+
+  /// @nodoc
+  @JsonValue(14)
+  playerEventReachCacheFileMaxCount,
+
+  /// @nodoc
+  @JsonValue(15)
+  playerEventReachCacheFileMaxSize,
+
+  /// @nodoc
+  @JsonValue(16)
+  playerEventTryOpenStart,
+
+  /// @nodoc
+  @JsonValue(17)
+  playerEventTryOpenSucceed,
+
+  /// @nodoc
+  @JsonValue(18)
+  playerEventTryOpenFailed,
 }
 
-/// Extensions functions of [MediaPlayerEvent].
+/// @nodoc
 extension MediaPlayerEventExt on MediaPlayerEvent {
   /// @nodoc
   static MediaPlayerEvent fromValue(int value) {
@@ -274,6 +298,7 @@ extension MediaPlayerEventExt on MediaPlayerEvent {
 }
 
 /// Events that occur when media resources are preloaded.
+///
 @JsonEnum(alwaysCreate: true)
 enum PlayerPreloadEvent {
   /// 0: Starts preloading media resources.
@@ -289,7 +314,7 @@ enum PlayerPreloadEvent {
   playerPreloadEventError,
 }
 
-/// Extensions functions of [PlayerPreloadEvent].
+/// @nodoc
 extension PlayerPreloadEventExt on PlayerPreloadEvent {
   /// @nodoc
   static PlayerPreloadEvent fromValue(int value) {
@@ -303,9 +328,10 @@ extension PlayerPreloadEventExt on PlayerPreloadEvent {
 }
 
 /// The detailed information of the media stream.
+///
 @JsonSerializable(explicitToJson: true)
 class PlayerStreamInfo {
-  /// Construct the [PlayerStreamInfo].
+  /// @nodoc
   const PlayerStreamInfo(
       {this.streamIndex,
       this.streamType,
@@ -341,7 +367,7 @@ class PlayerStreamInfo {
   @JsonKey(name: 'videoFrameRate')
   final int? videoFrameRate;
 
-  /// @nodoc
+  /// This parameter only takes effect for video streams, and indicates the video bitrate (bps).
   @JsonKey(name: 'videoBitRate')
   final int? videoBitRate;
 
@@ -382,9 +408,10 @@ class PlayerStreamInfo {
 }
 
 /// Information about the video bitrate of the media resource being played.
+///
 @JsonSerializable(explicitToJson: true)
 class SrcInfo {
-  /// Construct the [SrcInfo].
+  /// @nodoc
   const SrcInfo({this.bitrateInKbps, this.name});
 
   /// The video bitrate (Kbps) of the media resource being played.
@@ -404,6 +431,7 @@ class SrcInfo {
 }
 
 /// The type of media metadata.
+///
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerMetadataType {
   /// 0: The type is unknown.
@@ -415,7 +443,7 @@ enum MediaPlayerMetadataType {
   playerMetadataTypeSei,
 }
 
-/// Extensions functions of [MediaPlayerMetadataType].
+/// @nodoc
 extension MediaPlayerMetadataTypeExt on MediaPlayerMetadataType {
   /// @nodoc
   static MediaPlayerMetadataType fromValue(int value) {
@@ -428,11 +456,38 @@ extension MediaPlayerMetadataTypeExt on MediaPlayerMetadataType {
   }
 }
 
+/// @nodoc
+@JsonSerializable(explicitToJson: true)
+class CacheStatistics {
+  /// @nodoc
+  const CacheStatistics({this.fileSize, this.cacheSize, this.downloadSize});
+
+  /// @nodoc
+  @JsonKey(name: 'fileSize')
+  final int? fileSize;
+
+  /// @nodoc
+  @JsonKey(name: 'cacheSize')
+  final int? cacheSize;
+
+  /// @nodoc
+  @JsonKey(name: 'downloadSize')
+  final int? downloadSize;
+
+  /// @nodoc
+  factory CacheStatistics.fromJson(Map<String, dynamic> json) =>
+      _$CacheStatisticsFromJson(json);
+
+  /// @nodoc
+  Map<String, dynamic> toJson() => _$CacheStatisticsToJson(this);
+}
+
 /// Information related to the media player.
+///
 @JsonSerializable(explicitToJson: true)
 class PlayerUpdatedInfo {
-  /// Construct the [PlayerUpdatedInfo].
-  const PlayerUpdatedInfo({this.playerId, this.deviceId});
+  /// @nodoc
+  const PlayerUpdatedInfo({this.playerId, this.deviceId, this.cacheStatistics});
 
   /// The ID of a media player.
   @JsonKey(name: 'playerId')
@@ -443,9 +498,62 @@ class PlayerUpdatedInfo {
   final String? deviceId;
 
   /// @nodoc
+  @JsonKey(name: 'cacheStatistics')
+  final CacheStatistics? cacheStatistics;
+
+  /// @nodoc
   factory PlayerUpdatedInfo.fromJson(Map<String, dynamic> json) =>
       _$PlayerUpdatedInfoFromJson(json);
 
   /// @nodoc
   Map<String, dynamic> toJson() => _$PlayerUpdatedInfoToJson(this);
+}
+
+/// @nodoc
+@JsonSerializable(explicitToJson: true)
+class MediaSource {
+  /// @nodoc
+  const MediaSource(
+      {this.url,
+      this.uri,
+      this.startPos,
+      this.autoPlay,
+      this.enableCache,
+      this.isAgoraSource,
+      this.isLiveSource});
+
+  /// @nodoc
+  @JsonKey(name: 'url')
+  final String? url;
+
+  /// @nodoc
+  @JsonKey(name: 'uri')
+  final String? uri;
+
+  /// @nodoc
+  @JsonKey(name: 'startPos')
+  final int? startPos;
+
+  /// @nodoc
+  @JsonKey(name: 'autoPlay')
+  final bool? autoPlay;
+
+  /// @nodoc
+  @JsonKey(name: 'enableCache')
+  final bool? enableCache;
+
+  /// @nodoc
+  @JsonKey(name: 'isAgoraSource')
+  final bool? isAgoraSource;
+
+  /// @nodoc
+  @JsonKey(name: 'isLiveSource')
+  final bool? isLiveSource;
+
+  /// @nodoc
+  factory MediaSource.fromJson(Map<String, dynamic> json) =>
+      _$MediaSourceFromJson(json);
+
+  /// @nodoc
+  Map<String, dynamic> toJson() => _$MediaSourceToJson(this);
 }

@@ -50,9 +50,6 @@ class _State extends State<SetContentInspect> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -110,13 +107,15 @@ class _State extends State<SetContentInspect> {
   }
 
   void _leaveChannel() async {
-    await _engine.setContentInspect(const ContentInspectConfig(
-      enable: false,
-      modules: [
-        ContentInspectModule(type: ContentInspectType.contentInspectModeration)
-      ],
-      moduleCount: 1,
-    ));
+    await _engine.enableContentInspect(
+        enabled: false,
+        config: const ContentInspectConfig(
+          modules: [
+            ContentInspectModule(
+                type: ContentInspectType.contentInspectModeration)
+          ],
+          moduleCount: 1,
+        ));
 
     await _engine.leaveChannel();
   }
@@ -162,33 +161,31 @@ class _State extends State<SetContentInspect> {
                       _isStartContentInspect = !_isStartContentInspect;
 
                       if (_isStartContentInspect) {
-                        _engine.setContentInspect(const ContentInspectConfig(
-                          enable: true,
-                          deviceWork: true,
-                          deviceworkType: ContentInspectDeviceType
-                              .contentInspectDeviceAgora,
-                          modules: [
-                            ContentInspectModule(
-                              type: ContentInspectType.contentInspectModeration,
-                              frequency: 2,
-                            )
-                          ],
-                          moduleCount: 1,
-                        ));
+                        _engine.enableContentInspect(
+                            enabled: true,
+                            config: const ContentInspectConfig(
+                              modules: [
+                                ContentInspectModule(
+                                  type: ContentInspectType
+                                      .contentInspectModeration,
+                                  interval: 2,
+                                )
+                              ],
+                              moduleCount: 1,
+                            ));
                       } else {
-                        _engine.setContentInspect(const ContentInspectConfig(
-                          enable: false,
-                          deviceWork: true,
-                          deviceworkType: ContentInspectDeviceType
-                              .contentInspectDeviceAgora,
-                          modules: [
-                            ContentInspectModule(
-                              type: ContentInspectType.contentInspectModeration,
-                              frequency: 2,
-                            )
-                          ],
-                          moduleCount: 1,
-                        ));
+                        _engine.enableContentInspect(
+                            enabled: true,
+                            config: const ContentInspectConfig(
+                              modules: [
+                                ContentInspectModule(
+                                  type: ContentInspectType
+                                      .contentInspectModeration,
+                                  interval: 2,
+                                )
+                              ],
+                              moduleCount: 1,
+                            ));
                       }
 
                       setState(() {});

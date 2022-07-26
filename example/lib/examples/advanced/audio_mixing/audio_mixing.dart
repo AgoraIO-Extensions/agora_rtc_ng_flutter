@@ -53,9 +53,6 @@ class _AudioMixingState extends State<AudioMixing> {
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -77,7 +74,7 @@ class _AudioMixingState extends State<AudioMixing> {
         logSink.log('[onAudioMixingFinished]');
       },
       onAudioMixingStateChanged:
-          (AudioMixingStateType state, AudioMixingErrorType errorCode) {
+          (AudioMixingStateType state, AudioMixingReasonType errorCode) {
         logSink.log(
             '[onAudioMixingStateChanged] state:${state.toString()}, errorCode: ${errorCode.toString()}}');
       },

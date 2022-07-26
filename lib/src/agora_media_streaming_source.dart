@@ -93,7 +93,7 @@ enum StreamingSrcErr {
   streamingSrcErrCodecproc,
 }
 
-/// Extensions functions of [StreamingSrcErr].
+/// @nodoc
 extension StreamingSrcErrExt on StreamingSrcErr {
   /// @nodoc
   static StreamingSrcErr fromValue(int value) {
@@ -138,7 +138,7 @@ enum StreamingSrcState {
   streamingSrcStateError,
 }
 
-/// Extensions functions of [StreamingSrcState].
+/// @nodoc
 extension StreamingSrcStateExt on StreamingSrcState {
   /// @nodoc
   static StreamingSrcState fromValue(int value) {
@@ -154,7 +154,7 @@ extension StreamingSrcStateExt on StreamingSrcState {
 /// @nodoc
 @JsonSerializable(explicitToJson: true)
 class InputSeiData {
-  /// Construct the [InputSeiData].
+  /// @nodoc
   const InputSeiData(
       {this.type,
       this.timestamp,

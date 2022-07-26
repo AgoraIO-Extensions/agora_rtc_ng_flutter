@@ -25,7 +25,7 @@ enum RhythmPlayerStateType {
   rhythmPlayerStateFailed,
 }
 
-/// Extensions functions of [RhythmPlayerStateType].
+/// @nodoc
 extension RhythmPlayerStateTypeExt on RhythmPlayerStateType {
   /// @nodoc
   static RhythmPlayerStateType fromValue(int value) {
@@ -62,7 +62,7 @@ enum RhythmPlayerErrorType {
   rhythmPlayerErrorFileOverDurationLimit,
 }
 
-/// Extensions functions of [RhythmPlayerErrorType].
+/// @nodoc
 extension RhythmPlayerErrorTypeExt on RhythmPlayerErrorType {
   /// @nodoc
   static RhythmPlayerErrorType fromValue(int value) {
@@ -76,9 +76,10 @@ extension RhythmPlayerErrorTypeExt on RhythmPlayerErrorType {
 }
 
 /// The metronome configuration.
+///
 @JsonSerializable(explicitToJson: true)
 class AgoraRhythmPlayerConfig {
-  /// Construct the [AgoraRhythmPlayerConfig].
+  /// @nodoc
   const AgoraRhythmPlayerConfig({this.beatsPerMeasure, this.beatsPerMinute});
 
   /// The number of beats per measure, which ranges from 1 to 9. The default value is 4, which means that each measure contains one downbeat and three upbeats.

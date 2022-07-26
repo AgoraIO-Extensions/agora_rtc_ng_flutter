@@ -71,9 +71,6 @@ class _State extends State<MediaPlayer> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -93,8 +90,9 @@ class _State extends State<MediaPlayer> {
       },
     ));
 
-    _mediaPlayerController = await MediaPlayerController.create(
+    _mediaPlayerController = MediaPlayerController(
         rtcEngine: _engine, canvas: const VideoCanvas(uid: 0));
+    await _mediaPlayerController.initialize();
     _mediaPlayerController.registerPlayerSourceObserver(
       MediaPlayerSourceObserver(
         onCompleted: () {

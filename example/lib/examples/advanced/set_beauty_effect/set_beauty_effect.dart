@@ -59,9 +59,7 @@ class _State extends State<SetBeautyEffect> {
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
+
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -88,7 +86,7 @@ class _State extends State<SetBeautyEffect> {
           isJoined = false;
         });
       },
-      onExtensionErrored:
+      onExtensionError:
           (String provider, String extName, int error, String msg) {
         logSink.log(
             '[onExtensionErrored] provider: $provider, extName: $extName, error: $error, msg: $msg');
@@ -114,13 +112,13 @@ class _State extends State<SetBeautyEffect> {
 
     if (defaultTargetPlatform == TargetPlatform.windows) {
       await _engine
-          .loadExtensionProvider('libagora_video_process_extension.dll');
+          .loadExtensionProvider(path: 'agora_clear_vision_extension.dll');
     } else if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider('agora_video_process_extension');
+      await _engine.loadExtensionProvider(path: 'agora_clear_vision_extension');
     }
     await _engine.enableExtension(
-      provider: 'agora',
-      extension: 'beauty',
+      provider: 'agora_video_filters_clear_vision',
+      extension: 'clear_vision',
     );
     await _engine.startPreview();
 
