@@ -169,6 +169,113 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
   }
 
   @override
+  Future<List<int>> setSubscribeAudioBlacklistEx(
+      {required int uidNumber, required RtcConnection connection}) async {
+    const apiType = 'RtcEngineEx_setSubscribeAudioBlacklistEx';
+    final param = createParams(
+        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final setSubscribeAudioBlacklistExJson =
+        RtcEngineExSetSubscribeAudioBlacklistExJson.fromJson(rm);
+    return setSubscribeAudioBlacklistExJson.uidList;
+  }
+
+  @override
+  Future<List<int>> setSubscribeAudioWhitelistEx(
+      {required int uidNumber, required RtcConnection connection}) async {
+    const apiType = 'RtcEngineEx_setSubscribeAudioWhitelistEx';
+    final param = createParams(
+        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final setSubscribeAudioWhitelistExJson =
+        RtcEngineExSetSubscribeAudioWhitelistExJson.fromJson(rm);
+    return setSubscribeAudioWhitelistExJson.uidList;
+  }
+
+  @override
+  Future<List<int>> setSubscribeVideoBlacklistEx(
+      {required int uidNumber, required RtcConnection connection}) async {
+    const apiType = 'RtcEngineEx_setSubscribeVideoBlacklistEx';
+    final param = createParams(
+        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final setSubscribeVideoBlacklistExJson =
+        RtcEngineExSetSubscribeVideoBlacklistExJson.fromJson(rm);
+    return setSubscribeVideoBlacklistExJson.uidList;
+  }
+
+  @override
+  Future<List<int>> setSubscribeVideoWhitelistEx(
+      {required int uidNumber, required RtcConnection connection}) async {
+    const apiType = 'RtcEngineEx_setSubscribeVideoWhitelistEx';
+    final param = createParams(
+        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final setSubscribeVideoWhitelistExJson =
+        RtcEngineExSetSubscribeVideoWhitelistExJson.fromJson(rm);
+    return setSubscribeVideoWhitelistExJson.uidList;
+  }
+
+  @override
+  Future<void> setRemoteVideoSubscriptionOptionsEx(
+      {required int uid,
+      required VideoSubscriptionOptions options,
+      required RtcConnection connection}) async {
+    const apiType = 'RtcEngineEx_setRemoteVideoSubscriptionOptionsEx';
+    final param = createParams({
+      'uid': uid,
+      'options': options.toJson(),
+      'connection': connection.toJson()
+    });
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
   Future<void> setRemoteVoicePositionEx(
       {required int uid,
       required double pan,
@@ -511,16 +618,54 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
   }
 
   @override
-  Future<void> addPublishStreamUrlEx(
-      {required String url,
-      required bool transcodingEnabled,
+  Future<void> setDualStreamModeEx(
+      {required VideoSourceType sourceType,
+      required SimulcastStreamMode mode,
+      required SimulcastStreamConfig streamConfig,
       required RtcConnection connection}) async {
-    const apiType = 'RtcEngineEx_addPublishStreamUrlEx';
+    const apiType = 'RtcEngineEx_setDualStreamModeEx';
     final param = createParams({
-      'url': url,
-      'transcodingEnabled': transcodingEnabled,
+      'sourceType': sourceType.value(),
+      'mode': mode.value(),
+      'streamConfig': streamConfig.toJson(),
       'connection': connection.toJson()
     });
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> enableWirelessAccelerate(bool enabled) async {
+    const apiType = 'RtcEngineEx_enableWirelessAccelerate';
+    final param = createParams({'enabled': enabled});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> takeSnapshotEx(
+      {required RtcConnection connection,
+      required int uid,
+      required String filePath}) async {
+    const apiType = 'RtcEngineEx_takeSnapshotEx';
+    final param = createParams(
+        {'connection': connection.toJson(), 'uid': uid, 'filePath': filePath});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param));
     if (callApiResult.irisReturnCode < 0) {

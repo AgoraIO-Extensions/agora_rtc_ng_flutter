@@ -3,6 +3,7 @@ export 'agora_base.dart';
 export 'agora_media_base.dart';
 export 'agora_media_player_types.dart';
 export 'agora_log.dart';
+export 'agora_media_engine.dart';
 export 'agora_media_player.dart';
 export 'agora_media_player_source.dart';
 export 'agora_media_streaming_source.dart';

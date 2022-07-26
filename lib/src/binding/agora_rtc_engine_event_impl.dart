@@ -31,16 +31,23 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         onRejoinChannelSuccess!(connection, elapsed);
         break;
 
-      case 'onWarning':
-        if (onWarning == null) break;
-        RtcEngineEventHandlerOnWarningJson paramJson =
-            RtcEngineEventHandlerOnWarningJson.fromJson(jsonMap);
-        WarnCodeType? warn = paramJson.warn;
-        String? msg = paramJson.msg;
-        if (warn == null || msg == null) {
+      case 'onProxyConnected':
+        if (onProxyConnected == null) break;
+        RtcEngineEventHandlerOnProxyConnectedJson paramJson =
+            RtcEngineEventHandlerOnProxyConnectedJson.fromJson(jsonMap);
+        String? channel = paramJson.channel;
+        int? uid = paramJson.uid;
+        ProxyType? proxyType = paramJson.proxyType;
+        String? localProxyIp = paramJson.localProxyIp;
+        int? elapsed = paramJson.elapsed;
+        if (channel == null ||
+            uid == null ||
+            proxyType == null ||
+            localProxyIp == null ||
+            elapsed == null) {
           break;
         }
-        onWarning!(warn, msg);
+        onProxyConnected!(channel, uid, proxyType, localProxyIp, elapsed);
         break;
 
       case 'onError':
@@ -609,11 +616,11 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
             RtcEngineEventHandlerOnAudioMixingStateChangedJson.fromJson(
                 jsonMap);
         AudioMixingStateType? state = paramJson.state;
-        AudioMixingErrorType? errorCode = paramJson.errorCode;
-        if (state == null || errorCode == null) {
+        AudioMixingReasonType? reason = paramJson.reason;
+        if (state == null || reason == null) {
           break;
         }
-        onAudioMixingStateChanged!(state, errorCode);
+        onAudioMixingStateChanged!(state, reason);
         break;
 
       case 'onRhythmPlayerStateChanged':
@@ -815,7 +822,7 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         onActiveSpeaker!(connection, uid);
         break;
 
-      case 'onContentInspectResultEx':
+      case 'onContentInspectResult':
         if (onContentInspectResult == null) break;
         RtcEngineEventHandlerOnContentInspectResultJson paramJson =
             RtcEngineEventHandlerOnContentInspectResultJson.fromJson(jsonMap);
@@ -831,18 +838,20 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         RtcEngineEventHandlerOnSnapshotTakenJson paramJson =
             RtcEngineEventHandlerOnSnapshotTakenJson.fromJson(jsonMap);
         RtcConnection? connection = paramJson.connection;
+        int? uid = paramJson.uid;
         String? filePath = paramJson.filePath;
         int? width = paramJson.width;
         int? height = paramJson.height;
         int? errCode = paramJson.errCode;
         if (connection == null ||
+            uid == null ||
             filePath == null ||
             width == null ||
             height == null ||
             errCode == null) {
           break;
         }
-        onSnapshotTaken!(connection, filePath, width, height, errCode);
+        onSnapshotTaken!(connection, uid, filePath, width, height, errCode);
         break;
 
       case 'onClientRoleChangedEx':
@@ -909,29 +918,6 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
           break;
         }
         onRtmpStreamingEvent!(url, eventCode);
-        break;
-
-      case 'onStreamPublished':
-        if (onStreamPublished == null) break;
-        RtcEngineEventHandlerOnStreamPublishedJson paramJson =
-            RtcEngineEventHandlerOnStreamPublishedJson.fromJson(jsonMap);
-        String? url = paramJson.url;
-        ErrorCodeType? error = paramJson.error;
-        if (url == null || error == null) {
-          break;
-        }
-        onStreamPublished!(url, error);
-        break;
-
-      case 'onStreamUnpublished':
-        if (onStreamUnpublished == null) break;
-        RtcEngineEventHandlerOnStreamUnpublishedJson paramJson =
-            RtcEngineEventHandlerOnStreamUnpublishedJson.fromJson(jsonMap);
-        String? url = paramJson.url;
-        if (url == null) {
-          break;
-        }
-        onStreamUnpublished!(url);
         break;
 
       case 'onTranscodingUpdated':
@@ -1055,6 +1041,38 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
           break;
         }
         onConnectionStateChanged!(connection, state, reason);
+        break;
+
+      case 'onWlAccMessageEx':
+        if (onWlAccMessage == null) break;
+        RtcEngineEventHandlerOnWlAccMessageJson paramJson =
+            RtcEngineEventHandlerOnWlAccMessageJson.fromJson(jsonMap);
+        RtcConnection? connection = paramJson.connection;
+        WlaccMessageReason? reason = paramJson.reason;
+        WlaccSuggestAction? action = paramJson.action;
+        String? wlAccMsg = paramJson.wlAccMsg;
+        if (connection == null ||
+            reason == null ||
+            action == null ||
+            wlAccMsg == null) {
+          break;
+        }
+        onWlAccMessage!(connection, reason, action, wlAccMsg);
+        break;
+
+      case 'onWlAccStatsEx':
+        if (onWlAccStats == null) break;
+        RtcEngineEventHandlerOnWlAccStatsJson paramJson =
+            RtcEngineEventHandlerOnWlAccStatsJson.fromJson(jsonMap);
+        RtcConnection? connection = paramJson.connection;
+        WlAccStats? currentStats = paramJson.currentStats;
+        WlAccStats? averageStats = paramJson.averageStats;
+        if (connection == null ||
+            currentStats == null ||
+            averageStats == null) {
+          break;
+        }
+        onWlAccStats!(connection, currentStats, averageStats);
         break;
 
       case 'onNetworkTypeChangedEx':
@@ -1199,18 +1217,20 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         RtcEngineEventHandlerOnVideoPublishStateChangedJson paramJson =
             RtcEngineEventHandlerOnVideoPublishStateChangedJson.fromJson(
                 jsonMap);
+        VideoSourceType? source = paramJson.source;
         String? channel = paramJson.channel;
         StreamPublishState? oldState = paramJson.oldState;
         StreamPublishState? newState = paramJson.newState;
         int? elapseSinceLastState = paramJson.elapseSinceLastState;
-        if (channel == null ||
+        if (source == null ||
+            channel == null ||
             oldState == null ||
             newState == null ||
             elapseSinceLastState == null) {
           break;
         }
         onVideoPublishStateChanged!(
-            channel, oldState, newState, elapseSinceLastState);
+            source, channel, oldState, newState, elapseSinceLastState);
         break;
 
       case 'onExtensionEvent':
@@ -1218,16 +1238,16 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         RtcEngineEventHandlerOnExtensionEventJson paramJson =
             RtcEngineEventHandlerOnExtensionEventJson.fromJson(jsonMap);
         String? provider = paramJson.provider;
-        String? extName = paramJson.extName;
+        String? extension = paramJson.extension;
         String? key = paramJson.key;
         String? value = paramJson.value;
         if (provider == null ||
-            extName == null ||
+            extension == null ||
             key == null ||
             value == null) {
           break;
         }
-        onExtensionEvent!(provider, extName, key, value);
+        onExtensionEvent!(provider, extension, key, value);
         break;
 
       case 'onExtensionStarted':
@@ -1235,11 +1255,11 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         RtcEngineEventHandlerOnExtensionStartedJson paramJson =
             RtcEngineEventHandlerOnExtensionStartedJson.fromJson(jsonMap);
         String? provider = paramJson.provider;
-        String? extName = paramJson.extName;
-        if (provider == null || extName == null) {
+        String? extension = paramJson.extension;
+        if (provider == null || extension == null) {
           break;
         }
-        onExtensionStarted!(provider, extName);
+        onExtensionStarted!(provider, extension);
         break;
 
       case 'onExtensionStopped':
@@ -1247,28 +1267,28 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         RtcEngineEventHandlerOnExtensionStoppedJson paramJson =
             RtcEngineEventHandlerOnExtensionStoppedJson.fromJson(jsonMap);
         String? provider = paramJson.provider;
-        String? extName = paramJson.extName;
-        if (provider == null || extName == null) {
+        String? extension = paramJson.extension;
+        if (provider == null || extension == null) {
           break;
         }
-        onExtensionStopped!(provider, extName);
+        onExtensionStopped!(provider, extension);
         break;
 
-      case 'onExtensionErrored':
-        if (onExtensionErrored == null) break;
-        RtcEngineEventHandlerOnExtensionErroredJson paramJson =
-            RtcEngineEventHandlerOnExtensionErroredJson.fromJson(jsonMap);
+      case 'onExtensionError':
+        if (onExtensionError == null) break;
+        RtcEngineEventHandlerOnExtensionErrorJson paramJson =
+            RtcEngineEventHandlerOnExtensionErrorJson.fromJson(jsonMap);
         String? provider = paramJson.provider;
-        String? extName = paramJson.extName;
+        String? extension = paramJson.extension;
         int? error = paramJson.error;
-        String? msg = paramJson.msg;
+        String? message = paramJson.message;
         if (provider == null ||
-            extName == null ||
+            extension == null ||
             error == null ||
-            msg == null) {
+            message == null) {
           break;
         }
-        onExtensionErrored!(provider, extName, error, msg);
+        onExtensionError!(provider, extension, error, message);
         break;
 
       case 'onUserAccountUpdatedEx':

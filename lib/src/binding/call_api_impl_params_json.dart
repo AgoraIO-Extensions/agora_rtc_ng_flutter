@@ -16,6 +16,58 @@ class VideoDeviceManagerGetDeviceJson {
 }
 
 @JsonSerializable(explicitToJson: true)
+class RtcEngineSetSubscribeAudioBlacklistJson {
+  const RtcEngineSetSubscribeAudioBlacklistJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineSetSubscribeAudioBlacklistJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineSetSubscribeAudioBlacklistJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineSetSubscribeAudioBlacklistJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineSetSubscribeAudioWhitelistJson {
+  const RtcEngineSetSubscribeAudioWhitelistJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineSetSubscribeAudioWhitelistJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineSetSubscribeAudioWhitelistJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineSetSubscribeAudioWhitelistJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineSetSubscribeVideoBlacklistJson {
+  const RtcEngineSetSubscribeVideoBlacklistJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineSetSubscribeVideoBlacklistJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineSetSubscribeVideoBlacklistJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineSetSubscribeVideoBlacklistJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineSetSubscribeVideoWhitelistJson {
+  const RtcEngineSetSubscribeVideoWhitelistJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineSetSubscribeVideoWhitelistJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineSetSubscribeVideoWhitelistJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineSetSubscribeVideoWhitelistJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RtcEngineGetExtensionPropertyJson {
   const RtcEngineGetExtensionPropertyJson(this.value);
 
@@ -99,6 +151,216 @@ class RtcEngineCreateDataStreamJson {
   Map<String, dynamic> toJson() => _$RtcEngineCreateDataStreamJsonToJson(this);
 }
 
+/// @nodoc
+const defaultConnectionId = 0;
+
+/// @nodoc
+const dummyConnectionId = 4294967295;
+
+/// @nodoc
+const kMaxCodecNameLength = 50;
+
+@JsonSerializable(explicitToJson: true)
+class AudioFrameObserverBaseOnRecordAudioFrameJson {
+  const AudioFrameObserverBaseOnRecordAudioFrameJson(this.audioFrame);
+
+  @JsonKey(name: 'audioFrame')
+  final AudioFrame audioFrame;
+  factory AudioFrameObserverBaseOnRecordAudioFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$AudioFrameObserverBaseOnRecordAudioFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$AudioFrameObserverBaseOnRecordAudioFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AudioFrameObserverBaseOnPlaybackAudioFrameJson {
+  const AudioFrameObserverBaseOnPlaybackAudioFrameJson(this.audioFrame);
+
+  @JsonKey(name: 'audioFrame')
+  final AudioFrame audioFrame;
+  factory AudioFrameObserverBaseOnPlaybackAudioFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$AudioFrameObserverBaseOnPlaybackAudioFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$AudioFrameObserverBaseOnPlaybackAudioFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AudioFrameObserverBaseOnMixedAudioFrameJson {
+  const AudioFrameObserverBaseOnMixedAudioFrameJson(this.audioFrame);
+
+  @JsonKey(name: 'audioFrame')
+  final AudioFrame audioFrame;
+  factory AudioFrameObserverBaseOnMixedAudioFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$AudioFrameObserverBaseOnMixedAudioFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$AudioFrameObserverBaseOnMixedAudioFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson {
+  const AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson(this.audioFrame);
+
+  @JsonKey(name: 'audioFrame')
+  final AudioFrame audioFrame;
+  factory AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnCaptureVideoFrameJson {
+  const VideoFrameObserverOnCaptureVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnCaptureVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnCaptureVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnCaptureVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnPreEncodeVideoFrameJson {
+  const VideoFrameObserverOnPreEncodeVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnPreEncodeVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnPreEncodeVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnPreEncodeVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJson {
+  const VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJson(
+      this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJson {
+  const VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJson(
+      this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJsonFromJson(
+          json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnScreenCaptureVideoFrameJson {
+  const VideoFrameObserverOnScreenCaptureVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnScreenCaptureVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnScreenCaptureVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnScreenCaptureVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnPreEncodeScreenVideoFrameJson {
+  const VideoFrameObserverOnPreEncodeScreenVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnPreEncodeScreenVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnPreEncodeScreenVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnPreEncodeScreenVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnMediaPlayerVideoFrameJson {
+  const VideoFrameObserverOnMediaPlayerVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnMediaPlayerVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnMediaPlayerVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnMediaPlayerVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJson {
+  const VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJson(
+      this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJson {
+  const VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJson(
+      this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJsonFromJson(
+          json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnRenderVideoFrameJson {
+  const VideoFrameObserverOnRenderVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnRenderVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnRenderVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnRenderVideoFrameJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VideoFrameObserverOnTranscodedVideoFrameJson {
+  const VideoFrameObserverOnTranscodedVideoFrameJson(this.videoFrame);
+
+  @JsonKey(name: 'videoFrame')
+  final VideoFrame videoFrame;
+  factory VideoFrameObserverOnTranscodedVideoFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoFrameObserverOnTranscodedVideoFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoFrameObserverOnTranscodedVideoFrameJsonToJson(this);
+}
+
 @JsonSerializable(explicitToJson: true)
 class MediaPlayerGetDurationJson {
   const MediaPlayerGetDurationJson(this.duration);
@@ -145,10 +407,10 @@ class MediaPlayerGetStreamInfoJson {
 
 @JsonSerializable(explicitToJson: true)
 class MediaPlayerGetMuteJson {
-  const MediaPlayerGetMuteJson(this.mute);
+  const MediaPlayerGetMuteJson(this.muted);
 
-  @JsonKey(name: 'mute')
-  final bool mute;
+  @JsonKey(name: 'muted')
+  final bool muted;
   factory MediaPlayerGetMuteJson.fromJson(Map<String, dynamic> json) =>
       _$MediaPlayerGetMuteJsonFromJson(json);
   Map<String, dynamic> toJson() => _$MediaPlayerGetMuteJsonToJson(this);
@@ -177,6 +439,71 @@ class MediaPlayerGetPublishSignalVolumeJson {
       _$MediaPlayerGetPublishSignalVolumeJsonFromJson(json);
   Map<String, dynamic> toJson() =>
       _$MediaPlayerGetPublishSignalVolumeJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class MediaPlayerCacheManagerGetCacheDirJson {
+  const MediaPlayerCacheManagerGetCacheDirJson(this.path);
+
+  @JsonKey(name: 'path')
+  final String path;
+  factory MediaPlayerCacheManagerGetCacheDirJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$MediaPlayerCacheManagerGetCacheDirJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$MediaPlayerCacheManagerGetCacheDirJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineExSetSubscribeAudioBlacklistExJson {
+  const RtcEngineExSetSubscribeAudioBlacklistExJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineExSetSubscribeAudioBlacklistExJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineExSetSubscribeAudioBlacklistExJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineExSetSubscribeAudioBlacklistExJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineExSetSubscribeAudioWhitelistExJson {
+  const RtcEngineExSetSubscribeAudioWhitelistExJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineExSetSubscribeAudioWhitelistExJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineExSetSubscribeAudioWhitelistExJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineExSetSubscribeAudioWhitelistExJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineExSetSubscribeVideoBlacklistExJson {
+  const RtcEngineExSetSubscribeVideoBlacklistExJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineExSetSubscribeVideoBlacklistExJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineExSetSubscribeVideoBlacklistExJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineExSetSubscribeVideoBlacklistExJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RtcEngineExSetSubscribeVideoWhitelistExJson {
+  const RtcEngineExSetSubscribeVideoWhitelistExJson(this.uidList);
+
+  @JsonKey(name: 'uidList')
+  final List<int> uidList;
+  factory RtcEngineExSetSubscribeVideoWhitelistExJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$RtcEngineExSetSubscribeVideoWhitelistExJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$RtcEngineExSetSubscribeVideoWhitelistExJsonToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)

@@ -1,5 +1,9 @@
 export 'agora_rtc_engine_impl.dart';
 export 'agora_rtc_engine_event_impl.dart';
+export 'agora_base_event_impl.dart';
+export 'agora_media_base_impl.dart';
+export 'agora_media_base_event_impl.dart';
+export 'agora_media_engine_impl.dart';
 export 'agora_media_player_impl.dart';
 export 'agora_media_player_source_event_impl.dart';
 export 'agora_rtc_engine_ex_impl.dart';

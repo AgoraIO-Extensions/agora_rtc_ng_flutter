@@ -4,71 +4,55 @@ part 'agora_media_player_types.g.dart';
 /// @nodoc
 const kMaxCharBufferLength = 50;
 
-/// The playback state.
+/* enum_mediaplayerstate */
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerState {
-  /// 0: The default state.
-  /// The media player returns this state code before you open the media resource or after you stop the playback.
+/* property_mediaplayerstate_playerstateidle */
   @JsonValue(0)
   playerStateIdle,
-
-  /// Opening the media resource.
+/* property_mediaplayerstate_playerstateopening */
   @JsonValue(1)
   playerStateOpening,
-
-  /// Opens the media resource successfully.
+/* property_mediaplayerstate_playerstateopencompleted */
   @JsonValue(2)
   playerStateOpenCompleted,
-
-  /// The media resource is playing.
+/* property_mediaplayerstate_playerstateplaying */
   @JsonValue(3)
   playerStatePlaying,
-
-  /// Pauses the playback.
+/* property_mediaplayerstate_playerstatepaused */
   @JsonValue(4)
   playerStatePaused,
-
-  /// The playback finishes.
+/* property_mediaplayerstate_playerstateplaybackcompleted */
   @JsonValue(5)
   playerStatePlaybackCompleted,
-
-  /// The loop finishes.
+/* property_mediaplayerstate_playerstateplaybackallloopscompleted */
   @JsonValue(6)
   playerStatePlaybackAllLoopsCompleted,
-
-  /// The playback stops.
+/* property_mediaplayerstate_playerstatestopped */
   @JsonValue(7)
   playerStateStopped,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstatepausinginternal */
   @JsonValue(50)
   playerStatePausingInternal,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstatestoppinginternal */
   @JsonValue(51)
   playerStateStoppingInternal,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstateseekinginternal */
   @JsonValue(52)
   playerStateSeekingInternal,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstategettinginternal */
   @JsonValue(53)
   playerStateGettingInternal,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstatenoneinternal */
   @JsonValue(54)
   playerStateNoneInternal,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstatedonothinginternal */
   @JsonValue(55)
   playerStateDoNothingInternal,
-
-  /// @nodoc
+/* property_mediaplayerstate_playerstatesettrackinternal */
   @JsonValue(56)
   playerStateSetTrackInternal,
-
-  /// 100: The media player fails to play the media resource.
+/* property_mediaplayerstate_playerstatefailed */
   @JsonValue(100)
   playerStateFailed,
 }
@@ -86,78 +70,61 @@ extension MediaPlayerStateExt on MediaPlayerState {
   }
 }
 
-/// Error codes of the media player.
+/* enum_mediaplayererror */
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerError {
-  /// 0: No error.
+/* property_mediaplayererror_playererrornone */
   @JsonValue(0)
   playerErrorNone,
-
-  /// -1: Invalid arguments.
+/* property_mediaplayererror_playererrorinvalidarguments */
   @JsonValue(-1)
   playerErrorInvalidArguments,
-
-  /// @nodoc
+/* property_mediaplayererror_playererrorinternal */
   @JsonValue(-2)
   playerErrorInternal,
-
-  /// -3: No resource.
+/* property_mediaplayererror_playererrornoresource */
   @JsonValue(-3)
   playerErrorNoResource,
-
-  /// -4: Invalid media resource.
+/* property_mediaplayererror_playererrorinvalidmediasource */
   @JsonValue(-4)
   playerErrorInvalidMediaSource,
-
-  /// -5: The type of the media stream is unknown.
+/* property_mediaplayererror_playererrorunknownstreamtype */
   @JsonValue(-5)
   playerErrorUnknownStreamType,
-
-  /// -6: The object is not initialized.
+/* property_mediaplayererror_playererrorobjnotinitialized */
   @JsonValue(-6)
   playerErrorObjNotInitialized,
-
-  /// -7: The codec is not supported.
+/* property_mediaplayererror_playererrorcodecnotsupported */
   @JsonValue(-7)
   playerErrorCodecNotSupported,
-
-  /// -8: Invalid renderer.
+/* property_mediaplayererror_playererrorvideorenderfailed */
   @JsonValue(-8)
   playerErrorVideoRenderFailed,
-
-  /// -9: An error with the internal state of the player occurs.
+/* property_mediaplayererror_playererrorinvalidstate */
   @JsonValue(-9)
   playerErrorInvalidState,
-
-  /// -10: The URL of the media resource can not be found.
+/* property_mediaplayererror_playererrorurlnotfound */
   @JsonValue(-10)
   playerErrorUrlNotFound,
-
-  /// -11: Invalid connection between the player and Agora's server.
+/* property_mediaplayererror_playererrorinvalidconnectionstate */
   @JsonValue(-11)
   playerErrorInvalidConnectionState,
-
-  /// -12: The playback buffer is insufficient.
+/* property_mediaplayererror_playererrorsrcbufferunderflow */
   @JsonValue(-12)
   playerErrorSrcBufferUnderflow,
-
-  /// -13: The playback is interrupted.
+/* property_mediaplayererror_playererrorinterrupted */
   @JsonValue(-13)
   playerErrorInterrupted,
-
-  /// -14: The SDK does support the method being called.
+/* property_mediaplayererror_playererrornotsupported */
   @JsonValue(-14)
   playerErrorNotSupported,
-
-  /// @nodoc
+/* property_mediaplayererror_playererrortokenexpired */
   @JsonValue(-15)
   playerErrorTokenExpired,
-
-  /// @nodoc
+/* property_mediaplayererror_playererroripexpired */
   @JsonValue(-16)
   playerErrorIpExpired,
-
-  /// -17: An unknown error.
+/* property_mediaplayererror_playererrorunknown */
   @JsonValue(-17)
   playerErrorUnknown,
 }
@@ -175,22 +142,19 @@ extension MediaPlayerErrorExt on MediaPlayerError {
   }
 }
 
-/// The type of the media stream.
+/* enum_mediastreamtype */
 @JsonEnum(alwaysCreate: true)
 enum MediaStreamType {
-  /// 0: The type is unknown.
+/* property_mediastreamtype_streamtypeunknown */
   @JsonValue(0)
   streamTypeUnknown,
-
-  /// 1: The video stream.
+/* property_mediastreamtype_streamtypevideo */
   @JsonValue(1)
   streamTypeVideo,
-
-  /// 2: The audio stream.
+/* property_mediastreamtype_streamtypeaudio */
   @JsonValue(2)
   streamTypeAudio,
-
-  /// 3: The subtitle stream.
+/* property_mediastreamtype_streamtypesubtitle */
   @JsonValue(3)
   streamTypeSubtitle,
 }
@@ -208,56 +172,60 @@ extension MediaStreamTypeExt on MediaStreamType {
   }
 }
 
-/// Media player events.
+/* enum_mediaplayerevent */
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerEvent {
-  /// 0: The player begins to seek to a new playback position.
+/* property_mediaplayerevent_playereventseekbegin */
   @JsonValue(0)
   playerEventSeekBegin,
-
-  /// 1: The player finishes seeking to a new playback position.
+/* property_mediaplayerevent_playereventseekcomplete */
   @JsonValue(1)
   playerEventSeekComplete,
-
-  /// 2: An error occurs when seeking to a new playback position.
+/* property_mediaplayerevent_playereventseekerror */
   @JsonValue(2)
   playerEventSeekError,
-
-  /// 5: The audio track used by the player has been changed.
+/* property_mediaplayerevent_playereventaudiotrackchanged */
   @JsonValue(5)
   playerEventAudioTrackChanged,
-
-  /// 6: The currently buffered data is not enough to support playback.
+/* property_mediaplayerevent_playereventbufferlow */
   @JsonValue(6)
   playerEventBufferLow,
-
-  /// 7: The currently buffered data is just enough to support playback.
+/* property_mediaplayerevent_playereventbufferrecover */
   @JsonValue(7)
   playerEventBufferRecover,
-
-  /// 8: The audio or video playback freezes.
+/* property_mediaplayerevent_playereventfreezestart */
   @JsonValue(8)
   playerEventFreezeStart,
-
-  /// 9: The audio or video playback resumes without freezing.
+/* property_mediaplayerevent_playereventfreezestop */
   @JsonValue(9)
   playerEventFreezeStop,
-
-  /// 10: The player starts switching the media resource.
+/* property_mediaplayerevent_playereventswitchbegin */
   @JsonValue(10)
   playerEventSwitchBegin,
-
-  /// 11: Media resource switching is complete.
+/* property_mediaplayerevent_playereventswitchcomplete */
   @JsonValue(11)
   playerEventSwitchComplete,
-
-  /// 12: Media resource switching error.
+/* property_mediaplayerevent_playereventswitcherror */
   @JsonValue(12)
   playerEventSwitchError,
-
-  /// 13: The first video frame is rendered.
+/* property_mediaplayerevent_playereventfirstdisplayed */
   @JsonValue(13)
   playerEventFirstDisplayed,
+/* property_mediaplayerevent_playereventreachcachefilemaxcount */
+  @JsonValue(14)
+  playerEventReachCacheFileMaxCount,
+/* property_mediaplayerevent_playereventreachcachefilemaxsize */
+  @JsonValue(15)
+  playerEventReachCacheFileMaxSize,
+/* property_mediaplayerevent_playereventtryopenstart */
+  @JsonValue(16)
+  playerEventTryOpenStart,
+/* property_mediaplayerevent_playereventtryopensucceed */
+  @JsonValue(17)
+  playerEventTryOpenSucceed,
+/* property_mediaplayerevent_playereventtryopenfailed */
+  @JsonValue(18)
+  playerEventTryOpenFailed,
 }
 
 /// Extensions functions of [MediaPlayerEvent].
@@ -273,18 +241,16 @@ extension MediaPlayerEventExt on MediaPlayerEvent {
   }
 }
 
-/// Events that occur when media resources are preloaded.
+/* enum_playerpreloadevent */
 @JsonEnum(alwaysCreate: true)
 enum PlayerPreloadEvent {
-  /// 0: Starts preloading media resources.
+/* property_playerpreloadevent_playerpreloadeventbegin */
   @JsonValue(0)
   playerPreloadEventBegin,
-
-  /// 1: Preloading media resources is complete.
+/* property_playerpreloadevent_playerpreloadeventcomplete */
   @JsonValue(1)
   playerPreloadEventComplete,
-
-  /// 2: An error occurs when preloading media resources.
+/* property_playerpreloadevent_playerpreloadeventerror */
   @JsonValue(2)
   playerPreloadEventError,
 }
@@ -302,7 +268,7 @@ extension PlayerPreloadEventExt on PlayerPreloadEvent {
   }
 }
 
-/// The detailed information of the media stream.
+/* class_playerstreaminfo */
 @JsonSerializable(explicitToJson: true)
 class PlayerStreamInfo {
   /// Construct the [PlayerStreamInfo].
@@ -321,55 +287,43 @@ class PlayerStreamInfo {
       this.audioBitsPerSample,
       this.duration});
 
-  /// The index of the media stream.
+/* property_playerstreaminfo_streamindex */
   @JsonKey(name: 'streamIndex')
   final int? streamIndex;
-
-  /// The type of the media stream. See MediaStreamType .
+/* property_playerstreaminfo_streamtype */
   @JsonKey(name: 'streamType')
   final MediaStreamType? streamType;
-
-  /// The codec of the media stream.
+/* property_playerstreaminfo_codecname */
   @JsonKey(name: 'codecName')
   final String? codecName;
-
-  /// The language of the media stream.
+/* property_playerstreaminfo_language */
   @JsonKey(name: 'language')
   final String? language;
-
-  /// This parameter only takes effect for video streams, and indicates the video frame rate (fps).
+/* property_playerstreaminfo_videoframerate */
   @JsonKey(name: 'videoFrameRate')
   final int? videoFrameRate;
-
-  /// @nodoc
+/* property_playerstreaminfo_videobitrate */
   @JsonKey(name: 'videoBitRate')
   final int? videoBitRate;
-
-  /// This parameter only takes effect for video streams, and indicates the video width (pixel).
+/* property_playerstreaminfo_videowidth */
   @JsonKey(name: 'videoWidth')
   final int? videoWidth;
-
-  /// This parameter only takes effect for video streams, and indicates the video height (pixel).
+/* property_playerstreaminfo_videoheight */
   @JsonKey(name: 'videoHeight')
   final int? videoHeight;
-
-  /// This parameter only takes effect for video streams, and indicates the video rotation angle.
+/* property_playerstreaminfo_videorotation */
   @JsonKey(name: 'videoRotation')
   final int? videoRotation;
-
-  /// This parameter only takes effect for audio streams, and indicates the audio sample rate (Hz).
+/* property_playerstreaminfo_audiosamplerate */
   @JsonKey(name: 'audioSampleRate')
   final int? audioSampleRate;
-
-  /// This parameter only takes effect for audio streams, and indicates the audio channel number.
+/* property_playerstreaminfo_audiochannels */
   @JsonKey(name: 'audioChannels')
   final int? audioChannels;
-
-  /// This parameter only takes effect for audio streams, and indicates the bit number of each audio sample.
+/* property_playerstreaminfo_audiobitspersample */
   @JsonKey(name: 'audioBitsPerSample')
   final int? audioBitsPerSample;
-
-  /// The total duration (s) of the media stream.
+/* property_playerstreaminfo_duration */
   @JsonKey(name: 'duration')
   final int? duration;
 
@@ -381,17 +335,16 @@ class PlayerStreamInfo {
   Map<String, dynamic> toJson() => _$PlayerStreamInfoToJson(this);
 }
 
-/// Information about the video bitrate of the media resource being played.
+/* class_srcinfo */
 @JsonSerializable(explicitToJson: true)
 class SrcInfo {
   /// Construct the [SrcInfo].
   const SrcInfo({this.bitrateInKbps, this.name});
 
-  /// The video bitrate (Kbps) of the media resource being played.
+/* property_srcinfo_bitrateinkbps */
   @JsonKey(name: 'bitrateInKbps')
   final int? bitrateInKbps;
-
-  /// The name of the media resource.
+/* property_srcinfo_name */
   @JsonKey(name: 'name')
   final String? name;
 
@@ -403,14 +356,13 @@ class SrcInfo {
   Map<String, dynamic> toJson() => _$SrcInfoToJson(this);
 }
 
-/// The type of media metadata.
+/* enum_mediaplayermetadatatype */
 @JsonEnum(alwaysCreate: true)
 enum MediaPlayerMetadataType {
-  /// 0: The type is unknown.
+/* property_mediaplayermetadatatype_playermetadatatypeunknown */
   @JsonValue(0)
   playerMetadataTypeUnknown,
-
-  /// 1: The type is SEI.
+/* property_mediaplayermetadatatype_playermetadatatypesei */
   @JsonValue(1)
   playerMetadataTypeSei,
 }
@@ -428,19 +380,45 @@ extension MediaPlayerMetadataTypeExt on MediaPlayerMetadataType {
   }
 }
 
-/// Information related to the media player.
+/* class_cachestatistics */
+@JsonSerializable(explicitToJson: true)
+class CacheStatistics {
+  /// Construct the [CacheStatistics].
+  const CacheStatistics({this.fileSize, this.cacheSize, this.downloadSize});
+
+/* property_cachestatistics_filesize */
+  @JsonKey(name: 'fileSize')
+  final int? fileSize;
+/* property_cachestatistics_cachesize */
+  @JsonKey(name: 'cacheSize')
+  final int? cacheSize;
+/* property_cachestatistics_downloadsize */
+  @JsonKey(name: 'downloadSize')
+  final int? downloadSize;
+
+  /// @nodoc
+  factory CacheStatistics.fromJson(Map<String, dynamic> json) =>
+      _$CacheStatisticsFromJson(json);
+
+  /// @nodoc
+  Map<String, dynamic> toJson() => _$CacheStatisticsToJson(this);
+}
+
+/* class_playerupdatedinfo */
 @JsonSerializable(explicitToJson: true)
 class PlayerUpdatedInfo {
   /// Construct the [PlayerUpdatedInfo].
-  const PlayerUpdatedInfo({this.playerId, this.deviceId});
+  const PlayerUpdatedInfo({this.playerId, this.deviceId, this.cacheStatistics});
 
-  /// The ID of a media player.
+/* property_playerupdatedinfo_playerid */
   @JsonKey(name: 'playerId')
   final String? playerId;
-
-  /// The ID of a deivce.
+/* property_playerupdatedinfo_deviceid */
   @JsonKey(name: 'deviceId')
   final String? deviceId;
+/* property_playerupdatedinfo_cachestatistics */
+  @JsonKey(name: 'cacheStatistics')
+  final CacheStatistics? cacheStatistics;
 
   /// @nodoc
   factory PlayerUpdatedInfo.fromJson(Map<String, dynamic> json) =>
@@ -448,4 +426,47 @@ class PlayerUpdatedInfo {
 
   /// @nodoc
   Map<String, dynamic> toJson() => _$PlayerUpdatedInfoToJson(this);
+}
+
+/* class_mediasource */
+@JsonSerializable(explicitToJson: true)
+class MediaSource {
+  /// Construct the [MediaSource].
+  const MediaSource(
+      {this.url,
+      this.uri,
+      this.startPos,
+      this.autoPlay,
+      this.enableCache,
+      this.isAgoraSource,
+      this.isLiveSource});
+
+/* property_mediasource_url */
+  @JsonKey(name: 'url')
+  final String? url;
+/* property_mediasource_uri */
+  @JsonKey(name: 'uri')
+  final String? uri;
+/* property_mediasource_startpos */
+  @JsonKey(name: 'startPos')
+  final int? startPos;
+/* property_mediasource_autoplay */
+  @JsonKey(name: 'autoPlay')
+  final bool? autoPlay;
+/* property_mediasource_enablecache */
+  @JsonKey(name: 'enableCache')
+  final bool? enableCache;
+/* property_mediasource_isagorasource */
+  @JsonKey(name: 'isAgoraSource')
+  final bool? isAgoraSource;
+/* property_mediasource_islivesource */
+  @JsonKey(name: 'isLiveSource')
+  final bool? isLiveSource;
+
+  /// @nodoc
+  factory MediaSource.fromJson(Map<String, dynamic> json) =>
+      _$MediaSourceFromJson(json);
+
+  /// @nodoc
+  Map<String, dynamic> toJson() => _$MediaSourceToJson(this);
 }

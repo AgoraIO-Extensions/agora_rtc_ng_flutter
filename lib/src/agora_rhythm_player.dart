@@ -1,26 +1,22 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 part 'agora_rhythm_player.g.dart';
 
-/// @nodoc
+/* enum_rhythmplayerstatetype */
 @JsonEnum(alwaysCreate: true)
 enum RhythmPlayerStateType {
-  /// @nodoc
+/* property_rhythmplayerstatetype_rhythmplayerstateidle */
   @JsonValue(810)
   rhythmPlayerStateIdle,
-
-  /// @nodoc
+/* property_rhythmplayerstatetype_rhythmplayerstateopening */
   @JsonValue(811)
   rhythmPlayerStateOpening,
-
-  /// @nodoc
+/* property_rhythmplayerstatetype_rhythmplayerstatedecoding */
   @JsonValue(812)
   rhythmPlayerStateDecoding,
-
-  /// @nodoc
+/* property_rhythmplayerstatetype_rhythmplayerstateplaying */
   @JsonValue(813)
   rhythmPlayerStatePlaying,
-
-  /// @nodoc
+/* property_rhythmplayerstatetype_rhythmplayerstatefailed */
   @JsonValue(814)
   rhythmPlayerStateFailed,
 }
@@ -38,26 +34,22 @@ extension RhythmPlayerStateTypeExt on RhythmPlayerStateType {
   }
 }
 
-/// @nodoc
+/* enum_rhythmplayererrortype */
 @JsonEnum(alwaysCreate: true)
 enum RhythmPlayerErrorType {
-  /// @nodoc
+/* property_rhythmplayererrortype_rhythmplayererrorok */
   @JsonValue(0)
   rhythmPlayerErrorOk,
-
-  /// @nodoc
+/* property_rhythmplayererrortype_rhythmplayererrorfailed */
   @JsonValue(1)
   rhythmPlayerErrorFailed,
-
-  /// @nodoc
+/* property_rhythmplayererrortype_rhythmplayererrorcannotopen */
   @JsonValue(801)
   rhythmPlayerErrorCanNotOpen,
-
-  /// @nodoc
+/* property_rhythmplayererrortype_rhythmplayererrorcannotplay */
   @JsonValue(802)
   rhythmPlayerErrorCanNotPlay,
-
-  /// @nodoc
+/* property_rhythmplayererrortype_rhythmplayererrorfileoverdurationlimit */
   @JsonValue(803)
   rhythmPlayerErrorFileOverDurationLimit,
 }
@@ -75,17 +67,16 @@ extension RhythmPlayerErrorTypeExt on RhythmPlayerErrorType {
   }
 }
 
-/// The metronome configuration.
+/* class_agorarhythmplayerconfig */
 @JsonSerializable(explicitToJson: true)
 class AgoraRhythmPlayerConfig {
   /// Construct the [AgoraRhythmPlayerConfig].
   const AgoraRhythmPlayerConfig({this.beatsPerMeasure, this.beatsPerMinute});
 
-  /// The number of beats per measure, which ranges from 1 to 9. The default value is 4, which means that each measure contains one downbeat and three upbeats.
+/* property_agorarhythmplayerconfig_beatspermeasure */
   @JsonKey(name: 'beatsPerMeasure')
   final int? beatsPerMeasure;
-
-  /// The beat speed (beats/minute), which ranges from 60 to 360. The default value is 60, which means that the metronome plays 60 beats in one minute.
+/* property_agorarhythmplayerconfig_beatsperminute */
   @JsonKey(name: 'beatsPerMinute')
   final int? beatsPerMinute;
 

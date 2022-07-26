@@ -26,6 +26,7 @@ const _$LogLevelEnumMap = {
   LogLevel.logLevelWarn: 2,
   LogLevel.logLevelError: 4,
   LogLevel.logLevelFatal: 8,
+  LogLevel.logLevelApiCall: 16,
 };
 
 const _$LogFilterTypeEnumMap = {

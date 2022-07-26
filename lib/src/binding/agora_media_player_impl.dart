@@ -41,6 +41,22 @@ class MediaPlayerImpl implements MediaPlayer {
   }
 
   @override
+  Future<void> openWithMediaSource(MediaSource source) async {
+    const apiType = 'MediaPlayer_openWithMediaSource';
+    final param = createParams({'source': source.toJson()});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
   Future<void> play() async {
     const apiType = 'MediaPlayer_play';
     final param = createParams({});
@@ -225,66 +241,6 @@ class MediaPlayerImpl implements MediaPlayer {
   }
 
   @override
-  Future<void> muteAudio(bool audioMute) async {
-    const apiType = 'MediaPlayer_muteAudio';
-    final param = createParams({'audio_mute': audioMute});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
-  }
-
-  @override
-  Future<bool> isAudioMuted() async {
-    const apiType = 'MediaPlayer_isAudioMuted';
-    final param = createParams({});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    return result as bool;
-  }
-
-  @override
-  Future<void> muteVideo(bool videoMute) async {
-    const apiType = 'MediaPlayer_muteVideo';
-    final param = createParams({'video_mute': videoMute});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
-  }
-
-  @override
-  Future<bool> isVideoMuted() async {
-    const apiType = 'MediaPlayer_isVideoMuted';
-    final param = createParams({});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    return result as bool;
-  }
-
-  @override
   Future<void> setPlaybackSpeed(int speed) async {
     const apiType = 'MediaPlayer_setPlaybackSpeed';
     final param = createParams({'speed': speed});
@@ -379,9 +335,9 @@ class MediaPlayerImpl implements MediaPlayer {
   }
 
   @override
-  Future<void> mute(bool mute) async {
+  Future<void> mute(bool muted) async {
     const apiType = 'MediaPlayer_mute';
-    final param = createParams({'mute': mute});
+    final param = createParams({'muted': muted});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param));
     if (callApiResult.irisReturnCode < 0) {
@@ -409,7 +365,7 @@ class MediaPlayerImpl implements MediaPlayer {
       throw AgoraRtcException(code: result);
     }
     final getMuteJson = MediaPlayerGetMuteJson.fromJson(rm);
-    return getMuteJson.mute;
+    return getMuteJson.muted;
   }
 
   @override
@@ -545,6 +501,90 @@ class MediaPlayerImpl implements MediaPlayer {
 // throw AgoraRtcException(code: result);
 // }
     throw UnimplementedError('Unimplement for unregisterPlayerSourceObserver');
+  }
+
+  @override
+  Future<void> unregisterAudioFrameObserver(AudioFrameObserver observer) async {
+    const apiType = 'MediaPlayer_unregisterAudioFrameObserver';
+    final param = createParams({'observer': observer});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> registerVideoFrameObserver(VideoFrameObserver observer) async {
+    const apiType = 'MediaPlayer_registerVideoFrameObserver';
+    final param = createParams({'observer': observer});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> unregisterVideoFrameObserver(VideoFrameObserver observer) async {
+    const apiType = 'MediaPlayer_unregisterVideoFrameObserver';
+    final param = createParams({'observer': observer});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> registerMediaPlayerAudioSpectrumObserver(
+      {required AudioSpectrumObserver observer,
+      required int intervalInMS}) async {
+    const apiType = 'MediaPlayer_registerMediaPlayerAudioSpectrumObserver';
+    final param =
+        createParams({'observer': observer, 'intervalInMS': intervalInMS});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> unregisterMediaPlayerAudioSpectrumObserver(
+      AudioSpectrumObserver observer) async {
+    const apiType = 'MediaPlayer_unregisterMediaPlayerAudioSpectrumObserver';
+    final param = createParams({'observer': observer});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
   }
 
   @override
@@ -787,6 +827,23 @@ class MediaPlayerImpl implements MediaPlayer {
   }
 
   @override
+  Future<void> setSoundPositionParams(
+      {required double pan, required double gain}) async {
+    const apiType = 'MediaPlayer_setSoundPositionParams';
+    final param = createParams({'pan': pan, 'gain': gain});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
   Future<void> setPlayerOptionInInt(
       {required String key, required int value}) async {
     const apiType = 'MediaPlayer_setPlayerOptionInInt';
@@ -808,6 +865,189 @@ class MediaPlayerImpl implements MediaPlayer {
       {required String key, required String value}) async {
     const apiType = 'MediaPlayer_setPlayerOptionInString';
     final param = createParams({'key': key, 'value': value});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+}
+
+class MediaPlayerCacheManagerImpl implements MediaPlayerCacheManager {
+  @protected
+  Map<String, dynamic> createParams(Map<String, dynamic> param) {
+    return param;
+  }
+
+  @override
+  Future<void> removeAllCaches() async {
+    const apiType = 'MediaPlayerCacheManager_removeAllCaches';
+    final param = createParams({});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> removeOldCache() async {
+    const apiType = 'MediaPlayerCacheManager_removeOldCache';
+    final param = createParams({});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> removeCacheByUri(String uri) async {
+    const apiType = 'MediaPlayerCacheManager_removeCacheByUri';
+    final param = createParams({'uri': uri});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> setCacheDir(String path) async {
+    const apiType = 'MediaPlayerCacheManager_setCacheDir';
+    final param = createParams({'path': path});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> setMaxCacheFileCount(int count) async {
+    const apiType = 'MediaPlayerCacheManager_setMaxCacheFileCount';
+    final param = createParams({'count': count});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> setMaxCacheFileSize(int cacheSize) async {
+    const apiType = 'MediaPlayerCacheManager_setMaxCacheFileSize';
+    final param = createParams({'cacheSize': cacheSize});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<void> enableAutoRemoveCache(bool enable) async {
+    const apiType = 'MediaPlayerCacheManager_enableAutoRemoveCache';
+    final param = createParams({'enable': enable});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<String> getCacheDir(int length) async {
+    const apiType = 'MediaPlayerCacheManager_getCacheDir';
+    final param = createParams({'length': length});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getCacheDirJson = MediaPlayerCacheManagerGetCacheDirJson.fromJson(rm);
+    return getCacheDirJson.path;
+  }
+
+  @override
+  Future<void> getMaxCacheFileCount() async {
+    const apiType = 'MediaPlayerCacheManager_getMaxCacheFileCount';
+    final param = createParams({});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<int> getMaxCacheFileSize() async {
+    const apiType = 'MediaPlayerCacheManager_getMaxCacheFileSize';
+    final param = createParams({});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    return result as int;
+  }
+
+  @override
+  Future<void> getCacheFileCount() async {
+    const apiType = 'MediaPlayerCacheManager_getCacheFileCount';
+    final param = createParams({});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param));
     if (callApiResult.irisReturnCode < 0) {

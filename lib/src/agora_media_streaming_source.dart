@@ -1,94 +1,73 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 part 'agora_media_streaming_source.g.dart';
 
-/// @nodoc
+/* enum_streamingsrcerr */
 @JsonEnum(alwaysCreate: true)
 enum StreamingSrcErr {
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrnone */
   @JsonValue(0)
   streamingSrcErrNone,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrunknown */
   @JsonValue(1)
   streamingSrcErrUnknown,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrinvalidparam */
   @JsonValue(2)
   streamingSrcErrInvalidParam,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrbadstate */
   @JsonValue(3)
   streamingSrcErrBadState,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrnomem */
   @JsonValue(4)
   streamingSrcErrNoMem,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrbufferoverflow */
   @JsonValue(5)
   streamingSrcErrBufferOverflow,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrbufferunderflow */
   @JsonValue(6)
   streamingSrcErrBufferUnderflow,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrnotfound */
   @JsonValue(7)
   streamingSrcErrNotFound,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrtimeout */
   @JsonValue(8)
   streamingSrcErrTimeout,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrexpired */
   @JsonValue(9)
   streamingSrcErrExpired,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrunsupported */
   @JsonValue(10)
   streamingSrcErrUnsupported,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrnotexist */
   @JsonValue(11)
   streamingSrcErrNotExist,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrexist */
   @JsonValue(12)
   streamingSrcErrExist,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerropen */
   @JsonValue(13)
   streamingSrcErrOpen,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrclose */
   @JsonValue(14)
   streamingSrcErrClose,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrread */
   @JsonValue(15)
   streamingSrcErrRead,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrwrite */
   @JsonValue(16)
   streamingSrcErrWrite,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrseek */
   @JsonValue(17)
   streamingSrcErrSeek,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerreof */
   @JsonValue(18)
   streamingSrcErrEof,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrcodecopen */
   @JsonValue(19)
   streamingSrcErrCodecopen,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrcodecclose */
   @JsonValue(20)
   streamingSrcErrCodecclose,
-
-  /// @nodoc
+/* property_streamingsrcerr_streamingsrcerrcodecproc */
   @JsonValue(21)
   streamingSrcErrCodecproc,
 }
@@ -106,34 +85,28 @@ extension StreamingSrcErrExt on StreamingSrcErr {
   }
 }
 
-/// @nodoc
+/* enum_streamingsrcstate */
 @JsonEnum(alwaysCreate: true)
 enum StreamingSrcState {
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateclosed */
   @JsonValue(0)
   streamingSrcStateClosed,
-
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateopening */
   @JsonValue(1)
   streamingSrcStateOpening,
-
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateidle */
   @JsonValue(2)
   streamingSrcStateIdle,
-
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateplaying */
   @JsonValue(3)
   streamingSrcStatePlaying,
-
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateseeking */
   @JsonValue(4)
   streamingSrcStateSeeking,
-
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateeof */
   @JsonValue(5)
   streamingSrcStateEof,
-
-  /// @nodoc
+/* property_streamingsrcstate_streamingsrcstateerror */
   @JsonValue(6)
   streamingSrcStateError,
 }
@@ -151,7 +124,7 @@ extension StreamingSrcStateExt on StreamingSrcState {
   }
 }
 
-/// @nodoc
+/* class_inputseidata */
 @JsonSerializable(explicitToJson: true)
 class InputSeiData {
   /// Construct the [InputSeiData].
@@ -162,23 +135,19 @@ class InputSeiData {
       this.privateData,
       this.dataSize});
 
-  /// @nodoc
+/* property_inputseidata_type */
   @JsonKey(name: 'type')
   final int? type;
-
-  /// @nodoc
+/* property_inputseidata_timestamp */
   @JsonKey(name: 'timestamp')
   final int? timestamp;
-
-  /// @nodoc
+/* property_inputseidata_frameindex */
   @JsonKey(name: 'frame_index')
   final int? frameIndex;
-
-  /// @nodoc
+/* property_inputseidata_privatedata */
   @JsonKey(name: 'private_data', ignore: true)
   final Uint8List? privateData;
-
-  /// @nodoc
+/* property_inputseidata_datasize */
   @JsonKey(name: 'data_size')
   final int? dataSize;
 
