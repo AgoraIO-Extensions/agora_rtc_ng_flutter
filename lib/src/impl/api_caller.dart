@@ -153,7 +153,7 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
     // final eventPort = ReceivePort('IrisApiEngine_EventPort');
 
     _ApiCallExecutorInternal executor = _ApiCallExecutorInternal();
-    executor.initilize();
+    executor.initilize(mainEventSendPort);
     mainApiCallSendPort.send([
       apiCallPort.sendPort,
       executor.getIrisApiEngineIntPtr(),
@@ -320,14 +320,25 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
   late final IrisEvent _irisEvent;
   ffi.Pointer<IrisCEventHandler>? _irisCEventHandler;
   ffi.Pointer<ffi.Void>? _irisEventHandlerPtr;
+  ffi.Pointer<IrisCEventHandlerEx>? _irisCEventHandlerEx;
+  ffi.Pointer<ffi.Void>? _irisEventHandlerExPtr;
   ffi.Pointer<ffi.Void>? _irisMediaPlayerEventHandlerPtr;
 
   @override
-  void initilize() {
+  void initilize(SendPort sendPort) {
     _nativeIrisApiEngineBinding =
         NativeIrisApiEngineBinding(_loadAgoraFpaServiceLib());
     _irisApiEnginePtr = _nativeIrisApiEngineBinding.CreateIrisApiEngine();
+
     _irisEvent = IrisEvent();
+    _irisCEventHandler = calloc<IrisCEventHandler>()
+      ..ref.OnEvent = _irisEvent.onEventPtr;
+    _irisCEventHandlerEx = calloc<IrisCEventHandlerEx>()
+      ..ref.OnEvent = _irisEvent.onEventExPtr;
+    _irisEventHandlerExPtr =
+        _nativeIrisApiEngineBinding.CreateIrisEventHandlerEx(
+            _irisCEventHandlerEx!);
+    _irisEvent.setEventHandler(_SendableIrisEventHandler(sendPort));
   }
 
   @override
@@ -336,20 +347,22 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     return _irisApiEnginePtr!.address;
   }
 
-  void _initIrisCEventHandlerIfNeed(SendPort sendPort) {
-    if (_irisCEventHandler == null) {
-      _irisCEventHandler = calloc<IrisCEventHandler>()
-        ..ref.OnEvent = _irisEvent.onEventPtr;
-      _irisEvent.setEventHandler(_SendableIrisEventHandler(sendPort));
-    }
-  }
+  // void _initIrisCEventHandlerIfNeed(SendPort sendPort) {
+  //   if (_irisCEventHandler == null) {
+  //     _irisCEventHandler = calloc<IrisCEventHandler>()
+  //       ..ref.OnEvent = _irisEvent.onEventPtr;
+  //     _irisEvent.setEventHandler(_SendableIrisEventHandler(sendPort));
+  //   }
+  // }
 
   @override
   void setupIrisRtcEngineEventHandler(SendPort sendPort) {
     assert(_irisApiEnginePtr != null);
 
-    _initIrisCEventHandlerIfNeed(sendPort);
+    // _initIrisCEventHandlerIfNeed(sendPort);
     assert(_irisCEventHandler != null);
+
+    if (_irisEventHandlerPtr != null) return;
 
     _irisEventHandlerPtr =
         _nativeIrisApiEngineBinding.SetIrisRtcEngineEventHandler(
@@ -383,7 +396,7 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     assert(_irisApiEnginePtr != null);
     if (_irisMediaPlayerEventHandlerPtr != null) return;
 
-    _initIrisCEventHandlerIfNeed(sendPort);
+    // _initIrisCEventHandlerIfNeed(sendPort);
     assert(_irisCEventHandler != null);
 
     _irisMediaPlayerEventHandlerPtr =
@@ -463,13 +476,19 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     // _irisCEventHandler internally.
     disposeIrisRtcEngineEventHandler();
 
+    _nativeIrisApiEngineBinding.DestroyIrisEventHandler(
+        _irisEventHandlerExPtr!);
+    _irisEventHandlerExPtr = null;
+    calloc.free(_irisCEventHandlerEx!);
+    _irisCEventHandlerEx = null;
+
     _nativeIrisApiEngineBinding.DestroyIrisApiEngine(_irisApiEnginePtr!);
     _irisApiEnginePtr = null;
   }
 }
 
 abstract class _ApiCallExecutorBase {
-  void initilize();
+  void initilize(SendPort sendPort);
 
   int getIrisApiEngineIntPtr();
 

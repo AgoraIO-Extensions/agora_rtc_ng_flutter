@@ -880,22 +880,23 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> registerAudioEncodedFrameObserver(
+  void registerAudioEncodedFrameObserver(
       {required AudioEncodedFrameObserverConfig config,
-      required AudioEncodedFrameObserver observer}) async {
-    const apiType = 'RtcEngine_registerAudioEncodedFrameObserver';
-    final param =
-        createParams({'config': config.toJson(), 'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+      required AudioEncodedFrameObserver observer}) {
+// Implementation template
+// const apiType = 'RtcEngine_registerAudioEncodedFrameObserver';
+// final param = createParams({// 'config':config.toJson(), 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError(
+        'Unimplement for registerAudioEncodedFrameObserver');
   }
 
   @override

@@ -851,6 +851,8 @@ class VideoDeviceManagerImpl extends rtc_engine_binding.VideoDeviceManagerImpl
     return deviceInfoList;
   }
 
+  
+
   @override
   Future<void> release() async {
     _instance = null;

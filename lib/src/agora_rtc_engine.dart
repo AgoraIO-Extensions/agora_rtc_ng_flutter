@@ -1988,7 +1988,7 @@ abstract class RtcEngine {
   Future<void> enableAudioVolumeIndication(
       {required int interval, required int smooth, required bool reportVad});
 
-  Future<void> registerAudioEncodedFrameObserver(
+  void registerAudioEncodedFrameObserver(
       {required AudioEncodedFrameObserverConfig config,
       required AudioEncodedFrameObserver observer});
 
