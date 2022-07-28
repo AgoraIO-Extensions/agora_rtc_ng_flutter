@@ -63,14 +63,14 @@ abstract class MediaPlayer {
 
   Future<void> unregisterAudioFrameObserver(AudioFrameObserver observer);
 
-  Future<void> registerVideoFrameObserver(VideoFrameObserver observer);
+  void registerVideoFrameObserver(VideoFrameObserver observer);
 
-  Future<void> unregisterVideoFrameObserver(VideoFrameObserver observer);
+  void unregisterVideoFrameObserver(VideoFrameObserver observer);
 
-  Future<void> registerMediaPlayerAudioSpectrumObserver(
+  void registerMediaPlayerAudioSpectrumObserver(
       {required AudioSpectrumObserver observer, required int intervalInMS});
 
-  Future<void> unregisterMediaPlayerAudioSpectrumObserver(
+  void unregisterMediaPlayerAudioSpectrumObserver(
       AudioSpectrumObserver observer);
 
   Future<void> setAudioDualMonoMode(AudioDualMonoMode mode);

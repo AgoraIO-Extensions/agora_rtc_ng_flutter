@@ -715,28 +715,16 @@ class AudioFrameObserverBase {
     this.onRecordAudioFrame,
     this.onPlaybackAudioFrame,
     this.onMixedAudioFrame,
-    this.getObservedAudioFramePosition,
-    this.getPlaybackAudioParams,
-    this.getRecordAudioParams,
-    this.getMixedAudioParams,
   });
 
-  final bool Function(String channelId, AudioFrame audioFrame)?
+  final void Function(String channelId, AudioFrame audioFrame)?
       onRecordAudioFrame;
 
-  final bool Function(String channelId, AudioFrame audioFrame)?
+  final void Function(String channelId, AudioFrame audioFrame)?
       onPlaybackAudioFrame;
 
-  final bool Function(String channelId, AudioFrame audioFrame)?
+  final void Function(String channelId, AudioFrame audioFrame)?
       onMixedAudioFrame;
-
-  final int Function()? getObservedAudioFramePosition;
-
-  final AudioParams Function()? getPlaybackAudioParams;
-
-  final AudioParams Function()? getRecordAudioParams;
-
-  final AudioParams Function()? getMixedAudioParams;
 }
 
 @JsonEnum(alwaysCreate: true)
@@ -863,26 +851,18 @@ class AudioParams {
 class AudioFrameObserver extends AudioFrameObserverBase {
   /// Construct the [AudioFrameObserver].
   const AudioFrameObserver({
-    bool Function(String channelId, AudioFrame audioFrame)? onRecordAudioFrame,
-    bool Function(String channelId, AudioFrame audioFrame)?
+    void Function(String channelId, AudioFrame audioFrame)? onRecordAudioFrame,
+    void Function(String channelId, AudioFrame audioFrame)?
         onPlaybackAudioFrame,
-    bool Function(String channelId, AudioFrame audioFrame)? onMixedAudioFrame,
-    int Function()? getObservedAudioFramePosition,
-    AudioParams Function()? getPlaybackAudioParams,
-    AudioParams Function()? getRecordAudioParams,
-    AudioParams Function()? getMixedAudioParams,
+    void Function(String channelId, AudioFrame audioFrame)? onMixedAudioFrame,
     this.onPlaybackAudioFrameBeforeMixing,
   }) : super(
           onRecordAudioFrame: onRecordAudioFrame,
           onPlaybackAudioFrame: onPlaybackAudioFrame,
           onMixedAudioFrame: onMixedAudioFrame,
-          getObservedAudioFramePosition: getObservedAudioFramePosition,
-          getPlaybackAudioParams: getPlaybackAudioParams,
-          getRecordAudioParams: getRecordAudioParams,
-          getMixedAudioParams: getMixedAudioParams,
         );
 
-  final bool Function(String channelId, int uid, AudioFrame audioFrame)?
+  final void Function(String channelId, int uid, AudioFrame audioFrame)?
       onPlaybackAudioFrameBeforeMixing;
 }
 
@@ -961,53 +941,35 @@ class VideoFrameObserver {
     this.onSecondaryPreEncodeScreenVideoFrame,
     this.onRenderVideoFrame,
     this.onTranscodedVideoFrame,
-    this.getVideoFrameProcessMode,
-    this.getVideoFormatPreference,
-    this.getRotationApplied,
-    this.getMirrorApplied,
-    this.getObservedFramePosition,
-    this.isExternal,
   });
 
-  final bool Function(VideoFrame videoFrame)? onCaptureVideoFrame;
+  final void Function(VideoFrame videoFrame)? onCaptureVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)? onPreEncodeVideoFrame;
+  final void Function(VideoFrame videoFrame)? onPreEncodeVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)?
+  final void Function(VideoFrame videoFrame)?
       onSecondaryCameraCaptureVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)?
+  final void Function(VideoFrame videoFrame)?
       onSecondaryPreEncodeCameraVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)? onScreenCaptureVideoFrame;
+  final void Function(VideoFrame videoFrame)? onScreenCaptureVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)? onPreEncodeScreenVideoFrame;
+  final void Function(VideoFrame videoFrame)? onPreEncodeScreenVideoFrame;
 
-  final bool Function(VideoFrame videoFrame, int mediaPlayerId)?
+  final void Function(VideoFrame videoFrame, int mediaPlayerId)?
       onMediaPlayerVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)?
+  final void Function(VideoFrame videoFrame)?
       onSecondaryScreenCaptureVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)?
+  final void Function(VideoFrame videoFrame)?
       onSecondaryPreEncodeScreenVideoFrame;
 
-  final bool Function(String channelId, int remoteUid, VideoFrame videoFrame)?
+  final void Function(String channelId, int remoteUid, VideoFrame videoFrame)?
       onRenderVideoFrame;
 
-  final bool Function(VideoFrame videoFrame)? onTranscodedVideoFrame;
-
-  final VideoFrameProcessMode Function()? getVideoFrameProcessMode;
-
-  final VideoPixelFormat Function()? getVideoFormatPreference;
-
-  final bool Function()? getRotationApplied;
-
-  final bool Function()? getMirrorApplied;
-
-  final int Function()? getObservedFramePosition;
-
-  final bool Function()? isExternal;
+  final void Function(VideoFrame videoFrame)? onTranscodedVideoFrame;
 }
 
 @JsonEnum(alwaysCreate: true)

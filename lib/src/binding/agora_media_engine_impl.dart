@@ -10,52 +10,55 @@ class MediaEngineImpl implements MediaEngine {
   }
 
   @override
-  Future<void> registerAudioFrameObserver(AudioFrameObserver observer) async {
-    const apiType = 'MediaEngine_registerAudioFrameObserver';
-    final param = createParams({'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+  void registerAudioFrameObserver(AudioFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaEngine_registerAudioFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for registerAudioFrameObserver');
   }
 
   @override
-  Future<void> registerVideoFrameObserver(VideoFrameObserver observer) async {
-    const apiType = 'MediaEngine_registerVideoFrameObserver';
-    final param = createParams({'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+  void registerVideoFrameObserver(VideoFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaEngine_registerVideoFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for registerVideoFrameObserver');
   }
 
   @override
-  Future<void> registerVideoEncodedFrameObserver(
-      VideoEncodedFrameObserver observer) async {
-    const apiType = 'MediaEngine_registerVideoEncodedFrameObserver';
-    final param = createParams({'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+  void registerVideoEncodedFrameObserver(VideoEncodedFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaEngine_registerVideoEncodedFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError(
+        'Unimplement for registerVideoEncodedFrameObserver');
   }
 
   @override

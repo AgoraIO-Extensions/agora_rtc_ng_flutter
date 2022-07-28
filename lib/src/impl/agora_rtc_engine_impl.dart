@@ -138,7 +138,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<void> initialize(RtcEngineContext context) async {
-    await apiCaller.initilize();
+    await apiCaller.initilizeAsync();
     await super.initialize(context);
 
     await apiCaller.callIrisApi(
@@ -160,14 +160,14 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     _directCdnStreamingEventHandler = null;
     _mediaPlayerCount = 0;
 
-    await apiCaller.disposeIrisRtcEngineEventHandler();
+    await apiCaller.disposeIrisRtcEngineEventHandlerAsync();
 
     await _globalVideoViewController
         .detachVideoFrameBufferManager(apiCaller.getIrisApiEngineIntPtr());
 
     await super.release(sync: sync);
 
-    await apiCaller.dispose();
+    await apiCaller.disposeAsync();
     _instance = null;
   }
 
@@ -192,7 +192,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   void registerEventHandler(
       covariant RtcEngineEventHandler eventHandler) async {
     if (_rtcEngineEventHandlers.isEmpty) {
-      await apiCaller.setupIrisRtcEngineEventHandler();
+      await apiCaller.setupIrisRtcEngineEventHandlerAsync();
       apiCaller.addEventHandler(_instance!);
     }
     _rtcEngineEventHandlers.add(eventHandler);
@@ -203,7 +203,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       covariant RtcEngineEventHandler eventHandler) async {
     _rtcEngineEventHandlers.remove(_rtcEngineEventHandlers);
     if (_rtcEngineEventHandlers.isEmpty) {
-      await apiCaller.disposeIrisRtcEngineEventHandler();
+      await apiCaller.disposeIrisRtcEngineEventHandlerAsync();
     }
   }
 
@@ -293,7 +293,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     final result = rm['result'];
 
     if (_mediaPlayerCount == 0) {
-      await apiCaller.setupIrisMediaPlayerEventHandlerIfNeed();
+      await apiCaller.setupIrisMediaPlayerEventHandlerIfNeedAsync();
     }
 
     final MediaPlayer mediaPlayer = MediaPlayerImpl.create(result as int);
@@ -305,7 +305,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   Future<void> destroyMediaPlayer(covariant MediaPlayer mediaPlayer) async {
     --_mediaPlayerCount;
     if (_mediaPlayerCount == 0) {
-      await apiCaller.disposeIrisMediaPlayerEventHandlerIfNeed();
+      await apiCaller.disposeIrisMediaPlayerEventHandlerIfNeedAsync();
     }
 
     const apiType = 'RtcEngine_destroyMediaPlayer';

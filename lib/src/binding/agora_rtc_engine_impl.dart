@@ -2062,37 +2062,37 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<void> registerAudioSpectrumObserver(
-      AudioSpectrumObserver observer) async {
-    const apiType = 'RtcEngine_registerAudioSpectrumObserver';
-    final param = createParams({'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+  void registerAudioSpectrumObserver(AudioSpectrumObserver observer) {
+// Implementation template
+// const apiType = 'RtcEngine_registerAudioSpectrumObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for registerAudioSpectrumObserver');
   }
 
   @override
-  Future<void> unregisterAudioSpectrumObserver(
-      AudioSpectrumObserver observer) async {
-    const apiType = 'RtcEngine_unregisterAudioSpectrumObserver';
-    final param = createParams({'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
+  void unregisterAudioSpectrumObserver(AudioSpectrumObserver observer) {
+// Implementation template
+// const apiType = 'RtcEngine_unregisterAudioSpectrumObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for unregisterAudioSpectrumObserver');
   }
 
   @override
@@ -4513,31 +4513,33 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<MediaEngine> getMediaEngine() async {
-    const apiType = 'RtcEngine_getMediaEngine';
-    final param = createParams({});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    return result as MediaEngine;
+  MediaEngine getMediaEngine() {
+// Implementation template
+// const apiType = 'RtcEngine_getMediaEngine';
+// final param = createParams({// // });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// return result as MediaEngine;
+    throw UnimplementedError('Unimplement for getMediaEngine');
   }
 
   @override
-  Future<MediaRecorder> getMediaRecorder() async {
-    const apiType = 'RtcEngine_getMediaRecorder';
-    final param = createParams({});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    return result as MediaRecorder;
+  MediaRecorder getMediaRecorder() {
+// Implementation template
+// const apiType = 'RtcEngine_getMediaRecorder';
+// final param = createParams({// // });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param));
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// return result as MediaRecorder;
+    throw UnimplementedError('Unimplement for getMediaRecorder');
   }
 
   @override

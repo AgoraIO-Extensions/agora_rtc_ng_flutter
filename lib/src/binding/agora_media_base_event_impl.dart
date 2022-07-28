@@ -42,35 +42,6 @@ extension AudioFrameObserverBaseExt on AudioFrameObserverBase {
         }
         onMixedAudioFrame!(channelId, audioFrame);
         break;
-
-      case 'AudioFrameObserverBase_getObservedAudioFramePosition':
-        if (getObservedAudioFramePosition == null) break;
-        AudioFrameObserverBaseGetObservedAudioFramePositionJson paramJson =
-            AudioFrameObserverBaseGetObservedAudioFramePositionJson.fromJson(
-                jsonMap);
-        getObservedAudioFramePosition!();
-        break;
-
-      case 'AudioFrameObserverBase_getPlaybackAudioParams':
-        if (getPlaybackAudioParams == null) break;
-        AudioFrameObserverBaseGetPlaybackAudioParamsJson paramJson =
-            AudioFrameObserverBaseGetPlaybackAudioParamsJson.fromJson(jsonMap);
-        getPlaybackAudioParams!();
-        break;
-
-      case 'AudioFrameObserverBase_getRecordAudioParams':
-        if (getRecordAudioParams == null) break;
-        AudioFrameObserverBaseGetRecordAudioParamsJson paramJson =
-            AudioFrameObserverBaseGetRecordAudioParamsJson.fromJson(jsonMap);
-        getRecordAudioParams!();
-        break;
-
-      case 'AudioFrameObserverBase_getMixedAudioParams':
-        if (getMixedAudioParams == null) break;
-        AudioFrameObserverBaseGetMixedAudioParamsJson paramJson =
-            AudioFrameObserverBaseGetMixedAudioParamsJson.fromJson(jsonMap);
-        getMixedAudioParams!();
-        break;
       default:
         break;
     }
@@ -291,48 +262,6 @@ extension VideoFrameObserverExt on VideoFrameObserver {
           break;
         }
         onTranscodedVideoFrame!(videoFrame);
-        break;
-
-      case 'VideoFrameObserver_getVideoFrameProcessMode':
-        if (getVideoFrameProcessMode == null) break;
-        VideoFrameObserverGetVideoFrameProcessModeJson paramJson =
-            VideoFrameObserverGetVideoFrameProcessModeJson.fromJson(jsonMap);
-        getVideoFrameProcessMode!();
-        break;
-
-      case 'VideoFrameObserver_getVideoFormatPreference':
-        if (getVideoFormatPreference == null) break;
-        VideoFrameObserverGetVideoFormatPreferenceJson paramJson =
-            VideoFrameObserverGetVideoFormatPreferenceJson.fromJson(jsonMap);
-        getVideoFormatPreference!();
-        break;
-
-      case 'VideoFrameObserver_getRotationApplied':
-        if (getRotationApplied == null) break;
-        VideoFrameObserverGetRotationAppliedJson paramJson =
-            VideoFrameObserverGetRotationAppliedJson.fromJson(jsonMap);
-        getRotationApplied!();
-        break;
-
-      case 'VideoFrameObserver_getMirrorApplied':
-        if (getMirrorApplied == null) break;
-        VideoFrameObserverGetMirrorAppliedJson paramJson =
-            VideoFrameObserverGetMirrorAppliedJson.fromJson(jsonMap);
-        getMirrorApplied!();
-        break;
-
-      case 'VideoFrameObserver_getObservedFramePosition':
-        if (getObservedFramePosition == null) break;
-        VideoFrameObserverGetObservedFramePositionJson paramJson =
-            VideoFrameObserverGetObservedFramePositionJson.fromJson(jsonMap);
-        getObservedFramePosition!();
-        break;
-
-      case 'VideoFrameObserver_isExternal':
-        if (isExternal == null) break;
-        VideoFrameObserverIsExternalJson paramJson =
-            VideoFrameObserverIsExternalJson.fromJson(jsonMap);
-        isExternal!();
         break;
       default:
         break;

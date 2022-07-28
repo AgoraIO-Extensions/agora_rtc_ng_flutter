@@ -258,19 +258,6 @@ class MediaPlayerCacheManagerGetCacheDirJson {
 }
 
 @JsonSerializable(explicitToJson: true)
-class MediaRecorderSetMediaRecorderObserverJson {
-  const MediaRecorderSetMediaRecorderObserverJson(this.callback);
-
-  @JsonKey(name: 'callback')
-  final MediaRecorderObserver callback;
-  factory MediaRecorderSetMediaRecorderObserverJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$MediaRecorderSetMediaRecorderObserverJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$MediaRecorderSetMediaRecorderObserverJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class RtcEngineExSetSubscribeAudioBlacklistExJson {
   const RtcEngineExSetSubscribeAudioBlacklistExJson(this.uidList);
 

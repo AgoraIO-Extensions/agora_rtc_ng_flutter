@@ -30,12 +30,11 @@ extension AudioMixingDualMonoModeExt on AudioMixingDualMonoMode {
 }
 
 abstract class MediaEngine {
-  Future<void> registerAudioFrameObserver(AudioFrameObserver observer);
+  void registerAudioFrameObserver(AudioFrameObserver observer);
 
-  Future<void> registerVideoFrameObserver(VideoFrameObserver observer);
+  void registerVideoFrameObserver(VideoFrameObserver observer);
 
-  Future<void> registerVideoEncodedFrameObserver(
-      VideoEncodedFrameObserver observer);
+  void registerVideoEncodedFrameObserver(VideoEncodedFrameObserver observer);
 
   Future<void> pushAudioFrame(
       {required MediaSourceType type,

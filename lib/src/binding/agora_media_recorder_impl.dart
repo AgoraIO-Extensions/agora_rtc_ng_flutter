@@ -10,10 +10,12 @@ class MediaRecorderImpl implements MediaRecorder {
   }
 
   @override
-  Future<MediaRecorderObserver> setMediaRecorderObserver(
-      RtcConnection connection) async {
+  Future<void> setMediaRecorderObserver(
+      {required RtcConnection connection,
+      required MediaRecorderObserver callback}) async {
     const apiType = 'MediaRecorder_setMediaRecorderObserver';
-    final param = createParams({'connection': connection.toJson()});
+    final param =
+        createParams({'connection': connection.toJson(), 'callback': callback});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param));
     if (callApiResult.irisReturnCode < 0) {
@@ -24,9 +26,6 @@ class MediaRecorderImpl implements MediaRecorder {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setMediaRecorderObserverJson =
-        MediaRecorderSetMediaRecorderObserverJson.fromJson(rm);
-    return setMediaRecorderObserverJson.callback;
   }
 
   @override

@@ -1788,50 +1788,6 @@ class AudioFrameObserverBaseOnMixedAudioFrameJson {
 }
 
 @JsonSerializable(explicitToJson: true)
-class AudioFrameObserverBaseGetObservedAudioFramePositionJson {
-  const AudioFrameObserverBaseGetObservedAudioFramePositionJson();
-
-  factory AudioFrameObserverBaseGetObservedAudioFramePositionJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$AudioFrameObserverBaseGetObservedAudioFramePositionJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$AudioFrameObserverBaseGetObservedAudioFramePositionJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class AudioFrameObserverBaseGetPlaybackAudioParamsJson {
-  const AudioFrameObserverBaseGetPlaybackAudioParamsJson();
-
-  factory AudioFrameObserverBaseGetPlaybackAudioParamsJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$AudioFrameObserverBaseGetPlaybackAudioParamsJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$AudioFrameObserverBaseGetPlaybackAudioParamsJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class AudioFrameObserverBaseGetRecordAudioParamsJson {
-  const AudioFrameObserverBaseGetRecordAudioParamsJson();
-
-  factory AudioFrameObserverBaseGetRecordAudioParamsJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$AudioFrameObserverBaseGetRecordAudioParamsJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$AudioFrameObserverBaseGetRecordAudioParamsJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class AudioFrameObserverBaseGetMixedAudioParamsJson {
-  const AudioFrameObserverBaseGetMixedAudioParamsJson();
-
-  factory AudioFrameObserverBaseGetMixedAudioParamsJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$AudioFrameObserverBaseGetMixedAudioParamsJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$AudioFrameObserverBaseGetMixedAudioParamsJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson {
   const AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson(
       {this.channelId, this.uid, this.audioFrame});
@@ -2053,72 +2009,6 @@ class VideoFrameObserverOnTranscodedVideoFrameJson {
       _$VideoFrameObserverOnTranscodedVideoFrameJsonFromJson(json);
   Map<String, dynamic> toJson() =>
       _$VideoFrameObserverOnTranscodedVideoFrameJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class VideoFrameObserverGetVideoFrameProcessModeJson {
-  const VideoFrameObserverGetVideoFrameProcessModeJson();
-
-  factory VideoFrameObserverGetVideoFrameProcessModeJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$VideoFrameObserverGetVideoFrameProcessModeJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$VideoFrameObserverGetVideoFrameProcessModeJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class VideoFrameObserverGetVideoFormatPreferenceJson {
-  const VideoFrameObserverGetVideoFormatPreferenceJson();
-
-  factory VideoFrameObserverGetVideoFormatPreferenceJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$VideoFrameObserverGetVideoFormatPreferenceJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$VideoFrameObserverGetVideoFormatPreferenceJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class VideoFrameObserverGetRotationAppliedJson {
-  const VideoFrameObserverGetRotationAppliedJson();
-
-  factory VideoFrameObserverGetRotationAppliedJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$VideoFrameObserverGetRotationAppliedJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$VideoFrameObserverGetRotationAppliedJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class VideoFrameObserverGetMirrorAppliedJson {
-  const VideoFrameObserverGetMirrorAppliedJson();
-
-  factory VideoFrameObserverGetMirrorAppliedJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$VideoFrameObserverGetMirrorAppliedJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$VideoFrameObserverGetMirrorAppliedJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class VideoFrameObserverGetObservedFramePositionJson {
-  const VideoFrameObserverGetObservedFramePositionJson();
-
-  factory VideoFrameObserverGetObservedFramePositionJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$VideoFrameObserverGetObservedFramePositionJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$VideoFrameObserverGetObservedFramePositionJsonToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class VideoFrameObserverIsExternalJson {
-  const VideoFrameObserverIsExternalJson();
-
-  factory VideoFrameObserverIsExternalJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$VideoFrameObserverIsExternalJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$VideoFrameObserverIsExternalJsonToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)

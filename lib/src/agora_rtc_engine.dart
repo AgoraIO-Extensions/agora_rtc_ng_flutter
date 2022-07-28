@@ -2173,9 +2173,9 @@ abstract class RtcEngine {
 
   Future<void> disableAudioSpectrumMonitor();
 
-  Future<void> registerAudioSpectrumObserver(AudioSpectrumObserver observer);
+  void registerAudioSpectrumObserver(AudioSpectrumObserver observer);
 
-  Future<void> unregisterAudioSpectrumObserver(AudioSpectrumObserver observer);
+  void unregisterAudioSpectrumObserver(AudioSpectrumObserver observer);
 
   Future<void> adjustRecordingSignalVolume(int volume);
 
@@ -2565,9 +2565,9 @@ abstract class RtcEngine {
 
   VideoDeviceManager getVideoDeviceManager();
 
-  Future<MediaEngine> getMediaEngine();
+  MediaEngine getMediaEngine();
 
-  Future<MediaRecorder> getMediaRecorder();
+  MediaRecorder getMediaRecorder();
 
   Future<void> sendMetaData(
       {required Metadata metadata, required VideoSourceType sourceType});

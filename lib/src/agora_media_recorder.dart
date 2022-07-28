@@ -1,8 +1,9 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 
 abstract class MediaRecorder {
-  Future<MediaRecorderObserver> setMediaRecorderObserver(
-      RtcConnection connection);
+  Future<void> setMediaRecorderObserver(
+      {required RtcConnection connection,
+      required MediaRecorderObserver callback});
 
   Future<void> startRecording(
       {required RtcConnection connection,
