@@ -58,9 +58,48 @@ class VideoDeviceManagerImpl implements VideoDeviceManager {
   }
 
   @override
-  Future<void> defined() async {
-    const apiType = 'VideoDeviceManager_defined';
-    final param = createParams({});
+  Future<void> numberOfCapabilities(String deviceIdUTF8) async {
+    const apiType = 'VideoDeviceManager_numberOfCapabilities';
+    final param = createParams({'deviceIdUTF8': deviceIdUTF8});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+  }
+
+  @override
+  Future<VideoFormat> getCapability(
+      {required String deviceIdUTF8,
+      required int deviceCapabilityNumber}) async {
+    const apiType = 'VideoDeviceManager_getCapability';
+    final param = createParams({
+      'deviceIdUTF8': deviceIdUTF8,
+      'deviceCapabilityNumber': deviceCapabilityNumber
+    });
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
+    final getCapabilityJson = VideoDeviceManagerGetCapabilityJson.fromJson(rm);
+    return getCapabilityJson.capability;
+  }
+
+  @override
+  Future<void> startDeviceTest(int hwnd) async {
+    const apiType = 'VideoDeviceManager_startDeviceTest';
+    final param = createParams({'hwnd': hwnd});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param));
     if (callApiResult.irisReturnCode < 0) {
@@ -4471,6 +4510,34 @@ class RtcEngineImpl implements RtcEngine {
 // final result = rm['result'];
 // return result as VideoDeviceManager;
     throw UnimplementedError('Unimplement for getVideoDeviceManager');
+  }
+
+  @override
+  Future<MediaEngine> getMediaEngine() async {
+    const apiType = 'RtcEngine_getMediaEngine';
+    final param = createParams({});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    return result as MediaEngine;
+  }
+
+  @override
+  Future<MediaRecorder> getMediaRecorder() async {
+    const apiType = 'RtcEngine_getMediaRecorder';
+    final param = createParams({});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    return result as MediaRecorder;
   }
 
   @override

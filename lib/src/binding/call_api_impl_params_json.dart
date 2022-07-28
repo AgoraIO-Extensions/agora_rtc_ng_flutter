@@ -16,6 +16,19 @@ class VideoDeviceManagerGetDeviceJson {
 }
 
 @JsonSerializable(explicitToJson: true)
+class VideoDeviceManagerGetCapabilityJson {
+  const VideoDeviceManagerGetCapabilityJson(this.capability);
+
+  @JsonKey(name: 'capability')
+  final VideoFormat capability;
+  factory VideoDeviceManagerGetCapabilityJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$VideoDeviceManagerGetCapabilityJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$VideoDeviceManagerGetCapabilityJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RtcEngineSetSubscribeAudioBlacklistJson {
   const RtcEngineSetSubscribeAudioBlacklistJson(this.uidList);
 
@@ -452,6 +465,19 @@ class MediaPlayerCacheManagerGetCacheDirJson {
       _$MediaPlayerCacheManagerGetCacheDirJsonFromJson(json);
   Map<String, dynamic> toJson() =>
       _$MediaPlayerCacheManagerGetCacheDirJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class MediaRecorderSetMediaRecorderObserverJson {
+  const MediaRecorderSetMediaRecorderObserverJson(this.callback);
+
+  @JsonKey(name: 'callback')
+  final MediaRecorderObserver callback;
+  factory MediaRecorderSetMediaRecorderObserverJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$MediaRecorderSetMediaRecorderObserverJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$MediaRecorderSetMediaRecorderObserverJsonToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)

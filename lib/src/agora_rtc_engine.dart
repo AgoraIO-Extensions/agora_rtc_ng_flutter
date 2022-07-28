@@ -1012,6 +1012,8 @@ class ChannelMediaOptions {
       {this.publishCameraTrack,
       this.publishSecondaryCameraTrack,
       this.publishMicrophoneTrack,
+      this.publishScreenCaptureVideo,
+      this.publishScreenCaptureAudio,
       this.publishScreenTrack,
       this.publishSecondaryScreenTrack,
       this.publishCustomAudioTrack,
@@ -1050,6 +1052,12 @@ class ChannelMediaOptions {
 /* property_channelmediaoptions_publishmicrophonetrack */
   @JsonKey(name: 'publishMicrophoneTrack')
   final bool? publishMicrophoneTrack;
+/* property_channelmediaoptions_publishscreencapturevideo */
+  @JsonKey(name: 'publishScreenCaptureVideo')
+  final bool? publishScreenCaptureVideo;
+/* property_channelmediaoptions_publishscreencaptureaudio */
+  @JsonKey(name: 'publishScreenCaptureAudio')
+  final bool? publishScreenCaptureAudio;
 /* property_channelmediaoptions_publishscreentrack */
   @JsonKey(name: 'publishScreenTrack')
   final bool? publishScreenTrack;
@@ -1746,8 +1754,15 @@ abstract class VideoDeviceManager {
 /* api_ivideodevicemanager_getdevice */
   Future<String> getDevice();
 
-/* api_ivideodevicemanager_defined */
-  Future<void> defined();
+/* api_ivideodevicemanager_numberofcapabilities */
+  Future<void> numberOfCapabilities(String deviceIdUTF8);
+
+/* api_ivideodevicemanager_getcapability */
+  Future<VideoFormat> getCapability(
+      {required String deviceIdUTF8, required int deviceCapabilityNumber});
+
+/* api_ivideodevicemanager_startdevicetest */
+  Future<void> startDeviceTest(int hwnd);
 
 /* api_ivideodevicemanager_stopdevicetest */
   Future<void> stopDeviceTest();
@@ -2985,6 +3000,12 @@ abstract class RtcEngine {
 
 /* api_irtcengine_getvideodevicemanager */
   VideoDeviceManager getVideoDeviceManager();
+
+/* api_irtcengine_getmediaengine */
+  Future<MediaEngine> getMediaEngine();
+
+/* api_irtcengine_getmediarecorder */
+  Future<MediaRecorder> getMediaRecorder();
 
 /* api_irtcengine_sendmetadata */
   Future<void> sendMetaData(

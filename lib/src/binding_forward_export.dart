@@ -6,6 +6,7 @@ export 'agora_log.dart';
 export 'agora_media_engine.dart';
 export 'agora_media_player.dart';
 export 'agora_media_player_source.dart';
+export 'agora_media_recorder.dart';
 export 'agora_media_streaming_source.dart';
 export 'agora_rtc_engine_ex.dart';
 export 'audio_device_manager.dart';
