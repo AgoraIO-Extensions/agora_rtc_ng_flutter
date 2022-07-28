@@ -709,20 +709,34 @@ extension VideoModulePositionExt on VideoModulePosition {
   }
 }
 
-abstract class AudioFrameObserverBase {
-  Future<AudioFrame> onRecordAudioFrame(String channelId);
+class AudioFrameObserverBase {
+  /// Construct the [AudioFrameObserverBase].
+  const AudioFrameObserverBase({
+    this.onRecordAudioFrame,
+    this.onPlaybackAudioFrame,
+    this.onMixedAudioFrame,
+    this.getObservedAudioFramePosition,
+    this.getPlaybackAudioParams,
+    this.getRecordAudioParams,
+    this.getMixedAudioParams,
+  });
 
-  Future<AudioFrame> onPlaybackAudioFrame(String channelId);
+  final bool Function(String channelId, AudioFrame audioFrame)?
+      onRecordAudioFrame;
 
-  Future<AudioFrame> onMixedAudioFrame(String channelId);
+  final bool Function(String channelId, AudioFrame audioFrame)?
+      onPlaybackAudioFrame;
 
-  Future<void> getObservedAudioFramePosition();
+  final bool Function(String channelId, AudioFrame audioFrame)?
+      onMixedAudioFrame;
 
-  Future<AudioParams> getPlaybackAudioParams();
+  final int Function()? getObservedAudioFramePosition;
 
-  Future<AudioParams> getRecordAudioParams();
+  final AudioParams Function()? getPlaybackAudioParams;
 
-  Future<AudioParams> getMixedAudioParams();
+  final AudioParams Function()? getRecordAudioParams;
+
+  final AudioParams Function()? getMixedAudioParams;
 }
 
 @JsonEnum(alwaysCreate: true)
@@ -846,9 +860,30 @@ class AudioParams {
   Map<String, dynamic> toJson() => _$AudioParamsToJson(this);
 }
 
-abstract class AudioFrameObserver implements AudioFrameObserverBase {
-  Future<AudioFrame> onPlaybackAudioFrameBeforeMixing(
-      {required String channelId, required int uid});
+class AudioFrameObserver extends AudioFrameObserverBase {
+  /// Construct the [AudioFrameObserver].
+  const AudioFrameObserver({
+    bool Function(String channelId, AudioFrame audioFrame)? onRecordAudioFrame,
+    bool Function(String channelId, AudioFrame audioFrame)?
+        onPlaybackAudioFrame,
+    bool Function(String channelId, AudioFrame audioFrame)? onMixedAudioFrame,
+    int Function()? getObservedAudioFramePosition,
+    AudioParams Function()? getPlaybackAudioParams,
+    AudioParams Function()? getRecordAudioParams,
+    AudioParams Function()? getMixedAudioParams,
+    this.onPlaybackAudioFrameBeforeMixing,
+  }) : super(
+          onRecordAudioFrame: onRecordAudioFrame,
+          onPlaybackAudioFrame: onPlaybackAudioFrame,
+          onMixedAudioFrame: onMixedAudioFrame,
+          getObservedAudioFramePosition: getObservedAudioFramePosition,
+          getPlaybackAudioParams: getPlaybackAudioParams,
+          getRecordAudioParams: getRecordAudioParams,
+          getMixedAudioParams: getMixedAudioParams,
+        );
+
+  final bool Function(String channelId, int uid, AudioFrame audioFrame)?
+      onPlaybackAudioFrameBeforeMixing;
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -912,41 +947,67 @@ class VideoEncodedFrameObserver {
       EncodedVideoFrameInfo videoEncodedFrameInfo)? onEncodedVideoFrameReceived;
 }
 
-abstract class VideoFrameObserver {
-  Future<VideoFrame> onCaptureVideoFrame();
+class VideoFrameObserver {
+  /// Construct the [VideoFrameObserver].
+  const VideoFrameObserver({
+    this.onCaptureVideoFrame,
+    this.onPreEncodeVideoFrame,
+    this.onSecondaryCameraCaptureVideoFrame,
+    this.onSecondaryPreEncodeCameraVideoFrame,
+    this.onScreenCaptureVideoFrame,
+    this.onPreEncodeScreenVideoFrame,
+    this.onMediaPlayerVideoFrame,
+    this.onSecondaryScreenCaptureVideoFrame,
+    this.onSecondaryPreEncodeScreenVideoFrame,
+    this.onRenderVideoFrame,
+    this.onTranscodedVideoFrame,
+    this.getVideoFrameProcessMode,
+    this.getVideoFormatPreference,
+    this.getRotationApplied,
+    this.getMirrorApplied,
+    this.getObservedFramePosition,
+    this.isExternal,
+  });
 
-  Future<VideoFrame> onPreEncodeVideoFrame();
+  final bool Function(VideoFrame videoFrame)? onCaptureVideoFrame;
 
-  Future<VideoFrame> onSecondaryCameraCaptureVideoFrame();
+  final bool Function(VideoFrame videoFrame)? onPreEncodeVideoFrame;
 
-  Future<VideoFrame> onSecondaryPreEncodeCameraVideoFrame();
+  final bool Function(VideoFrame videoFrame)?
+      onSecondaryCameraCaptureVideoFrame;
 
-  Future<VideoFrame> onScreenCaptureVideoFrame();
+  final bool Function(VideoFrame videoFrame)?
+      onSecondaryPreEncodeCameraVideoFrame;
 
-  Future<VideoFrame> onPreEncodeScreenVideoFrame();
+  final bool Function(VideoFrame videoFrame)? onScreenCaptureVideoFrame;
 
-  Future<VideoFrame> onMediaPlayerVideoFrame(int mediaPlayerId);
+  final bool Function(VideoFrame videoFrame)? onPreEncodeScreenVideoFrame;
 
-  Future<VideoFrame> onSecondaryScreenCaptureVideoFrame();
+  final bool Function(VideoFrame videoFrame, int mediaPlayerId)?
+      onMediaPlayerVideoFrame;
 
-  Future<VideoFrame> onSecondaryPreEncodeScreenVideoFrame();
+  final bool Function(VideoFrame videoFrame)?
+      onSecondaryScreenCaptureVideoFrame;
 
-  Future<VideoFrame> onRenderVideoFrame(
-      {required String channelId, required int remoteUid});
+  final bool Function(VideoFrame videoFrame)?
+      onSecondaryPreEncodeScreenVideoFrame;
 
-  Future<VideoFrame> onTranscodedVideoFrame();
+  final bool Function(String channelId, int remoteUid, VideoFrame videoFrame)?
+      onRenderVideoFrame;
 
-  Future<VideoFrameProcessMode> getVideoFrameProcessMode();
+  final bool Function(VideoFrame videoFrame)? onTranscodedVideoFrame;
 
-  Future<VideoPixelFormat> getVideoFormatPreference();
+  final VideoFrameProcessMode Function()? getVideoFrameProcessMode;
 
-  Future<bool> getRotationApplied();
+  final VideoPixelFormat Function()? getVideoFormatPreference;
 
-  Future<bool> getMirrorApplied();
+  final bool Function()? getRotationApplied;
 
-  Future<int> getObservedFramePosition();
+  final bool Function()? getMirrorApplied;
 
-  Future<bool> isExternal();
+  final int Function()? getObservedFramePosition;
+
+  final bool Function()? isExternal;
 }
 
 @JsonEnum(alwaysCreate: true)
@@ -1148,9 +1209,15 @@ class RecorderInfo {
   Map<String, dynamic> toJson() => _$RecorderInfoToJson(this);
 }
 
-abstract class MediaRecorderObserver {
-  Future<void> onRecorderStateChanged(
-      {required RecorderState state, required RecorderErrorCode error});
+class MediaRecorderObserver {
+  /// Construct the [MediaRecorderObserver].
+  const MediaRecorderObserver({
+    this.onRecorderStateChanged,
+    this.onRecorderInfoUpdated,
+  });
 
-  Future<void> onRecorderInfoUpdated(RecorderInfo info);
+  final void Function(RecorderState state, RecorderErrorCode error)?
+      onRecorderStateChanged;
+
+  final void Function(RecorderInfo info)? onRecorderInfoUpdated;
 }
