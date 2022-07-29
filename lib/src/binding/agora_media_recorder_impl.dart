@@ -16,8 +16,10 @@ class MediaRecorderImpl implements MediaRecorder {
     const apiType = 'MediaRecorder_setMediaRecorderObserver';
     final param =
         createParams({'connection': connection.toJson(), 'callback': callback});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    final List<Uint8List> buffers = [];
+    buffers.addAll(connection.collectBufferList());
+    final callApiResult = await apiCaller
+        .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {
       throw AgoraRtcException(code: callApiResult.irisReturnCode);
     }
@@ -35,8 +37,11 @@ class MediaRecorderImpl implements MediaRecorder {
     const apiType = 'MediaRecorder_startRecording';
     final param = createParams(
         {'connection': connection.toJson(), 'config': config.toJson()});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    final List<Uint8List> buffers = [];
+    buffers.addAll(connection.collectBufferList());
+    buffers.addAll(config.collectBufferList());
+    final callApiResult = await apiCaller
+        .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {
       throw AgoraRtcException(code: callApiResult.irisReturnCode);
     }
@@ -51,8 +56,10 @@ class MediaRecorderImpl implements MediaRecorder {
   Future<void> stopRecording(RtcConnection connection) async {
     const apiType = 'MediaRecorder_stopRecording';
     final param = createParams({'connection': connection.toJson()});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+    final List<Uint8List> buffers = [];
+    buffers.addAll(connection.collectBufferList());
+    final callApiResult = await apiCaller
+        .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {
       throw AgoraRtcException(code: callApiResult.irisReturnCode);
     }
@@ -68,7 +75,7 @@ class MediaRecorderImpl implements MediaRecorder {
     const apiType = 'MediaRecorder_release';
     final param = createParams({});
     final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param));
+        await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
     if (callApiResult.irisReturnCode < 0) {
       throw AgoraRtcException(code: callApiResult.irisReturnCode);
     }

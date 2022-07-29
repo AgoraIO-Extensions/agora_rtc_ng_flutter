@@ -1,26 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:agora_rtc_ng/src/agora_base.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ext.dart';
-import 'package:agora_rtc_ng/src/audio_device_manager.dart';
-import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_event_impl.dart';
 import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_ex_impl.dart'
     as rtc_engine_ex_binding;
 import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_impl.dart'
     as rtc_engine_binding;
-import 'package:agora_rtc_ng/src/binding/event_handler_param_json.dart';
 
-import 'package:agora_rtc_ng/src/agora_media_player.dart';
-import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart';
-import 'package:agora_rtc_ng/src/impl/media_player_impl.dart';
+import 'package:agora_rtc_ng/src/binding_forward_export.dart';
+import 'package:agora_rtc_ng/src/impl/media_player_impl.dart'
+    as media_player_impl;
+import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
+    as audio_device_manager_impl;
+import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
+
 import 'package:flutter/services.dart';
 import 'package:iris_event/iris_event.dart';
 
-import 'api_caller.dart';
 import 'global_video_view_controller.dart';
 import 'package:meta/meta.dart';
 
@@ -75,6 +69,18 @@ extension RtcEngineEventHandlerExExt on RtcEngineEventHandler {
   }
 }
 
+extension MetadataExt on Metadata {
+  Metadata copyWith(
+      {int? uid, int? size, Uint8List? buffer, int? timeStampMs}) {
+    return Metadata(
+      uid: uid ?? this.uid,
+      size: size ?? this.size,
+      buffer: buffer ?? this.buffer,
+      timeStampMs: timeStampMs ?? this.timeStampMs,
+    );
+  }
+}
+
 extension MetadataObserverExt on MetadataObserver {
   bool eventIntercept(String event, String data, List<Uint8List> buffers) {
     final jsonMap = jsonDecode(data);
@@ -114,6 +120,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   final Set<RtcEngineEventHandler> _rtcEngineEventHandlers = {};
   final Set<MetadataObserver> _metadataObservers = {};
   DirectCdnStreamingEventHandler? _directCdnStreamingEventHandler;
+
+  final Set<IrisEventHandler> _eventHandlers = {};
 
   final GlobalVideoViewController _globalVideoViewController =
       const GlobalVideoViewController();
@@ -173,6 +181,10 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   void onEvent(String event, String data, List<Uint8List> buffers) {
+    for (final e in _eventHandlers) {
+      e.onEvent(event, data, buffers);
+    }
+
     for (final eh in _rtcEngineEventHandlers) {
       if (!eh.eventIntercept(event, data, buffers)) {
         eh.process(event, data, buffers);
@@ -296,7 +308,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       await apiCaller.setupIrisMediaPlayerEventHandlerIfNeedAsync();
     }
 
-    final MediaPlayer mediaPlayer = MediaPlayerImpl.create(result as int);
+    final MediaPlayer mediaPlayer =
+        media_player_impl.MediaPlayerImpl.create(result as int);
     ++_mediaPlayerCount;
     return mediaPlayer;
   }
@@ -332,8 +345,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     final dataPtr = uint8ListToPtr(data);
     final param = createParams(
         {'streamId': streamId, 'data': dataPtr.address, 'length': length});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param), buffer: data);
+    final callApiResult = await apiCaller
+        .callIrisApi(apiType, jsonEncode(param), buffers: [data]);
     if (callApiResult.irisReturnCode < 0) {
       throw AgoraRtcException(code: callApiResult.irisReturnCode);
     }
@@ -542,7 +555,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   AudioDeviceManager getAudioDeviceManager() {
-    return AudioDeviceManagerImpl.create();
+    return audio_device_manager_impl.AudioDeviceManagerImpl.create();
   }
 
   @override
@@ -810,6 +823,44 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       throw AgoraRtcException(code: result);
     }
   }
+
+  @override
+  void registerAudioEncodedFrameObserver(
+      {required AudioEncodedFrameObserverConfig config,
+      required AudioEncodedFrameObserver observer}) async {
+    final param = createParams({'config': config.toJson()});
+    await apiCaller.callIrisEventAsync(
+        const CreateIrisEventKey(
+            registerName: 'RtcEngine_registerAudioEncodedFrameObserver',
+            unregisterName: 'RtcEngine_unregisterAudioEncodedFrameObserver'),
+        jsonEncode(param));
+
+    _eventHandlers.add(AudioEncodedFrameObserverWrapper(observer));
+  }
+
+  @override
+  void registerAudioSpectrumObserver(AudioSpectrumObserver observer) async {
+    final param = createParams({});
+    await apiCaller.callIrisEventAsync(
+        const CreateIrisEventKey(
+            registerName: 'RtcEngine_registerAudioSpectrumObserver',
+            unregisterName: 'RtcEngine_unregisterAudioSpectrumObserver'),
+        jsonEncode(param));
+
+    _eventHandlers.add(AudioSpectrumObserverWrapper(observer));
+  }
+
+  @override
+  void unregisterAudioSpectrumObserver(AudioSpectrumObserver observer) async {
+    final param = createParams({});
+    await apiCaller.callIrisEventAsync(
+        const DisposeIrisEventKey(
+            registerName: 'RtcEngine_registerAudioSpectrumObserver',
+            unregisterName: 'RtcEngine_unregisterAudioSpectrumObserver'),
+        jsonEncode(param));
+
+    _eventHandlers.remove(AudioSpectrumObserverWrapper(observer));
+  }
 }
 
 class VideoDeviceManagerImpl extends rtc_engine_binding.VideoDeviceManagerImpl
@@ -850,8 +901,6 @@ class VideoDeviceManagerImpl extends rtc_engine_binding.VideoDeviceManagerImpl
 
     return deviceInfoList;
   }
-
-  
 
   @override
   Future<void> release() async {

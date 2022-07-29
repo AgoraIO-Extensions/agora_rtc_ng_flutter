@@ -82,10 +82,10 @@ class ApiCaller implements _ApiCallExecutorBaseAsync {
   }
 
   @override
-  Future<CallApiResult> callIrisApiAsync(
+  Future<CallApiResult> callIrisApiWithUin8ListAsync(
     String funcName,
     String params, {
-    Uint8List? buffer,
+    List<Uint8List>? buffers,
   }) async {
     if (_apiCallExecutor == null) {
       throw AgoraRtcException(
@@ -93,15 +93,17 @@ class ApiCaller implements _ApiCallExecutorBaseAsync {
         message: 'Make sure you call RtcEngine.initialize first',
       );
     }
-    return _apiCallExecutor!.callIrisApiAsync(funcName, params, buffer: buffer);
+    return _apiCallExecutor!
+        .callIrisApiWithUin8ListAsync(funcName, params, buffers: buffers);
   }
 
   Future<CallApiResult> callIrisApi(
     String funcName,
     String params, {
-    Uint8List? buffer,
-  }) =>
-      callIrisApiAsync(funcName, params, buffer: buffer);
+    List<Uint8List>? buffers,
+  }) {
+    return callIrisApiWithUin8ListAsync(funcName, params, buffers: buffers);
+  }
 
   @override
   Future<void> setupIrisRtcEngineEventHandlerAsync({SendPort? sendPort}) {
@@ -133,6 +135,11 @@ class ApiCaller implements _ApiCallExecutorBaseAsync {
   @override
   void removeEventHandler(IrisEventHandler eventHandler) {
     _apiCallExecutor!.removeEventHandler(eventHandler);
+  }
+
+  @override
+  Future<CallApiResult> callIrisEventAsync(IrisEventKey key, String params) {
+    return _apiCallExecutor!.callIrisEventAsync(key, params);
   }
 }
 
@@ -170,12 +177,15 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
       assert(request is _Request);
 
       if (request is _ApiCallRequest) {
-        final result = executor.callIrisApi(
+        final result = executor.callIrisApiWithUint8List(
           request.funcName,
           request.params,
-          buffer: request.buffer,
+          buffers: request.buffers,
         );
 
+        mainApiCallSendPort.send(result);
+      } else if (request is _IrisEventObserverRequest) {
+        final result = executor.callIrisEvent(request.key, request.params);
         mainApiCallSendPort.send(result);
       } else if (request is _SetupIrisRtcEngineEventHandlerRequest) {
         executor.setupIrisRtcEngineEventHandler(mainEventSendPort);
@@ -232,12 +242,12 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
   }
 
   @override
-  Future<CallApiResult> callIrisApiAsync(
+  Future<CallApiResult> callIrisApiWithUin8ListAsync(
     String funcName,
     String params, {
-    Uint8List? buffer,
+    List<Uint8List>? buffers,
   }) async {
-    requestPort.send(_ApiCallRequest(funcName, params, buffer));
+    requestPort.send(_ApiCallRequest(funcName, params, buffers));
     final CallApiResult result = await responseQueue.next;
     return result;
   }
@@ -285,16 +295,31 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
     requestPort.send(null);
     await responseQueue.cancel();
   }
+
+  @override
+  Future<CallApiResult> callIrisEventAsync(
+      IrisEventKey key, String params) async {
+    requestPort.send(_IrisEventObserverRequest(params, key));
+    final CallApiResult result = await responseQueue.next;
+    return result;
+  }
 }
 
 abstract class _Request {}
 
 class _ApiCallRequest implements _Request {
-  const _ApiCallRequest(this.funcName, this.params, this.buffer);
+  const _ApiCallRequest(this.funcName, this.params, this.buffers);
 
   final String funcName;
   final String params;
-  final Uint8List? buffer;
+  final List<Uint8List>? buffers;
+}
+
+class _IrisEventObserverRequest implements _Request {
+  const _IrisEventObserverRequest(this.params, this.key);
+
+  final String params;
+  final IrisEventKey key;
 }
 
 class _SetupIrisRtcEngineEventHandlerRequest implements _Request {
@@ -323,6 +348,7 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
   ffi.Pointer<IrisCEventHandlerEx>? _irisCEventHandlerEx;
   ffi.Pointer<ffi.Void>? _irisEventHandlerExPtr;
   ffi.Pointer<ffi.Void>? _irisMediaPlayerEventHandlerPtr;
+  Map<IrisEventKey, _IrisEventHandlerObserver> _irisEventHandlerObservers = {};
 
   @override
   void initilize(SendPort sendPort) {
@@ -408,7 +434,7 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
   CallApiResult callIrisApi(
     String funcName,
     String params, {
-    Uint8List? buffer,
+    List<ffi.Pointer<ffi.Void>>? bufferList,
   }) {
     assert(_irisApiEnginePtr != null, 'Make sure initilize() has been called.');
 
@@ -425,24 +451,26 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
       final ffi.Pointer<ffi.Int8> paramsPointer =
           paramsPointerUtf8.cast<ffi.Int8>();
 
-      ffi.Pointer<ffi.Void> bufferPointer;
-      ffi.Pointer<ffi.Pointer<ffi.Void>> bufferPtrToPtr;
-      int bufferLength = buffer?.length ?? 0;
-      if (buffer != null) {
-        final ffi.Pointer<ffi.Uint8> bufferData =
-            arena.allocate<ffi.Uint8>(buffer.length);
+      // ffi.Pointer<ffi.Void> bufferPointer;
+      ffi.Pointer<ffi.Pointer<ffi.Void>> bufferListPtr;
+      int bufferLength = bufferList?.length ?? 0;
 
-        final pointerList = bufferData.asTypedList(buffer.length);
-        pointerList.setAll(0, buffer);
+      if (bufferList != null) {
+        bufferListPtr = arena.allocate(bufferList.length);
 
-        bufferPointer = bufferData.cast<ffi.Void>();
+        for (int i = 0; i < bufferList.length; i++) {
+          final bufferPtr = bufferList[i];
+          // final ffi.Pointer<ffi.Uint8> bufferData =
+          //     arena.allocate<ffi.Uint8>(buffer.length);
 
-        bufferPtrToPtr = arena();
+          // final pointerList = bufferData.asTypedList(buffer.length);
+          // pointerList.setAll(0, buffer);
 
-        bufferPtrToPtr.value =
-            ffi.Pointer<ffi.Void>.fromAddress(bufferPointer.address);
+          // bufferPointer = bufferData.cast<ffi.Void>();
+          bufferListPtr[i] = bufferPtr;
+        }
       } else {
-        bufferPtrToPtr = ffi.nullptr;
+        bufferListPtr = ffi.nullptr;
       }
 
       try {
@@ -451,7 +479,7 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
             funcNamePointer,
             paramsPointer,
             paramsPointerUtf8Length,
-            bufferPtrToPtr,
+            bufferListPtr,
             bufferLength,
             resultPointer);
 
@@ -468,6 +496,34 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
   }
 
   @override
+  CallApiResult callIrisApiWithUint8List(
+    String funcName,
+    String params, {
+    List<Uint8List>? buffers,
+  }) {
+    return using<CallApiResult>((Arena arena) {
+      int bufferLength = buffers?.length ?? 0;
+
+      List<ffi.Pointer<ffi.Void>>? buffersPtrList = [];
+
+      if (buffers != null) {
+        for (int i = 0; i < bufferLength; i++) {
+          final buffer = buffers[i];
+          final ffi.Pointer<ffi.Uint8> bufferData =
+              arena.allocate<ffi.Uint8>(buffer.length);
+
+          final pointerList = bufferData.asTypedList(buffer.length);
+          pointerList.setAll(0, buffer);
+
+          buffersPtrList.add(bufferData.cast<ffi.Void>());
+        }
+      }
+
+      return callIrisApi(funcName, params, bufferList: buffersPtrList);
+    });
+  }
+
+  @override
   void dispose() {
     assert(_irisApiEnginePtr != null);
 
@@ -475,6 +531,8 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     // The IrisRtcEngineEventHandler should be dispose on last, which will free the
     // _irisCEventHandler internally.
     disposeIrisRtcEngineEventHandler();
+
+    _destroyObservers();
 
     _nativeIrisApiEngineBinding.DestroyIrisEventHandler(
         _irisEventHandlerExPtr!);
@@ -484,6 +542,46 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
 
     _nativeIrisApiEngineBinding.DestroyIrisApiEngine(_irisApiEnginePtr!);
     _irisApiEnginePtr = null;
+  }
+
+  void _destroyObservers() {
+    _irisEventHandlerObservers.forEach((key, ob) {
+      callIrisApi(ob.key.unregisterName, "{}");
+      ob.dispose();
+    });
+
+    _irisEventHandlerObservers.clear();
+  }
+
+  @override
+  CallApiResult callIrisEvent(IrisEventKey key, String params) {
+    if (key is CreateIrisEventKey) {
+      final ob = _IrisEventHandlerObserver(
+        nativeIrisApiEngineBinding: _nativeIrisApiEngineBinding,
+        irisApiEnginePtr: _irisApiEnginePtr!,
+        irisEventHandlerExPtr: _irisEventHandlerExPtr!,
+        key: key,
+      );
+
+      _irisEventHandlerObservers.putIfAbsent(key, () => ob);
+
+      return callIrisApi(
+        key.registerName,
+        params,
+        bufferList: [ob.observerPtr],
+      );
+    } else if (key is DisposeIrisEventKey) {
+      final result = callIrisApi(
+        key.unregisterName,
+        params,
+        bufferList: null,
+      );
+      _irisEventHandlerObservers[key]?.dispose();
+
+      return result;
+    }
+
+    throw UnsupportedError('Not supported key type: ${key.runtimeType}');
   }
 }
 
@@ -503,8 +601,16 @@ abstract class _ApiCallExecutorBase {
   CallApiResult callIrisApi(
     String funcName,
     String params, {
-    Uint8List? buffer,
+    List<ffi.Pointer<ffi.Void>>? bufferList,
   });
+
+  CallApiResult callIrisApiWithUint8List(
+    String funcName,
+    String params, {
+    List<Uint8List>? buffers,
+  });
+
+  CallApiResult callIrisEvent(IrisEventKey key, String params);
 
   void dispose();
 }
@@ -523,11 +629,13 @@ abstract class _ApiCallExecutorBaseAsync {
   Future<void> setupIrisMediaPlayerEventHandlerIfNeedAsync(
       {SendPort? sendPort});
 
-  Future<CallApiResult> callIrisApiAsync(
+  Future<CallApiResult> callIrisApiWithUin8ListAsync(
     String funcName,
     String params, {
-    Uint8List? buffer,
+    List<Uint8List>? buffers,
   });
+
+  Future<CallApiResult> callIrisEventAsync(IrisEventKey key, String params);
 
   Future<void> disposeAsync();
 
@@ -543,5 +651,85 @@ class _SendableIrisEventHandler implements IrisEventHandler {
   @override
   void onEvent(String event, String data, List<Uint8List> buffers) {
     _sendPort.send([event, data, buffers]);
+  }
+}
+
+abstract class IrisEventKey {
+  const IrisEventKey(
+      {required this.registerName, required this.unregisterName});
+  final String registerName;
+  final String unregisterName;
+
+  @override
+  bool operator ==(Object other) {
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is IrisEventKey &&
+        other.registerName == registerName &&
+        other.unregisterName == unregisterName;
+  }
+
+  @override
+  int get hashCode => hashValues(registerName, unregisterName);
+}
+
+class CreateIrisEventKey extends IrisEventKey {
+  const CreateIrisEventKey(
+      {required String registerName, required String unregisterName})
+      : super(registerName: registerName, unregisterName: unregisterName);
+}
+
+class DisposeIrisEventKey extends IrisEventKey {
+  const DisposeIrisEventKey(
+      {required String registerName, required String unregisterName})
+      : super(registerName: registerName, unregisterName: unregisterName);
+}
+
+class _IrisEventHandlerObserver {
+  _IrisEventHandlerObserver(
+      {required this.nativeIrisApiEngineBinding,
+      required this.irisApiEnginePtr,
+      required this.irisEventHandlerExPtr,
+      required this.key,
+      this.playerId = 0}) {
+    using((Arena arena) {
+      final ffi.Pointer<ffi.Int8> funcNamePointer =
+          key.registerName.toNativeUtf8(allocator: arena).cast<ffi.Int8>();
+
+      _observerPtr = nativeIrisApiEngineBinding.CreateObserver(
+        irisApiEnginePtr,
+        funcNamePointer,
+        irisEventHandlerExPtr,
+        playerId,
+      );
+    });
+  }
+
+  final NativeIrisApiEngineBinding nativeIrisApiEngineBinding;
+
+  final IrisApiEnginePtr irisApiEnginePtr;
+
+  final ffi.Pointer<ffi.Void> irisEventHandlerExPtr;
+
+  final IrisEventKey key;
+
+  final int playerId;
+
+  late final ffi.Pointer<ffi.Void> _observerPtr;
+
+  ffi.Pointer<ffi.Void> get observerPtr => _observerPtr;
+
+  void dispose() {
+    using((Arena arena) {
+      final ffi.Pointer<ffi.Int8> funcNamePointer =
+          key.unregisterName.toNativeUtf8(allocator: arena).cast<ffi.Int8>();
+
+      nativeIrisApiEngineBinding.DestroyObserver(
+        irisApiEnginePtr,
+        funcNamePointer,
+        _observerPtr,
+      );
+    });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
+import 'package:iris_event/iris_event.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable
 
@@ -12,6 +13,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
         AudioEncodedFrameObserverOnRecordAudioEncodedFrameJson paramJson =
             AudioEncodedFrameObserverOnRecordAudioEncodedFrameJson.fromJson(
                 jsonMap);
+        paramJson.fillBuffers(buffers);
         Uint8List? frameBuffer = paramJson.frameBuffer;
         int? length = paramJson.length;
         EncodedAudioFrameInfo? audioEncodedFrameInfo =
@@ -21,6 +23,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
             audioEncodedFrameInfo == null) {
           break;
         }
+        audioEncodedFrameInfo = audioEncodedFrameInfo.fillBuffers(buffers);
         onRecordAudioEncodedFrame!(frameBuffer, length, audioEncodedFrameInfo);
         break;
 
@@ -29,6 +32,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
         AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJson paramJson =
             AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJson.fromJson(
                 jsonMap);
+        paramJson.fillBuffers(buffers);
         Uint8List? frameBuffer = paramJson.frameBuffer;
         int? length = paramJson.length;
         EncodedAudioFrameInfo? audioEncodedFrameInfo =
@@ -38,6 +42,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
             audioEncodedFrameInfo == null) {
           break;
         }
+        audioEncodedFrameInfo = audioEncodedFrameInfo.fillBuffers(buffers);
         onPlaybackAudioEncodedFrame!(
             frameBuffer, length, audioEncodedFrameInfo);
         break;
@@ -47,6 +52,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
         AudioEncodedFrameObserverOnMixedAudioEncodedFrameJson paramJson =
             AudioEncodedFrameObserverOnMixedAudioEncodedFrameJson.fromJson(
                 jsonMap);
+        paramJson.fillBuffers(buffers);
         Uint8List? frameBuffer = paramJson.frameBuffer;
         int? length = paramJson.length;
         EncodedAudioFrameInfo? audioEncodedFrameInfo =
@@ -56,10 +62,32 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
             audioEncodedFrameInfo == null) {
           break;
         }
+        audioEncodedFrameInfo = audioEncodedFrameInfo.fillBuffers(buffers);
         onMixedAudioEncodedFrame!(frameBuffer, length, audioEncodedFrameInfo);
         break;
       default:
         break;
     }
+  }
+}
+
+class AudioEncodedFrameObserverWrapper implements IrisEventHandler {
+  const AudioEncodedFrameObserverWrapper(this.audioEncodedFrameObserver);
+  final AudioEncodedFrameObserver audioEncodedFrameObserver;
+  @override
+  bool operator ==(Object other) {
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is AudioEncodedFrameObserverWrapper &&
+        other.audioEncodedFrameObserver == audioEncodedFrameObserver;
+  }
+
+  @override
+  int get hashCode => audioEncodedFrameObserver.hashCode;
+  @override
+  void onEvent(String event, String data, List<Uint8List> buffers) {
+    if (!event.startsWith('AudioEncodedFrameObserver')) return;
+    audioEncodedFrameObserver.process(event, data, buffers);
   }
 }

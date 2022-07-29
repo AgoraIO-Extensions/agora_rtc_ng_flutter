@@ -10,4 +10,5 @@ export 'agora_rtc_engine_ex_impl.dart';
 export 'audio_device_manager_impl.dart';
 export 'event_handler_param_json.dart';
 export 'call_api_impl_params_json.dart';
+export 'call_api_event_handler_buffer_ext.dart';
 export 'package:agora_rtc_ng/src/impl/api_caller.dart';

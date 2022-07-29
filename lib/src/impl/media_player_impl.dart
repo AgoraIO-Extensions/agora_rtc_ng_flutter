@@ -86,6 +86,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
     _mediaPlayerSourceObservers.remove(observer);
   }
 
+  
+
   void _destroy() {
     apiCaller.removeEventHandler(this);
 
