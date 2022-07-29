@@ -2426,17 +2426,17 @@ AudioSpectrumObserverOnRemoteAudioSpectrumJson
     _$AudioSpectrumObserverOnRemoteAudioSpectrumJsonFromJson(
             Map<String, dynamic> json) =>
         AudioSpectrumObserverOnRemoteAudioSpectrumJson(
-          spectrums: json['spectrums'] == null
-              ? null
-              : UserAudioSpectrumInfo.fromJson(
-                  json['spectrums'] as Map<String, dynamic>),
+          spectrums: (json['spectrums'] as List<dynamic>?)
+              ?.map((e) =>
+                  UserAudioSpectrumInfo.fromJson(e as Map<String, dynamic>))
+              .toList(),
           spectrumNumber: json['spectrumNumber'] as int?,
         );
 
 Map<String, dynamic> _$AudioSpectrumObserverOnRemoteAudioSpectrumJsonToJson(
         AudioSpectrumObserverOnRemoteAudioSpectrumJson instance) =>
     <String, dynamic>{
-      'spectrums': instance.spectrums?.toJson(),
+      'spectrums': instance.spectrums?.map((e) => e.toJson()).toList(),
       'spectrumNumber': instance.spectrumNumber,
     };
 
@@ -2678,6 +2678,36 @@ Map<String, dynamic> _$MediaRecorderObserverOnRecorderInfoUpdatedJsonToJson(
         MediaRecorderObserverOnRecorderInfoUpdatedJson instance) =>
     <String, dynamic>{
       'info': instance.info?.toJson(),
+    };
+
+MediaPlayerAudioFrameObserverOnFrameJson
+    _$MediaPlayerAudioFrameObserverOnFrameJsonFromJson(
+            Map<String, dynamic> json) =>
+        MediaPlayerAudioFrameObserverOnFrameJson(
+          frame: json['frame'] == null
+              ? null
+              : AudioPcmFrame.fromJson(json['frame'] as Map<String, dynamic>),
+        );
+
+Map<String, dynamic> _$MediaPlayerAudioFrameObserverOnFrameJsonToJson(
+        MediaPlayerAudioFrameObserverOnFrameJson instance) =>
+    <String, dynamic>{
+      'frame': instance.frame?.toJson(),
+    };
+
+MediaPlayerVideoFrameObserverOnFrameJson
+    _$MediaPlayerVideoFrameObserverOnFrameJsonFromJson(
+            Map<String, dynamic> json) =>
+        MediaPlayerVideoFrameObserverOnFrameJson(
+          frame: json['frame'] == null
+              ? null
+              : VideoFrame.fromJson(json['frame'] as Map<String, dynamic>),
+        );
+
+Map<String, dynamic> _$MediaPlayerVideoFrameObserverOnFrameJsonToJson(
+        MediaPlayerVideoFrameObserverOnFrameJson instance) =>
+    <String, dynamic>{
+      'frame': instance.frame?.toJson(),
     };
 
 MediaPlayerSourceObserverOnPlayerSourceStateChangedJson

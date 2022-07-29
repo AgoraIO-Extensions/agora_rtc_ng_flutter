@@ -4674,6 +4674,21 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
+  LocalSpatialAudioEngine getLocalSpatialAudioEngine() {
+// Implementation template
+// const apiType = 'RtcEngine_getLocalSpatialAudioEngine';
+// final param = createParams({// // });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// return result as LocalSpatialAudioEngine;
+    throw UnimplementedError('Unimplement for getLocalSpatialAudioEngine');
+  }
+
+  @override
   Future<void> sendMetaData(
       {required Metadata metadata, required VideoSourceType sourceType}) async {
     const apiType = 'RtcEngine_sendMetaData';
@@ -4707,5 +4722,23 @@ class RtcEngineImpl implements RtcEngine {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
+  }
+
+  @override
+  void unregisterAudioEncodedFrameObserver(AudioEncodedFrameObserver observer) {
+// Implementation template
+// const apiType = 'RtcEngine_unregisterAudioEncodedFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError(
+        'Unimplement for unregisterAudioEncodedFrameObserver');
   }
 }

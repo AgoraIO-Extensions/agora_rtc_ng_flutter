@@ -913,7 +913,8 @@ class AudioSpectrumObserver {
 
   final bool Function(AudioSpectrumData data)? onLocalAudioSpectrum;
 
-  final bool Function(UserAudioSpectrumInfo spectrums, int spectrumNumber)?
+  final bool Function(
+          List<UserAudioSpectrumInfo> spectrums, int spectrumNumber)?
       onRemoteAudioSpectrum;
 }
 

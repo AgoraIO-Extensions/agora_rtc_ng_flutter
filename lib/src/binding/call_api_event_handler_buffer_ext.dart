@@ -1309,6 +1309,18 @@ extension InputSeiDataBufferExt on InputSeiData {
   }
 }
 
+extension RemoteVoicePositionInfoBufferExt on RemoteVoicePositionInfo {
+  RemoteVoicePositionInfo fillBuffers(List<Uint8List> bufferList) {
+    if (bufferList.isEmpty) return this;
+    return this;
+  }
+
+  List<Uint8List> collectBufferList() {
+    final bufferList = <Uint8List>[];
+    return bufferList;
+  }
+}
+
 extension RtcConnectionBufferExt on RtcConnection {
   RtcConnection fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;

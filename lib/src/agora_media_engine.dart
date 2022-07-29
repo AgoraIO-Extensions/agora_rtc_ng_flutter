@@ -83,4 +83,10 @@ abstract class MediaEngine {
       int videoTrackId = 0});
 
   Future<void> release();
+
+  void unregisterAudioFrameObserver(AudioFrameObserver observer);
+
+  void unregisterVideoFrameObserver(VideoFrameObserver observer);
+
+  void unregisterVideoEncodedFrameObserver(VideoEncodedFrameObserver observer);
 }

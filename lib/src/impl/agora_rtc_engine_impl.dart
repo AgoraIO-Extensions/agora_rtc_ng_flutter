@@ -839,6 +839,19 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   }
 
   @override
+  void unregisterAudioEncodedFrameObserver(
+      AudioEncodedFrameObserver observer) async {
+    final param = createParams({});
+    await apiCaller.callIrisEventAsync(
+        const DisposeIrisEventKey(
+            registerName: 'RtcEngine_registerAudioEncodedFrameObserver',
+            unregisterName: 'RtcEngine_unregisterAudioEncodedFrameObserver'),
+        jsonEncode(param));
+
+    _eventHandlers.remove(AudioEncodedFrameObserverWrapper(observer));
+  }
+
+  @override
   void registerAudioSpectrumObserver(AudioSpectrumObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(

@@ -61,12 +61,6 @@ abstract class MediaPlayer {
 
   void unregisterPlayerSourceObserver(MediaPlayerSourceObserver observer);
 
-  Future<void> unregisterAudioFrameObserver(AudioFrameObserver observer);
-
-  void registerVideoFrameObserver(VideoFrameObserver observer);
-
-  void unregisterVideoFrameObserver(VideoFrameObserver observer);
-
   void registerMediaPlayerAudioSpectrumObserver(
       {required AudioSpectrumObserver observer, required int intervalInMS});
 
@@ -107,6 +101,14 @@ abstract class MediaPlayer {
   Future<void> setSoundPositionParams(
       {required double pan, required double gain});
 
+  void registerAudioFrameObserver(MediaPlayerAudioFrameObserver observer);
+
+  void unregisterAudioFrameObserver(MediaPlayerAudioFrameObserver observer);
+
+  void registerVideoFrameObserver(MediaPlayerVideoFrameObserver observer);
+
+  void unregisterVideoFrameObserver(MediaPlayerVideoFrameObserver observer);
+
   Future<void> setPlayerOptionInInt({required String key, required int value});
 
   Future<void> setPlayerOptionInString(
@@ -135,4 +137,22 @@ abstract class MediaPlayerCacheManager {
   Future<int> getMaxCacheFileSize();
 
   Future<void> getCacheFileCount();
+}
+
+class MediaPlayerAudioFrameObserver {
+  /// Construct the [MediaPlayerAudioFrameObserver].
+  const MediaPlayerAudioFrameObserver({
+    this.onFrame,
+  });
+
+  final void Function(AudioPcmFrame frame)? onFrame;
+}
+
+class MediaPlayerVideoFrameObserver {
+  /// Construct the [MediaPlayerVideoFrameObserver].
+  const MediaPlayerVideoFrameObserver({
+    this.onFrame,
+  });
+
+  final void Function(VideoFrame frame)? onFrame;
 }

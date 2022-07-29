@@ -506,56 +506,6 @@ class MediaPlayerImpl implements MediaPlayer {
   }
 
   @override
-  Future<void> unregisterAudioFrameObserver(AudioFrameObserver observer) async {
-    const apiType = 'MediaPlayer_unregisterAudioFrameObserver';
-    final param = createParams({'observer': observer});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
-  }
-
-  @override
-  void registerVideoFrameObserver(VideoFrameObserver observer) {
-// Implementation template
-// const apiType = 'MediaPlayer_registerVideoFrameObserver';
-// final param = createParams({// 'observer':observer// });
-// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
-// if (callApiResult.irisReturnCode < 0) {
-// throw AgoraRtcException(code: callApiResult.irisReturnCode);
-// }
-// final rm = callApiResult.data;
-// final result = rm['result'];
-// if (result < 0) {
-// throw AgoraRtcException(code: result);
-// }
-    throw UnimplementedError('Unimplement for registerVideoFrameObserver');
-  }
-
-  @override
-  void unregisterVideoFrameObserver(VideoFrameObserver observer) {
-// Implementation template
-// const apiType = 'MediaPlayer_unregisterVideoFrameObserver';
-// final param = createParams({// 'observer':observer// });
-// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
-// if (callApiResult.irisReturnCode < 0) {
-// throw AgoraRtcException(code: callApiResult.irisReturnCode);
-// }
-// final rm = callApiResult.data;
-// final result = rm['result'];
-// if (result < 0) {
-// throw AgoraRtcException(code: result);
-// }
-    throw UnimplementedError('Unimplement for unregisterVideoFrameObserver');
-  }
-
-  @override
   void registerMediaPlayerAudioSpectrumObserver(
       {required AudioSpectrumObserver observer, required int intervalInMS}) {
 // Implementation template
@@ -849,6 +799,74 @@ class MediaPlayerImpl implements MediaPlayer {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
+  }
+
+  @override
+  void registerAudioFrameObserver(MediaPlayerAudioFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaPlayer_registerAudioFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for registerAudioFrameObserver');
+  }
+
+  @override
+  void unregisterAudioFrameObserver(MediaPlayerAudioFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaPlayer_unregisterAudioFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for unregisterAudioFrameObserver');
+  }
+
+  @override
+  void registerVideoFrameObserver(MediaPlayerVideoFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaPlayer_registerVideoFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for registerVideoFrameObserver');
+  }
+
+  @override
+  void unregisterVideoFrameObserver(MediaPlayerVideoFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaPlayer_unregisterVideoFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for unregisterVideoFrameObserver');
   }
 
   @override

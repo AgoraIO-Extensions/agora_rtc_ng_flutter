@@ -333,4 +333,56 @@ class MediaEngineImpl implements MediaEngine {
       throw AgoraRtcException(code: result);
     }
   }
+
+  @override
+  void unregisterAudioFrameObserver(AudioFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaEngine_unregisterAudioFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for unregisterAudioFrameObserver');
+  }
+
+  @override
+  void unregisterVideoFrameObserver(VideoFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaEngine_unregisterVideoFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError('Unimplement for unregisterVideoFrameObserver');
+  }
+
+  @override
+  void unregisterVideoEncodedFrameObserver(VideoEncodedFrameObserver observer) {
+// Implementation template
+// const apiType = 'MediaEngine_unregisterVideoEncodedFrameObserver';
+// final param = createParams({// 'observer':observer// });
+// final callApiResult =  apiCaller.callIrisApi(apiType, jsonEncode(param), buffers:null);
+// if (callApiResult.irisReturnCode < 0) {
+// throw AgoraRtcException(code: callApiResult.irisReturnCode);
+// }
+// final rm = callApiResult.data;
+// final result = rm['result'];
+// if (result < 0) {
+// throw AgoraRtcException(code: result);
+// }
+    throw UnimplementedError(
+        'Unimplement for unregisterVideoEncodedFrameObserver');
+  }
 }

@@ -3291,7 +3291,7 @@ class AudioSpectrumObserverOnRemoteAudioSpectrumJson {
       {this.spectrums, this.spectrumNumber});
 
   @JsonKey(name: 'spectrums')
-  final UserAudioSpectrumInfo? spectrums;
+  final List<UserAudioSpectrumInfo>? spectrums;
   @JsonKey(name: 'spectrumNumber')
   final int? spectrumNumber;
   factory AudioSpectrumObserverOnRemoteAudioSpectrumJson.fromJson(
@@ -3713,6 +3713,60 @@ class MediaRecorderObserverOnRecorderInfoUpdatedJson {
 extension MediaRecorderObserverOnRecorderInfoUpdatedJsonBufferExt
     on MediaRecorderObserverOnRecorderInfoUpdatedJson {
   MediaRecorderObserverOnRecorderInfoUpdatedJson fillBuffers(
+      List<Uint8List> bufferList) {
+    if (bufferList.isEmpty) return this;
+    return this;
+  }
+
+  List<Uint8List> collectBufferList() {
+    final bufferList = <Uint8List>[];
+    return bufferList;
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class MediaPlayerAudioFrameObserverOnFrameJson {
+  const MediaPlayerAudioFrameObserverOnFrameJson({this.frame});
+
+  @JsonKey(name: 'frame')
+  final AudioPcmFrame? frame;
+  factory MediaPlayerAudioFrameObserverOnFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$MediaPlayerAudioFrameObserverOnFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$MediaPlayerAudioFrameObserverOnFrameJsonToJson(this);
+}
+
+extension MediaPlayerAudioFrameObserverOnFrameJsonBufferExt
+    on MediaPlayerAudioFrameObserverOnFrameJson {
+  MediaPlayerAudioFrameObserverOnFrameJson fillBuffers(
+      List<Uint8List> bufferList) {
+    if (bufferList.isEmpty) return this;
+    return this;
+  }
+
+  List<Uint8List> collectBufferList() {
+    final bufferList = <Uint8List>[];
+    return bufferList;
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class MediaPlayerVideoFrameObserverOnFrameJson {
+  const MediaPlayerVideoFrameObserverOnFrameJson({this.frame});
+
+  @JsonKey(name: 'frame')
+  final VideoFrame? frame;
+  factory MediaPlayerVideoFrameObserverOnFrameJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$MediaPlayerVideoFrameObserverOnFrameJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$MediaPlayerVideoFrameObserverOnFrameJsonToJson(this);
+}
+
+extension MediaPlayerVideoFrameObserverOnFrameJsonBufferExt
+    on MediaPlayerVideoFrameObserverOnFrameJson {
+  MediaPlayerVideoFrameObserverOnFrameJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
     return this;

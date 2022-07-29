@@ -144,12 +144,12 @@ extension AudioSpectrumObserverExt on AudioSpectrumObserver {
         AudioSpectrumObserverOnRemoteAudioSpectrumJson paramJson =
             AudioSpectrumObserverOnRemoteAudioSpectrumJson.fromJson(jsonMap);
         paramJson.fillBuffers(buffers);
-        UserAudioSpectrumInfo? spectrums = paramJson.spectrums;
+        List<UserAudioSpectrumInfo>? spectrums = paramJson.spectrums;
         int? spectrumNumber = paramJson.spectrumNumber;
         if (spectrums == null || spectrumNumber == null) {
           break;
         }
-        spectrums = spectrums.fillBuffers(buffers);
+        spectrums = spectrums.map((e) => e.fillBuffers(buffers)).toList();
         onRemoteAudioSpectrum!(spectrums, spectrumNumber);
         break;
       default:

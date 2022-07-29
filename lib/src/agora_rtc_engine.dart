@@ -2569,10 +2569,14 @@ abstract class RtcEngine {
 
   MediaRecorder getMediaRecorder();
 
+  LocalSpatialAudioEngine getLocalSpatialAudioEngine();
+
   Future<void> sendMetaData(
       {required Metadata metadata, required VideoSourceType sourceType});
 
   Future<void> setMaxMetadataSize(int size);
+
+  void unregisterAudioEncodedFrameObserver(AudioEncodedFrameObserver observer);
 }
 
 @JsonEnum(alwaysCreate: true)

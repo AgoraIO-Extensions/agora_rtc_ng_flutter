@@ -258,6 +258,32 @@ class MediaPlayerCacheManagerGetCacheDirJson {
 }
 
 @JsonSerializable(explicitToJson: true)
+class BaseSpatialAudioEngineUpdateSelfPositionJson {
+  const BaseSpatialAudioEngineUpdateSelfPositionJson(this.position);
+
+  @JsonKey(name: 'position')
+  final List<double> position;
+  factory BaseSpatialAudioEngineUpdateSelfPositionJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$BaseSpatialAudioEngineUpdateSelfPositionJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$BaseSpatialAudioEngineUpdateSelfPositionJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BaseSpatialAudioEngineUpdateSelfPositionExJson {
+  const BaseSpatialAudioEngineUpdateSelfPositionExJson(this.position);
+
+  @JsonKey(name: 'position')
+  final List<double> position;
+  factory BaseSpatialAudioEngineUpdateSelfPositionExJson.fromJson(
+          Map<String, dynamic> json) =>
+      _$BaseSpatialAudioEngineUpdateSelfPositionExJsonFromJson(json);
+  Map<String, dynamic> toJson() =>
+      _$BaseSpatialAudioEngineUpdateSelfPositionExJsonToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RtcEngineExSetSubscribeAudioBlacklistExJson {
   const RtcEngineExSetSubscribeAudioBlacklistExJson(this.uidList);
 

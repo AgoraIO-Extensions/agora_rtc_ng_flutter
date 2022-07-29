@@ -268,6 +268,36 @@ Map<String, dynamic> _$MediaPlayerCacheManagerGetCacheDirJsonToJson(
       'path': instance.path,
     };
 
+BaseSpatialAudioEngineUpdateSelfPositionJson
+    _$BaseSpatialAudioEngineUpdateSelfPositionJsonFromJson(
+            Map<String, dynamic> json) =>
+        BaseSpatialAudioEngineUpdateSelfPositionJson(
+          (json['position'] as List<dynamic>)
+              .map((e) => (e as num).toDouble())
+              .toList(),
+        );
+
+Map<String, dynamic> _$BaseSpatialAudioEngineUpdateSelfPositionJsonToJson(
+        BaseSpatialAudioEngineUpdateSelfPositionJson instance) =>
+    <String, dynamic>{
+      'position': instance.position,
+    };
+
+BaseSpatialAudioEngineUpdateSelfPositionExJson
+    _$BaseSpatialAudioEngineUpdateSelfPositionExJsonFromJson(
+            Map<String, dynamic> json) =>
+        BaseSpatialAudioEngineUpdateSelfPositionExJson(
+          (json['position'] as List<dynamic>)
+              .map((e) => (e as num).toDouble())
+              .toList(),
+        );
+
+Map<String, dynamic> _$BaseSpatialAudioEngineUpdateSelfPositionExJsonToJson(
+        BaseSpatialAudioEngineUpdateSelfPositionExJson instance) =>
+    <String, dynamic>{
+      'position': instance.position,
+    };
+
 RtcEngineExSetSubscribeAudioBlacklistExJson
     _$RtcEngineExSetSubscribeAudioBlacklistExJsonFromJson(
             Map<String, dynamic> json) =>
