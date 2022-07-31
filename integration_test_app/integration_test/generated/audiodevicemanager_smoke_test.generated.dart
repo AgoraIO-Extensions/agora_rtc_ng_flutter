@@ -782,4 +782,79 @@ void audioDeviceManagerSmokeTestCases() {
     },
 //  skip: !(),
   );
+
+  testWidgets(
+    'followSystemPlaybackDevice',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      String engineAppId = const String.fromEnvironment('TEST_APP_ID',
+          defaultValue: '<YOUR_APP_ID>');
+
+      RtcEngine rtcEngine = createAgoraRtcEngine();
+      await rtcEngine.initialize(RtcEngineContext(
+        appId: engineAppId,
+        areaCode: AreaCode.areaCodeGlob.value(),
+      ));
+
+      final audioDeviceManager = rtcEngine.getAudioDeviceManager();
+
+      try {
+        const bool enable = true;
+        await audioDeviceManager.followSystemPlaybackDevice(
+          enable,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[followSystemPlaybackDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[followSystemPlaybackDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
+
+      audioDeviceManager.release();
+      await rtcEngine.release();
+    },
+//  skip: !(),
+  );
+
+  testWidgets(
+    'followSystemRecordingDevice',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      String engineAppId = const String.fromEnvironment('TEST_APP_ID',
+          defaultValue: '<YOUR_APP_ID>');
+
+      RtcEngine rtcEngine = createAgoraRtcEngine();
+      await rtcEngine.initialize(RtcEngineContext(
+        appId: engineAppId,
+        areaCode: AreaCode.areaCodeGlob.value(),
+      ));
+
+      final audioDeviceManager = rtcEngine.getAudioDeviceManager();
+
+      try {
+        const bool enable = true;
+        await audioDeviceManager.followSystemRecordingDevice(
+          enable,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[followSystemRecordingDevice] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[followSystemRecordingDevice] errorcode: ${(e as AgoraRtcException).code}');
+      }
+
+      audioDeviceManager.release();
+      await rtcEngine.release();
+    },
+//  skip: !(),
+  );
 }
+

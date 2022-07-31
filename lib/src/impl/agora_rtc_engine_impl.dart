@@ -8,7 +8,7 @@ import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_impl.dart'
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 import 'package:agora_rtc_ng/src/impl/agora_media_recorder_impl_override.dart'
     as media_recorder_impl;
-    import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
+import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
     as agora_spatial_audio_impl;
 import 'package:agora_rtc_ng/src/impl/agora_media_engine_impl_override.dart'
     as media_engine_impl;
@@ -197,8 +197,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   @override
   Future<void> release({bool sync = false}) async {
     if (_rtcEngineEventHandlers.isNotEmpty) {
-      apiCaller.removeEventHandler(this);
       _rtcEngineEventHandlers.clear();
+      apiCaller.removeEventHandler(this);
     }
 
     _metadataObservers.clear();

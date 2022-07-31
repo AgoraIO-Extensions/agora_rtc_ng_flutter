@@ -45,9 +45,6 @@ class _State extends State<ScreenSharing> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -115,7 +112,7 @@ class _State extends State<ScreenSharing> {
         connection: RtcConnection(channelId: _controller.text, localUid: 1000),
         options: const ChannelMediaOptions(
           publishCameraTrack: true,
-          publishAudioTrack: false,
+          publishMicrophoneTrack: false,
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
         ));
 
@@ -125,7 +122,7 @@ class _State extends State<ScreenSharing> {
         options: const ChannelMediaOptions(
           publishScreenTrack: true,
           publishCameraTrack: false,
-          publishAudioTrack: false,
+          publishMicrophoneTrack: false,
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
         ));
   }

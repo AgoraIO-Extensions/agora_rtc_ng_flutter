@@ -348,7 +348,8 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
   ffi.Pointer<IrisCEventHandlerEx>? _irisCEventHandlerEx;
   ffi.Pointer<ffi.Void>? _irisEventHandlerExPtr;
   ffi.Pointer<ffi.Void>? _irisMediaPlayerEventHandlerPtr;
-  Map<IrisEventKey, _IrisEventHandlerObserver> _irisEventHandlerObservers = {};
+  final Map<IrisEventKey, _IrisEventHandlerObserver>
+      _irisEventHandlerObservers = {};
 
   @override
   void initilize(SendPort sendPort) {
@@ -404,6 +405,13 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
       calloc.free(_irisCEventHandler!);
       _irisCEventHandler = null;
       _irisEventHandlerPtr = null;
+
+      // _nativeIrisApiEngineBinding.DestroyIrisEventHandler(
+      //     _irisEventHandlerExPtr!);
+      calloc.free(_irisEventHandlerExPtr!);
+      _irisEventHandlerExPtr = null;
+      calloc.free(_irisCEventHandlerEx!);
+      _irisCEventHandlerEx = null;
     }
   }
 
@@ -460,13 +468,6 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
 
         for (int i = 0; i < bufferList.length; i++) {
           final bufferPtr = bufferList[i];
-          // final ffi.Pointer<ffi.Uint8> bufferData =
-          //     arena.allocate<ffi.Uint8>(buffer.length);
-
-          // final pointerList = bufferData.asTypedList(buffer.length);
-          // pointerList.setAll(0, buffer);
-
-          // bufferPointer = bufferData.cast<ffi.Void>();
           bufferListPtr[i] = bufferPtr;
         }
       } else {
@@ -528,17 +529,12 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     assert(_irisApiEnginePtr != null);
 
     disposeIrisMediaPlayerEventHandlerIfNeed();
-    // The IrisRtcEngineEventHandler should be dispose on last, which will free the
-    // _irisCEventHandler internally.
-    disposeIrisRtcEngineEventHandler();
 
     _destroyObservers();
 
-    _nativeIrisApiEngineBinding.DestroyIrisEventHandler(
-        _irisEventHandlerExPtr!);
-    _irisEventHandlerExPtr = null;
-    calloc.free(_irisCEventHandlerEx!);
-    _irisCEventHandlerEx = null;
+    // The IrisRtcEngineEventHandler should be dispose on last, which will free the
+    // _irisCEventHandler internally.
+    disposeIrisRtcEngineEventHandler();
 
     _nativeIrisApiEngineBinding.DestroyIrisApiEngine(_irisApiEnginePtr!);
     _irisApiEnginePtr = null;

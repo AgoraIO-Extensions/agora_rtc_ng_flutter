@@ -54,44 +54,49 @@ class _State extends State<TakeSnapshot> {
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
 
-    _engine.registerEventHandler(RtcEngineEventHandler(onWarning: (warn, msg) {
-      logSink.log('[onWarning] warn: $warn, msg: $msg');
-    }, onError: (ErrorCodeType err, String msg) {
-      logSink.log('[onError] err: $err, msg: $msg');
-    }, onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-      logSink.log(
-          '[onJoinChannelSuccess] connection: ${connection.toJson()} elapsed: $elapsed');
-      setState(() {
-        isJoined = true;
-      });
-    }, onUserJoined: (RtcConnection connection, int rUid, int elapsed) {
-      logSink.log(
-          '[onUserJoined] connection: ${connection.toJson()} remoteUid: $rUid elapsed: $elapsed');
-      setState(() {
-        remoteUid.add(rUid);
-      });
-    }, onUserOffline:
-        (RtcConnection connection, int rUid, UserOfflineReasonType reason) {
-      logSink.log(
-          '[onUserOffline] connection: ${connection.toJson()}  rUid: $rUid reason: $reason');
-      setState(() {
-        remoteUid.removeWhere((element) => element == rUid);
-      });
-    }, onLeaveChannel: (RtcConnection connection, RtcStats stats) {
-      logSink.log(
-          '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
-      setState(() {
-        isJoined = false;
-        remoteUid.clear();
-      });
-    }, onSnapshotTaken: (RtcConnection connection, String filePath, int width,
-        int height, int errCode) {
-      logSink.log(
-          '[onSnapshotTaken] connection: ${connection.toJson()}, filePath: $filePath, width: $width, height: $height, errCode: $errCode');
-      setState(() {
-        _snapshotPath = filePath;
-      });
-    }));
+    _engine.registerEventHandler(RtcEngineEventHandler(
+      onError: (ErrorCodeType err, String msg) {
+        logSink.log('[onError] err: $err, msg: $msg');
+      },
+      onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+        logSink.log(
+            '[onJoinChannelSuccess] connection: ${connection.toJson()} elapsed: $elapsed');
+        setState(() {
+          isJoined = true;
+        });
+      },
+      onUserJoined: (RtcConnection connection, int rUid, int elapsed) {
+        logSink.log(
+            '[onUserJoined] connection: ${connection.toJson()} remoteUid: $rUid elapsed: $elapsed');
+        setState(() {
+          remoteUid.add(rUid);
+        });
+      },
+      onUserOffline:
+          (RtcConnection connection, int rUid, UserOfflineReasonType reason) {
+        logSink.log(
+            '[onUserOffline] connection: ${connection.toJson()}  rUid: $rUid reason: $reason');
+        setState(() {
+          remoteUid.removeWhere((element) => element == rUid);
+        });
+      },
+      onLeaveChannel: (RtcConnection connection, RtcStats stats) {
+        logSink.log(
+            '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
+        setState(() {
+          isJoined = false;
+          remoteUid.clear();
+        });
+      },
+      onSnapshotTaken: (RtcConnection connection, int uid, String filePath,
+          int width, int height, int errCode) {
+        logSink.log(
+            '[onSnapshotTaken] connection: ${connection.toJson()}, uid: $uid, filePath: $filePath, width: $width, height: $height, errCode: $errCode');
+        setState(() {
+          _snapshotPath = filePath;
+        });
+      },
+    ));
 
     await _engine.enableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
@@ -125,12 +130,8 @@ class _State extends State<TakeSnapshot> {
         : await getApplicationDocumentsDirectory();
     String p = path.join(appDocDir.path, 'snapshot.jpeg');
 
-    SnapShotConfig config = SnapShotConfig(
-      channel: _controller.text,
-      uid: int.parse(_uidController.text),
-      filePath: p,
-    );
-    await _engine.takeSnapshot(config);
+    await _engine.takeSnapshot(
+        uid: int.parse(_uidController.text), filePath: p);
   }
 
   @override

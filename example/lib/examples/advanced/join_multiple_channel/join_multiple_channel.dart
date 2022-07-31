@@ -44,9 +44,6 @@ class _State extends State<JoinMultipleChannel> {
     ));
 
     _engine.registerEventHandler(RtcEngineEventHandler(
-      onWarning: (warn, msg) {
-        logSink.log('[onWarning] warn: $warn, msg: $msg');
-      },
       onError: (ErrorCodeType err, String msg) {
         logSink.log('[onError] err: $err, msg: $msg');
       },
@@ -140,14 +137,14 @@ class _State extends State<JoinMultipleChannel> {
     if (isJoined1) {
       await _engine.updateChannelMediaOptionsEx(
           options: const ChannelMediaOptions(
-              publishAudioTrack: false, publishCameraTrack: false),
+              publishMicrophoneTrack: false, publishCameraTrack: false),
           connection: _channel1);
     }
 
     if (isJoined0) {
       await _engine.updateChannelMediaOptionsEx(
           options: const ChannelMediaOptions(
-              publishAudioTrack: true, publishCameraTrack: true),
+              publishMicrophoneTrack: true, publishCameraTrack: true),
           connection: _channel0);
     }
   }
@@ -156,14 +153,14 @@ class _State extends State<JoinMultipleChannel> {
     if (isJoined0) {
       await _engine.updateChannelMediaOptionsEx(
           options: const ChannelMediaOptions(
-              publishAudioTrack: false, publishCameraTrack: false),
+              publishMicrophoneTrack: false, publishCameraTrack: false),
           connection: _channel0);
     }
 
     if (isJoined1) {
       await _engine.updateChannelMediaOptionsEx(
           options: const ChannelMediaOptions(
-              publishAudioTrack: true, publishCameraTrack: true),
+              publishMicrophoneTrack: true, publishCameraTrack: true),
           connection: _channel1);
     }
   }

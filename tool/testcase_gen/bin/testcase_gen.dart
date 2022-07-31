@@ -34,12 +34,22 @@ void main(List<String> arguments) {
     path.join(srcDir, 'agora_log.dart'),
     path.join(srcDir, 'agora_media_base.dart'),
     path.join(srcDir, 'agora_media_player.dart'),
+    path.join(srcDir, 'agora_media_player_types.dart'),
     path.join(srcDir, 'agora_media_player_source.dart'),
     path.join(srcDir, 'agora_rhythm_player.dart'),
     path.join(srcDir, 'agora_rtc_engine.dart'),
     path.join(srcDir, 'agora_rtc_engine_ex.dart'),
     path.join(srcDir, 'audio_device_manager.dart'),
+    path.join(srcDir, 'agora_media_engine.dart'),
+    path.join(srcDir, 'agora_spatial_audio.dart'),
+    path.join(srcDir, 'agora_media_recorder.dart'),
   ];
+
+  final outDir = path.join(
+    fileSystem.currentDirectory.absolute.path,
+    'integration_test_app',
+    'integration_test',
+  );
 
   List<TemplatedTestCase> templatedTestCases = [
     TemplatedTestCase(
@@ -88,7 +98,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 );
 ''',
       methodInvokeObjectName: 'rtcEngine',
-      outputDir: path.join(srcDir, 'generated'),
+      outputDir: path.join(outDir, 'generated'),
       skipMemberFunctions: [
         'release',
         'registerAudioEncodedFrameObserver',
@@ -150,7 +160,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 );
 ''',
       methodInvokeObjectName: 'rtcEngineEx',
-      outputDir: path.join(srcDir, 'generated'),
+      outputDir: path.join(outDir, 'generated'),
       skipMemberFunctions: [],
     ),
     TemplatedTestCase(
@@ -201,7 +211,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 );
 ''',
       methodInvokeObjectName: 'audioDeviceManager',
-      outputDir: path.join(srcDir, 'generated'),
+      outputDir: path.join(outDir, 'generated'),
       skipMemberFunctions: [
         'release',
       ],
@@ -254,7 +264,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 );
 ''',
       methodInvokeObjectName: 'videoDeviceManager',
-      outputDir: path.join(srcDir, 'generated'),
+      outputDir: path.join(outDir, 'generated'),
       skipMemberFunctions: [
         'release',
       ],
@@ -310,7 +320,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
 );
 ''',
       methodInvokeObjectName: 'mediaPlayerController',
-      outputDir: path.join(srcDir, 'generated'),
+      outputDir: path.join(outDir, 'generated'),
       skipMemberFunctions: [
         'release',
         'setView',
