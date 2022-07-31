@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng/src/agora_media_base.dart';
 import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart';
 import 'package:agora_rtc_ng/src/binding/agora_media_engine_impl.dart'
@@ -8,11 +9,22 @@ import 'package:agora_rtc_ng/src/binding/agora_media_engine_impl.dart'
 import 'package:agora_rtc_ng/src/impl/api_caller.dart';
 import 'package:iris_event/iris_event.dart';
 import 'package:meta/meta.dart';
+import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable
 
 class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
     implements IrisEventHandler {
+  MediaEngineImpl._(this._rtcEngine) {
+    _rtcEngine.addToPool(MediaEngineImpl, this);
+  }
+
+  factory MediaEngineImpl.create(RtcEngine rtcEngine) {
+    return MediaEngineImpl._(rtcEngine);
+  }
+
+  final RtcEngine _rtcEngine;
+
   final Set<IrisEventHandler> _eventHandlers = {};
 
   @override

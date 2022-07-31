@@ -6,6 +6,12 @@ import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_impl.dart'
     as rtc_engine_binding;
 
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
+import 'package:agora_rtc_ng/src/impl/agora_media_recorder_impl_override.dart'
+    as media_recorder_impl;
+    import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
+    as agora_spatial_audio_impl;
+import 'package:agora_rtc_ng/src/impl/agora_media_engine_impl_override.dart'
+    as media_engine_impl;
 import 'package:agora_rtc_ng/src/impl/media_player_impl.dart'
     as media_player_impl;
 import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
@@ -20,9 +26,38 @@ import 'package:meta/meta.dart';
 
 // ignore_for_file: public_member_api_docs
 
+class ObjectPool {
+  ObjectPool();
+  final Map<Type, Object> pool = {};
+
+  void put(Type objectType, Object obj) {
+    pool.putIfAbsent(objectType, () => obj);
+  }
+
+  void remove(Type objectType) {
+    pool.remove(objectType);
+  }
+
+  Object? get(Type objectType) {
+    return pool[objectType];
+  }
+}
+
 extension RtcEngineExt on RtcEngine {
   GlobalVideoViewController get globalVideoViewController =>
       (this as RtcEngineImpl)._globalVideoViewController;
+
+  void addToPool<V>(Type objectType, Object obj) {
+    (this as RtcEngineImpl)._objectPool.put(objectType, obj);
+  }
+
+  void removeFromPool(Type objectType) {
+    (this as RtcEngineImpl)._objectPool.remove(objectType);
+  }
+
+  V? getObjectFromPool<V>(Type objectType) {
+    return (this as RtcEngineImpl)._objectPool.get(objectType) as V;
+  }
 }
 
 extension ThumbImageBufferExt on ThumbImageBuffer {
@@ -125,6 +160,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   final GlobalVideoViewController _globalVideoViewController =
       const GlobalVideoViewController();
+
+  final ObjectPool _objectPool = ObjectPool();
 
   int _mediaPlayerCount = 0;
 
@@ -556,6 +593,24 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   @override
   AudioDeviceManager getAudioDeviceManager() {
     return audio_device_manager_impl.AudioDeviceManagerImpl.create();
+  }
+
+  @override
+  MediaEngine getMediaEngine() {
+    return getObjectFromPool(MediaEngineImpl) ??
+        media_engine_impl.MediaEngineImpl.create(this);
+  }
+
+  @override
+  MediaRecorder getMediaRecorder() {
+    return getObjectFromPool(MediaRecorderImpl) ??
+        media_recorder_impl.MediaRecorderImpl.create(this);
+  }
+
+  @override
+  LocalSpatialAudioEngine getLocalSpatialAudioEngine() {
+    return getObjectFromPool(LocalSpatialAudioEngineImpl) ??
+        agora_spatial_audio_impl.LocalSpatialAudioEngineImpl.create(this);
   }
 
   @override
