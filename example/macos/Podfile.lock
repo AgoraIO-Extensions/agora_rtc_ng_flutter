@@ -1,49 +1,46 @@
 PODS:
   - agora_rtc_ng (0.0.1):
-    - AgoraIrisRTC_macOS (= 3.8.201)
-    - AgoraRtcEngine_Special_macOS (= 3.8.201.2)
+    - AgoraRtcWrapper
     - FlutterMacOS
-  - AgoraIrisEventFlutter_macOS_Beta (1.0.0)
-  - AgoraIrisRTC_macOS (3.8.201)
-  - AgoraRtcEngine_Special_macOS (3.8.201.2)
+  - AgoraRtcWrapper (3.6.2)
   - FlutterMacOS (1.0.0)
   - iris_event (0.0.1):
-    - AgoraIrisEventFlutter_macOS_Beta (= 1.0.0)
     - FlutterMacOS
+    - iris_event_handler
+  - iris_event_handler (1.0.0)
   - path_provider_macos (0.0.1):
     - FlutterMacOS
 
 DEPENDENCIES:
   - agora_rtc_ng (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos`)
+  - AgoraRtcWrapper (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - iris_event (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
+  - iris_event_handler (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
-
-SPEC REPOS:
-  trunk:
-    - AgoraIrisEventFlutter_macOS_Beta
-    - AgoraIrisRTC_macOS
-    - AgoraRtcEngine_Special_macOS
 
 EXTERNAL SOURCES:
   agora_rtc_ng:
+    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos
+  AgoraRtcWrapper:
     :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   iris_event:
     :path: Flutter/ephemeral/.symlinks/plugins/iris_event/macos
+  iris_event_handler:
+    :path: Flutter/ephemeral/.symlinks/plugins/iris_event/macos
   path_provider_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
 
 SPEC CHECKSUMS:
-  agora_rtc_ng: 97f253c9c98a13840d029f28da3bb7f58d3c24a7
-  AgoraIrisEventFlutter_macOS_Beta: 5501db98308bd63c5a50739e3425f59b5ea733ed
-  AgoraIrisRTC_macOS: 670631309d5f5f46bb7666d679145f5a31cecd4b
-  AgoraRtcEngine_Special_macOS: c9590009101ef121abeb0030edb36d5f60de8c84
+  agora_rtc_ng: 3d55b53282afe70dc8c9e922ba7e64c911cf028a
+  AgoraRtcWrapper: 5ec7ed0a24c3d5a15783b24b7db8e670e99fb6a8
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
-  iris_event: 03f5c58cce035c041c7c21ce8a708c9c94435fbe
+  iris_event: b013c00dd8b6724d4191f1f3144300786d04eaa5
+  iris_event_handler: fbe9089fe354cec759b6568a273cf13d365f7579
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
 
-PODFILE CHECKSUM: 4a38fdef93054e111861dae58b137ee3dd407261
+PODFILE CHECKSUM: 2164db83ec2a5dd38e3ddfc4c76ed46606a5e71c
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

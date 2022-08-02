@@ -15,10 +15,10 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*.{h,mm}', 'Classes/File.swift'
   s.dependency 'FlutterMacOS'
-  # s.dependency 'AgoraRtcWrapper'
-  s.dependency 'AgoraRtcEngine_Special_macOS', '3.8.201.2'
-  s.dependency 'AgoraIrisRTC_macOS', '3.8.201'
+  s.dependency 'AgoraRtcWrapper'
+  # s.dependency 'AgoraRtcEngine_Special_macOS', '3.8.201.2'
+  # s.dependency 'AgoraIrisRTC_macOS', '3.8.201'
 
   s.platform = :osx, '10.11'
-  # s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 end

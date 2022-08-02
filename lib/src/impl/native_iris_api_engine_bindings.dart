@@ -21,6 +21,39 @@ class NativeIrisApiEngineBinding {
           lookup)
       : _lookup = lookup;
 
+  void enableUseJsonArray(
+    bool enable,
+  ) {
+    return _enableUseJsonArray(
+      enable ? 1 : 0,
+    );
+  }
+
+  late final _enableUseJsonArrayPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Uint8)>>(
+          'enableUseJsonArray');
+  late final _enableUseJsonArray =
+      _enableUseJsonArrayPtr.asFunction<void Function(int)>();
+
+  void InitIrisLogger(
+    ffi.Pointer<ffi.Int8> path,
+    int maxSize,
+    int level,
+  ) {
+    return _InitIrisLogger(
+      path,
+      maxSize,
+      level,
+    );
+  }
+
+  late final _InitIrisLoggerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<ffi.Int8>, ffi.Int32, ffi.Int32)>>('InitIrisLogger');
+  late final _InitIrisLogger = _InitIrisLoggerPtr.asFunction<
+      void Function(ffi.Pointer<ffi.Int8>, int, int)>();
+
   ffi.Pointer<ffi.Void> GetObserver(
     IrisApiEnginePtr engine_ptr,
     ffi.Pointer<ffi.Int8> api_type,
@@ -42,14 +75,16 @@ class NativeIrisApiEngineBinding {
   ffi.Pointer<ffi.Void> CreateObserver(
     IrisApiEnginePtr engine_ptr,
     ffi.Pointer<ffi.Int8> api_type,
-    IrisEventHandlerExHandle handle,
-    int playerId,
+    IrisEventHandlerHandle handle,
+    ffi.Pointer<ffi.Int8> params,
+    int paramLength,
   ) {
     return _CreateObserver(
       engine_ptr,
       api_type,
       handle,
-      playerId,
+      params,
+      paramLength,
     );
   }
 
@@ -58,11 +93,12 @@ class NativeIrisApiEngineBinding {
           ffi.Pointer<ffi.Void> Function(
               IrisApiEnginePtr,
               ffi.Pointer<ffi.Int8>,
-              IrisEventHandlerExHandle,
-              ffi.Int32)>>('CreateObserver');
+              IrisEventHandlerHandle,
+              ffi.Pointer<ffi.Int8>,
+              ffi.Uint32)>>('CreateObserver');
   late final _CreateObserver = _CreateObserverPtr.asFunction<
       ffi.Pointer<ffi.Void> Function(IrisApiEnginePtr, ffi.Pointer<ffi.Int8>,
-          IrisEventHandlerExHandle, int)>();
+          IrisEventHandlerHandle, ffi.Pointer<ffi.Int8>, int)>();
 
   void DestroyObserver(
     IrisApiEnginePtr engine_ptr,
@@ -164,23 +200,6 @@ class NativeIrisApiEngineBinding {
   late final _CreateIrisEventHandler = _CreateIrisEventHandlerPtr.asFunction<
       IrisEventHandlerHandle Function(ffi.Pointer<IrisCEventHandler>)>();
 
-  IrisEventHandlerExHandle CreateIrisEventHandlerEx(
-    ffi.Pointer<IrisCEventHandlerEx> event_handler,
-  ) {
-    return _CreateIrisEventHandlerEx(
-      event_handler,
-    );
-  }
-
-  late final _CreateIrisEventHandlerExPtr = _lookup<
-      ffi.NativeFunction<
-          IrisEventHandlerExHandle Function(
-              ffi.Pointer<IrisCEventHandlerEx>)>>('CreateIrisEventHandlerEx');
-  late final _CreateIrisEventHandlerEx =
-      _CreateIrisEventHandlerExPtr.asFunction<
-          IrisEventHandlerExHandle Function(
-              ffi.Pointer<IrisCEventHandlerEx>)>();
-
   void DestroyIrisEventHandler(
     IrisEventHandlerHandle handler,
   ) {
@@ -262,35 +281,6 @@ class NativeIrisApiEngineBinding {
               int,
               ffi.Pointer<ffi.Int8>)>();
 
-  IrisRtcAudioFrameObserverHandle RegisterAudioFrameObserverEvent(
-    IrisApiEnginePtr engine_ptr,
-    ffi.Pointer<IrisEventHandlerHandle> handler,
-    int order,
-    ffi.Pointer<ffi.Int8> identifier,
-  ) {
-    return _RegisterAudioFrameObserverEvent(
-      engine_ptr,
-      handler,
-      order,
-      identifier,
-    );
-  }
-
-  late final _RegisterAudioFrameObserverEventPtr = _lookup<
-      ffi.NativeFunction<
-          IrisRtcAudioFrameObserverHandle Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>,
-              ffi.Int32,
-              ffi.Pointer<ffi.Int8>)>>('RegisterAudioFrameObserverEvent');
-  late final _RegisterAudioFrameObserverEvent =
-      _RegisterAudioFrameObserverEventPtr.asFunction<
-          IrisRtcAudioFrameObserverHandle Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>,
-              int,
-              ffi.Pointer<ffi.Int8>)>();
-
   int UnRegisterAudioFrameObserver(
     IrisApiEnginePtr engine_ptr,
     IrisRtcAudioFrameObserverHandle handle,
@@ -341,35 +331,6 @@ class NativeIrisApiEngineBinding {
               int,
               ffi.Pointer<ffi.Int8>)>();
 
-  IrisRtcVideoFrameObserverHandle RegisterVideoFrameObserverEvent(
-    IrisApiEnginePtr engine_ptr,
-    ffi.Pointer<IrisEventHandlerHandle> handler,
-    int order,
-    ffi.Pointer<ffi.Int8> identifier,
-  ) {
-    return _RegisterVideoFrameObserverEvent(
-      engine_ptr,
-      handler,
-      order,
-      identifier,
-    );
-  }
-
-  late final _RegisterVideoFrameObserverEventPtr = _lookup<
-      ffi.NativeFunction<
-          IrisRtcVideoFrameObserverHandle Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>,
-              ffi.Int32,
-              ffi.Pointer<ffi.Int8>)>>('RegisterVideoFrameObserverEvent');
-  late final _RegisterVideoFrameObserverEvent =
-      _RegisterVideoFrameObserverEventPtr.asFunction<
-          IrisRtcVideoFrameObserverHandle Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>,
-              int,
-              ffi.Pointer<ffi.Int8>)>();
-
   int UnRegisterVideoFrameObserver(
     IrisApiEnginePtr engine_ptr,
     IrisRtcVideoFrameObserverHandle handle,
@@ -417,37 +378,6 @@ class NativeIrisApiEngineBinding {
           IrisRtcVideoEncodedVideoFrameObserverHandle Function(
               IrisApiEnginePtr,
               ffi.Pointer<IrisRtcCVideoEncodedVideoFrameObserver>,
-              int,
-              ffi.Pointer<ffi.Int8>)>();
-
-  IrisRtcVideoEncodedVideoFrameObserverHandle
-      RegisterVideoEncodedFrameObserverEvent(
-    IrisApiEnginePtr engine_ptr,
-    ffi.Pointer<IrisEventHandlerHandle> handler,
-    int order,
-    ffi.Pointer<ffi.Int8> identifier,
-  ) {
-    return _RegisterVideoEncodedFrameObserverEvent(
-      engine_ptr,
-      handler,
-      order,
-      identifier,
-    );
-  }
-
-  late final _RegisterVideoEncodedFrameObserverEventPtr = _lookup<
-          ffi.NativeFunction<
-              IrisRtcVideoEncodedVideoFrameObserverHandle Function(
-                  IrisApiEnginePtr,
-                  ffi.Pointer<IrisEventHandlerHandle>,
-                  ffi.Int32,
-                  ffi.Pointer<ffi.Int8>)>>(
-      'RegisterVideoEncodedFrameObserverEvent');
-  late final _RegisterVideoEncodedFrameObserverEvent =
-      _RegisterVideoEncodedFrameObserverEventPtr.asFunction<
-          IrisRtcVideoEncodedVideoFrameObserverHandle Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>,
               int,
               ffi.Pointer<ffi.Int8>)>();
 
@@ -522,54 +452,6 @@ class NativeIrisApiEngineBinding {
   late final _UnRegisterAudioEncodedFrameObserver =
       _UnRegisterAudioEncodedFrameObserverPtr.asFunction<
           int Function(IrisApiEnginePtr, IrisAudioEncodedFrameObserverHandle,
-              ffi.Pointer<ffi.Int8>)>();
-
-  IrisAudioEncodedFrameObserverHandle CreateIrisAudioEncodedFrameObserver(
-    IrisApiEnginePtr engine_ptr,
-    ffi.Pointer<IrisEventHandlerHandle> handler,
-    ffi.Pointer<ffi.Int8> params,
-  ) {
-    return _CreateIrisAudioEncodedFrameObserver(
-      engine_ptr,
-      handler,
-      params,
-    );
-  }
-
-  late final _CreateIrisAudioEncodedFrameObserverPtr = _lookup<
-      ffi.NativeFunction<
-          IrisAudioEncodedFrameObserverHandle Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>,
-              ffi.Pointer<ffi.Int8>)>>('CreateIrisAudioEncodedFrameObserver');
-  late final _CreateIrisAudioEncodedFrameObserver =
-      _CreateIrisAudioEncodedFrameObserverPtr.asFunction<
-          IrisAudioEncodedFrameObserverHandle Function(IrisApiEnginePtr,
-              ffi.Pointer<IrisEventHandlerHandle>, ffi.Pointer<ffi.Int8>)>();
-
-  void DestroyIrisAudioEncodedFrameObserver(
-    IrisApiEnginePtr engine_ptr,
-    ffi.Pointer<IrisAudioEncodedFrameObserverHandle> handle,
-    ffi.Pointer<ffi.Int8> params,
-  ) {
-    return _DestroyIrisAudioEncodedFrameObserver(
-      engine_ptr,
-      handle,
-      params,
-    );
-  }
-
-  late final _DestroyIrisAudioEncodedFrameObserverPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisAudioEncodedFrameObserverHandle>,
-              ffi.Pointer<ffi.Int8>)>>('DestroyIrisAudioEncodedFrameObserver');
-  late final _DestroyIrisAudioEncodedFrameObserver =
-      _DestroyIrisAudioEncodedFrameObserverPtr.asFunction<
-          void Function(
-              IrisApiEnginePtr,
-              ffi.Pointer<IrisAudioEncodedFrameObserverHandle>,
               ffi.Pointer<ffi.Int8>)>();
 
   IrisEventHandlerHandle RegisterAudioEncodedFrameObserverEx(
@@ -758,6 +640,44 @@ class NativeIrisApiEngineBinding {
               IrisEventHandlerHandle)>>('UnsetIrisMediaPlayerEventHandler');
   late final _UnsetIrisMediaPlayerEventHandler =
       _UnsetIrisMediaPlayerEventHandlerPtr.asFunction<
+          int Function(IrisApiEnginePtr, IrisEventHandlerHandle)>();
+
+  IrisEventHandlerHandle SetIrisMediaRecorderEventHandler(
+    IrisApiEnginePtr engine_ptr,
+    ffi.Pointer<IrisCEventHandler> event_handler,
+  ) {
+    return _SetIrisMediaRecorderEventHandler(
+      engine_ptr,
+      event_handler,
+    );
+  }
+
+  late final _SetIrisMediaRecorderEventHandlerPtr = _lookup<
+          ffi.NativeFunction<
+              IrisEventHandlerHandle Function(
+                  IrisApiEnginePtr, ffi.Pointer<IrisCEventHandler>)>>(
+      'SetIrisMediaRecorderEventHandler');
+  late final _SetIrisMediaRecorderEventHandler =
+      _SetIrisMediaRecorderEventHandlerPtr.asFunction<
+          IrisEventHandlerHandle Function(
+              IrisApiEnginePtr, ffi.Pointer<IrisCEventHandler>)>();
+
+  int UnsetIrisMediaRecorderEventHandler(
+    IrisApiEnginePtr engine_ptr,
+    IrisEventHandlerHandle handle,
+  ) {
+    return _UnsetIrisMediaRecorderEventHandler(
+      engine_ptr,
+      handle,
+    );
+  }
+
+  late final _UnsetIrisMediaRecorderEventHandlerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(IrisApiEnginePtr,
+              IrisEventHandlerHandle)>>('UnsetIrisMediaRecorderEventHandler');
+  late final _UnsetIrisMediaRecorderEventHandler =
+      _UnsetIrisMediaRecorderEventHandlerPtr.asFunction<
           int Function(IrisApiEnginePtr, IrisEventHandlerHandle)>();
 
   /// media player audio frame observer
@@ -1056,16 +976,36 @@ class NativeIrisApiEngineBinding {
               IrisApiEnginePtr, ffi.Pointer<IrisEventHandlerHandle>)>();
 }
 
-abstract class IRIS_API_ERROR_CODE_TYPE {
-  static const int IRIS_API_NOT_CREATE = 666666;
+abstract class IrisAppType {
+  static const int kAppTypeNative = 0;
+  static const int kAppTypeCocos = 1;
+  static const int kAppTypeUnity = 2;
+  static const int kAppTypeElectron = 3;
+  static const int kAppTypeFlutter = 4;
+  static const int kAppTypeUnreal = 5;
+  static const int kAppTypeXamarin = 6;
+  static const int kAppTypeApiCloud = 7;
+  static const int kAppTypeReactNative = 8;
+  static const int kAppTypePython = 9;
+  static const int kAppTypeCocosCreator = 10;
+  static const int kAppTypeRust = 11;
+  static const int kAppTypeCSharp = 12;
+  static const int kAppTypeCef = 13;
+  static const int kAppTypeUniApp = 14;
 }
 
-typedef IrisApiEnginePtr = ffi.Pointer<ffi.Void>;
-typedef IrisEventHandlerExHandle = ffi.Pointer<ffi.Void>;
-typedef IrisEventHandlerHandle = ffi.Pointer<ffi.Void>;
+abstract class IrisLogLevel {
+  static const int levelTrace = 0;
+  static const int levelDebug = 1;
+  static const int levelInfo = 2;
+  static const int levelWarn = 3;
+  static const int levelErr = 4;
+}
 
 class IrisCEventHandler extends ffi.Struct {
   external Func_Event OnEvent;
+
+  external Func_EventEx OnEventEx;
 }
 
 typedef Func_Event = ffi.Pointer<
@@ -1076,11 +1016,6 @@ typedef Func_Event = ffi.Pointer<
             ffi.Pointer<ffi.Pointer<ffi.Void>>,
             ffi.Pointer<ffi.Uint32>,
             ffi.Uint32)>>;
-
-class IrisCEventHandlerEx extends ffi.Struct {
-  external Func_EventEx OnEvent;
-}
-
 typedef Func_EventEx = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Void Function(
@@ -1090,6 +1025,13 @@ typedef Func_EventEx = ffi.Pointer<
             ffi.Pointer<ffi.Pointer<ffi.Void>>,
             ffi.Pointer<ffi.Uint32>,
             ffi.Uint32)>>;
+
+abstract class IRIS_API_ERROR_CODE_TYPE {
+  static const int IRIS_API_NOT_CREATE = 666666;
+}
+
+typedef IrisApiEnginePtr = ffi.Pointer<ffi.Void>;
+typedef IrisEventHandlerHandle = ffi.Pointer<ffi.Void>;
 typedef IrisRtcAudioFrameObserverHandle = ffi.Pointer<ffi.Void>;
 
 class IrisRtcCAudioFrameObserver extends ffi.Struct {
@@ -1269,7 +1211,7 @@ class IrisVideoFrameBufferConfig extends ffi.Struct {
   @ffi.Uint32()
   external int id;
 
-  @ffi.Array.multi([65536])
+  @ffi.Array.multi([512])
   external ffi.Array<ffi.Int8> key;
 }
 
@@ -1564,3 +1506,7 @@ typedef Func_OnSeek = ffi.Pointer<
 typedef Func_onReadData = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Int32 Function(ffi.Pointer<ffi.Uint8>, ffi.Int32, ffi.Int32)>>;
+
+const int kBasicResultLength = 65536;
+
+const int kBasicStringLength = 512;

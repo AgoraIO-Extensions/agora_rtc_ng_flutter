@@ -1,6 +1,6 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 
-// ignore_for_file: public_member_api_docs, unused_local_variable
+// ignore_for_file: public_member_api_docs, unused_local_variable, prefer_is_empty
 
 extension LocalVideoStatsBufferExt on LocalVideoStats {
   LocalVideoStats fillBuffers(List<Uint8List> bufferList) {
@@ -29,13 +29,17 @@ extension RemoteVideoStatsBufferExt on RemoteVideoStats {
 extension VideoCompositingLayoutBufferExt on VideoCompositingLayout {
   VideoCompositingLayout fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? appData;
+    if (bufferList.length > 0) {
+      appData = bufferList[0];
+    }
     return VideoCompositingLayout(
         canvasWidth: canvasWidth,
         canvasHeight: canvasHeight,
         backgroundColor: backgroundColor,
         regions: regions,
         regionCount: regionCount,
-        appData: bufferList[0],
+        appData: appData,
         appDataLength: appDataLength);
   }
 
@@ -135,8 +139,12 @@ extension SizeBufferExt on Size {
 extension ThumbImageBufferBufferExt on ThumbImageBuffer {
   ThumbImageBuffer fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? buffer;
+    if (bufferList.length > 0) {
+      buffer = bufferList[0];
+    }
     return ThumbImageBuffer(
-        buffer: bufferList[0], length: length, width: width, height: height);
+        buffer: buffer, length: length, width: width, height: height);
   }
 
   List<Uint8List> collectBufferList() {
@@ -236,8 +244,12 @@ extension RtcEngineContextBufferExt on RtcEngineContext {
 extension MetadataBufferExt on Metadata {
   Metadata fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? buffer;
+    if (bufferList.length > 0) {
+      buffer = bufferList[0];
+    }
     return Metadata(
-        uid: uid, size: size, buffer: bufferList[0], timeStampMs: timeStampMs);
+        uid: uid, size: size, buffer: buffer, timeStampMs: timeStampMs);
   }
 
   List<Uint8List> collectBufferList() {
@@ -554,7 +566,11 @@ extension DeviceInfoBufferExt on DeviceInfo {
 extension PacketBufferExt on Packet {
   Packet fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
-    return Packet(buffer: bufferList[0], size: size);
+    Uint8List? buffer;
+    if (bufferList.length > 0) {
+      buffer = bufferList[0];
+    }
+    return Packet(buffer: buffer, size: size);
   }
 
   List<Uint8List> collectBufferList() {
@@ -702,13 +718,17 @@ extension WlAccStatsBufferExt on WlAccStats {
 extension VideoCanvasBufferExt on VideoCanvas {
   VideoCanvas fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? priv;
+    if (bufferList.length > 0) {
+      priv = bufferList[0];
+    }
     return VideoCanvas(
         view: view,
         renderMode: renderMode,
         mirrorMode: mirrorMode,
         uid: uid,
         isScreenView: isScreenView,
-        priv: bufferList[0],
+        priv: priv,
         privSize: privSize,
         sourceType: sourceType,
         cropArea: cropArea,
@@ -897,10 +917,14 @@ extension PeerDownlinkInfoBufferExt on PeerDownlinkInfo {
 extension EncryptionConfigBufferExt on EncryptionConfig {
   EncryptionConfig fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? encryptionKdfSalt;
+    if (bufferList.length > 0) {
+      encryptionKdfSalt = bufferList[0];
+    }
     return EncryptionConfig(
         encryptionMode: encryptionMode,
         encryptionKey: encryptionKey,
-        encryptionKdfSalt: bufferList[0]);
+        encryptionKdfSalt: encryptionKdfSalt);
   }
 
   List<Uint8List> collectBufferList() {
@@ -1059,10 +1083,18 @@ extension AudioPcmFrameBufferExt on AudioPcmFrame {
 extension ExternalVideoFrameBufferExt on ExternalVideoFrame {
   ExternalVideoFrame fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? buffer;
+    if (bufferList.length > 0) {
+      buffer = bufferList[0];
+    }
+    Uint8List? metadataBuffer;
+    if (bufferList.length > 1) {
+      metadataBuffer = bufferList[1];
+    }
     return ExternalVideoFrame(
         type: type,
         format: format,
-        buffer: bufferList[0],
+        buffer: buffer,
         stride: stride,
         height: height,
         cropLeft: cropLeft,
@@ -1074,7 +1106,7 @@ extension ExternalVideoFrameBufferExt on ExternalVideoFrame {
         eglType: eglType,
         textureId: textureId,
         matrix: matrix,
-        metadataBuffer: bufferList[1],
+        metadataBuffer: metadataBuffer,
         metadataSize: metadataSize);
   }
 
@@ -1093,6 +1125,26 @@ extension ExternalVideoFrameBufferExt on ExternalVideoFrame {
 extension VideoFrameBufferExt on VideoFrame {
   VideoFrame fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? yBuffer;
+    if (bufferList.length > 0) {
+      yBuffer = bufferList[0];
+    }
+    Uint8List? uBuffer;
+    if (bufferList.length > 1) {
+      uBuffer = bufferList[1];
+    }
+    Uint8List? vBuffer;
+    if (bufferList.length > 2) {
+      vBuffer = bufferList[2];
+    }
+    Uint8List? metadataBuffer;
+    if (bufferList.length > 3) {
+      metadataBuffer = bufferList[3];
+    }
+    Uint8List? alphaBuffer;
+    if (bufferList.length > 4) {
+      alphaBuffer = bufferList[4];
+    }
     return VideoFrame(
         type: type,
         width: width,
@@ -1100,17 +1152,17 @@ extension VideoFrameBufferExt on VideoFrame {
         yStride: yStride,
         uStride: uStride,
         vStride: vStride,
-        yBuffer: bufferList[0],
-        uBuffer: bufferList[1],
-        vBuffer: bufferList[2],
+        yBuffer: yBuffer,
+        uBuffer: uBuffer,
+        vBuffer: vBuffer,
         rotation: rotation,
         renderTimeMs: renderTimeMs,
         avsyncType: avsyncType,
-        metadataBuffer: bufferList[3],
+        metadataBuffer: metadataBuffer,
         metadataSize: metadataSize,
         textureId: textureId,
         matrix: matrix,
-        alphaBuffer: bufferList[4]);
+        alphaBuffer: alphaBuffer);
   }
 
   List<Uint8List> collectBufferList() {
@@ -1137,13 +1189,17 @@ extension VideoFrameBufferExt on VideoFrame {
 extension AudioFrameBufferExt on AudioFrame {
   AudioFrame fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? buffer;
+    if (bufferList.length > 0) {
+      buffer = bufferList[0];
+    }
     return AudioFrame(
         type: type,
         samplesPerChannel: samplesPerChannel,
         bytesPerSample: bytesPerSample,
         channels: channels,
         samplesPerSec: samplesPerSec,
-        buffer: bufferList[0],
+        buffer: buffer,
         renderTimeMs: renderTimeMs,
         avsyncType: avsyncType);
   }
@@ -1292,11 +1348,15 @@ extension LogConfigBufferExt on LogConfig {
 extension InputSeiDataBufferExt on InputSeiData {
   InputSeiData fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? privateData;
+    if (bufferList.length > 0) {
+      privateData = bufferList[0];
+    }
     return InputSeiData(
         type: type,
         timestamp: timestamp,
         frameIndex: frameIndex,
-        privateData: bufferList[0],
+        privateData: privateData,
         dataSize: dataSize);
   }
 

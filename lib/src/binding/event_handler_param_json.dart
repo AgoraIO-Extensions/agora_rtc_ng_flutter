@@ -1553,11 +1553,15 @@ extension RtcEngineEventHandlerOnStreamMessageJsonBufferExt
   RtcEngineEventHandlerOnStreamMessageJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? data;
+    if (bufferList.length > 0) {
+      data = bufferList[0];
+    }
     return RtcEngineEventHandlerOnStreamMessageJson(
         connection: connection,
         remoteUid: remoteUid,
         streamId: streamId,
-        data: bufferList[0],
+        data: data,
         length: length,
         sentTs: sentTs);
   }
@@ -3045,8 +3049,12 @@ extension AudioEncodedFrameObserverOnRecordAudioEncodedFrameJsonBufferExt
   AudioEncodedFrameObserverOnRecordAudioEncodedFrameJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? frameBuffer;
+    if (bufferList.length > 0) {
+      frameBuffer = bufferList[0];
+    }
     return AudioEncodedFrameObserverOnRecordAudioEncodedFrameJson(
-        frameBuffer: bufferList[0],
+        frameBuffer: frameBuffer,
         length: length,
         audioEncodedFrameInfo: audioEncodedFrameInfo);
   }
@@ -3083,8 +3091,12 @@ extension AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJsonBufferExt
   AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? frameBuffer;
+    if (bufferList.length > 0) {
+      frameBuffer = bufferList[0];
+    }
     return AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJson(
-        frameBuffer: bufferList[0],
+        frameBuffer: frameBuffer,
         length: length,
         audioEncodedFrameInfo: audioEncodedFrameInfo);
   }
@@ -3121,8 +3133,12 @@ extension AudioEncodedFrameObserverOnMixedAudioEncodedFrameJsonBufferExt
   AudioEncodedFrameObserverOnMixedAudioEncodedFrameJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? frameBuffer;
+    if (bufferList.length > 0) {
+      frameBuffer = bufferList[0];
+    }
     return AudioEncodedFrameObserverOnMixedAudioEncodedFrameJson(
-        frameBuffer: bufferList[0],
+        frameBuffer: frameBuffer,
         length: length,
         audioEncodedFrameInfo: audioEncodedFrameInfo);
   }
@@ -3340,9 +3356,13 @@ extension VideoEncodedFrameObserverOnEncodedVideoFrameReceivedJsonBufferExt
   VideoEncodedFrameObserverOnEncodedVideoFrameReceivedJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
+    Uint8List? imageBuffer;
+    if (bufferList.length > 0) {
+      imageBuffer = bufferList[0];
+    }
     return VideoEncodedFrameObserverOnEncodedVideoFrameReceivedJson(
         uid: uid,
-        imageBuffer: bufferList[0],
+        imageBuffer: imageBuffer,
         length: length,
         videoEncodedFrameInfo: videoEncodedFrameInfo);
   }
@@ -3887,8 +3907,11 @@ extension MediaPlayerSourceObserverOnMetaDataJsonBufferExt
   MediaPlayerSourceObserverOnMetaDataJson fillBuffers(
       List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
-    return MediaPlayerSourceObserverOnMetaDataJson(
-        data: bufferList[0], length: length);
+    Uint8List? data;
+    if (bufferList.length > 0) {
+      data = bufferList[0];
+    }
+    return MediaPlayerSourceObserverOnMetaDataJson(data: data, length: length);
   }
 
   List<Uint8List> collectBufferList() {

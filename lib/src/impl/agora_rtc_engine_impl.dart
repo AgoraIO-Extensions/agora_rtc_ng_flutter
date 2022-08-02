@@ -1,11 +1,24 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:agora_rtc_ng/src/agora_base.dart';
+import 'package:agora_rtc_ng/src/agora_media_base.dart';
+import 'package:agora_rtc_ng/src/agora_media_engine.dart';
+import 'package:agora_rtc_ng/src/agora_media_player.dart';
+import 'package:agora_rtc_ng/src/agora_media_recorder.dart';
+import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
+import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
+import 'package:agora_rtc_ng/src/agora_rtc_engine_ext.dart';
+import 'package:agora_rtc_ng/src/agora_spatial_audio.dart';
+import 'package:agora_rtc_ng/src/audio_device_manager.dart';
 import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_ex_impl.dart'
     as rtc_engine_ex_binding;
 import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_impl.dart'
     as rtc_engine_binding;
+import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart'
+    as media_base_event_binding;
 
-import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 import 'package:agora_rtc_ng/src/impl/agora_media_recorder_impl_override.dart'
     as media_recorder_impl;
 import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
@@ -17,6 +30,7 @@ import 'package:agora_rtc_ng/src/impl/media_player_impl.dart'
 import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
     as audio_device_manager_impl;
 import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter/services.dart';
 import 'package:iris_event/iris_event.dart';
@@ -56,7 +70,7 @@ extension RtcEngineExt on RtcEngine {
   }
 
   V? getObjectFromPool<V>(Type objectType) {
-    return (this as RtcEngineImpl)._objectPool.get(objectType) as V;
+    return (this as RtcEngineImpl)._objectPool.get(objectType) as V?;
   }
 }
 
@@ -144,6 +158,20 @@ extension MetadataObserverExt on MetadataObserver {
     }
 
     return false;
+  }
+}
+
+class AudioSpectrumObserverWrapper
+    extends media_base_event_binding.AudioSpectrumObserverWrapper {
+  const AudioSpectrumObserverWrapper(
+      AudioSpectrumObserver audioSpectrumObserver)
+      : super(audioSpectrumObserver);
+
+  @override
+  void onEvent(String event, String data, List<Uint8List> buffers) {
+    if (!event.startsWith('RtcEngine_')) return;
+    audioSpectrumObserver.process(
+        event.replaceFirst('RtcEngine_', ''), data, buffers);
   }
 }
 
@@ -877,6 +905,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
+
+    
   }
 
   @override
@@ -885,7 +915,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       required AudioEncodedFrameObserver observer}) async {
     final param = createParams({'config': config.toJson()});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventKey(
+        const CreateIrisEventObserverKey(
             registerName: 'RtcEngine_registerAudioEncodedFrameObserver',
             unregisterName: 'RtcEngine_unregisterAudioEncodedFrameObserver'),
         jsonEncode(param));
@@ -898,7 +928,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       AudioEncodedFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventKey(
+        const DisposeIrisEventObserverKey(
             registerName: 'RtcEngine_registerAudioEncodedFrameObserver',
             unregisterName: 'RtcEngine_unregisterAudioEncodedFrameObserver'),
         jsonEncode(param));
@@ -910,24 +940,26 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   void registerAudioSpectrumObserver(AudioSpectrumObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventKey(
+        const CreateIrisEventObserverKey(
             registerName: 'RtcEngine_registerAudioSpectrumObserver',
             unregisterName: 'RtcEngine_unregisterAudioSpectrumObserver'),
         jsonEncode(param));
 
     _eventHandlers.add(AudioSpectrumObserverWrapper(observer));
+    debugPrint('_eventHandlers.length: ${_eventHandlers.length}');
   }
 
   @override
   void unregisterAudioSpectrumObserver(AudioSpectrumObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventKey(
+        const DisposeIrisEventObserverKey(
             registerName: 'RtcEngine_registerAudioSpectrumObserver',
             unregisterName: 'RtcEngine_unregisterAudioSpectrumObserver'),
         jsonEncode(param));
 
     _eventHandlers.remove(AudioSpectrumObserverWrapper(observer));
+    debugPrint('_eventHandlers.length: ${_eventHandlers.length}');
   }
 }
 

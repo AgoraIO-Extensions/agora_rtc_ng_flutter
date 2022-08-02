@@ -6,6 +6,7 @@ import 'package:agora_rtc_ng/src/agora_media_base.dart';
 import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart';
 import 'package:agora_rtc_ng/src/binding/agora_media_engine_impl.dart'
     as media_engine_impl_binding;
+import 'package:agora_rtc_ng/src/binding/call_api_event_handler_buffer_ext.dart';
 import 'package:agora_rtc_ng/src/impl/api_caller.dart';
 import 'package:iris_event/iris_event.dart';
 import 'package:meta/meta.dart';
@@ -17,6 +18,7 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
     implements IrisEventHandler {
   MediaEngineImpl._(this._rtcEngine) {
     _rtcEngine.addToPool(MediaEngineImpl, this);
+    apiCaller.addEventHandler(this);
   }
 
   factory MediaEngineImpl.create(RtcEngine rtcEngine) {
@@ -28,16 +30,10 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   final Set<IrisEventHandler> _eventHandlers = {};
 
   @override
-  @protected
-  Map<String, dynamic> createParams(Map<String, dynamic> param) {
-    return param;
-  }
-
-  @override
   void registerAudioFrameObserver(AudioFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventKey(
+        const CreateIrisEventObserverKey(
             registerName: 'MediaEngine_registerAudioFrameObserver',
             unregisterName: 'MediaEngine_unregisterAudioFrameObserver'),
         jsonEncode(param));
@@ -49,7 +45,7 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void registerVideoFrameObserver(VideoFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventKey(
+        const CreateIrisEventObserverKey(
             registerName: 'MediaEngine_registerVideoFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoFrameObserver'),
         jsonEncode(param));
@@ -62,7 +58,7 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
       VideoEncodedFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventKey(
+        const CreateIrisEventObserverKey(
             registerName: 'MediaEngine_registerVideoEncodedFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoEncodedFrameObserver'),
         jsonEncode(param));
@@ -74,7 +70,7 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void unregisterAudioFrameObserver(AudioFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventKey(
+        const DisposeIrisEventObserverKey(
             registerName: 'MediaEngine_registerAudioFrameObserver',
             unregisterName: 'MediaEngine_unregisterAudioFrameObserver'),
         jsonEncode(param));
@@ -86,7 +82,7 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void unregisterVideoFrameObserver(VideoFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventKey(
+        const DisposeIrisEventObserverKey(
             registerName: 'MediaEngine_registerVideoFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoFrameObserver'),
         jsonEncode(param));
@@ -99,12 +95,40 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
       VideoEncodedFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventKey(
+        const DisposeIrisEventObserverKey(
             registerName: 'MediaEngine_registerVideoEncodedFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoEncodedFrameObserver'),
         jsonEncode(param));
 
     _eventHandlers.remove(VideoEncodedFrameObserverWrapper(observer));
+  }
+
+  @override
+  Future<void> pushVideoFrame(
+      {required ExternalVideoFrame frame, int videoTrackId = 0}) async {
+    const apiType = 'MediaEngine_pushVideoFrame';
+    final param =
+        createParams({'frame': frame.toJson(), 'videoTrackId': videoTrackId});
+    final List<Uint8List> buffers = [];
+    // buffers.addAll(frame.collectBufferList());
+    final bufferList = <Uint8List>[];
+    if (frame.buffer != null) {
+      buffers.add(frame.buffer!);
+      buffers.add(Uint8List.fromList([]));
+    }
+    if (frame.metadataBuffer != null) {
+      buffers.add(frame.metadataBuffer!);
+    }
+    final callApiResult = await apiCaller
+        .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
   }
 
   @override

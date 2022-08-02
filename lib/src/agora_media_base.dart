@@ -924,7 +924,7 @@ class VideoEncodedFrameObserver {
     this.onEncodedVideoFrameReceived,
   });
 
-  final bool Function(int uid, Uint8List imageBuffer, int length,
+  final void Function(int uid, Uint8List imageBuffer, int length,
       EncodedVideoFrameInfo videoEncodedFrameInfo)? onEncodedVideoFrameReceived;
 }
 
