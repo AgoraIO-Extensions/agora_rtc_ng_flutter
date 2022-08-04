@@ -103,9 +103,11 @@ packages:
   iris_event:
     dependency: transitive
     description:
-      path: "/Users/fenglang/codes/aw/iris_event/"
-      relative: false
-    source: path
+      path: "."
+      ref: "littlegnal/oneventex"
+      resolved-ref: d67ea123c3c8694ddd534161fc0ef4aabe386634
+      url: "https://github.com/littleGnAl/iris_event.git"
+    source: git
     version: "1.1.0"
   js:
     dependency: transitive
