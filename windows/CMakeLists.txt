@@ -25,7 +25,7 @@ set(IRIS_DOWNLOAD_PATH "${CMAKE_CURRENT_SOURCE_DIR}/third_party/iris")
 set(IRIS_SDK_PATH "${IRIS_DOWNLOAD_PATH}/${IRIS_SDK_DOWNLOAD_NAME}/x64")
 set(IRIS_SDK_BIN_PATH "${IRIS_SDK_PATH}/Release")
 set(RTC_SDK_PATH "${IRIS_DOWNLOAD_PATH}/${IRIS_SDK_DOWNLOAD_NAME}/DCG")
-set(RTC_SDK_BIN_PATH "${RTC_SDK_PATH}/${RTC_SDK_DOWNLOAD_NAME}/rtc/sdk")
+set(RTC_SDK_BIN_PATH "${RTC_SDK_PATH}/${RTC_SDK_DOWNLOAD_NAME}/sdk/x86_64")
 
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.plugin_dev")
     # Download and extract the SDK binary distribution (executes DownloadSDK.cmake).
