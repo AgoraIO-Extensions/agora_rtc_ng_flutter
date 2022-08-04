@@ -233,7 +233,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     _directCdnStreamingEventHandler = null;
     _mediaPlayerCount = 0;
 
-    await apiCaller.disposeIrisRtcEngineEventHandlerAsync();
+    await apiCaller.disposeAllEventHandlersAsync();
 
     await _globalVideoViewController
         .detachVideoFrameBufferManager(apiCaller.getIrisApiEngineIntPtr());
@@ -479,8 +479,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<List<ScreenCaptureSourceInfo>> getScreenCaptureSources(
-      {required Size thumbSize,
-      required Size iconSize,
+      {required SIZE thumbSize,
+      required SIZE iconSize,
       required bool includeScreen}) async {
     const apiType = 'RtcEngine_getScreenCaptureSources';
     final param = createParams({
@@ -905,8 +905,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-
-    
   }
 
   @override
@@ -915,7 +913,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       required AudioEncodedFrameObserver observer}) async {
     final param = createParams({'config': config.toJson()});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'RtcEngine_registerAudioEncodedFrameObserver',
             unregisterName: 'RtcEngine_unregisterAudioEncodedFrameObserver'),
         jsonEncode(param));
@@ -928,7 +927,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
       AudioEncodedFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'RtcEngine_registerAudioEncodedFrameObserver',
             unregisterName: 'RtcEngine_unregisterAudioEncodedFrameObserver'),
         jsonEncode(param));
@@ -940,7 +940,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   void registerAudioSpectrumObserver(AudioSpectrumObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'RtcEngine_registerAudioSpectrumObserver',
             unregisterName: 'RtcEngine_unregisterAudioSpectrumObserver'),
         jsonEncode(param));
@@ -953,7 +954,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   void unregisterAudioSpectrumObserver(AudioSpectrumObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'RtcEngine_registerAudioSpectrumObserver',
             unregisterName: 'RtcEngine_unregisterAudioSpectrumObserver'),
         jsonEncode(param));

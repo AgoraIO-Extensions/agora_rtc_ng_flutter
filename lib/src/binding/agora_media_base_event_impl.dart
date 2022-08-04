@@ -12,7 +12,7 @@ extension AudioFrameObserverBaseExt on AudioFrameObserverBase {
         if (onRecordAudioFrame == null) break;
         AudioFrameObserverBaseOnRecordAudioFrameJson paramJson =
             AudioFrameObserverBaseOnRecordAudioFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         String? channelId = paramJson.channelId;
         AudioFrame? audioFrame = paramJson.audioFrame;
         if (channelId == null || audioFrame == null) {
@@ -26,7 +26,7 @@ extension AudioFrameObserverBaseExt on AudioFrameObserverBase {
         if (onPlaybackAudioFrame == null) break;
         AudioFrameObserverBaseOnPlaybackAudioFrameJson paramJson =
             AudioFrameObserverBaseOnPlaybackAudioFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         String? channelId = paramJson.channelId;
         AudioFrame? audioFrame = paramJson.audioFrame;
         if (channelId == null || audioFrame == null) {
@@ -40,7 +40,7 @@ extension AudioFrameObserverBaseExt on AudioFrameObserverBase {
         if (onMixedAudioFrame == null) break;
         AudioFrameObserverBaseOnMixedAudioFrameJson paramJson =
             AudioFrameObserverBaseOnMixedAudioFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         String? channelId = paramJson.channelId;
         AudioFrame? audioFrame = paramJson.audioFrame;
         if (channelId == null || audioFrame == null) {
@@ -85,7 +85,7 @@ extension AudioFrameObserverExt on AudioFrameObserver {
         AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson paramJson =
             AudioFrameObserverOnPlaybackAudioFrameBeforeMixingJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         String? channelId = paramJson.channelId;
         int? uid = paramJson.uid;
         AudioFrame? audioFrame = paramJson.audioFrame;
@@ -130,7 +130,7 @@ extension AudioSpectrumObserverExt on AudioSpectrumObserver {
         if (onLocalAudioSpectrum == null) break;
         AudioSpectrumObserverOnLocalAudioSpectrumJson paramJson =
             AudioSpectrumObserverOnLocalAudioSpectrumJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         AudioSpectrumData? data = paramJson.data;
         if (data == null) {
           break;
@@ -143,7 +143,7 @@ extension AudioSpectrumObserverExt on AudioSpectrumObserver {
         if (onRemoteAudioSpectrum == null) break;
         AudioSpectrumObserverOnRemoteAudioSpectrumJson paramJson =
             AudioSpectrumObserverOnRemoteAudioSpectrumJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         List<UserAudioSpectrumInfo>? spectrums = paramJson.spectrums;
         int? spectrumNumber = paramJson.spectrumNumber;
         if (spectrums == null || spectrumNumber == null) {
@@ -188,7 +188,7 @@ extension VideoEncodedFrameObserverExt on VideoEncodedFrameObserver {
         VideoEncodedFrameObserverOnEncodedVideoFrameReceivedJson paramJson =
             VideoEncodedFrameObserverOnEncodedVideoFrameReceivedJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         int? uid = paramJson.uid;
         Uint8List? imageBuffer = paramJson.imageBuffer;
         int? length = paramJson.length;
@@ -239,7 +239,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onCaptureVideoFrame == null) break;
         VideoFrameObserverOnCaptureVideoFrameJson paramJson =
             VideoFrameObserverOnCaptureVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -252,7 +252,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onPreEncodeVideoFrame == null) break;
         VideoFrameObserverOnPreEncodeVideoFrameJson paramJson =
             VideoFrameObserverOnPreEncodeVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -266,7 +266,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJson paramJson =
             VideoFrameObserverOnSecondaryCameraCaptureVideoFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -280,7 +280,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJson paramJson =
             VideoFrameObserverOnSecondaryPreEncodeCameraVideoFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -293,7 +293,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onScreenCaptureVideoFrame == null) break;
         VideoFrameObserverOnScreenCaptureVideoFrameJson paramJson =
             VideoFrameObserverOnScreenCaptureVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -306,7 +306,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onPreEncodeScreenVideoFrame == null) break;
         VideoFrameObserverOnPreEncodeScreenVideoFrameJson paramJson =
             VideoFrameObserverOnPreEncodeScreenVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -319,7 +319,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onMediaPlayerVideoFrame == null) break;
         VideoFrameObserverOnMediaPlayerVideoFrameJson paramJson =
             VideoFrameObserverOnMediaPlayerVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         int? mediaPlayerId = paramJson.mediaPlayerId;
         if (videoFrame == null || mediaPlayerId == null) {
@@ -334,7 +334,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJson paramJson =
             VideoFrameObserverOnSecondaryScreenCaptureVideoFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -348,7 +348,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJson paramJson =
             VideoFrameObserverOnSecondaryPreEncodeScreenVideoFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -361,7 +361,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onRenderVideoFrame == null) break;
         VideoFrameObserverOnRenderVideoFrameJson paramJson =
             VideoFrameObserverOnRenderVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         String? channelId = paramJson.channelId;
         int? remoteUid = paramJson.remoteUid;
         VideoFrame? videoFrame = paramJson.videoFrame;
@@ -376,7 +376,7 @@ extension VideoFrameObserverExt on VideoFrameObserver {
         if (onTranscodedVideoFrame == null) break;
         VideoFrameObserverOnTranscodedVideoFrameJson paramJson =
             VideoFrameObserverOnTranscodedVideoFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? videoFrame = paramJson.videoFrame;
         if (videoFrame == null) {
           break;
@@ -419,7 +419,7 @@ extension MediaRecorderObserverExt on MediaRecorderObserver {
         if (onRecorderStateChanged == null) break;
         MediaRecorderObserverOnRecorderStateChangedJson paramJson =
             MediaRecorderObserverOnRecorderStateChangedJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         RecorderState? state = paramJson.state;
         RecorderErrorCode? error = paramJson.error;
         if (state == null || error == null) {
@@ -432,7 +432,7 @@ extension MediaRecorderObserverExt on MediaRecorderObserver {
         if (onRecorderInfoUpdated == null) break;
         MediaRecorderObserverOnRecorderInfoUpdatedJson paramJson =
             MediaRecorderObserverOnRecorderInfoUpdatedJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         RecorderInfo? info = paramJson.info;
         if (info == null) {
           break;

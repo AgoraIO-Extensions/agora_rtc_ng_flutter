@@ -32,6 +32,10 @@ class _State extends State<PushVideoFrame> {
   ChannelProfileType _channelProfileType =
       ChannelProfileType.channelProfileLiveBroadcasting;
 
+  late final Uint8List _imageByteData;
+  late final int _imageWidth;
+  late final int _imageHeight;
+
   @override
   void initState() {
     super.initState();
@@ -100,15 +104,8 @@ class _State extends State<PushVideoFrame> {
 
     await _engine.enableVideo();
 
-    await _engine.setVideoEncoderConfiguration(
-      const VideoEncoderConfiguration(
-        dimensions: VideoDimensions(width: 640, height: 360),
-        frameRate: 15,
-        bitrate: 800,
-      ),
-    );
 
-    await _engine.startPreview();
+    await _getImageByteData();
 
     setState(() {
       _isReadyPreview = true;
@@ -131,55 +128,46 @@ class _State extends State<PushVideoFrame> {
     await _engine.leaveChannel();
   }
 
-  Future<void> _switchCamera() async {
-    await _engine.switchCamera();
-    setState(() {
-      switchCamera = !switchCamera;
-    });
-  }
 
-  Future<void> _pushVideoFrame() async {
+  Future<void> _getImageByteData() async {
     ByteData data = await rootBundle.load("assets/agora-logo.png");
     Uint8List bytes =
         data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String p = path.join(appDocDir.path, 'agora-logo.png');
-    final file = File(p);
-    if (!(await file.exists())) {
-      await file.create();
-      await file.writeAsBytes(bytes);
-    }
-
-    // final bytes = await File('./test/img.png').readAsBytes();
-    // final codec = await instantiateImageCodec(bytes);
-    // final frame = await codec.getNextFrame();
-    // final image = frame.image;
 
     final image = await decodeImageFromList(bytes);
 
     final byteData =
         await image.toByteData(format: ImageByteFormat.rawStraightRgba);
-    if (byteData != null) {
-      await _engine.getMediaEngine().pushVideoFrame(
-            frame: ExternalVideoFrame(
-                type: VideoBufferType.videoBufferRawData,
-                format: VideoPixelFormat.videoPixelRgba,
-                buffer: byteData.buffer.asUint8List(),
-                stride: image.width,
-                height: image.height,
-                cropLeft: 10,
-                cropTop: 10,
-                cropRight: 10,
-                cropBottom: 10,
-                rotation: 180,
-                timestamp: DateTime.now().millisecondsSinceEpoch,
-                metadataBuffer: Uint8List.fromList([]),
-                metadataSize: 0),
-          );
+    _imageByteData = byteData!.buffer.asUint8List();
+    // print('data: $_imageByteData');
+    print('data length: ${_imageByteData.length}');
+    _imageWidth = image.width;
+    _imageHeight = image.height;
+    image.dispose();
+  }
 
-      image.dispose();
-    }
+  Future<void> _pushVideoFrame() async {
+    // if (byteData != null) {
+
+    // }
+
+  
+
+    await _engine.getMediaEngine().pushVideoFrame(
+          frame: ExternalVideoFrame(
+              type: VideoBufferType.videoBufferRawData,
+              format: VideoPixelFormat.videoPixelRgba,
+              buffer: _imageByteData,
+              stride: _imageWidth,
+              height: _imageHeight,
+              // cropLeft: 10,
+              // cropTop: 10,
+              // cropRight: 10,
+              // cropBottom: 10,
+              // rotation: 180,
+              // timestamp: DateTime.now().millisecondsSinceEpoch
+              ),
+        );
 // final u32 = byteData!.buffer.asUint32List();
 
 // final hexCodes = <String>[];

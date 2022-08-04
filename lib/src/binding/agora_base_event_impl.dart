@@ -13,7 +13,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
         AudioEncodedFrameObserverOnRecordAudioEncodedFrameJson paramJson =
             AudioEncodedFrameObserverOnRecordAudioEncodedFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         Uint8List? frameBuffer = paramJson.frameBuffer;
         int? length = paramJson.length;
         EncodedAudioFrameInfo? audioEncodedFrameInfo =
@@ -32,7 +32,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
         AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJson paramJson =
             AudioEncodedFrameObserverOnPlaybackAudioEncodedFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         Uint8List? frameBuffer = paramJson.frameBuffer;
         int? length = paramJson.length;
         EncodedAudioFrameInfo? audioEncodedFrameInfo =
@@ -52,7 +52,7 @@ extension AudioEncodedFrameObserverExt on AudioEncodedFrameObserver {
         AudioEncodedFrameObserverOnMixedAudioEncodedFrameJson paramJson =
             AudioEncodedFrameObserverOnMixedAudioEncodedFrameJson.fromJson(
                 jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         Uint8List? frameBuffer = paramJson.frameBuffer;
         int? length = paramJson.length;
         EncodedAudioFrameInfo? audioEncodedFrameInfo =

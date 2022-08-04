@@ -124,8 +124,8 @@ extension ScreenCaptureConfigurationBufferExt on ScreenCaptureConfiguration {
   }
 }
 
-extension SizeBufferExt on Size {
-  Size fillBuffers(List<Uint8List> bufferList) {
+extension SIZEBufferExt on SIZE {
+  SIZE fillBuffers(List<Uint8List> bufferList) {
     if (bufferList.isEmpty) return this;
     return this;
   }

@@ -2807,8 +2807,8 @@ class RtcEngineImpl implements RtcEngine {
 
   @override
   Future<List<ScreenCaptureSourceInfo>> getScreenCaptureSources(
-      {required Size thumbSize,
-      required Size iconSize,
+      {required SIZE thumbSize,
+      required SIZE iconSize,
       required bool includeScreen}) async {
     const apiType = 'RtcEngine_getScreenCaptureSources';
     final param = createParams({

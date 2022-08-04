@@ -451,7 +451,7 @@ extension RenderModeTypeExt on RenderModeType {
   }
 }
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ExternalVideoFrame {
   /// Construct the [ExternalVideoFrame].
   const ExternalVideoFrame(

@@ -141,6 +141,11 @@ class ApiCaller implements _ApiCallExecutorBaseAsync {
   Future<CallApiResult> callIrisEventAsync(IrisEventKey key, String params) {
     return _apiCallExecutor!.callIrisEventAsync(key, params);
   }
+
+  @override
+  Future<void> disposeAllEventHandlersAsync() {
+    return _apiCallExecutor!.disposeAllEventHandlersAsync();
+  }
 }
 
 class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
@@ -303,6 +308,12 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
     final CallApiResult result = await responseQueue.next;
     return result;
   }
+
+  @override
+  Future<void> disposeAllEventHandlersAsync() async {
+    requestPort.send(const _DisposeAllEventHandlersRequest());
+    await responseQueue.next;
+  }
 }
 
 abstract class _Request {}
@@ -328,6 +339,10 @@ class _SetupIrisRtcEngineEventHandlerRequest implements _Request {
 
 class _DisposeIrisRtcEngineEventHandlerRequest implements _Request {
   const _DisposeIrisRtcEngineEventHandlerRequest();
+}
+
+class _DisposeAllEventHandlersRequest implements _Request {
+  const _DisposeAllEventHandlersRequest();
 }
 
 class _SetupIrisMediaPlayerEventHandlerRequest implements _Request {
@@ -482,6 +497,52 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
         return CallApiResult(irisReturnCode: -10000, data: const {});
       }
     });
+
+    // final ffi.Pointer<ffi.Int8> resultPointer =
+    //     calloc.allocate<ffi.Int8>(kBasicResultLength).cast<ffi.Int8>();
+
+    // final ffi.Pointer<ffi.Int8> funcNamePointer =
+    //     funcName.toNativeUtf8().cast<ffi.Int8>();
+
+    // final ffi.Pointer<Utf8> paramsPointerUtf8 = params.toNativeUtf8();
+    // final paramsPointerUtf8Length = paramsPointerUtf8.length;
+    // final ffi.Pointer<ffi.Int8> paramsPointer =
+    //     paramsPointerUtf8.cast<ffi.Int8>();
+
+    // // ffi.Pointer<ffi.Void> bufferPointer;
+    // ffi.Pointer<ffi.Pointer<ffi.Void>> bufferListPtr;
+    // int bufferLength = bufferList?.length ?? 0;
+
+    // if (bufferList != null) {
+    //   bufferListPtr = calloc.allocate(bufferList.length);
+
+    //   for (int i = 0; i < bufferList.length; i++) {
+    //     final bufferPtr = bufferList[i];
+    //     bufferListPtr[i] = bufferPtr;
+    //   }
+    // } else {
+    //   bufferListPtr = ffi.nullptr;
+    // }
+
+    // try {
+    //   final irisReturnCode = _nativeIrisApiEngineBinding.CallIrisApi(
+    //       _irisApiEnginePtr!,
+    //       funcNamePointer,
+    //       paramsPointer,
+    //       paramsPointerUtf8Length,
+    //       bufferListPtr,
+    //       bufferLength,
+    //       resultPointer);
+
+    //   final result = resultPointer.cast<Utf8>().toDartString();
+    //   final resultMap = Map<String, dynamic>.from(jsonDecode(result));
+
+    //   return CallApiResult(irisReturnCode: irisReturnCode, data: resultMap);
+    // } catch (e) {
+    //   debugPrint(
+    //       '[_ApiCallExecutor] $funcName, params: $params\nerror: ${e.toString()}');
+    //   return CallApiResult(irisReturnCode: -10000, data: const {});
+    // }
   }
 
   @override
@@ -505,8 +566,12 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
           final ffi.Pointer<ffi.Uint8> bufferData =
               arena.allocate<ffi.Uint8>(buffer.length);
 
-          final pointerList = bufferData.asTypedList(buffer.length);
-          pointerList.setAll(0, buffer);
+          for (int i = 0; i < buffer.length; i++) {
+            bufferData[i] = buffer[i];
+          }
+
+          // final pointerList = bufferData.asTypedList(buffer.length);
+          // pointerList.setAll(0, buffer);
 
           buffersPtrList.add(bufferData.cast<ffi.Void>());
         }
@@ -514,12 +579,33 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
 
       return callIrisApi(funcName, params, bufferList: buffersPtrList);
     });
+
+    // int bufferLength = buffers?.length ?? 0;
+
+    // List<ffi.Pointer<ffi.Void>>? buffersPtrList = [];
+
+    // if (buffers != null) {
+    //   for (int i = 0; i < bufferLength; i++) {
+    //     final buffer = buffers[i];
+    //     if (buffer.isEmpty) {
+    //       buffersPtrList.add(ffi.nullptr);
+    //       continue;
+    //     }
+    //     final ffi.Pointer<ffi.Uint8> bufferData =
+    //         calloc.allocate<ffi.Uint8>(buffer.length);
+
+    //     final pointerList = bufferData.asTypedList(buffer.length);
+    //     pointerList.setAll(0, buffer);
+
+    //     buffersPtrList.add(bufferData.cast<ffi.Void>());
+    //   }
+    // }
+
+    // return callIrisApi(funcName, params, bufferList: buffersPtrList);
   }
 
   @override
-  void dispose() {
-    assert(_irisApiEnginePtr != null);
-
+  void disposeAllEventHandlers() {
     disposeIrisMediaPlayerEventHandlerIfNeed();
 
     _destroyObservers();
@@ -527,6 +613,13 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     // The IrisRtcEngineEventHandler should be dispose on last, which will free the
     // _irisCEventHandler internally.
     disposeIrisRtcEngineEventHandler();
+  }
+
+  @override
+  void dispose() {
+    assert(_irisApiEnginePtr != null);
+
+    disposeAllEventHandlers();
 
     _nativeIrisApiEngineBinding.DestroyIrisApiEngine(_irisApiEnginePtr!);
     _irisApiEnginePtr = null;
@@ -542,30 +635,34 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
 
   @override
   CallApiResult callIrisEvent(IrisEventKey key, String params) {
-    if (key is SetIrisEventHandlerKey) {
-      _irisEventHandlerObservers.putIfAbsent(
-          key,
-          () => _SettableIrisEventHandler(
-                nativeIrisApiEngineBinding: _nativeIrisApiEngineBinding,
-                irisApiEnginePtr: _irisApiEnginePtr!,
-                irisCEventHandler: _irisCEventHandler!,
-                key: key,
-              ));
-    } else if (key is UnsetIrisEventHandlerKey) {
-      _irisEventHandlerObservers[key]?.dispose();
-    } else if (key is CreateIrisEventObserverKey) {
-      _irisEventHandlerObservers.putIfAbsent(
-          key,
-          () => _IrisEventHandlerObserver(
-                apiCallExecutorBase: this,
-                nativeIrisApiEngineBinding: _nativeIrisApiEngineBinding,
-                irisApiEnginePtr: _irisApiEnginePtr!,
-                irisEventHandlerExPtr: _irisEventHandlerExPtr!,
-                key: key,
-                params: params,
-              ));
-    } else if (key is DisposeIrisEventObserverKey) {
-      _irisEventHandlerObservers[key]?.dispose();
+    if (key is IrisEventHandlerKey) {
+      if (key.op == CallIrisEventOp.create) {
+        _irisEventHandlerObservers.putIfAbsent(
+            key,
+            () => _SettableIrisEventHandler(
+                  nativeIrisApiEngineBinding: _nativeIrisApiEngineBinding,
+                  irisApiEnginePtr: _irisApiEnginePtr!,
+                  irisCEventHandler: _irisCEventHandler!,
+                  key: key,
+                ));
+      } else if (key.op == CallIrisEventOp.dispose) {
+        _irisEventHandlerObservers[key]?.dispose();
+      }
+    } else if (key is IrisEventObserverKey) {
+      if (key.op == CallIrisEventOp.create) {
+        _irisEventHandlerObservers.putIfAbsent(
+            key,
+            () => _IrisEventHandlerObserver(
+                  apiCallExecutorBase: this,
+                  nativeIrisApiEngineBinding: _nativeIrisApiEngineBinding,
+                  irisApiEnginePtr: _irisApiEnginePtr!,
+                  irisEventHandlerExPtr: _irisEventHandlerExPtr!,
+                  key: key,
+                  params: params,
+                ));
+      } else if (key.op == CallIrisEventOp.dispose) {
+        _irisEventHandlerObservers[key]?.dispose();
+      }
     }
 
     // Treat the callIrisEvent to success by default
@@ -581,6 +678,8 @@ abstract class _ApiCallExecutorBase {
   void setupIrisRtcEngineEventHandler(SendPort sendPort);
 
   void disposeIrisRtcEngineEventHandler();
+
+  void disposeAllEventHandlers();
 
   void disposeIrisMediaPlayerEventHandlerIfNeed();
 
@@ -611,6 +710,8 @@ abstract class _ApiCallExecutorBaseAsync {
   Future<void> setupIrisRtcEngineEventHandlerAsync({SendPort? sendPort});
 
   Future<void> disposeIrisRtcEngineEventHandlerAsync();
+
+  Future<void> disposeAllEventHandlersAsync();
 
   Future<void> disposeIrisMediaPlayerEventHandlerIfNeedAsync();
 
@@ -644,9 +745,12 @@ class _SendableIrisEventHandler implements IrisEventHandler {
 
 abstract class IrisEventKey {
   const IrisEventKey(
-      {required this.registerName, required this.unregisterName});
+      {required this.registerName,
+      required this.unregisterName,
+      required this.op});
   final String registerName;
   final String unregisterName;
+  final CallIrisEventOp op;
 
   @override
   bool operator ==(Object other) {
@@ -662,29 +766,40 @@ abstract class IrisEventKey {
   int get hashCode => hashValues(registerName, unregisterName);
 }
 
-class CreateIrisEventObserverKey extends IrisEventKey {
-  const CreateIrisEventObserverKey(
-      {required String registerName, required String unregisterName})
-      : super(registerName: registerName, unregisterName: unregisterName);
+enum CallIrisEventOp {
+  create,
+  dispose,
 }
 
-class DisposeIrisEventObserverKey extends IrisEventKey {
-  const DisposeIrisEventObserverKey(
-      {required String registerName, required String unregisterName})
-      : super(registerName: registerName, unregisterName: unregisterName);
+class IrisEventObserverKey extends IrisEventKey {
+  const IrisEventObserverKey(
+      {required String registerName,
+      required String unregisterName,
+      required CallIrisEventOp op})
+      : super(
+            registerName: registerName, unregisterName: unregisterName, op: op);
 }
 
-class SetIrisEventHandlerKey extends IrisEventKey {
-  const SetIrisEventHandlerKey(
-      {required String registerName, required String unregisterName})
-      : super(registerName: registerName, unregisterName: unregisterName);
+// class DisposeIrisEventObserverKey extends IrisEventKey {
+//   const DisposeIrisEventObserverKey(
+//       {required String registerName, required String unregisterName})
+//       : super(registerName: registerName, unregisterName: unregisterName);
+// }
+
+class IrisEventHandlerKey extends IrisEventKey {
+  const IrisEventHandlerKey(
+      {required String registerName,
+      required String unregisterName,
+      required CallIrisEventOp op})
+      : super(
+            registerName: registerName, unregisterName: unregisterName, op: op);
 }
 
-class UnsetIrisEventHandlerKey extends IrisEventKey {
-  const UnsetIrisEventHandlerKey(
-      {required String registerName, required String unregisterName})
-      : super(registerName: registerName, unregisterName: unregisterName);
-}
+// class UnsetIrisEventHandlerKey extends IrisEventKey {
+//   const UnsetIrisEventHandlerKey(
+//       {required String registerName, required String unregisterName})
+//       : super(registerName: registerName, unregisterName: unregisterName);
+// }
 
 abstract class DisposableNativeIrisEventHandler {
   void dispose();
@@ -744,13 +859,14 @@ class _IrisEventHandlerObserver implements DisposableNativeIrisEventHandler {
       final ffi.Pointer<ffi.Int8> funcNamePointer =
           key.unregisterName.toNativeUtf8(allocator: arena).cast<ffi.Int8>();
 
+      apiCallExecutorBase
+          .callIrisApi(key.unregisterName, params, bufferList: [_observerPtr]);
+
       nativeIrisApiEngineBinding.DestroyObserver(
         irisApiEnginePtr,
         funcNamePointer,
         _observerPtr,
       );
-
-      apiCallExecutorBase.callIrisApi(key.unregisterName, params);
     });
   }
 }

@@ -69,6 +69,12 @@ class _State extends State<PushEncodedVideoFrame> {
           isJoined = false;
         });
       },
+      onUserJoined:
+          (RtcConnection connection, int remoteUid, int elapsed) async {
+        await _engine.setRemoteVideoSubscriptionOptions(
+            uid: remoteUid,
+            options: const VideoSubscriptionOptions(encodedFrameOnly: true));
+      },
       onStreamMessage: (RtcConnection connection, int remoteUid, int streamId,
           Uint8List data, int length, int sentTs) {
         logSink.log(
@@ -82,6 +88,13 @@ class _State extends State<PushEncodedVideoFrame> {
       },
     ));
 
+    await _engine.getMediaEngine().setExternalVideoSource(
+        enabled: true,
+        useTexture: false,
+        sourceType: ExternalVideoSourceType.encodedVideoFrame,
+        encodedVideoOption:
+            const SenderOptions(codecType: VideoCodecType.videoCodecGeneric));
+
     // enable video module and set up video encoding configs
     await _engine.enableVideo();
 
@@ -91,7 +104,7 @@ class _State extends State<PushEncodedVideoFrame> {
       onEncodedVideoFrameReceived:
           (uid, imageBuffer, length, videoEncodedFrameInfo) {
         logSink.log(
-            '[onStreamMessage] uid: $uid imageBuffer: $imageBuffer, length: $length, videoEncodedFrameInfo: ${videoEncodedFrameInfo.toJson()}');
+            '[onEncodedVideoFrameReceived] uid: $uid imageBuffer: $imageBuffer, length: $length, videoEncodedFrameInfo: ${videoEncodedFrameInfo.toJson()}');
         _showMyDialog(uid, 0, utf8.decode(imageBuffer));
       },
     ));

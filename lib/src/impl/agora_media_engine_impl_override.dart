@@ -33,7 +33,8 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void registerAudioFrameObserver(AudioFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'MediaEngine_registerAudioFrameObserver',
             unregisterName: 'MediaEngine_unregisterAudioFrameObserver'),
         jsonEncode(param));
@@ -45,7 +46,8 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void registerVideoFrameObserver(VideoFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'MediaEngine_registerVideoFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoFrameObserver'),
         jsonEncode(param));
@@ -58,7 +60,8 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
       VideoEncodedFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'MediaEngine_registerVideoEncodedFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoEncodedFrameObserver'),
         jsonEncode(param));
@@ -70,7 +73,8 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void unregisterAudioFrameObserver(AudioFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'MediaEngine_registerAudioFrameObserver',
             unregisterName: 'MediaEngine_unregisterAudioFrameObserver'),
         jsonEncode(param));
@@ -82,7 +86,8 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   void unregisterVideoFrameObserver(VideoFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'MediaEngine_registerVideoFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoFrameObserver'),
         jsonEncode(param));
@@ -95,7 +100,8 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
       VideoEncodedFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'MediaEngine_registerVideoEncodedFrameObserver',
             unregisterName: 'MediaEngine_unregisterVideoEncodedFrameObserver'),
         jsonEncode(param));
@@ -107,18 +113,13 @@ class MediaEngineImpl extends media_engine_impl_binding.MediaEngineImpl
   Future<void> pushVideoFrame(
       {required ExternalVideoFrame frame, int videoTrackId = 0}) async {
     const apiType = 'MediaEngine_pushVideoFrame';
-    final param =
-        createParams({'frame': frame.toJson(), 'videoTrackId': videoTrackId});
+    final param = createParams({'frame': frame.toJson(), 'videoTrackId': videoTrackId});
     final List<Uint8List> buffers = [];
-    // buffers.addAll(frame.collectBufferList());
     final bufferList = <Uint8List>[];
-    if (frame.buffer != null) {
-      buffers.add(frame.buffer!);
-      buffers.add(Uint8List.fromList([]));
-    }
-    if (frame.metadataBuffer != null) {
-      buffers.add(frame.metadataBuffer!);
-    }
+    // This is a little tricky that the buffers length must be 3
+    buffers.add(frame.buffer ?? Uint8List.fromList([]));
+    buffers.add(Uint8List.fromList([]));
+    buffers.add(frame.metadataBuffer ?? Uint8List.fromList([]));
     final callApiResult = await apiCaller
         .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {

@@ -321,12 +321,12 @@ Map<String, dynamic> _$ScreenCaptureConfigurationToJson(
       'regionRect': instance.regionRect?.toJson(),
     };
 
-Size _$SizeFromJson(Map<String, dynamic> json) => Size(
+SIZE _$SIZEFromJson(Map<String, dynamic> json) => SIZE(
       width: json['width'] as int?,
       height: json['height'] as int?,
     );
 
-Map<String, dynamic> _$SizeToJson(Size instance) => <String, dynamic>{
+Map<String, dynamic> _$SIZEToJson(SIZE instance) => <String, dynamic>{
       'width': instance.width,
       'height': instance.height,
     };

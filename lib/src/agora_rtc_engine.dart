@@ -798,9 +798,9 @@ class ScreenCaptureConfiguration {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Size {
-  /// Construct the [Size].
-  const Size({this.width, this.height});
+class SIZE {
+  /// Construct the [SIZE].
+  const SIZE({this.width, this.height});
 
   @JsonKey(name: 'width')
   final int? width;
@@ -809,10 +809,10 @@ class Size {
   final int? height;
 
   /// @nodoc
-  factory Size.fromJson(Map<String, dynamic> json) => _$SizeFromJson(json);
+  factory SIZE.fromJson(Map<String, dynamic> json) => _$SIZEFromJson(json);
 
   /// @nodoc
-  Map<String, dynamic> toJson() => _$SizeToJson(this);
+  Map<String, dynamic> toJson() => _$SIZEToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -2281,8 +2281,8 @@ abstract class RtcEngine {
   Future<bool> isSpeakerphoneEnabled();
 
   Future<List<ScreenCaptureSourceInfo>> getScreenCaptureSources(
-      {required Size thumbSize,
-      required Size iconSize,
+      {required SIZE thumbSize,
+      required SIZE iconSize,
       required bool includeScreen});
 
   Future<void> setAudioSessionOperationRestriction(

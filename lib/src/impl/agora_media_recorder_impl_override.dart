@@ -35,7 +35,8 @@ class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
         .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
 
     await apiCaller.callIrisEventAsync(
-        const SetIrisEventHandlerKey(
+        const IrisEventHandlerKey(
+            op: CallIrisEventOp.create,
             registerName: 'MediaRecorder_setMediaRecorderObserver',
             unregisterName: 'MediaRecorder_unsetMediaRecorderObserver'),
         jsonEncode(param));
@@ -47,7 +48,8 @@ class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
   Future<void> release() async {
     if (_eventHandlers.isNotEmpty) {
       await apiCaller.callIrisEventAsync(
-          const UnsetIrisEventHandlerKey(
+          const IrisEventHandlerKey(
+              op: CallIrisEventOp.dispose,
               registerName: 'MediaRecorder_setMediaRecorderObserver',
               unregisterName: 'MediaRecorder_unsetMediaRecorderObserver'),
           jsonEncode({}));

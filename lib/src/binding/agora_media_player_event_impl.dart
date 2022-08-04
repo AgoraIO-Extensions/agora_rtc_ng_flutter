@@ -12,7 +12,7 @@ extension MediaPlayerAudioFrameObserverExt on MediaPlayerAudioFrameObserver {
         if (onFrame == null) break;
         MediaPlayerAudioFrameObserverOnFrameJson paramJson =
             MediaPlayerAudioFrameObserverOnFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         AudioPcmFrame? frame = paramJson.frame;
         if (frame == null) {
           break;
@@ -56,7 +56,7 @@ extension MediaPlayerVideoFrameObserverExt on MediaPlayerVideoFrameObserver {
         if (onFrame == null) break;
         MediaPlayerVideoFrameObserverOnFrameJson paramJson =
             MediaPlayerVideoFrameObserverOnFrameJson.fromJson(jsonMap);
-        paramJson.fillBuffers(buffers);
+        paramJson = paramJson.fillBuffers(buffers);
         VideoFrame? frame = paramJson.frame;
         if (frame == null) {
           break;

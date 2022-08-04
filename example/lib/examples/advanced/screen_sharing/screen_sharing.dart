@@ -360,8 +360,8 @@ class _ScreenShareDesktopState extends State<ScreenShareDesktop>
   RtcEngine get rtcEngine => widget.rtcEngine;
 
   Future<void> _initScreenCaptureSourceInfos() async {
-    Size thumbSize = const Size(width: 360, height: 240);
-    Size iconSize = const Size(width: 360, height: 240);
+    SIZE thumbSize = const SIZE(width: 360, height: 240);
+    SIZE iconSize = const SIZE(width: 360, height: 240);
     _screenCaptureSourceInfos = await rtcEngine.getScreenCaptureSources(
         thumbSize: thumbSize, iconSize: iconSize, includeScreen: true);
     _selectedScreenCaptureSourceInfo = _screenCaptureSourceInfos[0];

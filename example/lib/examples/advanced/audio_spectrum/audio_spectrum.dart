@@ -87,7 +87,7 @@ class _State extends State<AudioSpectrum> {
 
     await _engine.enableVideo();
 
-    _engine.registerAudioSpectrumObserver(AudioSpectrumObserver(
+    final observer = AudioSpectrumObserver(
       onLocalAudioSpectrum: (AudioSpectrumData data) {
         debugPrint('[onLocalAudioSpectrum] data: ${data.toJson()}');
       },
@@ -96,7 +96,10 @@ class _State extends State<AudioSpectrum> {
         debugPrint(
             '[onRemoteAudioSpectrum] spectrums: $spectrums, spectrumNumber: $spectrumNumber');
       },
-    ));
+    );
+
+    _engine.registerAudioSpectrumObserver(observer);
+    // _engine.unregisterAudioSpectrumObserver(observer);
 
     await _engine.setVideoEncoderConfiguration(
       const VideoEncoderConfiguration(

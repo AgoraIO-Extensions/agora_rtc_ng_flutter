@@ -252,7 +252,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
       MediaPlayerAudioFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'MediaPlayer_registerAudioFrameObserver',
             unregisterName: 'MediaPlayer_unregisterAudioFrameObserver'),
         jsonEncode(param));
@@ -265,7 +266,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
       MediaPlayerAudioFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'MediaPlayer_registerAudioFrameObserver',
             unregisterName: 'MediaPlayer_unregisterAudioFrameObserver'),
         jsonEncode(param));
@@ -278,7 +280,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
       MediaPlayerVideoFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName: 'MediaPlayer_registerVideoFrameObserver',
             unregisterName: 'MediaPlayer_unregisterVideoFrameObserver'),
         jsonEncode(param));
@@ -291,7 +294,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
       MediaPlayerVideoFrameObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName: 'MediaPlayer_registerVideoFrameObserver',
             unregisterName: 'MediaPlayer_unregisterVideoFrameObserver'),
         jsonEncode(param));
@@ -305,7 +309,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
       required int intervalInMS}) async {
     final param = createParams({'intervalInMS': intervalInMS});
     await apiCaller.callIrisEventAsync(
-        const CreateIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.create,
             registerName:
                 'MediaPlayer_registerMediaPlayerAudioSpectrumObserver',
             unregisterName:
@@ -320,7 +325,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
       AudioSpectrumObserver observer) async {
     final param = createParams({});
     await apiCaller.callIrisEventAsync(
-        const DisposeIrisEventObserverKey(
+        const IrisEventObserverKey(
+            op: CallIrisEventOp.dispose,
             registerName:
                 'MediaPlayer_registerMediaPlayerAudioSpectrumObserver',
             unregisterName:

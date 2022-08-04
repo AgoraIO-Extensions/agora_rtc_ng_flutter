@@ -131,23 +131,31 @@ ExternalVideoFrame _$ExternalVideoFrameFromJson(Map<String, dynamic> json) =>
       metadataSize: json['metadata_size'] as int?,
     );
 
-Map<String, dynamic> _$ExternalVideoFrameToJson(ExternalVideoFrame instance) =>
-    <String, dynamic>{
-      'type': _$VideoBufferTypeEnumMap[instance.type],
-      'format': _$VideoPixelFormatEnumMap[instance.format],
-      'stride': instance.stride,
-      'height': instance.height,
-      'cropLeft': instance.cropLeft,
-      'cropTop': instance.cropTop,
-      'cropRight': instance.cropRight,
-      'cropBottom': instance.cropBottom,
-      'rotation': instance.rotation,
-      'timestamp': instance.timestamp,
-      'eglType': _$EglContextTypeEnumMap[instance.eglType],
-      'textureId': instance.textureId,
-      'matrix': instance.matrix,
-      'metadata_size': instance.metadataSize,
-    };
+Map<String, dynamic> _$ExternalVideoFrameToJson(ExternalVideoFrame instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', _$VideoBufferTypeEnumMap[instance.type]);
+  writeNotNull('format', _$VideoPixelFormatEnumMap[instance.format]);
+  writeNotNull('stride', instance.stride);
+  writeNotNull('height', instance.height);
+  writeNotNull('cropLeft', instance.cropLeft);
+  writeNotNull('cropTop', instance.cropTop);
+  writeNotNull('cropRight', instance.cropRight);
+  writeNotNull('cropBottom', instance.cropBottom);
+  writeNotNull('rotation', instance.rotation);
+  writeNotNull('timestamp', instance.timestamp);
+  writeNotNull('eglType', _$EglContextTypeEnumMap[instance.eglType]);
+  writeNotNull('textureId', instance.textureId);
+  writeNotNull('matrix', instance.matrix);
+  writeNotNull('metadata_size', instance.metadataSize);
+  return val;
+}
 
 const _$VideoBufferTypeEnumMap = {
   VideoBufferType.videoBufferRawData: 1,

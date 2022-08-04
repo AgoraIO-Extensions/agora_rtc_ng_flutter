@@ -3,6 +3,46 @@ import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
 import 'package:agora_rtc_ng/src/impl/video_view_controller_impl.dart';
 import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
+
+abstract class VideoViewControllerBase {
+  RtcEngine get rtcEngine;
+
+  VideoCanvas get canvas;
+
+  RtcConnection? get connection;
+
+  bool get useFlutterTexture;
+
+  bool get useAndroidSurfaceView;
+
+  @internal
+  void setTextureId(int textureId);
+
+  @internal
+  int getTextureId();
+
+  @internal
+  int getVideoSourceType();
+
+  @internal
+  Future<void> setupView(int nativeViewPtr);
+
+  @protected
+  Future<int> createTextureRender(
+    int uid,
+    String channelId,
+    int videoSourceType,
+  );
+
+  @internal
+  Future<void> initialize();
+
+  @internal
+  Future<void> disposeRender();
+
+  Future<void> dispose();
+}
 
 /// A AgoraVideoView controller for rendering local and remote video.
 /// On different platforms, the default view corresponding to this class is different:
