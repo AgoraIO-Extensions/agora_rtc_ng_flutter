@@ -113,7 +113,7 @@ class _AgoraRtcRenderPlatformViewState extends State<AgoraRtcRenderPlatformView>
 
   Future<void> _disposeRender() async {
     await widget.controller.disposeRender();
-    await getMethodChannel()!.invokeMethod<int>('deleteNativeViewPtr');
+    await getMethodChannel()?.invokeMethod<int>('deleteNativeViewPtr');
   }
 }
 

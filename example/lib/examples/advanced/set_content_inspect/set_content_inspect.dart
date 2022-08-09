@@ -2,6 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// MultiChannel Example
@@ -87,6 +88,12 @@ class _State extends State<SetContentInspect> {
         logSink.log('[onContentInspectResult] result: $result');
       },
     ));
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await _engine.loadExtensionProvider(
+          path: 'agora_content_inspect_extension');
+    }
+
     await _engine.enableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 

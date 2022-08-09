@@ -2,6 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/advanced/voice_changer/voice_changer.config.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// VoiceChanger Example
@@ -146,6 +147,12 @@ class _State extends State<VoiceChanger> {
       },
     ));
 
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await _engine.loadExtensionProvider(path: 'agora_audio_beauty_extension');
+    }
+
+    await _engine.enableAudio();
+    await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
     await _engine.joinChannel(
         token: config.token, channelId: _channelId.text, info: '', uid: 0);
   }
@@ -213,50 +220,50 @@ class _State extends State<VoiceChanger> {
           },
           child: const Text('setAudioEffectPreset'),
         ),
-        Row(
-          children: [
-            const Text('param1'),
-            Slider(
-              value: _audioEffectPresetParam1,
-              min: 0.0,
-              max: 10.0,
-              divisions: 10,
-              label: 'param1 $_audioEffectPresetParam1',
-              onChanged: (double value) {
-                setState(() {
-                  _audioEffectPresetParam1 = value;
-                });
-              },
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            const Text('param2'),
-            Slider(
-              value: _audioEffectPresetParam2,
-              min: 0.0,
-              max: 10.0,
-              divisions: 10,
-              label: 'param2 $_audioEffectPresetParam2',
-              onChanged: (double value) {
-                setState(() {
-                  _audioEffectPresetParam2 = value;
-                });
-              },
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            await _engine.setAudioEffectParameters(
-              preset: _selectedAudioEffectPreset,
-              param1: _audioEffectPresetParam1.toInt(),
-              param2: _audioEffectPresetParam2.toInt(),
-            );
-          },
-          child: const Text('setAudioEffectParameters'),
-        ),
+        // Row(
+        //   children: [
+        //     const Text('param1'),
+        //     Slider(
+        //       value: _audioEffectPresetParam1,
+        //       min: 0.0,
+        //       max: 10.0,
+        //       divisions: 10,
+        //       label: 'param1 $_audioEffectPresetParam1',
+        //       onChanged: (double value) {
+        //         setState(() {
+        //           _audioEffectPresetParam1 = value;
+        //         });
+        //       },
+        //     ),
+        //   ],
+        // ),
+        // Row(
+        //   children: [
+        //     const Text('param2'),
+        //     Slider(
+        //       value: _audioEffectPresetParam2,
+        //       min: 0.0,
+        //       max: 10.0,
+        //       divisions: 10,
+        //       label: 'param2 $_audioEffectPresetParam2',
+        //       onChanged: (double value) {
+        //         setState(() {
+        //           _audioEffectPresetParam2 = value;
+        //         });
+        //       },
+        //     ),
+        //   ],
+        // ),
+        // ElevatedButton(
+        //   onPressed: () async {
+        //     await _engine.setAudioEffectParameters(
+        //       preset: _selectedAudioEffectPreset,
+        //       param1: _audioEffectPresetParam1.toInt(),
+        //       param2: _audioEffectPresetParam2.toInt(),
+        //     );
+        //   },
+        //   child: const Text('setAudioEffectParameters'),
+        // ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
