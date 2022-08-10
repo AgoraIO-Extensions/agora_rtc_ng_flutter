@@ -64,7 +64,23 @@ class _State extends State<SendMetadata> {
         logSink.log(
             '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
         setState(() {
+          remoteUids.clear();
           isJoined = false;
+        });
+      },
+      onUserJoined: (RtcConnection connection, int rUid, int elapsed) {
+        logSink.log(
+            '[onUserJoined] connection: ${connection.toJson()} remoteUid: $rUid elapsed: $elapsed');
+        setState(() {
+          remoteUids.add(rUid);
+        });
+      },
+      onUserOffline:
+          (RtcConnection connection, int rUid, UserOfflineReasonType reason) {
+        logSink.log(
+            '[onUserOffline] connection: ${connection.toJson()}  rUid: $rUid reason: $reason');
+        setState(() {
+          remoteUids.remove(rUid);
         });
       },
     ));
@@ -157,28 +173,35 @@ class _State extends State<SendMetadata> {
     return ExampleActionsWidget(
       displayContentBuilder: (context, isLayoutHorizontal) {
         if (!_isReadyPreview) return Container();
-        final views = remoteUids.map((uid) {
-          return SizedBox(
-            height: 120,
-            width: 120,
-            child: AgoraVideoView(
-              controller: VideoViewController.remote(
-                rtcEngine: _engine,
-                canvas: VideoCanvas(uid: uid),
-                connection: RtcConnection(channelId: _controller.text),
-              ),
-            ),
-          );
-        }).toList();
         return Stack(
           children: [
             AgoraVideoView(
               controller: VideoViewController(
-                  rtcEngine: _engine, canvas: const VideoCanvas(uid: 0)),
+                rtcEngine: _engine,
+                canvas: const VideoCanvas(uid: 0),
+              ),
             ),
             Align(
               alignment: Alignment.topLeft,
-              child: Wrap(children: views),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.of(remoteUids.map(
+                    (e) => SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: AgoraVideoView(
+                        controller: VideoViewController.remote(
+                          rtcEngine: _engine,
+                          canvas: VideoCanvas(uid: e),
+                          connection:
+                              RtcConnection(channelId: _channelIdController.text),
+                        ),
+                      ),
+                    ),
+                  )),
+                ),
+              ),
             )
           ],
         );

@@ -25,26 +25,29 @@ import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
     as agora_spatial_audio_impl;
 import 'package:agora_rtc_ng/src/impl/agora_media_engine_impl_override.dart'
     as media_engine_impl;
+import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
 import 'package:agora_rtc_ng/src/impl/media_player_impl.dart'
     as media_player_impl;
 import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
     as audio_device_manager_impl;
 import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:iris_event/iris_event.dart';
 
 import 'global_video_view_controller.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
 
 // ignore_for_file: public_member_api_docs
 
 class ObjectPool {
   ObjectPool();
-  final Map<Type, Object> pool = {};
+  final Map<Type, AsyncDisposableObject> pool = {};
 
-  void put(Type objectType, Object obj) {
+  void put(Type objectType, AsyncDisposableObject obj) {
     pool.putIfAbsent(objectType, () => obj);
   }
 
@@ -52,8 +55,16 @@ class ObjectPool {
     pool.remove(objectType);
   }
 
-  Object? get(Type objectType) {
+  AsyncDisposableObject? get(Type objectType) {
     return pool[objectType];
+  }
+
+  Future<void> clear() async {
+    for (final key in pool.keys) {
+      await pool[key]?.disposeAsync();
+    }
+
+    pool.clear();
   }
 }
 
@@ -61,7 +72,7 @@ extension RtcEngineExt on RtcEngine {
   GlobalVideoViewController get globalVideoViewController =>
       (this as RtcEngineImpl)._globalVideoViewController;
 
-  void addToPool<V>(Type objectType, Object obj) {
+  void addToPool<V>(Type objectType, AsyncDisposableObject obj) {
     (this as RtcEngineImpl)._objectPool.put(objectType, obj);
   }
 
@@ -175,6 +186,21 @@ class AudioSpectrumObserverWrapper
   }
 }
 
+class _Lifecycle with WidgetsBindingObserver {
+  const _Lifecycle(this.onDestroy);
+
+  final VoidCallback onDestroy;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.detached) {
+      onDestroy();
+    }
+  }
+}
+
 class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     implements RtcEngineEx, IrisEventHandler {
   RtcEngineImpl._();
@@ -187,11 +213,13 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   final List<IrisEventHandler> _eventHandlers = [];
 
   final GlobalVideoViewController _globalVideoViewController =
-      const GlobalVideoViewController();
+      GlobalVideoViewController();
 
   final ObjectPool _objectPool = ObjectPool();
 
   int _mediaPlayerCount = 0;
+
+  _Lifecycle? _lifecycle;
 
   @internal
   final MethodChannel engineMethodChannel = const MethodChannel('agora_rtc_ng');
@@ -205,6 +233,22 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   }
 
   Future<void> _initializeInternal(RtcEngineContext context) async {
+    _lifecycle ??= _Lifecycle(
+      () {
+        release(sync: true);
+      },
+    );
+    WidgetsBinding.instance.addObserver(_lifecycle!);
+
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final externalFilesDir =
+          await engineMethodChannel.invokeMethod('getExternalFilesDir');
+      if (externalFilesDir != null) {
+        // Reset the sdk log file to ensure the iris log path has been set
+        await setLogFile(path.join(externalFilesDir, 'agorasdk.log'));
+      }
+    }
+
     await _globalVideoViewController
         .attachVideoFrameBufferManager(apiCaller.getIrisApiEngineIntPtr());
   }
@@ -224,6 +268,13 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<void> release({bool sync = false}) async {
+    if (_instance == null) return;
+
+    if (_lifecycle != null) {
+      WidgetsBinding.instance.removeObserver(_lifecycle!);
+      _lifecycle = null;
+    }
+
     if (_rtcEngineEventHandlers.isNotEmpty) {
       _rtcEngineEventHandlers.clear();
       apiCaller.removeEventHandler(this);
@@ -233,6 +284,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     _metadataObservers.clear();
     _directCdnStreamingEventHandler = null;
     _mediaPlayerCount = 0;
+
+    await _objectPool.clear();
 
     await apiCaller.disposeAllEventHandlersAsync();
 
@@ -797,14 +850,12 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   Future<void> startAudioMixing(
       {required String filePath,
       required bool loopback,
-      required bool replace,
       required int cycle,
       int startPos = 0}) async {
     const apiType = 'RtcEngine_startAudioMixing2';
     final param = createParams({
       'filePath': filePath,
       'loopback': loopback,
-      'replace': replace,
       'cycle': cycle,
       'startPos': startPos
     });
@@ -962,6 +1013,21 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
     _eventHandlers.remove(AudioSpectrumObserverWrapper(observer));
   }
+
+  /////////// debug ////////
+
+  /// [type] see [VideoSourceType], only [VideoSourceType.videoSourceCamera], [VideoSourceType.videoSourceRemote] supported
+  Future<void> startDumpVideo(int type, String dir) {
+    return apiCaller.startDumpVideoAsync(
+        _globalVideoViewController.videoFrameBufferManagerIntPtr, type, dir);
+  }
+
+  Future<void> stopDumpVideo() {
+    return apiCaller.stopDumpVideoAsync(
+        _globalVideoViewController.videoFrameBufferManagerIntPtr);
+  }
+
+  //////////////////////////
 }
 
 class VideoDeviceManagerImpl extends rtc_engine_binding.VideoDeviceManagerImpl

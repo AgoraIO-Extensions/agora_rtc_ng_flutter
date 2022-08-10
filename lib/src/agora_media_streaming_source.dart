@@ -152,7 +152,7 @@ extension StreamingSrcStateExt on StreamingSrcState {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class InputSeiData {
   /// @nodoc
   const InputSeiData(

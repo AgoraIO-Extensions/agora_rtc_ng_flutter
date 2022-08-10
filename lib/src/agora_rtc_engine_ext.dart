@@ -5,8 +5,7 @@ import 'agora_rtc_engine_ex.dart';
 import 'impl/agora_rtc_engine_impl.dart' as impl;
 import 'impl/media_player_impl.dart';
 
-/// The derived interface class from RtcEngine.
-///
+/// @nodoc
 extension RtcEngineExt on RtcEngine {
   /// @nodoc
   Future<String?> getAssetAbsolutePath(String assetPath) async {
@@ -33,7 +32,6 @@ class AgoraRtcException implements Exception {
   /// @nodoc
   final String? message;
 
-  /// @nodoc
   @override
   String toString() => 'AgoraRtcException($code, $message)';
 }

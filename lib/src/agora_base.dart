@@ -911,7 +911,7 @@ extension DegradationPreferenceExt on DegradationPreference {
 
 /// The video dimension.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoDimensions {
   /// @nodoc
   const VideoDimensions({this.width, this.height});
@@ -1028,7 +1028,7 @@ extension TCcModeExt on TCcMode {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class SenderOptions {
   /// @nodoc
   const SenderOptions({this.ccMode, this.codecType, this.targetBitrate});
@@ -1196,7 +1196,7 @@ extension WatermarkFitModeExt on WatermarkFitMode {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class EncodedAudioFrameAdvancedSettings {
   /// @nodoc
   const EncodedAudioFrameAdvancedSettings({this.speech, this.sendEvenIfEmpty});
@@ -1221,7 +1221,7 @@ class EncodedAudioFrameAdvancedSettings {
 
 /// Audio information after encoding.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class EncodedAudioFrameInfo {
   /// @nodoc
   const EncodedAudioFrameInfo(
@@ -1265,7 +1265,7 @@ class EncodedAudioFrameInfo {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioPcmDataInfo {
   /// @nodoc
   const AudioPcmDataInfo(
@@ -1355,7 +1355,7 @@ extension VideoStreamTypeExt on VideoStreamType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoSubscriptionOptions {
   /// @nodoc
   const VideoSubscriptionOptions({this.type, this.encodedFrameOnly});
@@ -1378,7 +1378,7 @@ class VideoSubscriptionOptions {
 
 /// The information about the external encoded video frame.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class EncodedVideoFrameInfo {
   /// @nodoc
   const EncodedVideoFrameInfo(
@@ -1475,7 +1475,7 @@ extension VideoMirrorModeTypeExt on VideoMirrorModeType {
 
 /// Video encoder configurations.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoEncoderConfiguration {
   /// @nodoc
   const VideoEncoderConfiguration(
@@ -1538,7 +1538,7 @@ class VideoEncoderConfiguration {
 
 /// The configurations for the data stream.
 /// The following table shows the SDK behaviors under different parameter settings:
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class DataStreamConfig {
   /// @nodoc
   const DataStreamConfig({this.syncWithAudio, this.ordered});
@@ -1598,7 +1598,7 @@ extension SimulcastStreamModeExt on SimulcastStreamMode {
 
 /// The configuration of the low-quality video stream.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class SimulcastStreamConfig {
   /// @nodoc
   const SimulcastStreamConfig({this.dimensions, this.bitrate, this.framerate});
@@ -1625,7 +1625,7 @@ class SimulcastStreamConfig {
 
 /// The location of the target area relative to the screen or window. If you do not set this parameter, the SDK selects the whole screen or window.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Rectangle {
   /// @nodoc
   const Rectangle({this.x, this.y, this.width, this.height});
@@ -1658,7 +1658,7 @@ class Rectangle {
 /// The position and size of the watermark on the screen are determined by xRatio, yRatio, and widthRatio:
 ///  (xRatio, yRatio) refers to the coordinates of the upper left corner of the watermark, which determines the distance from the upper left corner of the watermark to the upper left corner of the screen.
 ///  The widthRatio determines the width of the watermark.
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class WatermarkRatio {
   /// @nodoc
   const WatermarkRatio({this.xRatio, this.yRatio, this.widthRatio});
@@ -1685,7 +1685,7 @@ class WatermarkRatio {
 
 /// Configurations of the watermark image.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class WatermarkOptions {
   /// @nodoc
   const WatermarkOptions(
@@ -1725,7 +1725,7 @@ class WatermarkOptions {
 
 /// Statistics of the channel.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class RtcStats {
   /// @nodoc
   const RtcStats(
@@ -2068,7 +2068,7 @@ extension AudienceLatencyLevelTypeExt on AudienceLatencyLevelType {
 
 /// The detailed options of a user.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ClientRoleOptions {
   /// @nodoc
   const ClientRoleOptions({this.audienceLatencyLevel});
@@ -2150,7 +2150,7 @@ extension ExperiencePoorReasonExt on ExperiencePoorReason {
 
 /// Audio statistics of the remote user.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class RemoteAudioStats {
   /// @nodoc
   const RemoteAudioStats(
@@ -2353,7 +2353,7 @@ extension AudioScenarioTypeExt on AudioScenarioType {
 
 /// The format of the video frame.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoFormat {
   /// @nodoc
   const VideoFormat({this.width, this.height, this.fps});
@@ -2921,7 +2921,7 @@ extension RemoteUserStateExt on RemoteUserState {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoTrackInfo {
   /// @nodoc
   const VideoTrackInfo(
@@ -3018,7 +3018,7 @@ extension RemoteVideoDownscaleLevelExt on RemoteVideoDownscaleLevel {
 
 /// The volume information of users.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioVolumeInfo {
   /// @nodoc
   const AudioVolumeInfo({this.uid, this.volume, this.vad, this.voicePitch});
@@ -3054,7 +3054,7 @@ class AudioVolumeInfo {
 
 /// The audio device information.
 /// This class is for Android only.
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class DeviceInfo {
   /// @nodoc
   const DeviceInfo({this.isLowLatencyAudioSupported});
@@ -3075,7 +3075,7 @@ class DeviceInfo {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Packet {
   /// @nodoc
   const Packet({this.buffer, this.size});
@@ -3212,7 +3212,7 @@ extension AudioCodecProfileTypeExt on AudioCodecProfileType {
 
 /// Local audio statistics.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LocalAudioStats {
   /// @nodoc
   const LocalAudioStats(
@@ -3426,7 +3426,7 @@ extension RtmpStreamingEventExt on RtmpStreamingEvent {
 
 /// Image properties.
 /// This class sets the properties of the watermark and background images in the live video.
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class RtcImage {
   /// @nodoc
   const RtcImage(
@@ -3479,7 +3479,7 @@ class RtcImage {
 
 /// The configuration for advanced features of the RTMP or RTMPS streaming with transcoding.
 /// If you want to enable the advanced features of streaming with transcoding, contact .
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LiveStreamAdvancedFeature {
   /// @nodoc
   const LiveStreamAdvancedFeature({this.featureName, this.opened});
@@ -3552,7 +3552,7 @@ extension ConnectionStateTypeExt on ConnectionStateType {
 
 /// Transcoding configurations of each host.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class TranscodingUser {
   /// @nodoc
   const TranscodingUser(
@@ -3625,7 +3625,7 @@ class TranscodingUser {
 
 /// Transcoding configurations for Media Push.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LiveTranscoding {
   /// @nodoc
   const LiveTranscoding(
@@ -3782,7 +3782,7 @@ class LiveTranscoding {
 
 /// The video streams for the video mixing on the local client.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class TranscodingVideoStream {
   /// @nodoc
   const TranscodingVideoStream(
@@ -3860,7 +3860,7 @@ class TranscodingVideoStream {
 
 /// The configuration of the video mixing on the local client.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LocalTranscoderConfiguration {
   /// @nodoc
   const LocalTranscoderConfiguration(
@@ -3893,7 +3893,7 @@ class LocalTranscoderConfiguration {
 
 /// Configurations of the last-mile network test.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LastmileProbeConfig {
   /// @nodoc
   const LastmileProbeConfig(
@@ -3962,7 +3962,7 @@ extension LastmileProbeResultStateExt on LastmileProbeResultState {
 
 /// Results of the uplink or downlink last-mile network test.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LastmileProbeOneWayResult {
   /// @nodoc
   const LastmileProbeOneWayResult(
@@ -3990,7 +3990,7 @@ class LastmileProbeOneWayResult {
 
 /// Results of the uplink and downlink last-mile network tests.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LastmileProbeResult {
   /// @nodoc
   const LastmileProbeResult(
@@ -4219,7 +4219,7 @@ extension WlaccSuggestActionExt on WlaccSuggestAction {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class WlAccStats {
   /// @nodoc
   const WlAccStats(
@@ -4323,7 +4323,7 @@ extension VideoViewSetupModeExt on VideoViewSetupMode {
 
 /// Attributes of video canvas object.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoCanvas {
   /// @nodoc
   const VideoCanvas(
@@ -4391,7 +4391,7 @@ class VideoCanvas {
 
 /// Image enhancement options.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class BeautyOptions {
   /// @nodoc
   const BeautyOptions(
@@ -4465,7 +4465,7 @@ extension LighteningContrastLevelExt on LighteningContrastLevel {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LowlightEnhanceOptions {
   /// @nodoc
   const LowlightEnhanceOptions({this.mode, this.level});
@@ -4537,7 +4537,7 @@ extension LowLightEnhanceLevelExt on LowLightEnhanceLevel {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoDenoiserOptions {
   /// @nodoc
   const VideoDenoiserOptions({this.mode, this.level});
@@ -4613,7 +4613,7 @@ extension VideoDenoiserLevelExt on VideoDenoiserLevel {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ColorEnhanceOptions {
   /// @nodoc
   const ColorEnhanceOptions({this.strengthLevel, this.skinProtectLevel});
@@ -4636,7 +4636,7 @@ class ColorEnhanceOptions {
 
 /// The custom background image.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VirtualBackgroundSource {
   /// @nodoc
   const VirtualBackgroundSource(
@@ -4727,7 +4727,7 @@ extension BackgroundBlurDegreeExt on BackgroundBlurDegree {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class SegmentationProperty {
   /// @nodoc
   const SegmentationProperty({this.modelType, this.greenCapacity});
@@ -5016,7 +5016,7 @@ extension VoiceConversionPresetExt on VoiceConversionPreset {
 
 /// Screen sharing configurations.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ScreenCaptureParameters {
   /// @nodoc
   const ScreenCaptureParameters(
@@ -5183,7 +5183,7 @@ extension AudioEncodedFrameObserverPositionExt
 
 /// Recording configuration.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioRecordingConfiguration {
   /// @nodoc
   const AudioRecordingConfiguration(
@@ -5238,7 +5238,7 @@ class AudioRecordingConfiguration {
 
 /// Observer settings for encoded audio.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioEncodedFrameObserverConfig {
   /// @nodoc
   const AudioEncodedFrameObserverConfig({this.postionType, this.encodingType});
@@ -5562,7 +5562,7 @@ extension ChannelMediaRelayStateExt on ChannelMediaRelayState {
 
 /// The definition of ChannelMediaInfo.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ChannelMediaInfo {
   /// @nodoc
   const ChannelMediaInfo({this.channelName, this.token, this.uid});
@@ -5589,7 +5589,7 @@ class ChannelMediaInfo {
 
 /// The definition of ChannelMediaRelayConfiguration.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ChannelMediaRelayConfiguration {
   /// @nodoc
   const ChannelMediaRelayConfiguration(
@@ -5627,7 +5627,7 @@ class ChannelMediaRelayConfiguration {
 
 /// The uplink network information.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class UplinkNetworkInfo {
   /// @nodoc
   const UplinkNetworkInfo({this.videoEncoderTargetBitrateBps});
@@ -5645,7 +5645,7 @@ class UplinkNetworkInfo {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class DownlinkNetworkInfo {
   /// @nodoc
   const DownlinkNetworkInfo(
@@ -5684,7 +5684,7 @@ class DownlinkNetworkInfo {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class PeerDownlinkInfo {
   /// @nodoc
   const PeerDownlinkInfo(
@@ -5773,7 +5773,7 @@ extension EncryptionModeExt on EncryptionMode {
 
 /// Built-in encryption configurations.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class EncryptionConfig {
   /// @nodoc
   const EncryptionConfig(
@@ -5995,7 +5995,7 @@ extension StreamPublishStateExt on StreamPublishState {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class EchoTestConfiguration {
   /// @nodoc
   const EchoTestConfiguration(
@@ -6035,7 +6035,7 @@ class EchoTestConfiguration {
 
 /// The information of the user.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class UserInfo {
   /// @nodoc
   const UserInfo({this.uid, this.userAccount});
@@ -6132,7 +6132,7 @@ extension ThreadPriorityTypeExt on ThreadPriorityType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ScreenVideoParameters {
   /// @nodoc
   const ScreenVideoParameters(
@@ -6163,7 +6163,7 @@ class ScreenVideoParameters {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ScreenAudioParameters {
   /// @nodoc
   const ScreenAudioParameters(
@@ -6190,7 +6190,7 @@ class ScreenAudioParameters {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ScreenCaptureParameters2 {
   /// @nodoc
   const ScreenCaptureParameters2(
@@ -6224,7 +6224,7 @@ class ScreenCaptureParameters2 {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class SpatialAudioParams {
   /// @nodoc
   const SpatialAudioParams(

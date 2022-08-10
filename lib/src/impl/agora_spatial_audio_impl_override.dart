@@ -3,11 +3,12 @@ import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
 import 'package:agora_rtc_ng/src/binding/agora_spatial_audio_impl.dart'
     as spatial_audio_binding;
 import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart';
+import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable
 
-class LocalSpatialAudioEngineImpl
-    extends spatial_audio_binding.LocalSpatialAudioEngineImpl {
+class LocalSpatialAudioEngineImpl extends spatial_audio_binding
+    .LocalSpatialAudioEngineImpl implements AsyncDisposableObject {
   LocalSpatialAudioEngineImpl._(this._rtcEngine) {
     _rtcEngine.addToPool(LocalSpatialAudioEngineImpl, this);
   }
@@ -48,5 +49,10 @@ class LocalSpatialAudioEngineImpl
         await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
 
     _rtcEngine.removeFromPool(LocalSpatialAudioEngineImpl);
+  }
+
+  @override
+  Future<void> disposeAsync() async {
+    await release();
   }
 }

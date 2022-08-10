@@ -91,7 +91,7 @@ extension BytesPerSampleExt on BytesPerSample {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioParameters {
   /// @nodoc
   const AudioParameters({this.sampleRate, this.channels, this.framesPerBuffer});
@@ -275,7 +275,7 @@ extension ContentInspectTypeExt on ContentInspectType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ContentInspectModule {
   /// @nodoc
   const ContentInspectModule({this.type, this.interval});
@@ -297,7 +297,7 @@ class ContentInspectModule {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ContentInspectConfig {
   /// @nodoc
   const ContentInspectConfig({this.extraInfo, this.modules, this.moduleCount});
@@ -326,7 +326,7 @@ class ContentInspectConfig {
 const kMaxCodecNameLength = 50;
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class PacketOptions {
   /// @nodoc
   const PacketOptions({this.timestamp, this.audioLevelIndication});
@@ -348,7 +348,7 @@ class PacketOptions {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioEncodedFrameInfo {
   /// @nodoc
   const AudioEncodedFrameInfo({this.sendTs, this.codec});
@@ -370,7 +370,7 @@ class AudioEncodedFrameInfo {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioPcmFrame {
   /// @nodoc
   const AudioPcmFrame(
@@ -545,7 +545,7 @@ extension RenderModeTypeExt on RenderModeType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ExternalVideoFrame {
   /// @nodoc
   const ExternalVideoFrame(
@@ -694,7 +694,7 @@ extension VideoBufferTypeExt on VideoBufferType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoFrame {
   /// @nodoc
   const VideoFrame(
@@ -899,7 +899,7 @@ extension AudioFrameTypeExt on AudioFrameType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioFrame {
   /// @nodoc
   const AudioFrame(
@@ -990,7 +990,7 @@ extension AudioFramePositionExt on AudioFramePosition {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioParams {
   /// @nodoc
   const AudioParams(
@@ -1047,7 +1047,7 @@ class AudioFrameObserver extends AudioFrameObserverBase {
 
 /// The audio spectrum data.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioSpectrumData {
   /// @nodoc
   const AudioSpectrumData({this.audioSpectrumData, this.dataLength});
@@ -1072,7 +1072,7 @@ class AudioSpectrumData {
 
 /// Audio spectrum information of the remote user.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class UserAudioSpectrumInfo {
   /// @nodoc
   const UserAudioSpectrumInfo({this.uid, this.spectrumData});
@@ -1348,7 +1348,7 @@ extension RecorderErrorCodeExt on RecorderErrorCode {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class MediaRecorderConfiguration {
   /// @nodoc
   const MediaRecorderConfiguration(
@@ -1387,7 +1387,7 @@ class MediaRecorderConfiguration {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class RecorderInfo {
   /// @nodoc
   const RecorderInfo({this.fileName, this.durationMs, this.fileSize});

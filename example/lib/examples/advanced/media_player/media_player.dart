@@ -114,6 +114,7 @@ class _State extends State<MediaPlayer> {
             // _isStop = true;
             _isPause = false;
             _seekPos = 0;
+            _isMuted = false;
           } else if (state == MediaPlayerState.playerStatePlaying) {
             _isPlaying = true;
             _isPause = false;

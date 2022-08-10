@@ -4,14 +4,19 @@ import 'package:flutter/services.dart';
 // ignore_for_file: public_member_api_docs
 
 class GlobalVideoViewController {
-  const GlobalVideoViewController();
+  GlobalVideoViewController();
 
   final MethodChannel methodChannel =
       const MethodChannel('agora_rtc_ng/video_view_controller');
 
+  int _videoFrameBufferManagerIntPtr = 0;
+  int get videoFrameBufferManagerIntPtr => _videoFrameBufferManagerIntPtr;
+
   Future<void> attachVideoFrameBufferManager(int irisRtcEngineIntPtr) async {
-    await methodChannel.invokeMethod(
+    final videoFrameBufferManagerIntPtr = await methodChannel.invokeMethod<int>(
         'attachVideoFrameBufferManager', irisRtcEngineIntPtr);
+
+    _videoFrameBufferManagerIntPtr = videoFrameBufferManagerIntPtr ?? 0;
   }
 
   Future<void> detachVideoFrameBufferManager(int irisRtcEngineIntPtr) async {

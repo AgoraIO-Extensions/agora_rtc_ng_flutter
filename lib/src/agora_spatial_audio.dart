@@ -2,7 +2,7 @@ import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 part 'agora_spatial_audio.g.dart';
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class RemoteVoicePositionInfo {
   /// @nodoc
   const RemoteVoicePositionInfo({this.position, this.forward});

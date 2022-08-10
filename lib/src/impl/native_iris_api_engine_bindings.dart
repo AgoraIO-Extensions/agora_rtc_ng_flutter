@@ -54,6 +54,253 @@ class NativeIrisApiEngineBinding {
   late final _InitIrisLogger = _InitIrisLoggerPtr.asFunction<
       void Function(ffi.Pointer<ffi.Int8>, int, int)>();
 
+  IrisVideoFrameBufferManagerPtr CreateIrisVideoFrameBufferManager() {
+    return _CreateIrisVideoFrameBufferManager();
+  }
+
+  late final _CreateIrisVideoFrameBufferManagerPtr =
+      _lookup<ffi.NativeFunction<IrisVideoFrameBufferManagerPtr Function()>>(
+          'CreateIrisVideoFrameBufferManager');
+  late final _CreateIrisVideoFrameBufferManager =
+      _CreateIrisVideoFrameBufferManagerPtr.asFunction<
+          IrisVideoFrameBufferManagerPtr Function()>();
+
+  void FreeIrisVideoFrameBufferManager(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+  ) {
+    return _FreeIrisVideoFrameBufferManager(
+      manager_ptr,
+    );
+  }
+
+  late final _FreeIrisVideoFrameBufferManagerPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(IrisVideoFrameBufferManagerPtr)>>(
+      'FreeIrisVideoFrameBufferManager');
+  late final _FreeIrisVideoFrameBufferManager =
+      _FreeIrisVideoFrameBufferManagerPtr.asFunction<
+          void Function(IrisVideoFrameBufferManagerPtr)>();
+
+  IrisVideoFrameBufferDelegateHandle EnableVideoFrameBuffer(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    ffi.Pointer<IrisCVideoFrameBuffer> buffer,
+    int uid,
+    ffi.Pointer<ffi.Int8> channel_id,
+  ) {
+    return _EnableVideoFrameBuffer(
+      manager_ptr,
+      buffer,
+      uid,
+      channel_id,
+    );
+  }
+
+  late final _EnableVideoFrameBufferPtr = _lookup<
+      ffi.NativeFunction<
+          IrisVideoFrameBufferDelegateHandle Function(
+              IrisVideoFrameBufferManagerPtr,
+              ffi.Pointer<IrisCVideoFrameBuffer>,
+              ffi.Uint32,
+              ffi.Pointer<ffi.Int8>)>>('EnableVideoFrameBuffer');
+  late final _EnableVideoFrameBuffer = _EnableVideoFrameBufferPtr.asFunction<
+      IrisVideoFrameBufferDelegateHandle Function(
+          IrisVideoFrameBufferManagerPtr,
+          ffi.Pointer<IrisCVideoFrameBuffer>,
+          int,
+          ffi.Pointer<ffi.Int8>)>();
+
+  IrisVideoFrameBufferDelegateHandle EnableVideoFrameBufferByConfig(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    ffi.Pointer<IrisCVideoFrameBuffer> buffer,
+    ffi.Pointer<IrisVideoFrameBufferConfig> config,
+  ) {
+    return _EnableVideoFrameBufferByConfig(
+      manager_ptr,
+      buffer,
+      config,
+    );
+  }
+
+  late final _EnableVideoFrameBufferByConfigPtr = _lookup<
+          ffi.NativeFunction<
+              IrisVideoFrameBufferDelegateHandle Function(
+                  IrisVideoFrameBufferManagerPtr,
+                  ffi.Pointer<IrisCVideoFrameBuffer>,
+                  ffi.Pointer<IrisVideoFrameBufferConfig>)>>(
+      'EnableVideoFrameBufferByConfig');
+  late final _EnableVideoFrameBufferByConfig =
+      _EnableVideoFrameBufferByConfigPtr.asFunction<
+          IrisVideoFrameBufferDelegateHandle Function(
+              IrisVideoFrameBufferManagerPtr,
+              ffi.Pointer<IrisCVideoFrameBuffer>,
+              ffi.Pointer<IrisVideoFrameBufferConfig>)>();
+
+  void DisableVideoFrameBufferByDelegate(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    IrisVideoFrameBufferDelegateHandle handle,
+  ) {
+    return _DisableVideoFrameBufferByDelegate(
+      manager_ptr,
+      handle,
+    );
+  }
+
+  late final _DisableVideoFrameBufferByDelegatePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(IrisVideoFrameBufferManagerPtr,
+                  IrisVideoFrameBufferDelegateHandle)>>(
+      'DisableVideoFrameBufferByDelegate');
+  late final _DisableVideoFrameBufferByDelegate =
+      _DisableVideoFrameBufferByDelegatePtr.asFunction<
+          void Function(IrisVideoFrameBufferManagerPtr,
+              IrisVideoFrameBufferDelegateHandle)>();
+
+  void DisableVideoFrameBufferByUid(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    int uid,
+    ffi.Pointer<ffi.Int8> channel_id,
+  ) {
+    return _DisableVideoFrameBufferByUid(
+      manager_ptr,
+      uid,
+      channel_id,
+    );
+  }
+
+  late final _DisableVideoFrameBufferByUidPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(IrisVideoFrameBufferManagerPtr, ffi.Uint32,
+              ffi.Pointer<ffi.Int8>)>>('DisableVideoFrameBufferByUid');
+  late final _DisableVideoFrameBufferByUid =
+      _DisableVideoFrameBufferByUidPtr.asFunction<
+          void Function(
+              IrisVideoFrameBufferManagerPtr, int, ffi.Pointer<ffi.Int8>)>();
+
+  void DisableVideoFrameBufferByConfig(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    ffi.Pointer<IrisVideoFrameBufferConfig> config,
+  ) {
+    return _DisableVideoFrameBufferByConfig(
+      manager_ptr,
+      config,
+    );
+  }
+
+  late final _DisableVideoFrameBufferByConfigPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Void Function(IrisVideoFrameBufferManagerPtr,
+                  ffi.Pointer<IrisVideoFrameBufferConfig>)>>(
+      'DisableVideoFrameBufferByConfig');
+  late final _DisableVideoFrameBufferByConfig =
+      _DisableVideoFrameBufferByConfigPtr.asFunction<
+          void Function(IrisVideoFrameBufferManagerPtr,
+              ffi.Pointer<IrisVideoFrameBufferConfig>)>();
+
+  void DisableAllVideoFrameBuffer(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+  ) {
+    return _DisableAllVideoFrameBuffer(
+      manager_ptr,
+    );
+  }
+
+  late final _DisableAllVideoFrameBufferPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              IrisVideoFrameBufferManagerPtr)>>('DisableAllVideoFrameBuffer');
+  late final _DisableAllVideoFrameBuffer = _DisableAllVideoFrameBufferPtr
+      .asFunction<void Function(IrisVideoFrameBufferManagerPtr)>();
+
+  int GetVideoFrame(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    ffi.Pointer<IrisVideoFrame> video_frame,
+    ffi.Pointer<ffi.Uint8> is_new_frame,
+    int uid,
+    ffi.Pointer<ffi.Int8> channel_id,
+  ) {
+    return _GetVideoFrame(
+      manager_ptr,
+      video_frame,
+      is_new_frame,
+      uid,
+      channel_id,
+    );
+  }
+
+  late final _GetVideoFramePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              IrisVideoFrameBufferManagerPtr,
+              ffi.Pointer<IrisVideoFrame>,
+              ffi.Pointer<ffi.Uint8>,
+              ffi.Uint32,
+              ffi.Pointer<ffi.Int8>)>>('GetVideoFrame');
+  late final _GetVideoFrame = _GetVideoFramePtr.asFunction<
+      int Function(IrisVideoFrameBufferManagerPtr, ffi.Pointer<IrisVideoFrame>,
+          ffi.Pointer<ffi.Uint8>, int, ffi.Pointer<ffi.Int8>)>();
+
+  int GetVideoFrameByConfig(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    ffi.Pointer<IrisVideoFrame> video_frame,
+    ffi.Pointer<ffi.Uint8> is_new_frame,
+    ffi.Pointer<IrisVideoFrameBufferConfig> config,
+  ) {
+    return _GetVideoFrameByConfig(
+      manager_ptr,
+      video_frame,
+      is_new_frame,
+      config,
+    );
+  }
+
+  late final _GetVideoFrameByConfigPtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Int32 Function(
+                  IrisVideoFrameBufferManagerPtr,
+                  ffi.Pointer<IrisVideoFrame>,
+                  ffi.Pointer<ffi.Uint8>,
+                  ffi.Pointer<IrisVideoFrameBufferConfig>)>>(
+      'GetVideoFrameByConfig');
+  late final _GetVideoFrameByConfig = _GetVideoFrameByConfigPtr.asFunction<
+      int Function(IrisVideoFrameBufferManagerPtr, ffi.Pointer<IrisVideoFrame>,
+          ffi.Pointer<ffi.Uint8>, ffi.Pointer<IrisVideoFrameBufferConfig>)>();
+
+  bool StartDumpVideo(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+    int type,
+    ffi.Pointer<ffi.Int8> dir,
+  ) {
+    return _StartDumpVideo(
+          manager_ptr,
+          type,
+          dir,
+        ) !=
+        0;
+  }
+
+  late final _StartDumpVideoPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint8 Function(IrisVideoFrameBufferManagerPtr, ffi.Int32,
+              ffi.Pointer<ffi.Int8>)>>('StartDumpVideo');
+  late final _StartDumpVideo = _StartDumpVideoPtr.asFunction<
+      int Function(
+          IrisVideoFrameBufferManagerPtr, int, ffi.Pointer<ffi.Int8>)>();
+
+  bool StopDumpVideo(
+    IrisVideoFrameBufferManagerPtr manager_ptr,
+  ) {
+    return _StopDumpVideo(
+          manager_ptr,
+        ) !=
+        0;
+  }
+
+  late final _StopDumpVideoPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Uint8 Function(IrisVideoFrameBufferManagerPtr)>>('StopDumpVideo');
+  late final _StopDumpVideo = _StopDumpVideoPtr.asFunction<
+      int Function(IrisVideoFrameBufferManagerPtr)>();
+
   ffi.Pointer<ffi.Void> GetObserver(
     IrisApiEnginePtr engine_ptr,
     ffi.Pointer<ffi.Int8> api_type,
@@ -1026,6 +1273,125 @@ typedef Func_EventEx = ffi.Pointer<
             ffi.Pointer<ffi.Uint32>,
             ffi.Uint32)>>;
 
+abstract class IRIS_VIDEO_PROCESS_ERR {
+  static const int ERR_OK = 0;
+  static const int ERR_NULL_POINTER = 1;
+  static const int ERR_SIZE_NOT_MATCHING = 2;
+  static const int ERR_BUFFER_EMPTY = 5;
+}
+
+class IrisVideoFrameBufferConfig extends ffi.Struct {
+  @ffi.Int32()
+  external int type;
+
+  @ffi.Uint32()
+  external int id;
+
+  @ffi.Array.multi([512])
+  external ffi.Array<ffi.Int8> key;
+}
+
+abstract class IrisVideoSourceType {
+  static const int kVideoSourceTypeCameraPrimary = 0;
+  static const int kVideoSourceTypeCameraSecondary = 1;
+  static const int kVideoSourceTypeScreenPrimary = 2;
+  static const int kVideoSourceTypeScreenSecondary = 3;
+  static const int kVideoSourceTypeCustom = 4;
+  static const int kVideoSourceTypeMediaPlayer = 5;
+  static const int kVideoSourceTypeRtcImagePng = 6;
+  static const int kVideoSourceTypeRtcImageJpeg = 7;
+  static const int kVideoSourceTypeRtcImageGif = 8;
+  static const int kVideoSourceTypeRemote = 9;
+  static const int kVideoSourceTypeTranscoded = 10;
+  static const int kVideoSourceTypePreEncode = 11;
+  static const int kVideoSourceTypePreEncodeSecondaryCamera = 12;
+  static const int kVideoSourceTypePreEncodeScreen = 13;
+  static const int kVideoSourceTypePreEncodeSecondaryScreen = 14;
+  static const int kVideoSourceTypeUnknown = 15;
+}
+
+class IrisCVideoFrameBuffer extends ffi.Struct {
+  @ffi.Int32()
+  external int type;
+
+  external Func_VideoFrame OnVideoFrameReceived;
+
+  @ffi.Int32()
+  external int bytes_per_row_alignment;
+}
+
+abstract class IrisVideoFrameType {
+  static const int kVideoFrameTypeYUV420 = 0;
+  static const int kVideoFrameTypeYUV422 = 1;
+  static const int kVideoFrameTypeRGBA = 2;
+  static const int kVideoFrameTypeBGRA = 3;
+}
+
+typedef Func_VideoFrame = ffi.Pointer<
+    ffi.NativeFunction<
+        ffi.Void Function(ffi.Pointer<IrisVideoFrame>,
+            ffi.Pointer<IrisVideoFrameBufferConfig>, ffi.Uint8)>>;
+
+class IrisVideoFrame extends ffi.Struct {
+  @ffi.Int32()
+  external int type;
+
+  @ffi.Int32()
+  external int width;
+
+  @ffi.Int32()
+  external int height;
+
+  @ffi.Int32()
+  external int y_stride;
+
+  @ffi.Int32()
+  external int u_stride;
+
+  @ffi.Int32()
+  external int v_stride;
+
+  external ffi.Pointer<ffi.Void> y_buffer;
+
+  external ffi.Pointer<ffi.Void> u_buffer;
+
+  external ffi.Pointer<ffi.Void> v_buffer;
+
+  @ffi.Uint32()
+  external int y_buffer_length;
+
+  @ffi.Uint32()
+  external int u_buffer_length;
+
+  @ffi.Uint32()
+  external int v_buffer_length;
+
+  @ffi.Int32()
+  external int rotation;
+
+  @ffi.Int64()
+  external int render_time_ms;
+
+  @ffi.Int32()
+  external int av_sync_type;
+
+  external ffi.Pointer<ffi.Void> metadata_buffer;
+
+  @ffi.Int32()
+  external int metadata_size;
+
+  external ffi.Pointer<ffi.Void> sharedContext;
+
+  @ffi.Int32()
+  external int textureId;
+
+  @ffi.Array.multi([16])
+  external ffi.Array<ffi.Float> matrix;
+}
+
+typedef IrisVideoFrameBufferManagerPtr = ffi.Pointer<ffi.Void>;
+typedef IrisVideoFrameBufferDelegateHandle = ffi.Pointer<ffi.Void>;
+
 abstract class IRIS_API_ERROR_CODE_TYPE {
   static const int IRIS_API_NOT_CREATE = 666666;
 }
@@ -1139,101 +1505,6 @@ typedef Func_VideoCaptureLocal = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Uint8 Function(ffi.Pointer<IrisVideoFrame>,
             ffi.Pointer<IrisVideoFrameBufferConfig>)>>;
-
-class IrisVideoFrame extends ffi.Struct {
-  @ffi.Int32()
-  external int type;
-
-  @ffi.Int32()
-  external int width;
-
-  @ffi.Int32()
-  external int height;
-
-  @ffi.Int32()
-  external int y_stride;
-
-  @ffi.Int32()
-  external int u_stride;
-
-  @ffi.Int32()
-  external int v_stride;
-
-  external ffi.Pointer<ffi.Void> y_buffer;
-
-  external ffi.Pointer<ffi.Void> u_buffer;
-
-  external ffi.Pointer<ffi.Void> v_buffer;
-
-  @ffi.Uint32()
-  external int y_buffer_length;
-
-  @ffi.Uint32()
-  external int u_buffer_length;
-
-  @ffi.Uint32()
-  external int v_buffer_length;
-
-  @ffi.Int32()
-  external int rotation;
-
-  @ffi.Int64()
-  external int render_time_ms;
-
-  @ffi.Int32()
-  external int av_sync_type;
-
-  external ffi.Pointer<ffi.Void> metadata_buffer;
-
-  @ffi.Int32()
-  external int metadata_size;
-
-  external ffi.Pointer<ffi.Void> sharedContext;
-
-  @ffi.Int32()
-  external int textureId;
-
-  @ffi.Array.multi([16])
-  external ffi.Array<ffi.Float> matrix;
-}
-
-abstract class IrisVideoFrameType {
-  static const int kVideoFrameTypeYUV420 = 0;
-  static const int kVideoFrameTypeYUV422 = 1;
-  static const int kVideoFrameTypeRGBA = 2;
-  static const int kVideoFrameTypeBGRA = 3;
-}
-
-class IrisVideoFrameBufferConfig extends ffi.Struct {
-  @ffi.Int32()
-  external int type;
-
-  @ffi.Uint32()
-  external int id;
-
-  @ffi.Array.multi([512])
-  external ffi.Array<ffi.Int8> key;
-}
-
-abstract class IrisVideoSourceType {
-  static const int kVideoSourceTypeCameraPrimary = 0;
-  static const int kVideoSourceTypeCameraSecondary = 1;
-  static const int kVideoSourceTypeScreenPrimary = 2;
-  static const int kVideoSourceTypeScreenSecondary = 3;
-  static const int kVideoSourceTypeCustom = 4;
-  static const int kVideoSourceTypeMediaPlayer = 5;
-  static const int kVideoSourceTypeRtcImagePng = 6;
-  static const int kVideoSourceTypeRtcImageJpeg = 7;
-  static const int kVideoSourceTypeRtcImageGif = 8;
-  static const int kVideoSourceTypeRemote = 9;
-  static const int kVideoSourceTypeTranscoded = 10;
-  static const int kVideoSourceTypePreEncode = 11;
-  static const int kVideoSourceTypePreEncodeSecondaryCamera = 12;
-  static const int kVideoSourceTypePreEncodeScreen = 13;
-  static const int kVideoSourceTypePreEncodeSecondaryScreen = 14;
-  static const int kVideoSourceTypeUnknown = 15;
-}
-
 typedef Func_VideoFrameRemote = ffi.Pointer<
     ffi.NativeFunction<
         ffi.Uint8 Function(
@@ -1413,7 +1684,6 @@ abstract class IRIS_VIDEO_SOURCE_TYPE {
 
 typedef Func_MetadataReceived = ffi
     .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<IrisMetadata>)>>;
-typedef IrisVideoFrameBufferManagerPtr = ffi.Pointer<ffi.Void>;
 
 abstract class ApiTypeRawDataPluginManager {
   static const int kRDPMRegisterPlugin = 0;

@@ -112,13 +112,6 @@ class _State extends State<StartRhythmPlayer> {
   }
 
   void _joinChannel() async {
-    await _engine.joinChannel(
-      token: config.token,
-      channelId: _controller0.text,
-      info: '',
-      uid: 0,
-    );
-
     final sound1 = await _getFilePath('dang.mp3');
     final sound2 = await _getFilePath('ding.mp3');
     await _engine.startRhythmPlayer(
@@ -127,6 +120,13 @@ class _State extends State<StartRhythmPlayer> {
       config: AgoraRhythmPlayerConfig(
           beatsPerMeasure: _beatsPerMeasure.toInt(),
           beatsPerMinute: _beatsPerMinute.toInt()),
+    );
+
+    await _engine.joinChannelWithOptions(
+      token: config.token,
+      channelId: _controller0.text,
+      uid: 0,
+      options: ChannelMediaOptions(publishRhythmPlayerTrack: true),
     );
   }
 

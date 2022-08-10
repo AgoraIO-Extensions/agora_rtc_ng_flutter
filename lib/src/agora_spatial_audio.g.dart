@@ -20,8 +20,16 @@ RemoteVoicePositionInfo _$RemoteVoicePositionInfoFromJson(
     );
 
 Map<String, dynamic> _$RemoteVoicePositionInfoToJson(
-        RemoteVoicePositionInfo instance) =>
-    <String, dynamic>{
-      'position': instance.position,
-      'forward': instance.forward,
-    };
+    RemoteVoicePositionInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('position', instance.position);
+  writeNotNull('forward', instance.forward);
+  return val;
+}

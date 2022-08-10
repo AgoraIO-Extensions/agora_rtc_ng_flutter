@@ -100,7 +100,7 @@ const defaultLogSizeInKb = 1024;
 
 /// Configuration of Agora SDK log files.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class LogConfig {
   /// @nodoc
   const LogConfig({this.filePath, this.fileSizeInKB, this.level});

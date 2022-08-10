@@ -4,12 +4,13 @@ import 'package:agora_rtc_ng/src/binding/agora_media_recorder_impl.dart'
     as media_recorder_impl_binding;
 import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart'
     as rtc_engine_impl;
+import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
 import 'package:iris_event/iris_event.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable
 
 class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
-    implements IrisEventHandler {
+    implements IrisEventHandler, AsyncDisposableObject {
   MediaRecorderImpl._(this._rtcEngine) {
     _rtcEngine.addToPool(MediaRecorderImpl, this);
     apiCaller.addEventHandler(this);
@@ -28,11 +29,11 @@ class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
       {required RtcConnection connection,
       required MediaRecorderObserver callback}) async {
     const apiType = 'MediaRecorder_setMediaRecorderObserver';
+
     final param = createParams({'connection': connection.toJson()});
+
     final List<Uint8List> buffers = [];
     buffers.addAll(connection.collectBufferList());
-    final callApiResult = await apiCaller
-        .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
 
     await apiCaller.callIrisEventAsync(
         const IrisEventHandlerKey(
@@ -40,6 +41,9 @@ class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
             registerName: 'MediaRecorder_setMediaRecorderObserver',
             unregisterName: 'MediaRecorder_unsetMediaRecorderObserver'),
         jsonEncode(param));
+
+    final callApiResult = await apiCaller
+        .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
 
     _eventHandlers.add(MediaRecorderObserverWrapper(callback));
   }
@@ -56,11 +60,6 @@ class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
       _eventHandlers.clear();
     }
 
-    const apiType = 'MediaRecorder_release';
-    final param = createParams({});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
-
     _rtcEngine.removeFromPool(MediaRecorderImpl);
   }
 
@@ -69,5 +68,10 @@ class MediaRecorderImpl extends media_recorder_impl_binding.MediaRecorderImpl
     for (final e in _eventHandlers) {
       e.onEvent(event, data, buffers);
     }
+  }
+
+  @override
+  Future<void> disposeAsync() async {
+    await release();
   }
 }

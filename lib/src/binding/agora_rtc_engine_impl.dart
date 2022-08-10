@@ -864,10 +864,11 @@ class RtcEngineImpl implements RtcEngine {
   }
 
   @override
-  Future<List<int>> setSubscribeAudioBlacklist(int uidNumber) async {
+  Future<void> setSubscribeAudioBlacklist(
+      {required List<int> uidList, required int uidNumber}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngine'}_setSubscribeAudioBlacklist';
-    final param = createParams({'uidNumber': uidNumber});
+    final param = createParams({'uidList': uidList, 'uidNumber': uidNumber});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
     if (callApiResult.irisReturnCode < 0) {
@@ -878,16 +879,14 @@ class RtcEngineImpl implements RtcEngine {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeAudioBlacklistJson =
-        RtcEngineSetSubscribeAudioBlacklistJson.fromJson(rm);
-    return setSubscribeAudioBlacklistJson.uidList;
   }
 
   @override
-  Future<List<int>> setSubscribeAudioWhitelist(int uidNumber) async {
+  Future<void> setSubscribeAudioWhitelist(
+      {required List<int> uidList, required int uidNumber}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngine'}_setSubscribeAudioWhitelist';
-    final param = createParams({'uidNumber': uidNumber});
+    final param = createParams({'uidList': uidList, 'uidNumber': uidNumber});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
     if (callApiResult.irisReturnCode < 0) {
@@ -898,16 +897,14 @@ class RtcEngineImpl implements RtcEngine {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeAudioWhitelistJson =
-        RtcEngineSetSubscribeAudioWhitelistJson.fromJson(rm);
-    return setSubscribeAudioWhitelistJson.uidList;
   }
 
   @override
-  Future<List<int>> setSubscribeVideoBlacklist(int uidNumber) async {
+  Future<void> setSubscribeVideoBlacklist(
+      {required List<int> uidList, required int uidNumber}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngine'}_setSubscribeVideoBlacklist';
-    final param = createParams({'uidNumber': uidNumber});
+    final param = createParams({'uidList': uidList, 'uidNumber': uidNumber});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
     if (callApiResult.irisReturnCode < 0) {
@@ -918,16 +915,14 @@ class RtcEngineImpl implements RtcEngine {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeVideoBlacklistJson =
-        RtcEngineSetSubscribeVideoBlacklistJson.fromJson(rm);
-    return setSubscribeVideoBlacklistJson.uidList;
   }
 
   @override
-  Future<List<int>> setSubscribeVideoWhitelist(int uidNumber) async {
+  Future<void> setSubscribeVideoWhitelist(
+      {required List<int> uidList, required int uidNumber}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngine'}_setSubscribeVideoWhitelist';
-    final param = createParams({'uidNumber': uidNumber});
+    final param = createParams({'uidList': uidList, 'uidNumber': uidNumber});
     final callApiResult =
         await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
     if (callApiResult.irisReturnCode < 0) {
@@ -938,9 +933,6 @@ class RtcEngineImpl implements RtcEngine {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeVideoWhitelistJson =
-        RtcEngineSetSubscribeVideoWhitelistJson.fromJson(rm);
-    return setSubscribeVideoWhitelistJson.uidList;
   }
 
   @override
@@ -4717,7 +4709,6 @@ class RtcEngineImpl implements RtcEngine {
   Future<void> startAudioMixing(
       {required String filePath,
       required bool loopback,
-      required bool replace,
       required int cycle,
       int startPos = 0}) async {
     final apiType =
@@ -4725,7 +4716,6 @@ class RtcEngineImpl implements RtcEngine {
     final param = createParams({
       'filePath': filePath,
       'loopback': loopback,
-      'replace': replace,
       'cycle': cycle,
       'startPos': startPos
     });
@@ -4993,5 +4983,22 @@ class RtcEngineImpl implements RtcEngine {
 // }
     throw UnimplementedError(
         'Unimplement for unregisterAudioEncodedFrameObserver');
+  }
+
+  @override
+  Future<void> setParameters(String parameters) async {
+    final apiType =
+        '${isOverrideClassName ? className : 'RtcEngine'}_setParameters';
+    final param = createParams({'parameters': parameters});
+    final callApiResult =
+        await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
+    if (callApiResult.irisReturnCode < 0) {
+      throw AgoraRtcException(code: callApiResult.irisReturnCode);
+    }
+    final rm = callApiResult.data;
+    final result = rm['result'];
+    if (result < 0) {
+      throw AgoraRtcException(code: result);
+    }
   }
 }

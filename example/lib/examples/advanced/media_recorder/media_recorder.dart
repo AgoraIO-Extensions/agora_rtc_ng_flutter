@@ -142,8 +142,9 @@ class _State extends State<MediaRecorder> {
   }
 
   Future<void> _stopMediaRecording() async {
-    await _engine.getMediaRecorder().stopRecording(
-        RtcConnection(channelId: _controller.text, localUid: 0));
+    await _engine
+        .getMediaRecorder()
+        .stopRecording(RtcConnection(channelId: _controller.text, localUid: 0));
     setState(() {
       _recordingFileStoragePath = '';
       _isStartedMediaRecording = false;
@@ -151,7 +152,10 @@ class _State extends State<MediaRecorder> {
   }
 
   Future<void> _leaveChannel() async {
-    await _stopMediaRecording();
+    if (_isStartedMediaRecording) {
+      await _stopMediaRecording();
+    }
+
     await _engine.leaveChannel();
   }
 

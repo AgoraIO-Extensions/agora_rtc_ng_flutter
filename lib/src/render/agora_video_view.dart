@@ -15,7 +15,6 @@ class AgoraVideoView extends StatefulWidget {
   ///
   final VideoViewControllerBase controller;
 
-  /// @nodoc
   @override
   State<AgoraVideoView> createState() => AgoraVideoViewState();
 }

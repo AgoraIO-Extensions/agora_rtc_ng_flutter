@@ -15,6 +15,7 @@ import 'package:agora_rtc_ng_example/examples/advanced/start_direct_cdn_streamin
 import 'package:agora_rtc_ng_example/examples/advanced/start_local_video_transcoder/start_local_video_transcoder.dart';
 import 'package:agora_rtc_ng_example/examples/advanced/stream_message/stream_message.dart';
 import 'package:agora_rtc_ng_example/examples/advanced/take_snapshot/take_snapshot.dart';
+import 'package:agora_rtc_ng_example/examples/advanced/process_audio_raw_data/process_audio_raw_data.dart';
 import 'package:flutter/foundation.dart';
 
 import 'audio_mixing/audio_mixing.dart';
@@ -24,6 +25,7 @@ import 'device_manager/device_manager.dart';
 import 'enable_virtualbackground/enable_virtualbackground.dart';
 import 'join_multiple_channel/join_multiple_channel.dart';
 import 'media_recorder/media_recorder.dart';
+import 'precall_test/precall_test.dart';
 import 'send_metadata/send_metadata.dart';
 import 'set_content_inspect/set_content_inspect.dart';
 import 'start_rhythm_player/start_rhythm_player.dart';
@@ -36,12 +38,10 @@ final advanced = [
   {'name': 'ChannelMediaRelay', 'widget': const ChannelMediaRelay()},
   // if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
   //   {'name': 'CustomCaptureAudio', 'widget': const CustomCaptureAudio()},
-  if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
-    {'name': 'DeviceManager', 'widget': const DeviceManager()},
+  {'name': 'DeviceManager', 'widget': const DeviceManager()},
   {'name': 'JoinMultipleChannel', 'widget': const JoinMultipleChannel()},
   {'name': 'RtmpStreaming', 'widget': const RtmpStreaming()},
-  if (kIsWeb || !Platform.isIOS)
-    {'name': 'ScreenSharing', 'widget': const ScreenSharing()},
+  if (!kIsWeb) {'name': 'ScreenSharing', 'widget': const ScreenSharing()},
   {'name': 'SetEncryption', 'widget': SetEncryption()},
   {
     'name': 'SetVideoEncoderConfiguration',
@@ -81,5 +81,9 @@ final advanced = [
   {
     'name': 'SpatialAudioWithMediaPlayer',
     'widget': const SpatialAudioWithMediaPlayer()
+  },
+    {
+    'name': 'PreCallTest',
+    'widget': const PreCallTest()
   },
 ];

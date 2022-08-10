@@ -15,12 +15,20 @@ AudioParameters _$AudioParametersFromJson(Map<String, dynamic> json) =>
       framesPerBuffer: json['frames_per_buffer'] as int?,
     );
 
-Map<String, dynamic> _$AudioParametersToJson(AudioParameters instance) =>
-    <String, dynamic>{
-      'sample_rate': instance.sampleRate,
-      'channels': instance.channels,
-      'frames_per_buffer': instance.framesPerBuffer,
-    };
+Map<String, dynamic> _$AudioParametersToJson(AudioParameters instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('sample_rate', instance.sampleRate);
+  writeNotNull('channels', instance.channels);
+  writeNotNull('frames_per_buffer', instance.framesPerBuffer);
+  return val;
+}
 
 ContentInspectModule _$ContentInspectModuleFromJson(
         Map<String, dynamic> json) =>
@@ -30,11 +38,19 @@ ContentInspectModule _$ContentInspectModuleFromJson(
     );
 
 Map<String, dynamic> _$ContentInspectModuleToJson(
-        ContentInspectModule instance) =>
-    <String, dynamic>{
-      'type': _$ContentInspectTypeEnumMap[instance.type],
-      'interval': instance.interval,
-    };
+    ContentInspectModule instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', _$ContentInspectTypeEnumMap[instance.type]);
+  writeNotNull('interval', instance.interval);
+  return val;
+}
 
 const _$ContentInspectTypeEnumMap = {
   ContentInspectType.contentInspectInvalid: 0,
@@ -53,12 +69,20 @@ ContentInspectConfig _$ContentInspectConfigFromJson(
     );
 
 Map<String, dynamic> _$ContentInspectConfigToJson(
-        ContentInspectConfig instance) =>
-    <String, dynamic>{
-      'extraInfo': instance.extraInfo,
-      'modules': instance.modules?.map((e) => e.toJson()).toList(),
-      'moduleCount': instance.moduleCount,
-    };
+    ContentInspectConfig instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('extraInfo', instance.extraInfo);
+  writeNotNull('modules', instance.modules?.map((e) => e.toJson()).toList());
+  writeNotNull('moduleCount', instance.moduleCount);
+  return val;
+}
 
 PacketOptions _$PacketOptionsFromJson(Map<String, dynamic> json) =>
     PacketOptions(
@@ -66,11 +90,19 @@ PacketOptions _$PacketOptionsFromJson(Map<String, dynamic> json) =>
       audioLevelIndication: json['audioLevelIndication'] as int?,
     );
 
-Map<String, dynamic> _$PacketOptionsToJson(PacketOptions instance) =>
-    <String, dynamic>{
-      'timestamp': instance.timestamp,
-      'audioLevelIndication': instance.audioLevelIndication,
-    };
+Map<String, dynamic> _$PacketOptionsToJson(PacketOptions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('timestamp', instance.timestamp);
+  writeNotNull('audioLevelIndication', instance.audioLevelIndication);
+  return val;
+}
 
 AudioEncodedFrameInfo _$AudioEncodedFrameInfoFromJson(
         Map<String, dynamic> json) =>
@@ -80,11 +112,19 @@ AudioEncodedFrameInfo _$AudioEncodedFrameInfoFromJson(
     );
 
 Map<String, dynamic> _$AudioEncodedFrameInfoToJson(
-        AudioEncodedFrameInfo instance) =>
-    <String, dynamic>{
-      'sendTs': instance.sendTs,
-      'codec': instance.codec,
-    };
+    AudioEncodedFrameInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('sendTs', instance.sendTs);
+  writeNotNull('codec', instance.codec);
+  return val;
+}
 
 AudioPcmFrame _$AudioPcmFrameFromJson(Map<String, dynamic> json) =>
     AudioPcmFrame(
@@ -97,15 +137,24 @@ AudioPcmFrame _$AudioPcmFrameFromJson(Map<String, dynamic> json) =>
       data: (json['data_'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
 
-Map<String, dynamic> _$AudioPcmFrameToJson(AudioPcmFrame instance) =>
-    <String, dynamic>{
-      'capture_timestamp': instance.captureTimestamp,
-      'samples_per_channel_': instance.samplesPerChannel,
-      'sample_rate_hz_': instance.sampleRateHz,
-      'num_channels_': instance.numChannels,
-      'bytes_per_sample': _$BytesPerSampleEnumMap[instance.bytesPerSample],
-      'data_': instance.data,
-    };
+Map<String, dynamic> _$AudioPcmFrameToJson(AudioPcmFrame instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('capture_timestamp', instance.captureTimestamp);
+  writeNotNull('samples_per_channel_', instance.samplesPerChannel);
+  writeNotNull('sample_rate_hz_', instance.sampleRateHz);
+  writeNotNull('num_channels_', instance.numChannels);
+  writeNotNull(
+      'bytes_per_sample', _$BytesPerSampleEnumMap[instance.bytesPerSample]);
+  writeNotNull('data_', instance.data);
+  return val;
+}
 
 const _$BytesPerSampleEnumMap = {
   BytesPerSample.twoBytesPerSample: 2,
@@ -131,23 +180,31 @@ ExternalVideoFrame _$ExternalVideoFrameFromJson(Map<String, dynamic> json) =>
       metadataSize: json['metadata_size'] as int?,
     );
 
-Map<String, dynamic> _$ExternalVideoFrameToJson(ExternalVideoFrame instance) =>
-    <String, dynamic>{
-      'type': _$VideoBufferTypeEnumMap[instance.type],
-      'format': _$VideoPixelFormatEnumMap[instance.format],
-      'stride': instance.stride,
-      'height': instance.height,
-      'cropLeft': instance.cropLeft,
-      'cropTop': instance.cropTop,
-      'cropRight': instance.cropRight,
-      'cropBottom': instance.cropBottom,
-      'rotation': instance.rotation,
-      'timestamp': instance.timestamp,
-      'eglType': _$EglContextTypeEnumMap[instance.eglType],
-      'textureId': instance.textureId,
-      'matrix': instance.matrix,
-      'metadata_size': instance.metadataSize,
-    };
+Map<String, dynamic> _$ExternalVideoFrameToJson(ExternalVideoFrame instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', _$VideoBufferTypeEnumMap[instance.type]);
+  writeNotNull('format', _$VideoPixelFormatEnumMap[instance.format]);
+  writeNotNull('stride', instance.stride);
+  writeNotNull('height', instance.height);
+  writeNotNull('cropLeft', instance.cropLeft);
+  writeNotNull('cropTop', instance.cropTop);
+  writeNotNull('cropRight', instance.cropRight);
+  writeNotNull('cropBottom', instance.cropBottom);
+  writeNotNull('rotation', instance.rotation);
+  writeNotNull('timestamp', instance.timestamp);
+  writeNotNull('eglType', _$EglContextTypeEnumMap[instance.eglType]);
+  writeNotNull('textureId', instance.textureId);
+  writeNotNull('matrix', instance.matrix);
+  writeNotNull('metadata_size', instance.metadataSize);
+  return val;
+}
 
 const _$VideoBufferTypeEnumMap = {
   VideoBufferType.videoBufferRawData: 1,
@@ -192,21 +249,29 @@ VideoFrame _$VideoFrameFromJson(Map<String, dynamic> json) => VideoFrame(
           .toList(),
     );
 
-Map<String, dynamic> _$VideoFrameToJson(VideoFrame instance) =>
-    <String, dynamic>{
-      'type': _$VideoPixelFormatEnumMap[instance.type],
-      'width': instance.width,
-      'height': instance.height,
-      'yStride': instance.yStride,
-      'uStride': instance.uStride,
-      'vStride': instance.vStride,
-      'rotation': instance.rotation,
-      'renderTimeMs': instance.renderTimeMs,
-      'avsync_type': instance.avsyncType,
-      'metadata_size': instance.metadataSize,
-      'textureId': instance.textureId,
-      'matrix': instance.matrix,
-    };
+Map<String, dynamic> _$VideoFrameToJson(VideoFrame instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', _$VideoPixelFormatEnumMap[instance.type]);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('yStride', instance.yStride);
+  writeNotNull('uStride', instance.uStride);
+  writeNotNull('vStride', instance.vStride);
+  writeNotNull('rotation', instance.rotation);
+  writeNotNull('renderTimeMs', instance.renderTimeMs);
+  writeNotNull('avsync_type', instance.avsyncType);
+  writeNotNull('metadata_size', instance.metadataSize);
+  writeNotNull('textureId', instance.textureId);
+  writeNotNull('matrix', instance.matrix);
+  return val;
+}
 
 AudioFrame _$AudioFrameFromJson(Map<String, dynamic> json) => AudioFrame(
       type: $enumDecodeNullable(_$AudioFrameTypeEnumMap, json['type']),
@@ -219,16 +284,25 @@ AudioFrame _$AudioFrameFromJson(Map<String, dynamic> json) => AudioFrame(
       avsyncType: json['avsync_type'] as int?,
     );
 
-Map<String, dynamic> _$AudioFrameToJson(AudioFrame instance) =>
-    <String, dynamic>{
-      'type': _$AudioFrameTypeEnumMap[instance.type],
-      'samplesPerChannel': instance.samplesPerChannel,
-      'bytesPerSample': _$BytesPerSampleEnumMap[instance.bytesPerSample],
-      'channels': instance.channels,
-      'samplesPerSec': instance.samplesPerSec,
-      'renderTimeMs': instance.renderTimeMs,
-      'avsync_type': instance.avsyncType,
-    };
+Map<String, dynamic> _$AudioFrameToJson(AudioFrame instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', _$AudioFrameTypeEnumMap[instance.type]);
+  writeNotNull('samplesPerChannel', instance.samplesPerChannel);
+  writeNotNull(
+      'bytesPerSample', _$BytesPerSampleEnumMap[instance.bytesPerSample]);
+  writeNotNull('channels', instance.channels);
+  writeNotNull('samplesPerSec', instance.samplesPerSec);
+  writeNotNull('renderTimeMs', instance.renderTimeMs);
+  writeNotNull('avsync_type', instance.avsyncType);
+  return val;
+}
 
 const _$AudioFrameTypeEnumMap = {
   AudioFrameType.frameTypePcm16: 0,
@@ -241,13 +315,21 @@ AudioParams _$AudioParamsFromJson(Map<String, dynamic> json) => AudioParams(
       samplesPerCall: json['samples_per_call'] as int?,
     );
 
-Map<String, dynamic> _$AudioParamsToJson(AudioParams instance) =>
-    <String, dynamic>{
-      'sample_rate': instance.sampleRate,
-      'channels': instance.channels,
-      'mode': _$RawAudioFrameOpModeTypeEnumMap[instance.mode],
-      'samples_per_call': instance.samplesPerCall,
-    };
+Map<String, dynamic> _$AudioParamsToJson(AudioParams instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('sample_rate', instance.sampleRate);
+  writeNotNull('channels', instance.channels);
+  writeNotNull('mode', _$RawAudioFrameOpModeTypeEnumMap[instance.mode]);
+  writeNotNull('samples_per_call', instance.samplesPerCall);
+  return val;
+}
 
 const _$RawAudioFrameOpModeTypeEnumMap = {
   RawAudioFrameOpModeType.rawAudioFrameOpModeReadOnly: 0,
@@ -262,11 +344,19 @@ AudioSpectrumData _$AudioSpectrumDataFromJson(Map<String, dynamic> json) =>
       dataLength: json['dataLength'] as int?,
     );
 
-Map<String, dynamic> _$AudioSpectrumDataToJson(AudioSpectrumData instance) =>
-    <String, dynamic>{
-      'audioSpectrumData': instance.audioSpectrumData,
-      'dataLength': instance.dataLength,
-    };
+Map<String, dynamic> _$AudioSpectrumDataToJson(AudioSpectrumData instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('audioSpectrumData', instance.audioSpectrumData);
+  writeNotNull('dataLength', instance.dataLength);
+  return val;
+}
 
 UserAudioSpectrumInfo _$UserAudioSpectrumInfoFromJson(
         Map<String, dynamic> json) =>
@@ -279,11 +369,19 @@ UserAudioSpectrumInfo _$UserAudioSpectrumInfoFromJson(
     );
 
 Map<String, dynamic> _$UserAudioSpectrumInfoToJson(
-        UserAudioSpectrumInfo instance) =>
-    <String, dynamic>{
-      'uid': instance.uid,
-      'spectrumData': instance.spectrumData?.toJson(),
-    };
+    UserAudioSpectrumInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('spectrumData', instance.spectrumData?.toJson());
+  return val;
+}
 
 MediaRecorderConfiguration _$MediaRecorderConfigurationFromJson(
         Map<String, dynamic> json) =>
@@ -298,15 +396,25 @@ MediaRecorderConfiguration _$MediaRecorderConfigurationFromJson(
     );
 
 Map<String, dynamic> _$MediaRecorderConfigurationToJson(
-        MediaRecorderConfiguration instance) =>
-    <String, dynamic>{
-      'storagePath': instance.storagePath,
-      'containerFormat':
-          _$MediaRecorderContainerFormatEnumMap[instance.containerFormat],
-      'streamType': _$MediaRecorderStreamTypeEnumMap[instance.streamType],
-      'maxDurationMs': instance.maxDurationMs,
-      'recorderInfoUpdateInterval': instance.recorderInfoUpdateInterval,
-    };
+    MediaRecorderConfiguration instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('storagePath', instance.storagePath);
+  writeNotNull('containerFormat',
+      _$MediaRecorderContainerFormatEnumMap[instance.containerFormat]);
+  writeNotNull(
+      'streamType', _$MediaRecorderStreamTypeEnumMap[instance.streamType]);
+  writeNotNull('maxDurationMs', instance.maxDurationMs);
+  writeNotNull(
+      'recorderInfoUpdateInterval', instance.recorderInfoUpdateInterval);
+  return val;
+}
 
 const _$MediaRecorderContainerFormatEnumMap = {
   MediaRecorderContainerFormat.formatMp4: 1,
@@ -324,12 +432,20 @@ RecorderInfo _$RecorderInfoFromJson(Map<String, dynamic> json) => RecorderInfo(
       fileSize: json['fileSize'] as int?,
     );
 
-Map<String, dynamic> _$RecorderInfoToJson(RecorderInfo instance) =>
-    <String, dynamic>{
-      'fileName': instance.fileName,
-      'durationMs': instance.durationMs,
-      'fileSize': instance.fileSize,
-    };
+Map<String, dynamic> _$RecorderInfoToJson(RecorderInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('fileName', instance.fileName);
+  writeNotNull('durationMs', instance.durationMs);
+  writeNotNull('fileSize', instance.fileSize);
+  return val;
+}
 
 const _$AudioRouteEnumMap = {
   AudioRoute.routeDefault: -1,

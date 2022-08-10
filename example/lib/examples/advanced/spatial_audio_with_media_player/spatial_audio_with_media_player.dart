@@ -97,14 +97,6 @@ class _State extends State<SpatialAudioWithMediaPlayer> {
       },
     ));
 
-    if (defaultTargetPlatform == TargetPlatform.windows) {
-      await _engine.loadExtensionProvider(
-          path: 'libagora_spatial_audio_extension.dll');
-    } else if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider(
-          path: 'agora_spatial_audio_extension');
-    }
-
     await _engine.enableAudio();
     await _engine.enableVideo();
     await _engine.enableSpatialAudio(true);

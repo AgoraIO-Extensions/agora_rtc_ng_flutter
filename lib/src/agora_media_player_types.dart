@@ -329,7 +329,7 @@ extension PlayerPreloadEventExt on PlayerPreloadEvent {
 
 /// The detailed information of the media stream.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class PlayerStreamInfo {
   /// @nodoc
   const PlayerStreamInfo(
@@ -409,7 +409,7 @@ class PlayerStreamInfo {
 
 /// Information about the video bitrate of the media resource being played.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class SrcInfo {
   /// @nodoc
   const SrcInfo({this.bitrateInKbps, this.name});
@@ -457,7 +457,7 @@ extension MediaPlayerMetadataTypeExt on MediaPlayerMetadataType {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class CacheStatistics {
   /// @nodoc
   const CacheStatistics({this.fileSize, this.cacheSize, this.downloadSize});
@@ -484,7 +484,7 @@ class CacheStatistics {
 
 /// Information related to the media player.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class PlayerUpdatedInfo {
   /// @nodoc
   const PlayerUpdatedInfo({this.playerId, this.deviceId, this.cacheStatistics});
@@ -510,7 +510,7 @@ class PlayerUpdatedInfo {
 }
 
 /// @nodoc
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class MediaSource {
   /// @nodoc
   const MediaSource(

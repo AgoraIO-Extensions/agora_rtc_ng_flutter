@@ -106,9 +106,9 @@ class _SetVideoEncoderConfigurationState
 
     VideoEncoderConfiguration config = VideoEncoderConfiguration(
       dimensions: dimensions[dim],
-      frameRate: FrameRate.frameRateFps1.value(),
+      frameRate: FrameRate.frameRateFps15.value(),
       bitrate: 0,
-      minBitrate: 1,
+      minBitrate: -1,
       orientationMode: OrientationMode.orientationModeAdaptive,
       degradationPreference: DegradationPreference.maintainFramerate,
       mirrorMode: VideoMirrorModeType.videoMirrorModeAuto,

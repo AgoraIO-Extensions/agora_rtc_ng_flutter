@@ -21,6 +21,8 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
   bool switchCamera = true;
   late TextEditingController _channelIdController;
   late TextEditingController _rtmpUrlController;
+  late final TextEditingController _channelUidController;
+
   bool _isStreaming = false;
   int _remoteUid = 0;
 
@@ -28,6 +30,7 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
   void initState() {
     super.initState();
     _channelIdController = TextEditingController(text: channelId);
+    _channelUidController = TextEditingController(text: '1001');
     _rtmpUrlController = TextEditingController();
     _initEngine();
   }
@@ -107,8 +110,13 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
   }
 
   void _joinChannel() async {
+    final uid = int.tryParse(_channelUidController.text);
+    if (uid == null) return;
     await _engine.joinChannel(
-        token: config.token, channelId: channelId, info: '', uid: config.uid);
+        token: config.token,
+        channelId: _channelIdController.text,
+        info: '',
+        uid: uid);
   }
 
   void _leaveChannel() async {
@@ -116,14 +124,17 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
   }
 
   Future<void> _startTranscoding({bool isRemoteUser = false}) async {
+    final uid = int.tryParse(_channelUidController.text);
+    if (uid == null) return;
+
     if (_isStreaming && !isRemoteUser) return;
     final streamUrl = _rtmpUrlController.text;
 
     _isStreaming = true;
 
     final List<TranscodingUser> transcodingUsers = [
-      const TranscodingUser(
-        uid: 0,
+      TranscodingUser(
+        uid: uid,
         x: 0,
         y: 0,
         width: 360,
@@ -153,6 +164,7 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
 
     final liveTranscoding = LiveTranscoding(
       transcodingUsers: transcodingUsers,
+      userCount: transcodingUsers.length,
       width: width,
       height: height,
       videoBitrate: 400,
@@ -218,6 +230,12 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
             TextField(
               controller: _channelIdController,
               decoration: const InputDecoration(hintText: 'Channel ID'),
+            ),
+            TextField(
+              controller: _channelUidController,
+              decoration: const InputDecoration(
+                hintText: 'Enter channel uid',
+              ),
             ),
             TextField(
               controller: _rtmpUrlController,

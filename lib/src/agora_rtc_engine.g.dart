@@ -37,33 +37,43 @@ LocalVideoStats _$LocalVideoStatsFromJson(Map<String, dynamic> json) =>
       dualStreamEnabled: json['dualStreamEnabled'] as bool?,
     );
 
-Map<String, dynamic> _$LocalVideoStatsToJson(LocalVideoStats instance) =>
-    <String, dynamic>{
-      'uid': instance.uid,
-      'sentBitrate': instance.sentBitrate,
-      'sentFrameRate': instance.sentFrameRate,
-      'captureFrameRate': instance.captureFrameRate,
-      'captureFrameWidth': instance.captureFrameWidth,
-      'captureFrameHeight': instance.captureFrameHeight,
-      'regulatedCaptureFrameRate': instance.regulatedCaptureFrameRate,
-      'regulatedCaptureFrameWidth': instance.regulatedCaptureFrameWidth,
-      'regulatedCaptureFrameHeight': instance.regulatedCaptureFrameHeight,
-      'encoderOutputFrameRate': instance.encoderOutputFrameRate,
-      'encodedFrameWidth': instance.encodedFrameWidth,
-      'encodedFrameHeight': instance.encodedFrameHeight,
-      'rendererOutputFrameRate': instance.rendererOutputFrameRate,
-      'targetBitrate': instance.targetBitrate,
-      'targetFrameRate': instance.targetFrameRate,
-      'qualityAdaptIndication':
-          _$QualityAdaptIndicationEnumMap[instance.qualityAdaptIndication],
-      'encodedBitrate': instance.encodedBitrate,
-      'encodedFrameCount': instance.encodedFrameCount,
-      'codecType': _$VideoCodecTypeEnumMap[instance.codecType],
-      'txPacketLossRate': instance.txPacketLossRate,
-      'captureBrightnessLevel':
-          _$CaptureBrightnessLevelTypeEnumMap[instance.captureBrightnessLevel],
-      'dualStreamEnabled': instance.dualStreamEnabled,
-    };
+Map<String, dynamic> _$LocalVideoStatsToJson(LocalVideoStats instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('sentBitrate', instance.sentBitrate);
+  writeNotNull('sentFrameRate', instance.sentFrameRate);
+  writeNotNull('captureFrameRate', instance.captureFrameRate);
+  writeNotNull('captureFrameWidth', instance.captureFrameWidth);
+  writeNotNull('captureFrameHeight', instance.captureFrameHeight);
+  writeNotNull('regulatedCaptureFrameRate', instance.regulatedCaptureFrameRate);
+  writeNotNull(
+      'regulatedCaptureFrameWidth', instance.regulatedCaptureFrameWidth);
+  writeNotNull(
+      'regulatedCaptureFrameHeight', instance.regulatedCaptureFrameHeight);
+  writeNotNull('encoderOutputFrameRate', instance.encoderOutputFrameRate);
+  writeNotNull('encodedFrameWidth', instance.encodedFrameWidth);
+  writeNotNull('encodedFrameHeight', instance.encodedFrameHeight);
+  writeNotNull('rendererOutputFrameRate', instance.rendererOutputFrameRate);
+  writeNotNull('targetBitrate', instance.targetBitrate);
+  writeNotNull('targetFrameRate', instance.targetFrameRate);
+  writeNotNull('qualityAdaptIndication',
+      _$QualityAdaptIndicationEnumMap[instance.qualityAdaptIndication]);
+  writeNotNull('encodedBitrate', instance.encodedBitrate);
+  writeNotNull('encodedFrameCount', instance.encodedFrameCount);
+  writeNotNull('codecType', _$VideoCodecTypeEnumMap[instance.codecType]);
+  writeNotNull('txPacketLossRate', instance.txPacketLossRate);
+  writeNotNull('captureBrightnessLevel',
+      _$CaptureBrightnessLevelTypeEnumMap[instance.captureBrightnessLevel]);
+  writeNotNull('dualStreamEnabled', instance.dualStreamEnabled);
+  return val;
+}
 
 const _$QualityAdaptIndicationEnumMap = {
   QualityAdaptIndication.adaptNone: 0,
@@ -111,25 +121,33 @@ RemoteVideoStats _$RemoteVideoStatsFromJson(Map<String, dynamic> json) =>
       superResolutionType: json['superResolutionType'] as int?,
     );
 
-Map<String, dynamic> _$RemoteVideoStatsToJson(RemoteVideoStats instance) =>
-    <String, dynamic>{
-      'uid': instance.uid,
-      'delay': instance.delay,
-      'width': instance.width,
-      'height': instance.height,
-      'receivedBitrate': instance.receivedBitrate,
-      'decoderOutputFrameRate': instance.decoderOutputFrameRate,
-      'rendererOutputFrameRate': instance.rendererOutputFrameRate,
-      'frameLossRate': instance.frameLossRate,
-      'packetLossRate': instance.packetLossRate,
-      'rxStreamType': _$VideoStreamTypeEnumMap[instance.rxStreamType],
-      'totalFrozenTime': instance.totalFrozenTime,
-      'frozenRate': instance.frozenRate,
-      'avSyncTimeMs': instance.avSyncTimeMs,
-      'totalActiveTime': instance.totalActiveTime,
-      'publishDuration': instance.publishDuration,
-      'superResolutionType': instance.superResolutionType,
-    };
+Map<String, dynamic> _$RemoteVideoStatsToJson(RemoteVideoStats instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('delay', instance.delay);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('receivedBitrate', instance.receivedBitrate);
+  writeNotNull('decoderOutputFrameRate', instance.decoderOutputFrameRate);
+  writeNotNull('rendererOutputFrameRate', instance.rendererOutputFrameRate);
+  writeNotNull('frameLossRate', instance.frameLossRate);
+  writeNotNull('packetLossRate', instance.packetLossRate);
+  writeNotNull('rxStreamType', _$VideoStreamTypeEnumMap[instance.rxStreamType]);
+  writeNotNull('totalFrozenTime', instance.totalFrozenTime);
+  writeNotNull('frozenRate', instance.frozenRate);
+  writeNotNull('avSyncTimeMs', instance.avSyncTimeMs);
+  writeNotNull('totalActiveTime', instance.totalActiveTime);
+  writeNotNull('publishDuration', instance.publishDuration);
+  writeNotNull('superResolutionType', instance.superResolutionType);
+  return val;
+}
 
 const _$VideoStreamTypeEnumMap = {
   VideoStreamType.videoStreamHigh: 0,
@@ -150,15 +168,23 @@ VideoCompositingLayout _$VideoCompositingLayoutFromJson(
     );
 
 Map<String, dynamic> _$VideoCompositingLayoutToJson(
-        VideoCompositingLayout instance) =>
-    <String, dynamic>{
-      'canvasWidth': instance.canvasWidth,
-      'canvasHeight': instance.canvasHeight,
-      'backgroundColor': instance.backgroundColor,
-      'regions': instance.regions?.map((e) => e.toJson()).toList(),
-      'regionCount': instance.regionCount,
-      'appDataLength': instance.appDataLength,
-    };
+    VideoCompositingLayout instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('canvasWidth', instance.canvasWidth);
+  writeNotNull('canvasHeight', instance.canvasHeight);
+  writeNotNull('backgroundColor', instance.backgroundColor);
+  writeNotNull('regions', instance.regions?.map((e) => e.toJson()).toList());
+  writeNotNull('regionCount', instance.regionCount);
+  writeNotNull('appDataLength', instance.appDataLength);
+  return val;
+}
 
 Region _$RegionFromJson(Map<String, dynamic> json) => Region(
       uid: json['uid'] as int?,
@@ -172,16 +198,25 @@ Region _$RegionFromJson(Map<String, dynamic> json) => Region(
           $enumDecodeNullable(_$RenderModeTypeEnumMap, json['renderMode']),
     );
 
-Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
-      'uid': instance.uid,
-      'x': instance.x,
-      'y': instance.y,
-      'width': instance.width,
-      'height': instance.height,
-      'zOrder': instance.zOrder,
-      'alpha': instance.alpha,
-      'renderMode': _$RenderModeTypeEnumMap[instance.renderMode],
-    };
+Map<String, dynamic> _$RegionToJson(Region instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('x', instance.x);
+  writeNotNull('y', instance.y);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('zOrder', instance.zOrder);
+  writeNotNull('alpha', instance.alpha);
+  writeNotNull('renderMode', _$RenderModeTypeEnumMap[instance.renderMode]);
+  return val;
+}
 
 const _$RenderModeTypeEnumMap = {
   RenderModeType.renderModeHidden: 1,
@@ -202,17 +237,26 @@ InjectStreamConfig _$InjectStreamConfigFromJson(Map<String, dynamic> json) =>
       audioChannels: json['audioChannels'] as int?,
     );
 
-Map<String, dynamic> _$InjectStreamConfigToJson(InjectStreamConfig instance) =>
-    <String, dynamic>{
-      'width': instance.width,
-      'height': instance.height,
-      'videoGop': instance.videoGop,
-      'videoFramerate': instance.videoFramerate,
-      'videoBitrate': instance.videoBitrate,
-      'audioSampleRate': _$AudioSampleRateTypeEnumMap[instance.audioSampleRate],
-      'audioBitrate': instance.audioBitrate,
-      'audioChannels': instance.audioChannels,
-    };
+Map<String, dynamic> _$InjectStreamConfigToJson(InjectStreamConfig instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('videoGop', instance.videoGop);
+  writeNotNull('videoFramerate', instance.videoFramerate);
+  writeNotNull('videoBitrate', instance.videoBitrate);
+  writeNotNull('audioSampleRate',
+      _$AudioSampleRateTypeEnumMap[instance.audioSampleRate]);
+  writeNotNull('audioBitrate', instance.audioBitrate);
+  writeNotNull('audioChannels', instance.audioChannels);
+  return val;
+}
 
 const _$AudioSampleRateTypeEnumMap = {
   AudioSampleRateType.audioSampleRate32000: 32000,
@@ -239,32 +283,48 @@ PublisherConfiguration _$PublisherConfigurationFromJson(
     );
 
 Map<String, dynamic> _$PublisherConfigurationToJson(
-        PublisherConfiguration instance) =>
-    <String, dynamic>{
-      'width': instance.width,
-      'height': instance.height,
-      'framerate': instance.framerate,
-      'bitrate': instance.bitrate,
-      'defaultLayout': instance.defaultLayout,
-      'lifecycle': instance.lifecycle,
-      'owner': instance.owner,
-      'injectStreamWidth': instance.injectStreamWidth,
-      'injectStreamHeight': instance.injectStreamHeight,
-      'injectStreamUrl': instance.injectStreamUrl,
-      'publishUrl': instance.publishUrl,
-      'rawStreamUrl': instance.rawStreamUrl,
-      'extraInfo': instance.extraInfo,
-    };
+    PublisherConfiguration instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  writeNotNull('framerate', instance.framerate);
+  writeNotNull('bitrate', instance.bitrate);
+  writeNotNull('defaultLayout', instance.defaultLayout);
+  writeNotNull('lifecycle', instance.lifecycle);
+  writeNotNull('owner', instance.owner);
+  writeNotNull('injectStreamWidth', instance.injectStreamWidth);
+  writeNotNull('injectStreamHeight', instance.injectStreamHeight);
+  writeNotNull('injectStreamUrl', instance.injectStreamUrl);
+  writeNotNull('publishUrl', instance.publishUrl);
+  writeNotNull('rawStreamUrl', instance.rawStreamUrl);
+  writeNotNull('extraInfo', instance.extraInfo);
+  return val;
+}
 
 AudioTrackConfig _$AudioTrackConfigFromJson(Map<String, dynamic> json) =>
     AudioTrackConfig(
       enableLocalPlayback: json['enableLocalPlayback'] as bool?,
     );
 
-Map<String, dynamic> _$AudioTrackConfigToJson(AudioTrackConfig instance) =>
-    <String, dynamic>{
-      'enableLocalPlayback': instance.enableLocalPlayback,
-    };
+Map<String, dynamic> _$AudioTrackConfigToJson(AudioTrackConfig instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('enableLocalPlayback', instance.enableLocalPlayback);
+  return val;
+}
 
 CameraCapturerConfiguration _$CameraCapturerConfigurationFromJson(
         Map<String, dynamic> json) =>
@@ -279,13 +339,23 @@ CameraCapturerConfiguration _$CameraCapturerConfigurationFromJson(
     );
 
 Map<String, dynamic> _$CameraCapturerConfigurationToJson(
-        CameraCapturerConfiguration instance) =>
-    <String, dynamic>{
-      'cameraDirection': _$CameraDirectionEnumMap[instance.cameraDirection],
-      'deviceId': instance.deviceId,
-      'format': instance.format?.toJson(),
-      'followEncodeDimensionRatio': instance.followEncodeDimensionRatio,
-    };
+    CameraCapturerConfiguration instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'cameraDirection', _$CameraDirectionEnumMap[instance.cameraDirection]);
+  writeNotNull('deviceId', instance.deviceId);
+  writeNotNull('format', instance.format?.toJson());
+  writeNotNull(
+      'followEncodeDimensionRatio', instance.followEncodeDimensionRatio);
+  return val;
+}
 
 const _$CameraDirectionEnumMap = {
   CameraDirection.cameraRear: 0,
@@ -311,25 +381,42 @@ ScreenCaptureConfiguration _$ScreenCaptureConfigurationFromJson(
     );
 
 Map<String, dynamic> _$ScreenCaptureConfigurationToJson(
-        ScreenCaptureConfiguration instance) =>
-    <String, dynamic>{
-      'isCaptureWindow': instance.isCaptureWindow,
-      'displayId': instance.displayId,
-      'screenRect': instance.screenRect?.toJson(),
-      'windowId': instance.windowId,
-      'params': instance.params?.toJson(),
-      'regionRect': instance.regionRect?.toJson(),
-    };
+    ScreenCaptureConfiguration instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('isCaptureWindow', instance.isCaptureWindow);
+  writeNotNull('displayId', instance.displayId);
+  writeNotNull('screenRect', instance.screenRect?.toJson());
+  writeNotNull('windowId', instance.windowId);
+  writeNotNull('params', instance.params?.toJson());
+  writeNotNull('regionRect', instance.regionRect?.toJson());
+  return val;
+}
 
 SIZE _$SIZEFromJson(Map<String, dynamic> json) => SIZE(
       width: json['width'] as int?,
       height: json['height'] as int?,
     );
 
-Map<String, dynamic> _$SIZEToJson(SIZE instance) => <String, dynamic>{
-      'width': instance.width,
-      'height': instance.height,
-    };
+Map<String, dynamic> _$SIZEToJson(SIZE instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  return val;
+}
 
 ThumbImageBuffer _$ThumbImageBufferFromJson(Map<String, dynamic> json) =>
     ThumbImageBuffer(
@@ -338,12 +425,20 @@ ThumbImageBuffer _$ThumbImageBufferFromJson(Map<String, dynamic> json) =>
       height: json['height'] as int?,
     );
 
-Map<String, dynamic> _$ThumbImageBufferToJson(ThumbImageBuffer instance) =>
-    <String, dynamic>{
-      'length': instance.length,
-      'width': instance.width,
-      'height': instance.height,
-    };
+Map<String, dynamic> _$ThumbImageBufferToJson(ThumbImageBuffer instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('length', instance.length);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
+  return val;
+}
 
 ScreenCaptureSourceInfo _$ScreenCaptureSourceInfoFromJson(
         Map<String, dynamic> json) =>
@@ -366,18 +461,26 @@ ScreenCaptureSourceInfo _$ScreenCaptureSourceInfoFromJson(
     );
 
 Map<String, dynamic> _$ScreenCaptureSourceInfoToJson(
-        ScreenCaptureSourceInfo instance) =>
-    <String, dynamic>{
-      'type': _$ScreenCaptureSourceTypeEnumMap[instance.type],
-      'sourceId': instance.sourceId,
-      'sourceName': instance.sourceName,
-      'thumbImage': instance.thumbImage?.toJson(),
-      'iconImage': instance.iconImage?.toJson(),
-      'processPath': instance.processPath,
-      'sourceTitle': instance.sourceTitle,
-      'primaryMonitor': instance.primaryMonitor,
-      'isOccluded': instance.isOccluded,
-    };
+    ScreenCaptureSourceInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('type', _$ScreenCaptureSourceTypeEnumMap[instance.type]);
+  writeNotNull('sourceId', instance.sourceId);
+  writeNotNull('sourceName', instance.sourceName);
+  writeNotNull('thumbImage', instance.thumbImage?.toJson());
+  writeNotNull('iconImage', instance.iconImage?.toJson());
+  writeNotNull('processPath', instance.processPath);
+  writeNotNull('sourceTitle', instance.sourceTitle);
+  writeNotNull('primaryMonitor', instance.primaryMonitor);
+  writeNotNull('isOccluded', instance.isOccluded);
+  return val;
+}
 
 const _$ScreenCaptureSourceTypeEnumMap = {
   ScreenCaptureSourceType.screencapturesourcetypeUnknown: -1,
@@ -393,10 +496,18 @@ AdvancedAudioOptions _$AdvancedAudioOptionsFromJson(
     );
 
 Map<String, dynamic> _$AdvancedAudioOptionsToJson(
-        AdvancedAudioOptions instance) =>
-    <String, dynamic>{
-      'audioProcessingChannels': instance.audioProcessingChannels,
-    };
+    AdvancedAudioOptions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('audioProcessingChannels', instance.audioProcessingChannels);
+  return val;
+}
 
 ImageTrackOptions _$ImageTrackOptionsFromJson(Map<String, dynamic> json) =>
     ImageTrackOptions(
@@ -404,11 +515,19 @@ ImageTrackOptions _$ImageTrackOptionsFromJson(Map<String, dynamic> json) =>
       fps: json['fps'] as int?,
     );
 
-Map<String, dynamic> _$ImageTrackOptionsToJson(ImageTrackOptions instance) =>
-    <String, dynamic>{
-      'imageUrl': instance.imageUrl,
-      'fps': instance.fps,
-    };
+Map<String, dynamic> _$ImageTrackOptionsToJson(ImageTrackOptions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('imageUrl', instance.imageUrl);
+  writeNotNull('fps', instance.fps);
+  return val;
+}
 
 ChannelMediaOptions _$ChannelMediaOptionsFromJson(Map<String, dynamic> json) =>
     ChannelMediaOptions(
@@ -457,46 +576,65 @@ ChannelMediaOptions _$ChannelMediaOptionsFromJson(Map<String, dynamic> json) =>
       isAudioFilterable: json['isAudioFilterable'] as bool?,
     );
 
-Map<String, dynamic> _$ChannelMediaOptionsToJson(
-        ChannelMediaOptions instance) =>
-    <String, dynamic>{
-      'publishCameraTrack': instance.publishCameraTrack,
-      'publishSecondaryCameraTrack': instance.publishSecondaryCameraTrack,
-      'publishMicrophoneTrack': instance.publishMicrophoneTrack,
-      'publishScreenCaptureVideo': instance.publishScreenCaptureVideo,
-      'publishScreenCaptureAudio': instance.publishScreenCaptureAudio,
-      'publishScreenTrack': instance.publishScreenTrack,
-      'publishSecondaryScreenTrack': instance.publishSecondaryScreenTrack,
-      'publishCustomAudioTrack': instance.publishCustomAudioTrack,
-      'publishCustomAudioSourceId': instance.publishCustomAudioSourceId,
-      'publishCustomAudioTrackEnableAec':
-          instance.publishCustomAudioTrackEnableAec,
-      'publishDirectCustomAudioTrack': instance.publishDirectCustomAudioTrack,
-      'publishCustomAudioTrackAec': instance.publishCustomAudioTrackAec,
-      'publishCustomVideoTrack': instance.publishCustomVideoTrack,
-      'publishEncodedVideoTrack': instance.publishEncodedVideoTrack,
-      'publishMediaPlayerAudioTrack': instance.publishMediaPlayerAudioTrack,
-      'publishMediaPlayerVideoTrack': instance.publishMediaPlayerVideoTrack,
-      'publishTrancodedVideoTrack': instance.publishTrancodedVideoTrack,
-      'autoSubscribeAudio': instance.autoSubscribeAudio,
-      'autoSubscribeVideo': instance.autoSubscribeVideo,
-      'enableAudioRecordingOrPlayout': instance.enableAudioRecordingOrPlayout,
-      'publishMediaPlayerId': instance.publishMediaPlayerId,
-      'clientRoleType': _$ClientRoleTypeEnumMap[instance.clientRoleType],
-      'audienceLatencyLevel':
-          _$AudienceLatencyLevelTypeEnumMap[instance.audienceLatencyLevel],
-      'defaultVideoStreamType':
-          _$VideoStreamTypeEnumMap[instance.defaultVideoStreamType],
-      'channelProfile': _$ChannelProfileTypeEnumMap[instance.channelProfile],
-      'audioDelayMs': instance.audioDelayMs,
-      'mediaPlayerAudioDelayMs': instance.mediaPlayerAudioDelayMs,
-      'token': instance.token,
-      'enableBuiltInMediaEncryption': instance.enableBuiltInMediaEncryption,
-      'publishRhythmPlayerTrack': instance.publishRhythmPlayerTrack,
-      'isInteractiveAudience': instance.isInteractiveAudience,
-      'customVideoTrackId': instance.customVideoTrackId,
-      'isAudioFilterable': instance.isAudioFilterable,
-    };
+Map<String, dynamic> _$ChannelMediaOptionsToJson(ChannelMediaOptions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('publishCameraTrack', instance.publishCameraTrack);
+  writeNotNull(
+      'publishSecondaryCameraTrack', instance.publishSecondaryCameraTrack);
+  writeNotNull('publishMicrophoneTrack', instance.publishMicrophoneTrack);
+  writeNotNull('publishScreenCaptureVideo', instance.publishScreenCaptureVideo);
+  writeNotNull('publishScreenCaptureAudio', instance.publishScreenCaptureAudio);
+  writeNotNull('publishScreenTrack', instance.publishScreenTrack);
+  writeNotNull(
+      'publishSecondaryScreenTrack', instance.publishSecondaryScreenTrack);
+  writeNotNull('publishCustomAudioTrack', instance.publishCustomAudioTrack);
+  writeNotNull(
+      'publishCustomAudioSourceId', instance.publishCustomAudioSourceId);
+  writeNotNull('publishCustomAudioTrackEnableAec',
+      instance.publishCustomAudioTrackEnableAec);
+  writeNotNull(
+      'publishDirectCustomAudioTrack', instance.publishDirectCustomAudioTrack);
+  writeNotNull(
+      'publishCustomAudioTrackAec', instance.publishCustomAudioTrackAec);
+  writeNotNull('publishCustomVideoTrack', instance.publishCustomVideoTrack);
+  writeNotNull('publishEncodedVideoTrack', instance.publishEncodedVideoTrack);
+  writeNotNull(
+      'publishMediaPlayerAudioTrack', instance.publishMediaPlayerAudioTrack);
+  writeNotNull(
+      'publishMediaPlayerVideoTrack', instance.publishMediaPlayerVideoTrack);
+  writeNotNull(
+      'publishTrancodedVideoTrack', instance.publishTrancodedVideoTrack);
+  writeNotNull('autoSubscribeAudio', instance.autoSubscribeAudio);
+  writeNotNull('autoSubscribeVideo', instance.autoSubscribeVideo);
+  writeNotNull(
+      'enableAudioRecordingOrPlayout', instance.enableAudioRecordingOrPlayout);
+  writeNotNull('publishMediaPlayerId', instance.publishMediaPlayerId);
+  writeNotNull(
+      'clientRoleType', _$ClientRoleTypeEnumMap[instance.clientRoleType]);
+  writeNotNull('audienceLatencyLevel',
+      _$AudienceLatencyLevelTypeEnumMap[instance.audienceLatencyLevel]);
+  writeNotNull('defaultVideoStreamType',
+      _$VideoStreamTypeEnumMap[instance.defaultVideoStreamType]);
+  writeNotNull(
+      'channelProfile', _$ChannelProfileTypeEnumMap[instance.channelProfile]);
+  writeNotNull('audioDelayMs', instance.audioDelayMs);
+  writeNotNull('mediaPlayerAudioDelayMs', instance.mediaPlayerAudioDelayMs);
+  writeNotNull('token', instance.token);
+  writeNotNull(
+      'enableBuiltInMediaEncryption', instance.enableBuiltInMediaEncryption);
+  writeNotNull('publishRhythmPlayerTrack', instance.publishRhythmPlayerTrack);
+  writeNotNull('isInteractiveAudience', instance.isInteractiveAudience);
+  writeNotNull('customVideoTrackId', instance.customVideoTrackId);
+  writeNotNull('isAudioFilterable', instance.isAudioFilterable);
+  return val;
+}
 
 const _$ClientRoleTypeEnumMap = {
   ClientRoleType.clientRoleBroadcaster: 1,
@@ -531,15 +669,23 @@ LocalAccessPointConfiguration _$LocalAccessPointConfigurationFromJson(
     );
 
 Map<String, dynamic> _$LocalAccessPointConfigurationToJson(
-        LocalAccessPointConfiguration instance) =>
-    <String, dynamic>{
-      'ipList': instance.ipList,
-      'ipListSize': instance.ipListSize,
-      'domainList': instance.domainList,
-      'domainListSize': instance.domainListSize,
-      'verifyDomainName': instance.verifyDomainName,
-      'mode': _$LocalProxyModeEnumMap[instance.mode],
-    };
+    LocalAccessPointConfiguration instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('ipList', instance.ipList);
+  writeNotNull('ipListSize', instance.ipListSize);
+  writeNotNull('domainList', instance.domainList);
+  writeNotNull('domainListSize', instance.domainListSize);
+  writeNotNull('verifyDomainName', instance.verifyDomainName);
+  writeNotNull('mode', _$LocalProxyModeEnumMap[instance.mode]);
+  return val;
+}
 
 const _$LocalProxyModeEnumMap = {
   LocalProxyMode.connectivityFirst: 0,
@@ -553,13 +699,20 @@ LeaveChannelOptions _$LeaveChannelOptionsFromJson(Map<String, dynamic> json) =>
       stopMicrophoneRecording: json['stopMicrophoneRecording'] as bool?,
     );
 
-Map<String, dynamic> _$LeaveChannelOptionsToJson(
-        LeaveChannelOptions instance) =>
-    <String, dynamic>{
-      'stopAudioMixing': instance.stopAudioMixing,
-      'stopAllEffect': instance.stopAllEffect,
-      'stopMicrophoneRecording': instance.stopMicrophoneRecording,
-    };
+Map<String, dynamic> _$LeaveChannelOptionsToJson(LeaveChannelOptions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('stopAudioMixing', instance.stopAudioMixing);
+  writeNotNull('stopAllEffect', instance.stopAllEffect);
+  writeNotNull('stopMicrophoneRecording', instance.stopMicrophoneRecording);
+  return val;
+}
 
 RtcEngineContext _$RtcEngineContextFromJson(Map<String, dynamic> json) =>
     RtcEngineContext(
@@ -577,16 +730,27 @@ RtcEngineContext _$RtcEngineContextFromJson(Map<String, dynamic> json) =>
       useExternalEglContext: json['useExternalEglContext'] as bool?,
     );
 
-Map<String, dynamic> _$RtcEngineContextToJson(RtcEngineContext instance) =>
-    <String, dynamic>{
-      'appId': instance.appId,
-      'channelProfile': _$ChannelProfileTypeEnumMap[instance.channelProfile],
-      'audioScenario': _$AudioScenarioTypeEnumMap[instance.audioScenario],
-      'areaCode': instance.areaCode,
-      'logConfig': instance.logConfig?.toJson(),
-      'threadPriority': _$ThreadPriorityTypeEnumMap[instance.threadPriority],
-      'useExternalEglContext': instance.useExternalEglContext,
-    };
+Map<String, dynamic> _$RtcEngineContextToJson(RtcEngineContext instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('appId', instance.appId);
+  writeNotNull(
+      'channelProfile', _$ChannelProfileTypeEnumMap[instance.channelProfile]);
+  writeNotNull(
+      'audioScenario', _$AudioScenarioTypeEnumMap[instance.audioScenario]);
+  writeNotNull('areaCode', instance.areaCode);
+  writeNotNull('logConfig', instance.logConfig?.toJson());
+  writeNotNull(
+      'threadPriority', _$ThreadPriorityTypeEnumMap[instance.threadPriority]);
+  writeNotNull('useExternalEglContext', instance.useExternalEglContext);
+  return val;
+}
 
 const _$AudioScenarioTypeEnumMap = {
   AudioScenarioType.audioScenarioDefault: 0,
@@ -612,11 +776,20 @@ Metadata _$MetadataFromJson(Map<String, dynamic> json) => Metadata(
       timeStampMs: json['timeStampMs'] as int?,
     );
 
-Map<String, dynamic> _$MetadataToJson(Metadata instance) => <String, dynamic>{
-      'uid': instance.uid,
-      'size': instance.size,
-      'timeStampMs': instance.timeStampMs,
-    };
+Map<String, dynamic> _$MetadataToJson(Metadata instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('size', instance.size);
+  writeNotNull('timeStampMs', instance.timeStampMs);
+  return val;
+}
 
 DirectCdnStreamingStats _$DirectCdnStreamingStatsFromJson(
         Map<String, dynamic> json) =>
@@ -629,14 +802,22 @@ DirectCdnStreamingStats _$DirectCdnStreamingStatsFromJson(
     );
 
 Map<String, dynamic> _$DirectCdnStreamingStatsToJson(
-        DirectCdnStreamingStats instance) =>
-    <String, dynamic>{
-      'videoWidth': instance.videoWidth,
-      'videoHeight': instance.videoHeight,
-      'fps': instance.fps,
-      'videoBitrate': instance.videoBitrate,
-      'audioBitrate': instance.audioBitrate,
-    };
+    DirectCdnStreamingStats instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('videoWidth', instance.videoWidth);
+  writeNotNull('videoHeight', instance.videoHeight);
+  writeNotNull('fps', instance.fps);
+  writeNotNull('videoBitrate', instance.videoBitrate);
+  writeNotNull('audioBitrate', instance.audioBitrate);
+  return val;
+}
 
 DirectCdnStreamingMediaOptions _$DirectCdnStreamingMediaOptionsFromJson(
         Map<String, dynamic> json) =>
@@ -652,27 +833,44 @@ DirectCdnStreamingMediaOptions _$DirectCdnStreamingMediaOptionsFromJson(
     );
 
 Map<String, dynamic> _$DirectCdnStreamingMediaOptionsToJson(
-        DirectCdnStreamingMediaOptions instance) =>
-    <String, dynamic>{
-      'publishCameraTrack': instance.publishCameraTrack,
-      'publishMicrophoneTrack': instance.publishMicrophoneTrack,
-      'publishCustomAudioTrack': instance.publishCustomAudioTrack,
-      'publishCustomVideoTrack': instance.publishCustomVideoTrack,
-      'publishMediaPlayerAudioTrack': instance.publishMediaPlayerAudioTrack,
-      'publishMediaPlayerId': instance.publishMediaPlayerId,
-      'customVideoTrackId': instance.customVideoTrackId,
-    };
+    DirectCdnStreamingMediaOptions instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('publishCameraTrack', instance.publishCameraTrack);
+  writeNotNull('publishMicrophoneTrack', instance.publishMicrophoneTrack);
+  writeNotNull('publishCustomAudioTrack', instance.publishCustomAudioTrack);
+  writeNotNull('publishCustomVideoTrack', instance.publishCustomVideoTrack);
+  writeNotNull(
+      'publishMediaPlayerAudioTrack', instance.publishMediaPlayerAudioTrack);
+  writeNotNull('publishMediaPlayerId', instance.publishMediaPlayerId);
+  writeNotNull('customVideoTrackId', instance.customVideoTrackId);
+  return val;
+}
 
 SDKBuildInfo _$SDKBuildInfoFromJson(Map<String, dynamic> json) => SDKBuildInfo(
       build: json['build'] as int?,
       version: json['version'] as String?,
     );
 
-Map<String, dynamic> _$SDKBuildInfoToJson(SDKBuildInfo instance) =>
-    <String, dynamic>{
-      'build': instance.build,
-      'version': instance.version,
-    };
+Map<String, dynamic> _$SDKBuildInfoToJson(SDKBuildInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('build', instance.build);
+  writeNotNull('version', instance.version);
+  return val;
+}
 
 VideoDeviceInfo _$VideoDeviceInfoFromJson(Map<String, dynamic> json) =>
     VideoDeviceInfo(
@@ -680,11 +878,19 @@ VideoDeviceInfo _$VideoDeviceInfoFromJson(Map<String, dynamic> json) =>
       deviceName: json['deviceName'] as String?,
     );
 
-Map<String, dynamic> _$VideoDeviceInfoToJson(VideoDeviceInfo instance) =>
-    <String, dynamic>{
-      'deviceId': instance.deviceId,
-      'deviceName': instance.deviceName,
-    };
+Map<String, dynamic> _$VideoDeviceInfoToJson(VideoDeviceInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('deviceId', instance.deviceId);
+  writeNotNull('deviceName', instance.deviceName);
+  return val;
+}
 
 AudioDeviceInfo _$AudioDeviceInfoFromJson(Map<String, dynamic> json) =>
     AudioDeviceInfo(
@@ -692,11 +898,19 @@ AudioDeviceInfo _$AudioDeviceInfoFromJson(Map<String, dynamic> json) =>
       deviceName: json['deviceName'] as String?,
     );
 
-Map<String, dynamic> _$AudioDeviceInfoToJson(AudioDeviceInfo instance) =>
-    <String, dynamic>{
-      'deviceId': instance.deviceId,
-      'deviceName': instance.deviceName,
-    };
+Map<String, dynamic> _$AudioDeviceInfoToJson(AudioDeviceInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('deviceId', instance.deviceId);
+  writeNotNull('deviceName', instance.deviceName);
+  return val;
+}
 
 const _$MediaDeviceTypeEnumMap = {
   MediaDeviceType.unknownAudioDevice: -1,

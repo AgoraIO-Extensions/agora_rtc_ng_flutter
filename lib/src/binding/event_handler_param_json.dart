@@ -743,14 +743,14 @@ extension RtcEngineEventHandlerOnVideoSizeChangedJsonBufferExt
 @JsonSerializable(explicitToJson: true)
 class RtcEngineEventHandlerOnLocalVideoStateChangedJson {
   const RtcEngineEventHandlerOnLocalVideoStateChangedJson(
-      {this.connection, this.state, this.errorCode});
+      {this.source, this.state, this.error});
 
-  @JsonKey(name: 'connection')
-  final RtcConnection? connection;
+  @JsonKey(name: 'source')
+  final VideoSourceType? source;
   @JsonKey(name: 'state')
   final LocalVideoStreamState? state;
-  @JsonKey(name: 'errorCode')
-  final LocalVideoStreamError? errorCode;
+  @JsonKey(name: 'error')
+  final LocalVideoStreamError? error;
   factory RtcEngineEventHandlerOnLocalVideoStateChangedJson.fromJson(
           Map<String, dynamic> json) =>
       _$RtcEngineEventHandlerOnLocalVideoStateChangedJsonFromJson(json);

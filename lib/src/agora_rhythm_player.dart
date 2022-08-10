@@ -77,7 +77,7 @@ extension RhythmPlayerErrorTypeExt on RhythmPlayerErrorType {
 
 /// The metronome configuration.
 ///
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AgoraRhythmPlayerConfig {
   /// @nodoc
   const AgoraRhythmPlayerConfig({this.beatsPerMeasure, this.beatsPerMinute});

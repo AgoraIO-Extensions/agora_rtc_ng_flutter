@@ -12,11 +12,10 @@ import 'package:agora_rtc_ng/src/binding/audio_device_manager_impl.dart'
 extension DeviceInfoListExt on List<AudioDeviceInfo> {
   void fill(dynamic rm) {
     final devicesList = List.from(rm);
-    final List<AudioDeviceInfo> deviceInfoList = [];
     for (final d in devicesList) {
       final dm = Map<String, dynamic>.from(d);
 
-      deviceInfoList.add(AudioDeviceInfo.fromJson(dm));
+      add(AudioDeviceInfo.fromJson(dm));
     }
   }
 }
