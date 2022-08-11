@@ -44,7 +44,7 @@ abstract class AudioDeviceManager {
   /// Sets the audio playback device.
   ///
   ///
-  /// *[deviceId]The ID of the specified audio playback device. You can get the device ID by calling enumeratePlaybackDevices . Plugging or unplugging the audio device does not change the value of deviceId.
+  /// * [deviceId] The ID of the specified audio playback device. You can get the device ID by calling enumeratePlaybackDevices . Plugging or unplugging the audio device does not change the value of deviceId.
   ///
   Future<void> setPlaybackDevice(String deviceId);
 
@@ -71,7 +71,7 @@ abstract class AudioDeviceManager {
   /// Sets the audio recording device.
   ///
   ///
-  /// *[deviceId]The ID of the audio recording device. You can get the device ID by calling enumerateRecordingDevices . Plugging or unplugging the audio device does not change the value of deviceId.
+  /// * [deviceId] The ID of the audio recording device. You can get the device ID by calling enumerateRecordingDevices . Plugging or unplugging the audio device does not change the value of deviceId.
   ///
   Future<void> setRecordingDevice(String deviceId);
 
@@ -112,7 +112,7 @@ abstract class AudioDeviceManager {
   ///  After calling this method, the SDK triggers the onAudioVolumeIndication callback every 100 ms, reporting uid = 1 and the volume information of the playback device.
   ///  Ensure that you call this method before joining a channel.
   ///
-  /// *[testAudioFilePath]The path of the audio file. The data format is string in UTF-8.
+  /// * [testAudioFilePath] The path of the audio file. The data format is string in UTF-8.
   ///  Supported file formats: wav, mp3, m4a, and aac.
   ///  Supported file sample rates: 8000, 16000, 32000, 44100, and 48000 Hz.
   Future<void> startPlaybackDeviceTest(String testAudioFilePath);
@@ -126,7 +126,7 @@ abstract class AudioDeviceManager {
   /// This method tests whether the audio capture device works properly. After calling this method, the SDK triggers the onAudioVolumeIndication callback at the time interval set in this method, which reports uid = 0 and the volume information of the capturing device.
   ///  Ensure that you call this method before joining a channel.
   ///
-  /// *[indicationInterval]The time interval (ms) at which the SDK triggers the onAudioVolumeIndication callback. Agora recommends setting a value greater than 200 ms. This value must not be less than 10 ms; otherwise, you can not receive the onAudioVolumeIndication callback.
+  /// * [indicationInterval] The time interval (ms) at which the SDK triggers the onAudioVolumeIndication callback. Agora recommends setting a value greater than 200 ms. This value must not be less than 10 ms; otherwise, you can not receive the onAudioVolumeIndication callback.
   Future<void> startRecordingDeviceTest(int indicationInterval);
 
   /// Stops the audio capture device test.
@@ -138,7 +138,7 @@ abstract class AudioDeviceManager {
   /// This method tests whether the local audio capture device and playback device are working properly. Once the test starts, the audio recording device records the local audio, and the audio playback device plays the captured audio. The SDK triggers two independent onAudioVolumeIndication callbacks at the time interval set in this method, which reports the volume information of the capture device (uid = 0) and the volume information of the playback device (uid = 1) respectively. Ensure that you call this method before joining a channel.
   ///  This method tests local audio devices and does not report the network conditions.
   ///
-  /// *[indicationInterval]The time interval (ms) at which the SDK triggers the onAudioVolumeIndication callback. Agora recommends setting a value greater than 200 ms. This value must not be less than 10 ms; otherwise, you can not receive the onAudioVolumeIndication callback.
+  /// * [indicationInterval] The time interval (ms) at which the SDK triggers the onAudioVolumeIndication callback. Agora recommends setting a value greater than 200 ms. This value must not be less than 10 ms; otherwise, you can not receive the onAudioVolumeIndication callback.
   Future<void> startAudioDeviceLoopbackTest(int indicationInterval);
 
   /// Stops the audio device loopback test.

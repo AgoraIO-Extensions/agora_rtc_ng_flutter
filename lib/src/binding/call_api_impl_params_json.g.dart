@@ -32,58 +32,6 @@ Map<String, dynamic> _$VideoDeviceManagerGetCapabilityJsonToJson(
       'capability': instance.capability.toJson(),
     };
 
-RtcEngineSetSubscribeAudioBlacklistJson
-    _$RtcEngineSetSubscribeAudioBlacklistJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineSetSubscribeAudioBlacklistJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineSetSubscribeAudioBlacklistJsonToJson(
-        RtcEngineSetSubscribeAudioBlacklistJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
-RtcEngineSetSubscribeAudioWhitelistJson
-    _$RtcEngineSetSubscribeAudioWhitelistJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineSetSubscribeAudioWhitelistJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineSetSubscribeAudioWhitelistJsonToJson(
-        RtcEngineSetSubscribeAudioWhitelistJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
-RtcEngineSetSubscribeVideoBlacklistJson
-    _$RtcEngineSetSubscribeVideoBlacklistJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineSetSubscribeVideoBlacklistJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineSetSubscribeVideoBlacklistJsonToJson(
-        RtcEngineSetSubscribeVideoBlacklistJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
-RtcEngineSetSubscribeVideoWhitelistJson
-    _$RtcEngineSetSubscribeVideoWhitelistJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineSetSubscribeVideoWhitelistJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineSetSubscribeVideoWhitelistJsonToJson(
-        RtcEngineSetSubscribeVideoWhitelistJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
 RtcEngineGetExtensionPropertyJson _$RtcEngineGetExtensionPropertyJsonFromJson(
         Map<String, dynamic> json) =>
     RtcEngineGetExtensionPropertyJson(
@@ -266,58 +214,6 @@ Map<String, dynamic> _$MediaPlayerCacheManagerGetCacheDirJsonToJson(
         MediaPlayerCacheManagerGetCacheDirJson instance) =>
     <String, dynamic>{
       'path': instance.path,
-    };
-
-RtcEngineExSetSubscribeAudioBlacklistExJson
-    _$RtcEngineExSetSubscribeAudioBlacklistExJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineExSetSubscribeAudioBlacklistExJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineExSetSubscribeAudioBlacklistExJsonToJson(
-        RtcEngineExSetSubscribeAudioBlacklistExJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
-RtcEngineExSetSubscribeAudioWhitelistExJson
-    _$RtcEngineExSetSubscribeAudioWhitelistExJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineExSetSubscribeAudioWhitelistExJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineExSetSubscribeAudioWhitelistExJsonToJson(
-        RtcEngineExSetSubscribeAudioWhitelistExJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
-RtcEngineExSetSubscribeVideoBlacklistExJson
-    _$RtcEngineExSetSubscribeVideoBlacklistExJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineExSetSubscribeVideoBlacklistExJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineExSetSubscribeVideoBlacklistExJsonToJson(
-        RtcEngineExSetSubscribeVideoBlacklistExJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
-    };
-
-RtcEngineExSetSubscribeVideoWhitelistExJson
-    _$RtcEngineExSetSubscribeVideoWhitelistExJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineExSetSubscribeVideoWhitelistExJson(
-          (json['uidList'] as List<dynamic>).map((e) => e as int).toList(),
-        );
-
-Map<String, dynamic> _$RtcEngineExSetSubscribeVideoWhitelistExJsonToJson(
-        RtcEngineExSetSubscribeVideoWhitelistExJson instance) =>
-    <String, dynamic>{
-      'uidList': instance.uidList,
     };
 
 RtcEngineExGetUserInfoByUserAccountExJson

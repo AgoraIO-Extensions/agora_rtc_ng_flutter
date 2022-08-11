@@ -108,7 +108,7 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
 
   void _joinChannel() async {
     await _engine.joinChannel(
-        token: config.token, channelId: channelId, info: '', uid: config.uid);
+        token: config.token, channelId: _channelIdController.text, info: '', uid: 123);
   }
 
   void _leaveChannel() async {
@@ -123,7 +123,7 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
 
     final List<TranscodingUser> transcodingUsers = [
       const TranscodingUser(
-        uid: 0,
+        uid: 123,
         x: 0,
         y: 0,
         width: 360,
@@ -153,6 +153,7 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
 
     final liveTranscoding = LiveTranscoding(
       transcodingUsers: transcodingUsers,
+      userCount: transcodingUsers.length,
       width: width,
       height: height,
       videoBitrate: 400,

@@ -386,19 +386,18 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         onVideoSizeChanged!(connection, uid, width, height, rotation);
         break;
 
-      case 'onLocalVideoStateChangedEx':
+      case 'onLocalVideoStateChanged':
         if (onLocalVideoStateChanged == null) break;
         RtcEngineEventHandlerOnLocalVideoStateChangedJson paramJson =
             RtcEngineEventHandlerOnLocalVideoStateChangedJson.fromJson(jsonMap);
         paramJson = paramJson.fillBuffers(buffers);
-        RtcConnection? connection = paramJson.connection;
+        VideoSourceType? source = paramJson.source;
         LocalVideoStreamState? state = paramJson.state;
-        LocalVideoStreamError? errorCode = paramJson.errorCode;
-        if (connection == null || state == null || errorCode == null) {
+        LocalVideoStreamError? error = paramJson.error;
+        if (source == null || state == null || error == null) {
           break;
         }
-        connection = connection.fillBuffers(buffers);
-        onLocalVideoStateChanged!(connection, state, errorCode);
+        onLocalVideoStateChanged!(source, state, error);
         break;
 
       case 'onRemoteVideoStateChangedEx':

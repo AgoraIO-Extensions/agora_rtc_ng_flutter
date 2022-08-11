@@ -91,7 +91,7 @@ class _State extends State<EnableVirtualBackground> {
         enable: !_isEnabledVirtualBackgroundImage);
 
     await _engine.enableVideo();
-    await _engine.setClientRole(role: ClientRoleType.clientRoleAudience);
+    await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
     await _engine.startPreview();
 

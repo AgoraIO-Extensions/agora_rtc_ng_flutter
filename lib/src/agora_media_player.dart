@@ -14,9 +14,9 @@ abstract class MediaPlayer {
   /// Opens the media resource.
   ///
   ///
-  /// *[url]The path of the media file. Both local path and online path are supported.On the Android platform, the URI format is not supported.
+  /// * [url] The path of the media file. Both local path and online path are supported.On the Android platform, the URI format is not supported.
   ///
-  /// *[startPos]The starting position (ms) for playback. Default value is 0.
+  /// * [startPos] The starting position (ms) for playback. Default value is 0.
   Future<void> open({required String url, required int startPos});
 
   /// @nodoc
@@ -44,13 +44,13 @@ abstract class MediaPlayer {
   ///  Call this method to seek to the position you want to begin playback.
   ///  Call the play method to play the media file.
   ///
-  /// *[newPos]The new playback position (ms).
+  /// * [newPos] The new playback position (ms).
   Future<void> seek(int newPos);
 
   /// Sets the pitch of the current media resource.
   /// Call this method after calling open .
   ///
-  /// *[pitch]Sets the pitch of the local music file by the chromatic scale. The default value is 0, which means keeping the original pitch. The value ranges from -12 to 12, and the pitch value between consecutive values is a chromatic value. The greater the absolute value of this parameter, the higher or lower the pitch of the local music file.
+  /// * [pitch] Sets the pitch of the local music file by the chromatic scale. The default value is 0, which means keeping the original pitch. The value ranges from -12 to 12, and the pitch value between consecutive values is a chromatic value. The greater the absolute value of this parameter, the higher or lower the pitch of the local music file.
   Future<void> setAudioPitch(int pitch);
 
   /// Gets the duration of the media resource.
@@ -79,7 +79,7 @@ abstract class MediaPlayer {
   /// Gets the detailed information of the media stream.
   /// Call this method after calling getStreamCount .
   ///
-  /// *[index]The index of the media stream.
+  /// * [index] The index of the media stream.
   ///
   /// Returns
   /// If the call succeeds, returns the detailed information of the media stream. See PlayerStreamInfo .
@@ -90,7 +90,7 @@ abstract class MediaPlayer {
   /// If you want to loop, call this method and set the number of the loops.
   ///  When the loop finishes, the SDK triggers onPlayerSourceStateChanged and reports the playback state as playerStatePlaybackAllLoopsCompleted.
   ///
-  /// *[loopCount]The number of times the audio effect loops:
+  /// * [loopCount] The number of times the audio effect loops:
   Future<void> setLoopCount(int loopCount);
 
   /// @nodoc
@@ -118,7 +118,7 @@ abstract class MediaPlayer {
   /// Sets whether to mute the media file.
   ///
   ///
-  /// *[mute]Whether to mute the media file:
+  /// * [mute] Whether to mute the media file:
   ///  true: Mute the media file.
   ///  false: (Default) Unmute the media file.
   ///
@@ -135,7 +135,7 @@ abstract class MediaPlayer {
   /// Adjusts the local playback volume.
   ///
   ///
-  /// *[volume]The local playback volume, which ranges from 0 to 100:
+  /// * [volume] The local playback volume, which ranges from 0 to 100:
   ///  0: Mute.
   ///  100: (Default) The original volume.
   ///
@@ -153,7 +153,7 @@ abstract class MediaPlayer {
   /// Adjusts the volume of the media file for publishing.
   /// After connected to the Agora server, you can call this method to adjust the volume of the media file heard by the remote user.
   ///
-  /// *[volume]The volume, which ranges from 0 to 400:
+  /// * [volume] The volume, which ranges from 0 to 400:
   ///  0: Mute.
   ///  100: (Default) The original volume.
   ///  400: Four times the original volume (amplifying the audio signals by four times).
@@ -175,20 +175,20 @@ abstract class MediaPlayer {
   /// Sets the render mode of the media player.
   ///
   ///
-  /// *[renderMode]Sets the render mode of the view. See RenderModeType .
+  /// * [renderMode] Sets the render mode of the view. See RenderModeType .
   ///
   Future<void> setRenderMode(RenderModeType renderMode);
 
   /// Registers a media player observer.
   ///
   ///
-  /// *[observer]The player observer, listening for events during the playback. See MediaPlayerSourceObserver .
+  /// * [observer] The player observer, listening for events during the playback. See MediaPlayerSourceObserver .
   void registerPlayerSourceObserver(MediaPlayerSourceObserver observer);
 
   /// Releases a media player observer.
   ///
   ///
-  /// *[observer]The player observer, listening for events during the playback. See MediaPlayerSourceObserver .
+  /// * [observer] The player observer, listening for events during the playback. See MediaPlayerSourceObserver .
   void unregisterPlayerSourceObserver(MediaPlayerSourceObserver observer);
 
   /// @nodoc
@@ -203,7 +203,7 @@ abstract class MediaPlayer {
   /// In a stereo music file, the left and right channels can store different audio data. According to your needs, you can set the channel mode to original mode, left channel mode, right channel mode, or mixed channel mode. For example, in the KTV scenario, the left channel of the music file stores the musical accompaniment, and the right channel stores the singing voice. If you only need to listen to the accompaniment, call this method to set the channel mode of the music file to left channel mode; if you need to listen to the accompaniment and the singing voice at the same time, call this method to set the channel mode to mixed channel mode. Call this method after calling open .
   ///  This method only applies to stereo audio files.
   ///
-  /// *[mode]The channel mode. See AudioDualMonoMode .
+  /// * [mode] The channel mode. See AudioDualMonoMode .
   Future<void> setAudioDualMonoMode(AudioDualMonoMode mode);
 
   /// @nodoc

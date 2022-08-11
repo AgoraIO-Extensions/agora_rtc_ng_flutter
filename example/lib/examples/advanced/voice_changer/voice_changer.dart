@@ -153,8 +153,13 @@ class _State extends State<VoiceChanger> {
 
     await _engine.enableAudio();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await _engine.joinChannel(
-        token: config.token, channelId: _channelId.text, info: '', uid: 0);
+    await _engine.joinChannelWithOptions(
+        token: config.token,
+        channelId: _channelId.text,
+        uid: 0,
+        options: const ChannelMediaOptions(autoSubscribeAudio: true));
+    // await _engine.joinChannel(
+    //     token: config.token, channelId: _channelId.text, info: '', uid: 0);
   }
 
   DropdownButton _createDropdownButton<T>(
@@ -220,50 +225,6 @@ class _State extends State<VoiceChanger> {
           },
           child: const Text('setAudioEffectPreset'),
         ),
-        // Row(
-        //   children: [
-        //     const Text('param1'),
-        //     Slider(
-        //       value: _audioEffectPresetParam1,
-        //       min: 0.0,
-        //       max: 10.0,
-        //       divisions: 10,
-        //       label: 'param1 $_audioEffectPresetParam1',
-        //       onChanged: (double value) {
-        //         setState(() {
-        //           _audioEffectPresetParam1 = value;
-        //         });
-        //       },
-        //     ),
-        //   ],
-        // ),
-        // Row(
-        //   children: [
-        //     const Text('param2'),
-        //     Slider(
-        //       value: _audioEffectPresetParam2,
-        //       min: 0.0,
-        //       max: 10.0,
-        //       divisions: 10,
-        //       label: 'param2 $_audioEffectPresetParam2',
-        //       onChanged: (double value) {
-        //         setState(() {
-        //           _audioEffectPresetParam2 = value;
-        //         });
-        //       },
-        //     ),
-        //   ],
-        // ),
-        // ElevatedButton(
-        //   onPressed: () async {
-        //     await _engine.setAudioEffectParameters(
-        //       preset: _selectedAudioEffectPreset,
-        //       param1: _audioEffectPresetParam1.toInt(),
-        //       param2: _audioEffectPresetParam2.toInt(),
-        //     );
-        //   },
-        //   child: const Text('setAudioEffectParameters'),
-        // ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

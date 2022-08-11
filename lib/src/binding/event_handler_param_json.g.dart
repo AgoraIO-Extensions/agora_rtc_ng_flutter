@@ -582,22 +582,19 @@ RtcEngineEventHandlerOnLocalVideoStateChangedJson
     _$RtcEngineEventHandlerOnLocalVideoStateChangedJsonFromJson(
             Map<String, dynamic> json) =>
         RtcEngineEventHandlerOnLocalVideoStateChangedJson(
-          connection: json['connection'] == null
-              ? null
-              : RtcConnection.fromJson(
-                  json['connection'] as Map<String, dynamic>),
+          source: $enumDecodeNullable(_$VideoSourceTypeEnumMap, json['source']),
           state: $enumDecodeNullable(
               _$LocalVideoStreamStateEnumMap, json['state']),
-          errorCode: $enumDecodeNullable(
-              _$LocalVideoStreamErrorEnumMap, json['errorCode']),
+          error: $enumDecodeNullable(
+              _$LocalVideoStreamErrorEnumMap, json['error']),
         );
 
 Map<String, dynamic> _$RtcEngineEventHandlerOnLocalVideoStateChangedJsonToJson(
         RtcEngineEventHandlerOnLocalVideoStateChangedJson instance) =>
     <String, dynamic>{
-      'connection': instance.connection?.toJson(),
+      'source': _$VideoSourceTypeEnumMap[instance.source],
       'state': _$LocalVideoStreamStateEnumMap[instance.state],
-      'errorCode': _$LocalVideoStreamErrorEnumMap[instance.errorCode],
+      'error': _$LocalVideoStreamErrorEnumMap[instance.error],
     };
 
 const _$LocalVideoStreamStateEnumMap = {

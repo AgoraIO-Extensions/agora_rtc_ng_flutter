@@ -29,7 +29,6 @@ class _AudioMixingState extends State<AudioMixing> {
 
   bool _isStartedAudioMixing = false;
   bool _loopback = false;
-  bool _replace = false;
   double _cycle = 1.0;
   double _startPos = 1000;
 
@@ -96,18 +95,13 @@ class _AudioMixingState extends State<AudioMixing> {
   }
 
   Future<void> _joinChannel() async {
-    await _engine.joinChannel(
-        token: config.token,
-        channelId: _controller.text,
-        info: '',
-        uid: config.uid);
+    _engine.joinChannel(token: '', channelId: 'channelid', info: '', uid: 0);
   }
 
   Future<void> _leaveChannel() async {
     _stopAudioMixing();
     _isStartedAudioMixing = false;
     _loopback = false;
-    _replace = false;
     _cycle = 1.0;
     _startPos = 1000;
     await _engine.leaveChannel();
@@ -130,7 +124,6 @@ class _AudioMixingState extends State<AudioMixing> {
     await _engine.startAudioMixing(
       filePath: p,
       loopback: _loopback,
-      replace: _replace,
       cycle: _cycle.toInt(),
       startPos: _startPos.toInt(),
     );
@@ -184,21 +177,6 @@ class _AudioMixingState extends State<AudioMixing> {
                       : (changed) {
                           setState(() {
                             _loopback = changed;
-                          });
-                        },
-                  activeTrackColor: Colors.grey[350],
-                  activeColor: Colors.white,
-                )
-              ]),
-              Row(mainAxisSize: MainAxisSize.min, children: [
-                const Text('replace: '),
-                Switch(
-                  value: _replace,
-                  onChanged: _isStartedAudioMixing
-                      ? null
-                      : (changed) {
-                          setState(() {
-                            _replace = changed;
                           });
                         },
                   activeTrackColor: Colors.grey[350],

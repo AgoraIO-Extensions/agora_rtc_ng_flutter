@@ -32,9 +32,9 @@ abstract class RtcEngineEx implements RtcEngine {
   ///  If you want to join the same channel from different devices, ensure that the user IDs in all devices are different.
   ///  Ensure that the app ID you use to generate the token is the same with the app ID used when creating the RtcEngine instance.
   ///
-  /// *[options]The channel media options. See ChannelMediaOptions .
+  /// * [options] The channel media options. See ChannelMediaOptions .
   ///
-  /// *[token]The token generated on your server for authentication. See
+  /// * [token] The token generated on your server for authentication. See
   ///
   ///
   Future<void> joinChannelEx(
@@ -45,14 +45,14 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Leaves a channel.
   ///
   ///
-  /// *[connection]The connection information. See RtcConnection .
+  /// * [connection] The connection information. See RtcConnection .
   Future<void> leaveChannelEx(RtcConnection connection);
 
   /// Updates the channel media options after joining the channel.
   ///
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[options]The channel media options. See ChannelMediaOptions .
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [options] The channel media options. See ChannelMediaOptions .
   Future<void> updateChannelMediaOptionsEx(
       {required ChannelMediaOptions options,
       required RtcConnection connection});
@@ -62,8 +62,8 @@ abstract class RtcEngineEx implements RtcEngine {
   ///  The config specified in this method is the maximum values under ideal network conditions. If the network condition is not good, the video engine cannot use the
   /// config renders local video, which automatically reduces to an appropriate video parameter setting.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[config]Video profile. See VideoEncoderConfiguration .
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [config] Video profile. See VideoEncoderConfiguration .
   ///
   /// Returns
   /// 0: Success.
@@ -79,8 +79,8 @@ abstract class RtcEngineEx implements RtcEngine {
   ///  To unbind the remote user from the view, set the view parameter to NULL.
   ///  Once the remote user leaves the channel, the SDK unbinds the remote user.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[canvas]The remote video view settings. See VideoCanvas .
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [canvas] The remote video view settings. See VideoCanvas .
   ///
   Future<void> setupRemoteVideoEx(
       {required VideoCanvas canvas, required RtcConnection connection});
@@ -88,9 +88,9 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Stops or resumes receiving the audio stream of a specified user.
   /// This method is used to stops or resumes receiving the audio stream of a specified user. You can call this method before or after joining a channel. If a user leaves a channel, the settings in this method become invalid.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[uid]The ID of the specified user.
-  /// *[mute]Whether to stop receiving the audio stream of the specified user: true: Stop receiving the audio stream of the specified user.
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [uid] The ID of the specified user.
+  /// * [mute] Whether to stop receiving the audio stream of the specified user: true: Stop receiving the audio stream of the specified user.
   ///  false: (Default) Resume receiving the audio stream of the specified user.
   ///
   ///
@@ -105,10 +105,10 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Stops or resumes receiving the video stream of a specified user.
   /// This method is used to stops or resumes receiving the video stream of a specified user. You can call this method before or after joining a channel. If a user leaves a channel, the settings in this method become invalid.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[uid]The user ID of the remote user.
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [uid] The user ID of the remote user.
   ///
-  /// *[mute]Whether to stop receiving the video stream of the specified user:
+  /// * [mute] Whether to stop receiving the video stream of the specified user:
   ///  true: Stop receiving the video stream of the specified user.
   ///  false: (Default) Resume receiving the video stream of the specified user.
   ///
@@ -127,20 +127,28 @@ abstract class RtcEngineEx implements RtcEngine {
       required RtcConnection connection});
 
   /// @nodoc
-  Future<List<int>> setSubscribeAudioBlacklistEx(
-      {required int uidNumber, required RtcConnection connection});
+  Future<void> setSubscribeAudioBlacklistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection});
 
   /// @nodoc
-  Future<List<int>> setSubscribeAudioWhitelistEx(
-      {required int uidNumber, required RtcConnection connection});
+  Future<void> setSubscribeAudioWhitelistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection});
 
   /// @nodoc
-  Future<List<int>> setSubscribeVideoBlacklistEx(
-      {required int uidNumber, required RtcConnection connection});
+  Future<void> setSubscribeVideoBlacklistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection});
 
   /// @nodoc
-  Future<List<int>> setSubscribeVideoWhitelistEx(
-      {required int uidNumber, required RtcConnection connection});
+  Future<void> setSubscribeVideoWhitelistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection});
 
   /// @nodoc
   Future<void> setRemoteVideoSubscriptionOptionsEx(
@@ -153,14 +161,14 @@ abstract class RtcEngineEx implements RtcEngine {
   ///  When the local user calls this method to set the voice position of a remote user, the voice difference between the left and right channels allows the local user to track the real-time position of the remote user, creating a sense of space. This method applies to massive multiplayer online games, such as Battle Royale games. For the best voice positioning, Agora recommends using a wired headset.
   ///  Call this method after joining a channel.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[uid]The user ID of the remote user.
-  /// *[pan]The voice position of the remote user. The value ranges from -1.0 to 1.0:
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [uid] The user ID of the remote user.
+  /// * [pan] The voice position of the remote user. The value ranges from -1.0 to 1.0:
   ///  -1.0: The remote voice comes from the left.
   ///  0.0: (Default) The remote voice comes from the front.
   ///  1.0: The remote voice comes from the right.
   ///
-  /// *[gain]The volume of the remote user. The value ranges from 0.0 to 100.0. The default value is 100.0 (the original volume of the remote user). The smaller the value, the lower the volume.
+  /// * [gain] The volume of the remote user. The value ranges from 0.0 to 100.0. The default value is 100.0 (the original volume of the remote user). The smaller the value, the lower the volume.
   ///
   /// Returns
   /// 0: Success.
@@ -187,12 +195,12 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Enables loopback audio capture.
   /// If you enable loopback audio capture, the output of the sound card is mixed into the audio stream sent to the other end.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[enabled]Sets whether to enable loopback audio capture:
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [enabled] Sets whether to enable loopback audio capture:
   ///  true: Enable loopback audio capture.
   ///  false: (Default) Disable loopback audio capture.
   ///
-  /// *[deviceName]The device name.
+  /// * [deviceName] The device name.
   ///
   /// Returns
   /// 0: Success.
@@ -205,7 +213,7 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Gets the current connection state of the SDK.
   /// You can call this method either before or after joining a channel.
   ///
-  /// *[connection]The connection information. See RtcConnection .
+  /// * [connection] The connection information. See RtcConnection .
   ///
   /// Returns
   /// The current connection state.  ConnectionStateType
@@ -226,10 +234,10 @@ abstract class RtcEngineEx implements RtcEngine {
   /// A failed method call triggers the onStreamMessageError callback on the remote client. Ensure that you call createDataStreamEx to create a data channel before calling this method.
   ///  This method applies only to the `COMMUNICATION` profile or to the hosts in the `LIVE_BROADCASTING` profile. If an audience in the `LIVE_BROADCASTING` profile calls this method, the audience may be switched to a host.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[streamId]The data stream ID. You can get the data stream ID by calling createDataStreamEx.
-  /// *[data]The data to be sent.
-  /// *[length]The length of the data.
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [streamId] The data stream ID. You can get the data stream ID by calling createDataStreamEx.
+  /// * [data] The data to be sent.
+  /// * [length] The length of the data.
   ///
   /// Returns
   /// 0: Success.
@@ -252,9 +260,9 @@ abstract class RtcEngineEx implements RtcEngine {
   ///  If you have enabled the local video preview by calling the startPreview method, you can use the visibleInPreview member to set whether or not the watermark is visible in the preview.
   ///  If you have enabled the mirror mode for the local video, the watermark on the local video is also mirrored. To avoid mirroring the watermark, Agora recommends that you do not use the mirror and watermark functions for the local video at the same time. You can implement the watermark function in your application layer.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[options]The options of the watermark image to be added.
-  /// *[watermarkUrl]The local file path of the watermark image to be added. This method supports adding a watermark image from the local absolute or relative file path.
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [options] The options of the watermark image to be added.
+  /// * [watermarkUrl] The local file path of the watermark image to be added. This method supports adding a watermark image from the local absolute or relative file path.
   ///
   /// Returns
   /// 0: Success.
@@ -267,7 +275,7 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Removes the watermark image from the video stream.
   ///
   ///
-  /// *[connection]The connection information. See RtcConnection .
+  /// * [connection] The connection information. See RtcConnection .
   Future<void> clearVideoWatermarkEx(RtcConnection connection);
 
   /// Agora supports reporting and analyzing customized messages.
@@ -329,8 +337,8 @@ abstract class RtcEngineEx implements RtcEngine {
   /// Creates a data stream. Each user can create up to five data streams in a single channel.
   ///  Compared with createDataStreamEx , this method does not support data reliability. If a data packet is not received five seconds after it was sent, the SDK directly discards the data.
   ///
-  /// *[connection]The connection information. See RtcConnection .
-  /// *[config]The configurations for the data stream. See DataStreamConfig .
+  /// * [connection] The connection information. See RtcConnection .
+  /// * [config] The configurations for the data stream. See DataStreamConfig .
   ///
   /// Returns
   /// < 0: Failure.

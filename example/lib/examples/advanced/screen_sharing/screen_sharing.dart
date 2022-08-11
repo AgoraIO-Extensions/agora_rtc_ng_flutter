@@ -63,8 +63,6 @@ class _State extends State<ScreenSharing> {
           isJoined = false;
         });
       },
-      onLocalVideoStateChanged: (RtcConnection connection,
-          LocalVideoStreamState state, LocalVideoStreamError errorCode) {},
     ));
 
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -96,6 +94,7 @@ class _State extends State<ScreenSharing> {
         connection: RtcConnection(channelId: _controller.text, localUid: 1001),
         options: const ChannelMediaOptions(
           publishScreenTrack: true,
+          publishSecondaryScreenTrack: true,
           publishCameraTrack: false,
           publishMicrophoneTrack: false,
           publishScreenCaptureAudio: true,
@@ -108,7 +107,6 @@ class _State extends State<ScreenSharing> {
     await _engine.stopScreenCapture();
     await _engine.leaveChannel();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -425,15 +423,28 @@ class _ScreenShareDesktopState extends State<ScreenShareDesktop>
   void startScreenShare() async {
     if (isScreenShared) return;
 
-    final windowId = _selectedScreenCaptureSourceInfo.sourceId;
-    await rtcEngine.startScreenCaptureByWindowId(
-      windowId: windowId!,
-      regionRect: const Rectangle(),
-      captureParams: const ScreenCaptureParameters(
-        captureMouseCursor: true,
-        frameRate: 30,
-      ),
-    );
+    final sourceId = _selectedScreenCaptureSourceInfo.sourceId;
+
+    if (_selectedScreenCaptureSourceInfo.type ==
+        ScreenCaptureSourceType.screencapturesourcetypeScreen) {
+      await rtcEngine.startScreenCaptureByDisplayId(
+          displayId: sourceId!,
+          regionRect: const Rectangle(x: 0, y: 0, width: 0, height: 0),
+          captureParams: const ScreenCaptureParameters(
+            captureMouseCursor: true,
+            frameRate: 30,
+          ));
+    } else if (_selectedScreenCaptureSourceInfo.type ==
+        ScreenCaptureSourceType.screencapturesourcetypeWindow) {
+      await rtcEngine.startScreenCaptureByWindowId(
+        windowId: sourceId!,
+        regionRect: const Rectangle(x: 0, y: 0, width: 0, height: 0),
+        captureParams: const ScreenCaptureParameters(
+          captureMouseCursor: true,
+          frameRate: 30,
+        ),
+      );
+    }
 
     onStartScreenShared();
   }

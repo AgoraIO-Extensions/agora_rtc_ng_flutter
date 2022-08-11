@@ -797,14 +797,12 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   Future<void> startAudioMixing(
       {required String filePath,
       required bool loopback,
-      required bool replace,
       required int cycle,
       int startPos = 0}) async {
     const apiType = 'RtcEngine_startAudioMixing2';
     final param = createParams({
       'filePath': filePath,
       'loopback': loopback,
-      'replace': replace,
       'cycle': cycle,
       'startPos': startPos
     });

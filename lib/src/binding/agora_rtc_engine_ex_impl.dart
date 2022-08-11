@@ -204,12 +204,17 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
   }
 
   @override
-  Future<List<int>> setSubscribeAudioBlacklistEx(
-      {required int uidNumber, required RtcConnection connection}) async {
+  Future<void> setSubscribeAudioBlacklistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngineEx'}_setSubscribeAudioBlacklistEx';
-    final param = createParams(
-        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final param = createParams({
+      'uidList': uidList,
+      'uidNumber': uidNumber,
+      'connection': connection.toJson()
+    });
     final List<Uint8List> buffers = [];
     buffers.addAll(connection.collectBufferList());
     final callApiResult = await apiCaller
@@ -222,18 +227,20 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeAudioBlacklistExJson =
-        RtcEngineExSetSubscribeAudioBlacklistExJson.fromJson(rm);
-    return setSubscribeAudioBlacklistExJson.uidList;
   }
 
   @override
-  Future<List<int>> setSubscribeAudioWhitelistEx(
-      {required int uidNumber, required RtcConnection connection}) async {
+  Future<void> setSubscribeAudioWhitelistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngineEx'}_setSubscribeAudioWhitelistEx';
-    final param = createParams(
-        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final param = createParams({
+      'uidList': uidList,
+      'uidNumber': uidNumber,
+      'connection': connection.toJson()
+    });
     final List<Uint8List> buffers = [];
     buffers.addAll(connection.collectBufferList());
     final callApiResult = await apiCaller
@@ -246,18 +253,20 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeAudioWhitelistExJson =
-        RtcEngineExSetSubscribeAudioWhitelistExJson.fromJson(rm);
-    return setSubscribeAudioWhitelistExJson.uidList;
   }
 
   @override
-  Future<List<int>> setSubscribeVideoBlacklistEx(
-      {required int uidNumber, required RtcConnection connection}) async {
+  Future<void> setSubscribeVideoBlacklistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngineEx'}_setSubscribeVideoBlacklistEx';
-    final param = createParams(
-        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final param = createParams({
+      'uidList': uidList,
+      'uidNumber': uidNumber,
+      'connection': connection.toJson()
+    });
     final List<Uint8List> buffers = [];
     buffers.addAll(connection.collectBufferList());
     final callApiResult = await apiCaller
@@ -270,18 +279,20 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeVideoBlacklistExJson =
-        RtcEngineExSetSubscribeVideoBlacklistExJson.fromJson(rm);
-    return setSubscribeVideoBlacklistExJson.uidList;
   }
 
   @override
-  Future<List<int>> setSubscribeVideoWhitelistEx(
-      {required int uidNumber, required RtcConnection connection}) async {
+  Future<void> setSubscribeVideoWhitelistEx(
+      {required List<int> uidList,
+      required int uidNumber,
+      required RtcConnection connection}) async {
     final apiType =
         '${isOverrideClassName ? className : 'RtcEngineEx'}_setSubscribeVideoWhitelistEx';
-    final param = createParams(
-        {'uidNumber': uidNumber, 'connection': connection.toJson()});
+    final param = createParams({
+      'uidList': uidList,
+      'uidNumber': uidNumber,
+      'connection': connection.toJson()
+    });
     final List<Uint8List> buffers = [];
     buffers.addAll(connection.collectBufferList());
     final callApiResult = await apiCaller
@@ -294,9 +305,6 @@ class RtcEngineExImpl extends RtcEngineImpl implements RtcEngineEx {
     if (result < 0) {
       throw AgoraRtcException(code: result);
     }
-    final setSubscribeVideoWhitelistExJson =
-        RtcEngineExSetSubscribeVideoWhitelistExJson.fromJson(rm);
-    return setSubscribeVideoWhitelistExJson.uidList;
   }
 
   @override

@@ -19,14 +19,18 @@ class JoinMultipleChannel extends StatefulWidget {
 class _State extends State<JoinMultipleChannel> {
   late final RtcEngineEx _engine;
   bool _isReadyPreview = false;
-  late final RtcConnection _channel0, _channel1;
+  late RtcConnection _channel0, _channel1;
   String? renderChannelId;
   bool isJoined0 = false, isJoined1 = false;
   List<int> remoteUid0 = [], remoteUid1 = [];
+  late final TextEditingController _channel0UidController;
+  late final TextEditingController _channel1UidController;
 
   @override
   void initState() {
     super.initState();
+    _channel0UidController = TextEditingController(text: '1000');
+    _channel1UidController = TextEditingController(text: '1001');
     _initEngine();
   }
 
@@ -108,16 +112,15 @@ class _State extends State<JoinMultipleChannel> {
     await _engine.startPreview();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
-    _channel0 = const RtcConnection(channelId: _channelId0, localUid: 1000);
-
-    _channel1 = const RtcConnection(channelId: _channelId1, localUid: 1001);
-
     setState(() {
       _isReadyPreview = true;
     });
   }
 
   void _joinChannel0() async {
+    final uid = int.tryParse(_channel0UidController.text);
+    if (uid == null) return;
+    _channel0 = RtcConnection(channelId: _channelId0, localUid: uid);
     await _engine.joinChannelEx(
         token: '',
         connection: _channel0,
@@ -126,6 +129,9 @@ class _State extends State<JoinMultipleChannel> {
   }
 
   void _joinChannel1() async {
+    final uid = int.tryParse(_channel1UidController.text);
+    if (uid == null) return;
+    _channel1 = RtcConnection(channelId: _channelId1, localUid: uid);
     await _engine.joinChannelEx(
         token: '',
         connection: _channel1,
@@ -232,6 +238,15 @@ class _State extends State<JoinMultipleChannel> {
             const SizedBox(
               height: 20,
             ),
+            TextField(
+              controller: _channel0UidController,
+              decoration: const InputDecoration(
+                hintText: 'Enter channel0 uid',
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
                 Expanded(
@@ -248,6 +263,15 @@ class _State extends State<JoinMultipleChannel> {
                   ),
                 )
               ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              controller: _channel1UidController,
+              decoration: const InputDecoration(
+                hintText: 'Enter channel1 uid',
+              ),
             ),
             const SizedBox(
               height: 20,

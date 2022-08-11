@@ -103,6 +103,9 @@ class _State extends State<ChannelMediaRelay> {
             });
             break;
           default:
+            setState(() {
+              isRelaying = false;
+            });
             break;
         }
       },
@@ -130,7 +133,7 @@ class _State extends State<ChannelMediaRelay> {
         token: config.token,
         channelId: _channelController.text,
         info: '',
-        uid: _myUid);
+        uid: 0);
 
     setState(() {
       isJoined = true;
@@ -138,7 +141,8 @@ class _State extends State<ChannelMediaRelay> {
   }
 
   void _leaveChannel() async {
-    await _engine.stopChannelMediaRelay();
+    await _onPressRelayOrStop();
+
     await _engine.leaveChannel();
 
     setState(() {
@@ -146,9 +150,12 @@ class _State extends State<ChannelMediaRelay> {
     });
   }
 
-  _onPressRelayOrStop() async {
+  Future<void> _onPressRelayOrStop() async {
     if (isRelaying) {
       await _engine.stopChannelMediaRelay();
+      setState(() {
+        isRelaying = !isRelaying;
+      });
       return;
     }
     if (_channelMediaRelayController.text.isEmpty) {
