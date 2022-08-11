@@ -158,8 +158,6 @@ class _State extends State<VoiceChanger> {
         channelId: _channelId.text,
         uid: 0,
         options: const ChannelMediaOptions(autoSubscribeAudio: true));
-    // await _engine.joinChannel(
-    //     token: config.token, channelId: _channelId.text, info: '', uid: 0);
   }
 
   DropdownButton _createDropdownButton<T>(
