@@ -112,7 +112,7 @@ class _State extends State<SetBeautyEffect> {
 
     if (defaultTargetPlatform == TargetPlatform.windows) {
       await _engine
-          .loadExtensionProvider(path: 'agora_clear_vision_extension.dll');
+          .loadExtensionProvider(path: 'libagora_clear_vision_extension.dll');
     } else if (defaultTargetPlatform == TargetPlatform.android) {
       await _engine.loadExtensionProvider(path: 'agora_clear_vision_extension');
     }

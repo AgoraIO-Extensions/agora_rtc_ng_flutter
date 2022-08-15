@@ -2,6 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:agora_rtc_ng_example/examples/remote_video_views_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,9 @@ class _State extends State<ScreenSharing> {
   bool _isReadyPreview = false;
   String channelId = config.channelId;
   bool isJoined = false;
-  List<int> remoteUid = [];
   late TextEditingController _controller;
+  late final TextEditingController _localUidController;
+  late final TextEditingController _screenShareUidController;
 
   bool _isScreenShared = false;
 
@@ -28,6 +30,8 @@ class _State extends State<ScreenSharing> {
   void initState() {
     super.initState();
     _controller = TextEditingController(text: channelId);
+    _localUidController = TextEditingController(text: '1000');
+    _screenShareUidController = TextEditingController(text: '1001');
     _initEngine();
   }
 
@@ -60,6 +64,7 @@ class _State extends State<ScreenSharing> {
         logSink.log(
             '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
         setState(() {
+          remoteUid.clear();
           isJoined = false;
         });
       },
@@ -80,27 +85,35 @@ class _State extends State<ScreenSharing> {
   }
 
   void _joinChannel() async {
-    await _engine.joinChannelEx(
-        token: '',
-        connection: RtcConnection(channelId: _controller.text, localUid: 1000),
-        options: const ChannelMediaOptions(
-          publishCameraTrack: true,
-          publishMicrophoneTrack: false,
-          clientRoleType: ClientRoleType.clientRoleBroadcaster,
-        ));
+    final localUid = int.tryParse(_localUidController.text);
+    if (localUid != null) {
+      await _engine.joinChannelEx(
+          token: '',
+          connection:
+              RtcConnection(channelId: _controller.text, localUid: localUid),
+          options: const ChannelMediaOptions(
+            publishCameraTrack: true,
+            publishMicrophoneTrack: false,
+            clientRoleType: ClientRoleType.clientRoleBroadcaster,
+          ));
+    }
 
-    await _engine.joinChannelEx(
-        token: '',
-        connection: RtcConnection(channelId: _controller.text, localUid: 1001),
-        options: const ChannelMediaOptions(
-          publishScreenTrack: true,
-          publishSecondaryScreenTrack: true,
-          publishCameraTrack: false,
-          publishMicrophoneTrack: false,
-          publishScreenCaptureAudio: true,
-          publishScreenCaptureVideo: true,
-          clientRoleType: ClientRoleType.clientRoleBroadcaster,
-        ));
+    final shareShareUid = int.tryParse(_screenShareUidController.text);
+    if (shareShareUid != null) {
+      await _engine.joinChannelEx(
+          token: '',
+          connection: RtcConnection(
+              channelId: _controller.text, localUid: shareShareUid),
+          options: const ChannelMediaOptions(
+            publishScreenTrack: true,
+            publishSecondaryScreenTrack: true,
+            publishCameraTrack: false,
+            publishMicrophoneTrack: false,
+            publishScreenCaptureAudio: true,
+            publishScreenCaptureVideo: true,
+            clientRoleType: ClientRoleType.clientRoleBroadcaster,
+          ));
+    }
   }
 
   _leaveChannel() async {
@@ -168,23 +181,9 @@ class _State extends State<ScreenSharing> {
             localVideoView,
             Align(
               alignment: Alignment.topLeft,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.of(remoteUid.map(
-                    (e) => SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: AgoraVideoView(
-                          controller: VideoViewController.remote(
-                            rtcEngine: _engine,
-                            canvas: VideoCanvas(uid: e),
-                            connection:
-                                RtcConnection(channelId: _controller.text),
-                          ),
-                        )),
-                  )),
-                ),
+              child: RemoteVideoViewsWidget(
+                rtcEngine: _engine,
+                channelId: _controller.text,
               ),
             )
           ],
@@ -200,6 +199,14 @@ class _State extends State<ScreenSharing> {
             TextField(
               controller: _controller,
               decoration: const InputDecoration(hintText: 'Channel ID'),
+            ),
+            TextField(
+              controller: _localUidController,
+              decoration: const InputDecoration(hintText: 'Local Uid'),
+            ),
+            TextField(
+              controller: _screenShareUidController,
+              decoration: const InputDecoration(hintText: 'Screen Sharing Uid'),
             ),
             Row(
               children: [

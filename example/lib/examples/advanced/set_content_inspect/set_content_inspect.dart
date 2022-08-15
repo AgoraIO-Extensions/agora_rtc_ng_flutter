@@ -182,7 +182,7 @@ class _State extends State<SetContentInspect> {
                             ));
                       } else {
                         _engine.enableContentInspect(
-                            enabled: true,
+                            enabled: false,
                             config: const ContentInspectConfig(
                               modules: [
                                 ContentInspectModule(

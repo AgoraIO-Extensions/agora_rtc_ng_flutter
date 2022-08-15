@@ -1,26 +1,8 @@
 PODS:
   - agora_rtc_ng (0.0.1):
-    - AgoraIrisRTC_macOS (= 4.0.0-beta.2)
-    - AgoraRtcEngine_macOS (= 4.0.0-rc.1)
+    - AgoraRtcWrapper
     - FlutterMacOS
-  - AgoraIrisRTC_macOS (4.0.0-beta.2)
-  - AgoraRtcEngine_macOS (4.0.0-rc.1):
-    - AgoraRtcEngine_macOS/AINS (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/AudioBeauty (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/ClearVision (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/ContentInspect (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/PVC (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/RtcBasic (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/SpatialAudio (= 4.0.0-rc.1)
-    - AgoraRtcEngine_macOS/VirtualBackground (= 4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/AINS (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/AudioBeauty (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/ClearVision (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/ContentInspect (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/PVC (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/RtcBasic (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/SpatialAudio (4.0.0-rc.1)
-  - AgoraRtcEngine_macOS/VirtualBackground (4.0.0-rc.1)
+  - AgoraRtcWrapper (3.6.2)
   - FlutterMacOS (1.0.0)
   - iris_event (0.0.1):
     - FlutterMacOS
@@ -31,18 +13,16 @@ PODS:
 
 DEPENDENCIES:
   - agora_rtc_ng (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos`)
+  - AgoraRtcWrapper (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - iris_event (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
   - iris_event_handler (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
 
-SPEC REPOS:
-  trunk:
-    - AgoraIrisRTC_macOS
-    - AgoraRtcEngine_macOS
-
 EXTERNAL SOURCES:
   agora_rtc_ng:
+    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos
+  AgoraRtcWrapper:
     :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
@@ -54,14 +34,13 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
 
 SPEC CHECKSUMS:
-  agora_rtc_ng: ae1bbaa2ec66f0f1b18a8fb41a055b2cdda42829
-  AgoraIrisRTC_macOS: 5d9fdd1988f45d430506ee420bc95dc038e105db
-  AgoraRtcEngine_macOS: 03b5775f37dde2832bc63b7f7f6c076077eaf28c
+  agora_rtc_ng: 3d55b53282afe70dc8c9e922ba7e64c911cf028a
+  AgoraRtcWrapper: 5ec7ed0a24c3d5a15783b24b7db8e670e99fb6a8
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
   iris_event: b013c00dd8b6724d4191f1f3144300786d04eaa5
   iris_event_handler: fbe9089fe354cec759b6568a273cf13d365f7579
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
 
-PODFILE CHECKSUM: c02ef8d443ea0ea90522fffa0115411b915b085e
+PODFILE CHECKSUM: 2164db83ec2a5dd38e3ddfc4c76ed46606a5e71c
 
 COCOAPODS: 1.11.3
