@@ -342,7 +342,7 @@ class _State extends State<JoinMultipleChannel> {
             const SizedBox(
               height: 20,
             ),
-            if (defaultTargetPlatform == TargetPlatform.macOS)
+            if (defaultTargetPlatform == TargetPlatform.windows)
               ElevatedButton(
                 onPressed: () async {
                   _startDumpVideo = !_startDumpVideo;
