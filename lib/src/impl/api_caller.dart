@@ -146,6 +146,19 @@ class ApiCaller implements _ApiCallExecutorBaseAsync {
   Future<void> disposeAllEventHandlersAsync() {
     return _apiCallExecutor!.disposeAllEventHandlersAsync();
   }
+
+  @override
+  Future<void> startDumpVideoAsync(
+      int irisVideoFrameBufferManagerIntPtr, int type, String dir) {
+    return _apiCallExecutor!
+        .startDumpVideoAsync(irisVideoFrameBufferManagerIntPtr, type, dir);
+  }
+
+  @override
+  Future<void> stopDumpVideoAsync(int irisVideoFrameBufferManagerIntPtr) {
+    return _apiCallExecutor!
+        .stopDumpVideoAsync(irisVideoFrameBufferManagerIntPtr);
+  }
 }
 
 class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
@@ -207,6 +220,11 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
       } else if (request is _DisposeAllEventHandlersRequest) {
         executor.disposeAllEventHandlers();
         mainApiCallSendPort.send(0);
+      } else if (request is _StartDumpVideoRequest) {
+        executor.startDumpVideo(request.irisVideoFrameBufferManagerIntPtr,
+            request.type, request.dir);
+      } else if (request is _StopDumpVideoRequest) {
+        executor.stopDumpVideo(request.irisVideoFrameBufferManagerIntPtr);
       }
     }
 
@@ -317,6 +335,20 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
     requestPort.send(const _DisposeAllEventHandlersRequest());
     await responseQueue.next;
   }
+
+  @override
+  Future<void> startDumpVideoAsync(
+      int irisVideoFrameBufferManagerIntPtr, int type, String dir) async {
+    requestPort.send(
+        _StartDumpVideoRequest(irisVideoFrameBufferManagerIntPtr, type, dir));
+    await responseQueue.next;
+  }
+
+  @override
+  Future<void> stopDumpVideoAsync(int irisVideoFrameBufferManagerIntPtr) async {
+    requestPort.send(_StopDumpVideoRequest(irisVideoFrameBufferManagerIntPtr));
+    await responseQueue.next;
+  }
 }
 
 abstract class _Request {}
@@ -354,6 +386,21 @@ class _SetupIrisMediaPlayerEventHandlerRequest implements _Request {
 
 class _DisposeIrisMediaPlayerEventHandlerRequest implements _Request {
   const _DisposeIrisMediaPlayerEventHandlerRequest();
+}
+
+class _StartDumpVideoRequest implements _Request {
+  const _StartDumpVideoRequest(
+      this.irisVideoFrameBufferManagerIntPtr, this.type, this.dir);
+
+  final int irisVideoFrameBufferManagerIntPtr;
+  final int type;
+  final String dir;
+}
+
+class _StopDumpVideoRequest implements _Request {
+  const _StopDumpVideoRequest(this.irisVideoFrameBufferManagerIntPtr);
+
+  final int irisVideoFrameBufferManagerIntPtr;
 }
 
 class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
@@ -501,52 +548,6 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
         return CallApiResult(irisReturnCode: -10000, data: const {});
       }
     });
-
-    // final ffi.Pointer<ffi.Int8> resultPointer =
-    //     calloc.allocate<ffi.Int8>(kBasicResultLength).cast<ffi.Int8>();
-
-    // final ffi.Pointer<ffi.Int8> funcNamePointer =
-    //     funcName.toNativeUtf8().cast<ffi.Int8>();
-
-    // final ffi.Pointer<Utf8> paramsPointerUtf8 = params.toNativeUtf8();
-    // final paramsPointerUtf8Length = paramsPointerUtf8.length;
-    // final ffi.Pointer<ffi.Int8> paramsPointer =
-    //     paramsPointerUtf8.cast<ffi.Int8>();
-
-    // // ffi.Pointer<ffi.Void> bufferPointer;
-    // ffi.Pointer<ffi.Pointer<ffi.Void>> bufferListPtr;
-    // int bufferLength = bufferList?.length ?? 0;
-
-    // if (bufferList != null) {
-    //   bufferListPtr = calloc.allocate(bufferList.length);
-
-    //   for (int i = 0; i < bufferList.length; i++) {
-    //     final bufferPtr = bufferList[i];
-    //     bufferListPtr[i] = bufferPtr;
-    //   }
-    // } else {
-    //   bufferListPtr = ffi.nullptr;
-    // }
-
-    // try {
-    //   final irisReturnCode = _nativeIrisApiEngineBinding.CallIrisApi(
-    //       _irisApiEnginePtr!,
-    //       funcNamePointer,
-    //       paramsPointer,
-    //       paramsPointerUtf8Length,
-    //       bufferListPtr,
-    //       bufferLength,
-    //       resultPointer);
-
-    //   final result = resultPointer.cast<Utf8>().toDartString();
-    //   final resultMap = Map<String, dynamic>.from(jsonDecode(result));
-
-    //   return CallApiResult(irisReturnCode: irisReturnCode, data: resultMap);
-    // } catch (e) {
-    //   debugPrint(
-    //       '[_ApiCallExecutor] $funcName, params: $params\nerror: ${e.toString()}');
-    //   return CallApiResult(irisReturnCode: -10000, data: const {});
-    // }
   }
 
   @override
@@ -645,6 +646,24 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     // Treat the callIrisEvent to success by default
     return CallApiResult(irisReturnCode: 0, data: {});
   }
+
+  @override
+  void startDumpVideo(
+      int irisVideoFrameBufferManagerIntPtr, int type, String dir) {
+    using((Arena arena) {
+      final dirPtr = dir.toNativeUtf8(allocator: arena).cast<ffi.Int8>();
+      _nativeIrisApiEngineBinding.StartDumpVideo(
+          ffi.Pointer.fromAddress(irisVideoFrameBufferManagerIntPtr),
+          type,
+          dirPtr);
+    });
+  }
+
+  @override
+  void stopDumpVideo(int irisVideoFrameBufferManagerIntPtr) {
+    _nativeIrisApiEngineBinding.StopDumpVideo(
+        ffi.Pointer.fromAddress(irisVideoFrameBufferManagerIntPtr));
+  }
 }
 
 abstract class _ApiCallExecutorBase {
@@ -677,6 +696,11 @@ abstract class _ApiCallExecutorBase {
   CallApiResult callIrisEvent(IrisEventKey key, String params);
 
   void dispose();
+
+  void startDumpVideo(
+      int irisVideoFrameBufferManagerIntPtr, int type, String dir);
+
+  void stopDumpVideo(int irisVideoFrameBufferManagerIntPtr);
 }
 
 abstract class _ApiCallExecutorBaseAsync {
@@ -708,6 +732,11 @@ abstract class _ApiCallExecutorBaseAsync {
   void addEventHandler(IrisEventHandler eventHandler);
 
   void removeEventHandler(IrisEventHandler eventHandler);
+
+  Future<void> startDumpVideoAsync(
+      int irisVideoFrameBufferManagerIntPtr, int type, String dir);
+
+  Future<void> stopDumpVideoAsync(int irisVideoFrameBufferManagerIntPtr);
 }
 
 class _SendableIrisEventHandler implements IrisEventHandler {

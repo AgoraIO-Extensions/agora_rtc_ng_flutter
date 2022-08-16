@@ -64,7 +64,7 @@ class _State extends State<ScreenSharing> {
         logSink.log(
             '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
         setState(() {
-          remoteUid.clear();
+          
           isJoined = false;
         });
       },
@@ -219,7 +219,7 @@ class _State extends State<ScreenSharing> {
                 )
               ],
             ),
-            if (defaultTargetPlatform == TargetPlatform.android)
+            if (defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS)
               ScreenShareMobile(
                   rtcEngine: _engine,
                   isScreenShared: _isScreenShared,

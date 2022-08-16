@@ -187,7 +187,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   final List<IrisEventHandler> _eventHandlers = [];
 
   final GlobalVideoViewController _globalVideoViewController =
-      const GlobalVideoViewController();
+      GlobalVideoViewController();
 
   final ObjectPool _objectPool = ObjectPool();
 
@@ -960,6 +960,21 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
     _eventHandlers.remove(AudioSpectrumObserverWrapper(observer));
   }
+
+  /////////// debug ////////
+
+  /// [type] see [VideoSourceType], only [VideoSourceType.videoSourceCamera], [VideoSourceType.videoSourceRemote] supported
+  Future<void> startDumpVideo(int type, String dir) {
+    return apiCaller.startDumpVideoAsync(
+        _globalVideoViewController.videoFrameBufferManagerIntPtr, type, dir);
+  }
+
+  Future<void> stopDumpVideo() {
+    return apiCaller.stopDumpVideoAsync(
+        _globalVideoViewController.videoFrameBufferManagerIntPtr);
+  }
+
+  //////////////////////////
 }
 
 class VideoDeviceManagerImpl extends rtc_engine_binding.VideoDeviceManagerImpl

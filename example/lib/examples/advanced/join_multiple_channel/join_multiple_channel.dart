@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_ng/agora_rtc_ng_debug.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 const _channelId0 = 'channel0';
 const _channelId1 = 'channel1';
@@ -25,6 +30,7 @@ class _State extends State<JoinMultipleChannel> {
   List<int> remoteUid0 = [], remoteUid1 = [];
   late final TextEditingController _channel0UidController;
   late final TextEditingController _channel1UidController;
+  bool _startDumpVideo = false;
 
   @override
   void initState() {
@@ -333,6 +339,32 @@ class _State extends State<JoinMultipleChannel> {
                     },
               child: const Text('Render $_channelId1'),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            if (defaultTargetPlatform == TargetPlatform.macOS)
+              ElevatedButton(
+                onPressed: () async {
+                  _startDumpVideo = !_startDumpVideo;
+
+                  Directory appDocDir =
+                      await getApplicationDocumentsDirectory();
+
+                  if (_startDumpVideo) {
+                    _engine.startDumpVideo(
+                      VideoSourceType.videoSourceCamera.value(),
+                      appDocDir.absolute.path,
+                    );
+                    logSink.log(
+                        'Video data has dump to ${appDocDir.absolute.path}');
+                  } else {
+                    _engine.stopDumpVideo();
+                  }
+
+                  setState(() {});
+                },
+                child: Text('${_startDumpVideo ? 'Stop' : 'Start'} dump video'),
+              ),
           ],
         );
       },

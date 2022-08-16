@@ -116,7 +116,9 @@ void VideoViewController::HandleMethodCall(
         irisApiEngine->Detach(videoFrameBufferManager_);
 
         // DeleteVideoFrameBufferManagerIfNeed();
-        result->Success(flutter::EncodableValue(true));
+        // result->Success(flutter::EncodableValue(true));
+
+        result->Success((intptr_t)videoFrameBufferManager_);
     }
     else if (method.compare("createTextureRender") == 0)
     {

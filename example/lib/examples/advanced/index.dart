@@ -41,7 +41,7 @@ final advanced = [
     {'name': 'DeviceManager', 'widget': const DeviceManager()},
   {'name': 'JoinMultipleChannel', 'widget': const JoinMultipleChannel()},
   {'name': 'RtmpStreaming', 'widget': const RtmpStreaming()},
-  if (kIsWeb || !Platform.isIOS)
+  if (!kIsWeb)
     {'name': 'ScreenSharing', 'widget': const ScreenSharing()},
   {'name': 'SetEncryption', 'widget': SetEncryption()},
   {

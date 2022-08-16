@@ -1,5 +1,6 @@
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +21,8 @@ class RemoteVideoViewsWidget extends StatefulWidget {
 class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
   late final RtcEngineEventHandler _eventHandler;
   final Set<int> _remoteUids = {};
-  final Set<int> _localUids = {};
+  final Set<RtcConnection> _localRtcConnection = {};
+  final Map<int, RtcConnection> _remoteUidsMap = {};
 
   @override
   void initState() {
@@ -32,17 +34,19 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
   void _init() {
     _eventHandler = RtcEngineEventHandler(
       onJoinChannelSuccess: (connection, elapsed) {
-        _localUids.add(connection.localUid!);
+        _localRtcConnection.add(connection);
       },
       onLeaveChannel: (RtcConnection connection, RtcStats stats) {
-        _localUids.remove(connection.localUid!);
+        _localRtcConnection
+            .removeWhere((e) => e.localUid == connection.localUid);
       },
       onUserJoined: (connection, remoteUid, elapsed) {
         logSink.log(
             '[onUserJoined] connection: ${connection.toJson()}, remoteUid: $remoteUid, elapsed: $elapsed');
         setState(() {
-          if (!_localUids.contains(remoteUid)) {
+          if (!_localRtcConnection.any((e) => e.localUid == remoteUid)) {
             _remoteUids.add(remoteUid);
+            _remoteUidsMap.putIfAbsent(remoteUid, () => connection);
           }
         });
       },
@@ -52,6 +56,7 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
             '[onUserOffline] connection: ${connection.toJson()}, remoteUid: $remoteUid');
         setState(() {
           _remoteUids.remove(remoteUid);
+          _remoteUidsMap.remove(remoteUid);
         });
       },
     );
@@ -66,21 +71,23 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final widgets = <Widget>[];
+    _remoteUidsMap.forEach((key, value) {
+      widgets.add(SizedBox(
+          width: 120,
+          height: 120,
+          child: AgoraVideoView(
+            controller: VideoViewController.remote(
+              rtcEngine: widget.rtcEngine,
+              canvas: VideoCanvas(uid: key),
+              connection: value,
+            ),
+          )));
+    });
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.of(_remoteUids.map(
-          (e) => SizedBox(
-              width: 120,
-              height: 120,
-              child: AgoraVideoView(
-                controller: VideoViewController.remote(
-                  rtcEngine: widget.rtcEngine,
-                  canvas: VideoCanvas(uid: e),
-                  connection: RtcConnection(channelId: widget.channelId),
-                ),
-              )),
-        )),
+        children: widgets,
       ),
     );
   }
