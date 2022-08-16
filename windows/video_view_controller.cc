@@ -107,7 +107,8 @@ void VideoViewController::HandleMethodCall(
         intptr_t irisRtcEnginePtr = std::get<intptr_t>(*method_call.arguments());
         IrisApiEngine *irisApiEngine = reinterpret_cast<IrisApiEngine *>(irisRtcEnginePtr);
         irisApiEngine->Attach(videoFrameBufferManager_);
-        result->Success(flutter::EncodableValue(true));
+        // result->Success(flutter::EncodableValue(true));
+        result->Success((intptr_t)videoFrameBufferManager_);
     }
     else if (method.compare("detachVideoFrameBufferManager") == 0)
     {
@@ -116,9 +117,9 @@ void VideoViewController::HandleMethodCall(
         irisApiEngine->Detach(videoFrameBufferManager_);
 
         // DeleteVideoFrameBufferManagerIfNeed();
-        // result->Success(flutter::EncodableValue(true));
+        result->Success(flutter::EncodableValue(true));
 
-        result->Success((intptr_t)videoFrameBufferManager_);
+        
     }
     else if (method.compare("createTextureRender") == 0)
     {
