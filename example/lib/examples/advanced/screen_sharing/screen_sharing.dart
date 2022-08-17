@@ -105,6 +105,8 @@ class _State extends State<ScreenSharing> {
           connection: RtcConnection(
               channelId: _controller.text, localUid: shareShareUid),
           options: const ChannelMediaOptions(
+            autoSubscribeVideo: true,
+            autoSubscribeAudio: true,
             publishScreenTrack: true,
             publishSecondaryScreenTrack: true,
             publishCameraTrack: false,
@@ -116,9 +118,28 @@ class _State extends State<ScreenSharing> {
     }
   }
 
+  Future<void> _updateScreenShareChannelMediaOptions() async {
+    final shareShareUid = int.tryParse(_screenShareUidController.text);
+    if (shareShareUid == null) return;
+          await _engine.updateChannelMediaOptionsEx(
+          options: const ChannelMediaOptions(
+              publishScreenTrack: true,
+            publishSecondaryScreenTrack: true,
+            publishCameraTrack: false,
+            publishMicrophoneTrack: false,
+            publishScreenCaptureAudio: true,
+            publishScreenCaptureVideo: true,
+            clientRoleType: ClientRoleType.clientRoleBroadcaster,),
+                    connection: RtcConnection(
+              channelId: _controller.text, localUid: shareShareUid),);
+  }
+
   _leaveChannel() async {
     await _engine.stopScreenCapture();
     await _engine.leaveChannel();
+    setState(() {
+      _isScreenShared = false;
+    });
   }
 
   @override
@@ -224,9 +245,14 @@ class _State extends State<ScreenSharing> {
                   rtcEngine: _engine,
                   isScreenShared: _isScreenShared,
                   onStartScreenShared: () {
+                    if (isJoined) {
+                      _updateScreenShareChannelMediaOptions();
+                    }
                     setState(() {
                       _isScreenShared = !_isScreenShared;
                     });
+
+                    
                   },
                   onStopScreenShare: () {
                     setState(() {

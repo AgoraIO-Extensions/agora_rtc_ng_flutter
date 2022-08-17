@@ -20,7 +20,6 @@ class RemoteVideoViewsWidget extends StatefulWidget {
 
 class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
   late final RtcEngineEventHandler _eventHandler;
-  final Set<int> _remoteUids = {};
   final Set<RtcConnection> _localRtcConnection = {};
   final Map<int, RtcConnection> _remoteUidsMap = {};
 
@@ -39,13 +38,14 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
       onLeaveChannel: (RtcConnection connection, RtcStats stats) {
         _localRtcConnection
             .removeWhere((e) => e.localUid == connection.localUid);
+        _remoteUidsMap
+            .removeWhere((key, value) => value.localUid == connection.localUid);
       },
       onUserJoined: (connection, remoteUid, elapsed) {
         logSink.log(
             '[onUserJoined] connection: ${connection.toJson()}, remoteUid: $remoteUid, elapsed: $elapsed');
         setState(() {
           if (!_localRtcConnection.any((e) => e.localUid == remoteUid)) {
-            _remoteUids.add(remoteUid);
             _remoteUidsMap.putIfAbsent(remoteUid, () => connection);
           }
         });
@@ -55,7 +55,6 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
         logSink.log(
             '[onUserOffline] connection: ${connection.toJson()}, remoteUid: $remoteUid');
         setState(() {
-          _remoteUids.remove(remoteUid);
           _remoteUidsMap.remove(remoteUid);
         });
       },
@@ -87,6 +86,8 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: widgets,
       ),
     );

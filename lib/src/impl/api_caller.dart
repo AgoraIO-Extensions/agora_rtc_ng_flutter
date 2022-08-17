@@ -223,8 +223,10 @@ class _ApiCallExecutor implements _ApiCallExecutorBaseAsync {
       } else if (request is _StartDumpVideoRequest) {
         executor.startDumpVideo(request.irisVideoFrameBufferManagerIntPtr,
             request.type, request.dir);
+        mainApiCallSendPort.send(0);
       } else if (request is _StopDumpVideoRequest) {
         executor.stopDumpVideo(request.irisVideoFrameBufferManagerIntPtr);
+        mainApiCallSendPort.send(0);
       }
     }
 
@@ -423,6 +425,7 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
     _irisApiEnginePtr = _nativeIrisApiEngineBinding.CreateIrisApiEngine();
 
     _irisEvent = IrisEvent();
+
     _irisCEventHandler = calloc<IrisCEventHandler>()
       ..ref.OnEvent = _irisEvent.onEventPtr
       ..ref.OnEventEx = _irisEvent.onEventExPtr;
