@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_ng/agora_rtc_ng_debug.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// MultiChannel Example
 class JoinChannelVideo extends StatefulWidget {
@@ -25,6 +29,7 @@ class _State extends State<JoinChannelVideo> {
   bool _isUseAndroidSurfaceView = false;
   ChannelProfileType _channelProfileType =
       ChannelProfileType.channelProfileLiveBroadcasting;
+      bool _startDumpVideo = false;
 
   @override
   void initState() {
@@ -266,6 +271,35 @@ class _State extends State<JoinChannelVideo> {
                   child: ElevatedButton(
                     onPressed: isJoined ? _leaveChannel : _joinChannel,
                     child: Text('${isJoined ? 'Leave' : 'Join'} channel'),
+                  ),
+                )
+              ],
+            ),
+                        Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+             onPressed: () async {
+                  _startDumpVideo = !_startDumpVideo;
+
+                  Directory appDocDir =
+                      await getApplicationDocumentsDirectory();
+
+                  if (_startDumpVideo) {
+                    _engine.startDumpVideo(
+                      VideoSourceType.videoSourceRemote.value(),
+                      appDocDir.absolute.path,
+                    );
+                    logSink.log(
+                        'Video data has dump to ${appDocDir.absolute.path}');
+                  } else {
+                    _engine.stopDumpVideo();
+                  }
+
+                  setState(() {});
+                },
+                    child: Text('${_startDumpVideo ? 'Stop' : 'Start'} dump video'),
                   ),
                 )
               ],
