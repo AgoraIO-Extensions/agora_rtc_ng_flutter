@@ -22,6 +22,7 @@ class _State extends State<JoinChannelVideo> {
   Set<int> remoteUid = {};
   late TextEditingController _controller;
   bool _isUseFlutterTexture = false;
+  bool _isUseAndroidSurfaceView = false;
   ChannelProfileType _channelProfileType =
       ChannelProfileType.channelProfileLiveBroadcasting;
 
@@ -138,6 +139,7 @@ class _State extends State<JoinChannelVideo> {
                 rtcEngine: _engine,
                 canvas: const VideoCanvas(uid: 0),
                 useFlutterTexture: _isUseFlutterTexture,
+                useAndroidSurfaceView: _isUseAndroidSurfaceView,
               ),
             ),
             Align(
@@ -156,6 +158,7 @@ class _State extends State<JoinChannelVideo> {
                           connection:
                               RtcConnection(channelId: _controller.text),
                           useFlutterTexture: _isUseFlutterTexture,
+                          useAndroidSurfaceView: _isUseAndroidSurfaceView,
                         ),
                       ),
                     ),
@@ -196,8 +199,14 @@ class _State extends State<JoinChannelVideo> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
-                      'Rendered by SurfaceView \n(default TextureView): '),
+                  if (defaultTargetPlatform == TargetPlatform.iOS)
+                Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+                  children: [
+                      const Text(
+                      'Rendered by Flutter texture: '),
                   Switch(
                     value: _isUseFlutterTexture,
                     onChanged: isJoined
@@ -208,6 +217,28 @@ class _State extends State<JoinChannelVideo> {
                             });
                           },
                   )
+                  ]
+                ),
+                if (defaultTargetPlatform == TargetPlatform.android)
+                                Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+                  children: [
+                      const Text(
+                      'Rendered by Android SurfaceView: '),
+                  Switch(
+                    value: _isUseAndroidSurfaceView,
+                    onChanged: isJoined
+                        ? null
+                        : (changed) {
+                            setState(() {
+                              _isUseAndroidSurfaceView = changed;
+                            });
+                          },
+                  ),
+                  ]
+                ),
                 ],
               ),
             const SizedBox(

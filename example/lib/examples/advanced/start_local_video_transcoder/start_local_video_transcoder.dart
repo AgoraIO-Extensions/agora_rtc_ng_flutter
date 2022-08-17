@@ -150,7 +150,7 @@ class _State extends State<StartLocalVideoTranscoder> {
   }
 
   Future<void> _leaveChannel() async {
-    await _stopLocalVideoTranscoder();
+    // await _stopLocalVideoTranscoder();
     await _engine.leaveChannel();
   }
 
