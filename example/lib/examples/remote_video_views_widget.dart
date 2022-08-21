@@ -1,18 +1,21 @@
 import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 
 class RemoteVideoViewsWidget extends StatefulWidget {
   const RemoteVideoViewsWidget(
-      {Key? key, required this.rtcEngine, required this.channelId})
+      {Key? key, required this.rtcEngine, required this.channelId, this.connectionUid})
       : super(key: key);
 
   final RtcEngine rtcEngine;
 
   final String channelId;
+
+  final int? connectionUid;
 
   @override
   State<RemoteVideoViewsWidget> createState() => _RemoteVideoViewsWidgetState();
@@ -72,16 +75,38 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
   Widget build(BuildContext context) {
     final widgets = <Widget>[];
     _remoteUidsMap.forEach((key, value) {
-      widgets.add(SizedBox(
-          width: 120,
-          height: 120,
-          child: AgoraVideoView(
-            controller: VideoViewController.remote(
-              rtcEngine: widget.rtcEngine,
-              canvas: VideoCanvas(uid: key),
-              connection: value,
-            ),
-          )));
+      widgets.add(
+        SizedBox(
+          width: 200,
+          height: 200,
+          child: Stack(
+            children: [
+              AgoraVideoView(
+                controller: VideoViewController.remote(
+                  rtcEngine: widget.rtcEngine,
+                  canvas: VideoCanvas(uid: key),
+                  connection: RtcConnection(channelId: widget.channelId, localUid: widget.connectionUid),
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.connectionUid != null ? 'localuid: ${widget.connectionUid}' : '',
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  Text(
+                    'remoteuid: $key',
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      );
     });
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

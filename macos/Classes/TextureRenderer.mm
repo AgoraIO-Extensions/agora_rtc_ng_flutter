@@ -45,7 +45,7 @@ public:
 
       CVPixelBufferCreate(kCFAllocatorDefault, video_frame.width,
                           video_frame.height, kCVPixelFormatType_32BGRA,
-                          (__bridge CFDictionaryRef)dic, &buffer);
+                          (__bridge CFDictionaryRef)cvBufferProperties, &buffer);
 
       CVPixelBufferLockBaseAddress(buffer, 0);
       void *copyBaseAddress = CVPixelBufferGetBaseAddress(buffer);
@@ -95,36 +95,6 @@ public:
 //      self.renderer = renderer;
       self.lock = dispatch_semaphore_create(1);
       self.delegate = new ::RendererDelegate((__bridge void *)self);
-//      __weak __typeof(self) weakSelf = self;
-//      [self.channel setMethodCallHandler:^(FlutterMethodCall *_Nonnull call,
-//                                           FlutterResult _Nonnull result) {
-//        if (!weakSelf) {
-//          return;
-//        }
-////        if ([@"setData" isEqualToString:call.method]) {
-////          NSDictionary *data = call.arguments[@"data"];
-////          NSNumber *uid = data[@"uid"];
-////          NSString *channelId = data[@"channelId"];
-////
-////          IrisVideoFrameBuffer buffer(kVideoFrameTypeBGRA,
-////                                            weakSelf.delegate);
-////            IrisVideoFrameBufferConfig config;
-////
-////            config.id = [uid unsignedIntValue];
-////            if (config.id == 0) {
-////                config.type = IrisVideoSourceType::kVideoSourceTypeCameraPrimary;
-////            } else {
-////                config.type = IrisVideoSourceType::kVideoSourceTypeRemote;
-////            }
-////            if (channelId && (NSNull *)channelId != [NSNull null]) {
-////                strcpy(config.key, [channelId UTF8String]);
-////
-////            } else {
-////                strcpy(config.key, "");
-////            }
-//////            manager->EnableVideoFrameBuffer(buffer, &config);
-////        }
-//      }];
     }
     return self;
 }

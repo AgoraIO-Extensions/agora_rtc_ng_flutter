@@ -37,6 +37,7 @@ import 'package:iris_event/iris_event.dart';
 
 import 'global_video_view_controller.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
 
 // ignore_for_file: public_member_api_docs
 
@@ -205,6 +206,15 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   }
 
   Future<void> _initializeInternal(RtcEngineContext context) async {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final externalFilesDir =
+          await engineMethodChannel.invokeMethod('getExternalFilesDir');
+      if (externalFilesDir != null) {
+        // Reset the sdk log file to ensure the iris log path has been set
+        await setLogFile(path.join(externalFilesDir, 'agorasdk.log'));
+      }
+    }
+
     await _globalVideoViewController
         .attachVideoFrameBufferManager(apiCaller.getIrisApiEngineIntPtr());
   }

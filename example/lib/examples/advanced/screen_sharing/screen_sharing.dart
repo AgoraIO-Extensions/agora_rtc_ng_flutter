@@ -64,7 +64,6 @@ class _State extends State<ScreenSharing> {
         logSink.log(
             '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
         setState(() {
-          
           isJoined = false;
         });
       },
@@ -121,17 +120,19 @@ class _State extends State<ScreenSharing> {
   Future<void> _updateScreenShareChannelMediaOptions() async {
     final shareShareUid = int.tryParse(_screenShareUidController.text);
     if (shareShareUid == null) return;
-          await _engine.updateChannelMediaOptionsEx(
-          options: const ChannelMediaOptions(
-              publishScreenTrack: true,
-            publishSecondaryScreenTrack: true,
-            publishCameraTrack: false,
-            publishMicrophoneTrack: false,
-            publishScreenCaptureAudio: true,
-            publishScreenCaptureVideo: true,
-            clientRoleType: ClientRoleType.clientRoleBroadcaster,),
-                    connection: RtcConnection(
-              channelId: _controller.text, localUid: shareShareUid),);
+    await _engine.updateChannelMediaOptionsEx(
+      options: const ChannelMediaOptions(
+        publishScreenTrack: true,
+        publishSecondaryScreenTrack: true,
+        publishCameraTrack: false,
+        publishMicrophoneTrack: false,
+        publishScreenCaptureAudio: true,
+        publishScreenCaptureVideo: true,
+        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+      ),
+      connection:
+          RtcConnection(channelId: _controller.text, localUid: shareShareUid),
+    );
   }
 
   _leaveChannel() async {
@@ -205,6 +206,7 @@ class _State extends State<ScreenSharing> {
               child: RemoteVideoViewsWidget(
                 rtcEngine: _engine,
                 channelId: _controller.text,
+                connectionUid: int.tryParse(_localUidController.text),
               ),
             )
           ],
@@ -240,7 +242,8 @@ class _State extends State<ScreenSharing> {
                 )
               ],
             ),
-            if (defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS)
+            if (defaultTargetPlatform == TargetPlatform.android ||
+                defaultTargetPlatform == TargetPlatform.iOS)
               ScreenShareMobile(
                   rtcEngine: _engine,
                   isScreenShared: _isScreenShared,
@@ -251,8 +254,6 @@ class _State extends State<ScreenSharing> {
                     setState(() {
                       _isScreenShared = !_isScreenShared;
                     });
-
-                    
                   },
                   onStopScreenShare: () {
                     setState(() {
