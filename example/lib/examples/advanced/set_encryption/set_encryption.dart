@@ -102,6 +102,7 @@ class _SetEncryptionState extends State<SetEncryption> {
         logSink.log(
             '[onLeaveChannel] connection: ${connection.toJson()} stats: ${stats.toJson()}');
         setState(() {
+          remoteUid.clear();
           isJoined = false;
         });
       },
