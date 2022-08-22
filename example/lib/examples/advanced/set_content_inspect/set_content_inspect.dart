@@ -2,6 +2,7 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
+import 'package:agora_rtc_ng_example/examples/remote_video_views_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -114,15 +115,17 @@ class _State extends State<SetContentInspect> {
   }
 
   void _leaveChannel() async {
-    await _engine.enableContentInspect(
-        enabled: false,
-        config: const ContentInspectConfig(
-          modules: [
-            ContentInspectModule(
-                type: ContentInspectType.contentInspectModeration)
-          ],
-          moduleCount: 1,
-        ));
+    if (_isStartContentInspect) {
+      await _engine.enableContentInspect(
+          enabled: false,
+          config: const ContentInspectConfig(
+            modules: [
+              ContentInspectModule(
+                  type: ContentInspectType.contentInspectModeration)
+            ],
+            moduleCount: 1,
+          ));
+    }
 
     await _engine.leaveChannel();
   }
@@ -132,11 +135,22 @@ class _State extends State<SetContentInspect> {
     return ExampleActionsWidget(
       displayContentBuilder: (context, isLayoutHorizontal) {
         if (!_isReadyPreview) return Container();
-        return AgoraVideoView(
-          controller: VideoViewController(
-            rtcEngine: _engine,
-            canvas: const VideoCanvas(uid: 0),
-          ),
+        return Stack(
+          children: [
+            AgoraVideoView(
+              controller: VideoViewController(
+                rtcEngine: _engine,
+                canvas: const VideoCanvas(uid: 0),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: RemoteVideoViewsWidget(
+                rtcEngine: _engine,
+                channelId: _controller.text,
+              ),
+            )
+          ],
         );
       },
       actionsBuilder: (context, isLayoutHorizontal) {

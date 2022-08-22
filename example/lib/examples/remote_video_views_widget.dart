@@ -77,8 +77,8 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
     _remoteUidsMap.forEach((key, value) {
       widgets.add(
         SizedBox(
-          width: 200,
-          height: 200,
+          width: 150,
+          height: 150,
           child: Stack(
             children: [
               AgoraVideoView(
