@@ -25,6 +25,7 @@ import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
     as agora_spatial_audio_impl;
 import 'package:agora_rtc_ng/src/impl/agora_media_engine_impl_override.dart'
     as media_engine_impl;
+import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
 import 'package:agora_rtc_ng/src/impl/media_player_impl.dart'
     as media_player_impl;
 import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
@@ -44,9 +45,9 @@ import 'package:path/path.dart' as path;
 
 class ObjectPool {
   ObjectPool();
-  final Map<Type, Object> pool = {};
+  final Map<Type, AsyncDisposableObject> pool = {};
 
-  void put(Type objectType, Object obj) {
+  void put(Type objectType, AsyncDisposableObject obj) {
     pool.putIfAbsent(objectType, () => obj);
   }
 
@@ -54,8 +55,16 @@ class ObjectPool {
     pool.remove(objectType);
   }
 
-  Object? get(Type objectType) {
+  AsyncDisposableObject? get(Type objectType) {
     return pool[objectType];
+  }
+
+  Future<void> clear() async {
+    for (final key in pool.keys) {
+      await pool[key]?.disposeAsync();
+    }
+
+    pool.clear();
   }
 }
 
@@ -63,7 +72,7 @@ extension RtcEngineExt on RtcEngine {
   GlobalVideoViewController get globalVideoViewController =>
       (this as RtcEngineImpl)._globalVideoViewController;
 
-  void addToPool<V>(Type objectType, Object obj) {
+  void addToPool<V>(Type objectType, AsyncDisposableObject obj) {
     (this as RtcEngineImpl)._objectPool.put(objectType, obj);
   }
 
@@ -178,14 +187,12 @@ class AudioSpectrumObserverWrapper
 }
 
 class _Lifecycle with WidgetsBindingObserver {
-
   const _Lifecycle(this.onDestroy);
 
   final VoidCallback onDestroy;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
@@ -226,9 +233,11 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   }
 
   Future<void> _initializeInternal(RtcEngineContext context) async {
-    _lifecycle ??= _Lifecycle(() {
-      release(sync: true);
-    },);
+    _lifecycle ??= _Lifecycle(
+      () {
+        release(sync: true);
+      },
+    );
     WidgetsBinding.instance.addObserver(_lifecycle!);
 
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -243,8 +252,6 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     await _globalVideoViewController
         .attachVideoFrameBufferManager(apiCaller.getIrisApiEngineIntPtr());
   }
-
-
 
   @override
   Future<void> initialize(RtcEngineContext context) async {
@@ -262,7 +269,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   @override
   Future<void> release({bool sync = false}) async {
     if (_instance == null) return;
-    
+
     if (_lifecycle != null) {
       WidgetsBinding.instance.removeObserver(_lifecycle!);
       _lifecycle = null;
@@ -277,6 +284,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     _metadataObservers.clear();
     _directCdnStreamingEventHandler = null;
     _mediaPlayerCount = 0;
+
+    await _objectPool.clear();
 
     await apiCaller.disposeAllEventHandlersAsync();
 

@@ -70,6 +70,13 @@ class _State extends State<ScreenSharing> {
     ));
 
     await _engine.enableVideo();
+    await _engine.setVideoEncoderConfiguration(
+      const VideoEncoderConfiguration(
+        dimensions: VideoDimensions(width: 1920, height: 1080),
+        frameRate: 15,
+        bitrate: 0,
+      ),
+    );
     await _engine.startPreview();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 

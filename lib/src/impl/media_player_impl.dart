@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:agora_rtc_ng/src/agora_base.dart';
 import 'package:agora_rtc_ng/src/agora_media_base.dart';
 import 'package:agora_rtc_ng/src/agora_media_player.dart';
 import 'package:agora_rtc_ng/src/agora_media_player_source.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine_ext.dart';
+import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart'
+    as media_base_event_binding;
 import 'package:agora_rtc_ng/src/binding/agora_media_player_event_impl.dart'
     as media_player_event_binding;
 import 'package:agora_rtc_ng/src/binding/agora_media_player_impl.dart'
@@ -15,14 +15,12 @@ import 'package:agora_rtc_ng/src/binding/agora_media_player_impl.dart'
 import 'package:agora_rtc_ng/src/binding/agora_media_player_source_event_impl.dart';
 import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart'
     as rtc_engine_impl;
+import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
 import 'package:agora_rtc_ng/src/render/media_player_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:iris_event/iris_event.dart';
-import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart'
-    as media_base_event_binding;
 
 import 'api_caller.dart';
-import 'video_view_controller_impl.dart';
 
 class MediaPlayerAudioFrameObserverWrapper
     extends media_player_event_binding.MediaPlayerAudioFrameObserverWrapper {
@@ -250,8 +248,8 @@ class MediaPlayerImpl extends agora_media_player_impl_binding.MediaPlayerImpl
   }
 }
 
-class MediaPlayerCacheManagerImpl
-    extends agora_media_player_impl_binding.MediaPlayerCacheManagerImpl {
+class MediaPlayerCacheManagerImpl extends agora_media_player_impl_binding
+    .MediaPlayerCacheManagerImpl implements AsyncDisposableObject {
   MediaPlayerCacheManagerImpl._(RtcEngine rtcEngine) {
     rtcEngine.addToPool(MediaPlayerCacheManagerImpl, this);
   }
@@ -259,4 +257,7 @@ class MediaPlayerCacheManagerImpl
     return rtcEngine.getObjectFromPool(MediaPlayerCacheManagerImpl) ??
         MediaPlayerCacheManagerImpl._(rtcEngine);
   }
+
+  @override
+  Future<void> disposeAsync() async {}
 }

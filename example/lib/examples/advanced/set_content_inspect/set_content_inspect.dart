@@ -111,12 +111,13 @@ class _State extends State<SetContentInspect> {
 
   void _leaveChannel() async {
     if (_isStartContentInspect) {
+      _isStartContentInspect = !_isStartContentInspect;
       await _engine.enableContentInspect(
           enabled: false,
           config: const ContentInspectConfig(
             modules: [
               ContentInspectModule(
-                  type: ContentInspectType.contentInspectModeration)
+                  type: ContentInspectType.contentInspectModeration, interval: 0)
             ],
             moduleCount: 1,
           ));

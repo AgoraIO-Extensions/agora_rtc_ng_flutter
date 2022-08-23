@@ -12,6 +12,8 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:iris_event/iris_event.dart';
 
+import 'disposable_object.dart';
+
 // ignore_for_file: public_member_api_docs
 
 const int kBasicResultLength = 64 * 1024;
@@ -789,12 +791,6 @@ class IrisEventObserverKey extends IrisEventKey {
             registerName: registerName, unregisterName: unregisterName, op: op);
 }
 
-// class DisposeIrisEventObserverKey extends IrisEventKey {
-//   const DisposeIrisEventObserverKey(
-//       {required String registerName, required String unregisterName})
-//       : super(registerName: registerName, unregisterName: unregisterName);
-// }
-
 class IrisEventHandlerKey extends IrisEventKey {
   const IrisEventHandlerKey(
       {required String registerName,
@@ -804,13 +800,8 @@ class IrisEventHandlerKey extends IrisEventKey {
             registerName: registerName, unregisterName: unregisterName, op: op);
 }
 
-// class UnsetIrisEventHandlerKey extends IrisEventKey {
-//   const UnsetIrisEventHandlerKey(
-//       {required String registerName, required String unregisterName})
-//       : super(registerName: registerName, unregisterName: unregisterName);
-// }
-
-abstract class DisposableNativeIrisEventHandler {
+abstract class DisposableNativeIrisEventHandler implements DisposableObject {
+  @override
   void dispose();
 }
 

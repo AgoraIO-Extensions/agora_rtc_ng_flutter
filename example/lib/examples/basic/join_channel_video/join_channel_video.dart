@@ -93,7 +93,7 @@ class _State extends State<JoinChannelVideo> {
       const VideoEncoderConfiguration(
         dimensions: VideoDimensions(width: 640, height: 360),
         frameRate: 15,
-        bitrate: 800,
+        bitrate: 0,
       ),
     );
 
