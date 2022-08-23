@@ -110,16 +110,6 @@ class _State extends State<SetBeautyEffect> {
 
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
-    if (defaultTargetPlatform == TargetPlatform.windows) {
-      await _engine.loadExtensionProvider(
-          path: 'libagora_clear_vision_extension.dll');
-    } else if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider(path: 'agora_clear_vision_extension');
-    }
-    await _engine.enableExtension(
-      provider: 'agora_video_filters_clear_vision',
-      extension: 'clear_vision',
-    );
     await _engine.startPreview();
 
     setState(() {

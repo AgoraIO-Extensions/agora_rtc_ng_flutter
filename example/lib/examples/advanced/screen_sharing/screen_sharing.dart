@@ -69,11 +69,6 @@ class _State extends State<ScreenSharing> {
       },
     ));
 
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider(
-          path: 'agora_screen_capture_extension');
-    }
-
     await _engine.enableVideo();
     await _engine.startPreview();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);

@@ -147,10 +147,6 @@ class _State extends State<VoiceChanger> {
       },
     ));
 
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider(path: 'agora_audio_beauty_extension');
-    }
-
     await _engine.enableAudio();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
     await _engine.joinChannelWithOptions(

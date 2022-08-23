@@ -31,6 +31,7 @@ import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
     as audio_device_manager_impl;
 import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:iris_event/iris_event.dart';
@@ -176,6 +177,23 @@ class AudioSpectrumObserverWrapper
   }
 }
 
+class _Lifecycle with WidgetsBindingObserver {
+
+  const _Lifecycle(this.onDestroy);
+
+  final VoidCallback onDestroy;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.detached) {
+      onDestroy();
+    }
+  }
+}
+
 class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     implements RtcEngineEx, IrisEventHandler {
   RtcEngineImpl._();
@@ -194,6 +212,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   int _mediaPlayerCount = 0;
 
+  _Lifecycle? _lifecycle;
+
   @internal
   final MethodChannel engineMethodChannel = const MethodChannel('agora_rtc_ng');
 
@@ -206,6 +226,11 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   }
 
   Future<void> _initializeInternal(RtcEngineContext context) async {
+    _lifecycle ??= _Lifecycle(() {
+      release(sync: true);
+    },);
+    WidgetsBinding.instance.addObserver(_lifecycle!);
+
     if (defaultTargetPlatform == TargetPlatform.android) {
       final externalFilesDir =
           await engineMethodChannel.invokeMethod('getExternalFilesDir');
@@ -218,6 +243,8 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
     await _globalVideoViewController
         .attachVideoFrameBufferManager(apiCaller.getIrisApiEngineIntPtr());
   }
+
+
 
   @override
   Future<void> initialize(RtcEngineContext context) async {
@@ -234,6 +261,13 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
 
   @override
   Future<void> release({bool sync = false}) async {
+    if (_instance == null) return;
+    
+    if (_lifecycle != null) {
+      WidgetsBinding.instance.removeObserver(_lifecycle!);
+      _lifecycle = null;
+    }
+
     if (_rtcEngineEventHandlers.isNotEmpty) {
       _rtcEngineEventHandlers.clear();
       apiCaller.removeEventHandler(this);

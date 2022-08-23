@@ -26,22 +26,30 @@ PlayerStreamInfo _$PlayerStreamInfoFromJson(Map<String, dynamic> json) =>
       duration: json['duration'] as int?,
     );
 
-Map<String, dynamic> _$PlayerStreamInfoToJson(PlayerStreamInfo instance) =>
-    <String, dynamic>{
-      'streamIndex': instance.streamIndex,
-      'streamType': _$MediaStreamTypeEnumMap[instance.streamType],
-      'codecName': instance.codecName,
-      'language': instance.language,
-      'videoFrameRate': instance.videoFrameRate,
-      'videoBitRate': instance.videoBitRate,
-      'videoWidth': instance.videoWidth,
-      'videoHeight': instance.videoHeight,
-      'videoRotation': instance.videoRotation,
-      'audioSampleRate': instance.audioSampleRate,
-      'audioChannels': instance.audioChannels,
-      'audioBitsPerSample': instance.audioBitsPerSample,
-      'duration': instance.duration,
-    };
+Map<String, dynamic> _$PlayerStreamInfoToJson(PlayerStreamInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('streamIndex', instance.streamIndex);
+  writeNotNull('streamType', _$MediaStreamTypeEnumMap[instance.streamType]);
+  writeNotNull('codecName', instance.codecName);
+  writeNotNull('language', instance.language);
+  writeNotNull('videoFrameRate', instance.videoFrameRate);
+  writeNotNull('videoBitRate', instance.videoBitRate);
+  writeNotNull('videoWidth', instance.videoWidth);
+  writeNotNull('videoHeight', instance.videoHeight);
+  writeNotNull('videoRotation', instance.videoRotation);
+  writeNotNull('audioSampleRate', instance.audioSampleRate);
+  writeNotNull('audioChannels', instance.audioChannels);
+  writeNotNull('audioBitsPerSample', instance.audioBitsPerSample);
+  writeNotNull('duration', instance.duration);
+  return val;
+}
 
 const _$MediaStreamTypeEnumMap = {
   MediaStreamType.streamTypeUnknown: 0,
@@ -55,10 +63,19 @@ SrcInfo _$SrcInfoFromJson(Map<String, dynamic> json) => SrcInfo(
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$SrcInfoToJson(SrcInfo instance) => <String, dynamic>{
-      'bitrateInKbps': instance.bitrateInKbps,
-      'name': instance.name,
-    };
+Map<String, dynamic> _$SrcInfoToJson(SrcInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('bitrateInKbps', instance.bitrateInKbps);
+  writeNotNull('name', instance.name);
+  return val;
+}
 
 CacheStatistics _$CacheStatisticsFromJson(Map<String, dynamic> json) =>
     CacheStatistics(
@@ -67,12 +84,20 @@ CacheStatistics _$CacheStatisticsFromJson(Map<String, dynamic> json) =>
       downloadSize: json['downloadSize'] as int?,
     );
 
-Map<String, dynamic> _$CacheStatisticsToJson(CacheStatistics instance) =>
-    <String, dynamic>{
-      'fileSize': instance.fileSize,
-      'cacheSize': instance.cacheSize,
-      'downloadSize': instance.downloadSize,
-    };
+Map<String, dynamic> _$CacheStatisticsToJson(CacheStatistics instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('fileSize', instance.fileSize);
+  writeNotNull('cacheSize', instance.cacheSize);
+  writeNotNull('downloadSize', instance.downloadSize);
+  return val;
+}
 
 PlayerUpdatedInfo _$PlayerUpdatedInfoFromJson(Map<String, dynamic> json) =>
     PlayerUpdatedInfo(
@@ -84,12 +109,20 @@ PlayerUpdatedInfo _$PlayerUpdatedInfoFromJson(Map<String, dynamic> json) =>
               json['cacheStatistics'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$PlayerUpdatedInfoToJson(PlayerUpdatedInfo instance) =>
-    <String, dynamic>{
-      'playerId': instance.playerId,
-      'deviceId': instance.deviceId,
-      'cacheStatistics': instance.cacheStatistics?.toJson(),
-    };
+Map<String, dynamic> _$PlayerUpdatedInfoToJson(PlayerUpdatedInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('playerId', instance.playerId);
+  writeNotNull('deviceId', instance.deviceId);
+  writeNotNull('cacheStatistics', instance.cacheStatistics?.toJson());
+  return val;
+}
 
 MediaSource _$MediaSourceFromJson(Map<String, dynamic> json) => MediaSource(
       url: json['url'] as String?,
@@ -101,16 +134,24 @@ MediaSource _$MediaSourceFromJson(Map<String, dynamic> json) => MediaSource(
       isLiveSource: json['isLiveSource'] as bool?,
     );
 
-Map<String, dynamic> _$MediaSourceToJson(MediaSource instance) =>
-    <String, dynamic>{
-      'url': instance.url,
-      'uri': instance.uri,
-      'startPos': instance.startPos,
-      'autoPlay': instance.autoPlay,
-      'enableCache': instance.enableCache,
-      'isAgoraSource': instance.isAgoraSource,
-      'isLiveSource': instance.isLiveSource,
-    };
+Map<String, dynamic> _$MediaSourceToJson(MediaSource instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('url', instance.url);
+  writeNotNull('uri', instance.uri);
+  writeNotNull('startPos', instance.startPos);
+  writeNotNull('autoPlay', instance.autoPlay);
+  writeNotNull('enableCache', instance.enableCache);
+  writeNotNull('isAgoraSource', instance.isAgoraSource);
+  writeNotNull('isLiveSource', instance.isLiveSource);
+  return val;
+}
 
 const _$MediaPlayerStateEnumMap = {
   MediaPlayerState.playerStateIdle: 0,

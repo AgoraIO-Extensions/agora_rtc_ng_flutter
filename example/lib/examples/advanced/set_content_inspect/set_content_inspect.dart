@@ -90,11 +90,6 @@ class _State extends State<SetContentInspect> {
       },
     ));
 
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider(
-          path: 'agora_content_inspect_extension');
-    }
-
     await _engine.enableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 

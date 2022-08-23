@@ -67,18 +67,6 @@ class _State extends State<EnableVirtualBackground> {
       },
     ));
 
-    if (defaultTargetPlatform == TargetPlatform.windows) {
-      await _engine.loadExtensionProvider(
-          path: 'libagora_segmentation_extension.dll');
-    } else if (defaultTargetPlatform == TargetPlatform.android) {
-      await _engine.loadExtensionProvider(path: 'agora_segmentation_extension');
-    }
-
-    await _engine.enableExtension(
-        provider: 'agora_video_filters_segmentation',
-        extension: 'portrait_segmentation',
-        enable: !_isEnabledVirtualBackgroundImage);
-
     await _engine.enableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
 
