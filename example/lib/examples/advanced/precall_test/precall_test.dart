@@ -287,7 +287,8 @@ class _State extends State<PreCallTest> {
                           !_isStartRecordingDeviceTest;
 
                       if (_isStartRecordingDeviceTest) {
-                        await _audioDeviceManager.startRecordingDeviceTest(1000);
+                        await _audioDeviceManager
+                            .startRecordingDeviceTest(1000);
 
                         // _videoDeviceManager.startDeviceTest(1000);
                       } else {
@@ -354,7 +355,6 @@ class _State extends State<PreCallTest> {
                         }
 
                         await _audioDeviceManager.startPlaybackDeviceTest(p);
-
                       } else {
                         await _audioDeviceManager.stopPlaybackDeviceTest();
                       }
@@ -396,13 +396,13 @@ class _State extends State<PreCallTest> {
                       _isStartLastmileProbeTest = !_isStartLastmileProbeTest;
 
                       if (_isStartLastmileProbeTest) {
-  LastmileProbeConfig config = const LastmileProbeConfig(
-    probeUplink: true,
-    probeDownlink: true,
-    expectedUplinkBitrate: 100000,
-    expectedDownlinkBitrate: 100000,
-  );
-  await _engine.startLastmileProbeTest(config);
+                        LastmileProbeConfig config = const LastmileProbeConfig(
+                          probeUplink: true,
+                          probeDownlink: true,
+                          expectedUplinkBitrate: 100000,
+                          expectedDownlinkBitrate: 100000,
+                        );
+                        await _engine.startLastmileProbeTest(config);
                       } else {
                         await _engine.stopLastmileProbeTest();
                       }
