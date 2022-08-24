@@ -25,6 +25,7 @@ import 'device_manager/device_manager.dart';
 import 'enable_virtualbackground/enable_virtualbackground.dart';
 import 'join_multiple_channel/join_multiple_channel.dart';
 import 'media_recorder/media_recorder.dart';
+import 'precall_test/precall_test.dart';
 import 'send_metadata/send_metadata.dart';
 import 'set_content_inspect/set_content_inspect.dart';
 import 'start_rhythm_player/start_rhythm_player.dart';
@@ -37,12 +38,10 @@ final advanced = [
   {'name': 'ChannelMediaRelay', 'widget': const ChannelMediaRelay()},
   // if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
   //   {'name': 'CustomCaptureAudio', 'widget': const CustomCaptureAudio()},
-  if (kIsWeb || !(Platform.isAndroid || Platform.isIOS))
-    {'name': 'DeviceManager', 'widget': const DeviceManager()},
+  {'name': 'DeviceManager', 'widget': const DeviceManager()},
   {'name': 'JoinMultipleChannel', 'widget': const JoinMultipleChannel()},
   {'name': 'RtmpStreaming', 'widget': const RtmpStreaming()},
-  if (!kIsWeb)
-    {'name': 'ScreenSharing', 'widget': const ScreenSharing()},
+  if (!kIsWeb) {'name': 'ScreenSharing', 'widget': const ScreenSharing()},
   {'name': 'SetEncryption', 'widget': SetEncryption()},
   {
     'name': 'SetVideoEncoderConfiguration',
@@ -82,5 +81,9 @@ final advanced = [
   {
     'name': 'SpatialAudioWithMediaPlayer',
     'widget': const SpatialAudioWithMediaPlayer()
+  },
+    {
+    'name': 'PreCallTest',
+    'widget': const PreCallTest()
   },
 ];
