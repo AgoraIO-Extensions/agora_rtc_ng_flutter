@@ -5,21 +5,22 @@ import 'package:agora_rtc_ng/src/impl/video_view_controller_impl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
-/// @nodoc
+/// AgoraVideoView 的控制器，用于渲染本地和远端视频。
+/// 在不同平台上，该类对应的默认视图不同：Android:。如果你想要使用，则设置useAndroidSurfaceView 的属性为true。iOS:。 如果你想要使用 Flutter Texture，则设置useFlutterTexture 的属性为true。macOS 和 Windows：。
 abstract class VideoViewControllerBase {
-  /// @nodoc
+  ///  RtcEngine 。
   RtcEngine get rtcEngine;
 
-  /// @nodoc
+  /// 本地视频显示属性。详见 VideoCanvas 。
   VideoCanvas get canvas;
 
-  /// @nodoc
+  /// Connection 信息。详见 RtcConnection 。
   RtcConnection? get connection;
 
-  /// @nodoc
+  /// 是否使用FlutterTexture 渲染视频：true: 使用FlutterTexture 渲染视频。false: 不使用FlutterTexture 渲染视频。FlutterTexture 仅适用于 iOS、macOS 和 Windows 平台。
   bool get useFlutterTexture;
 
-  /// @nodoc
+  /// 是否使用 AndroidSurfaceView 渲染视频：true: 使用 AndroidSurfaceView 渲染视频。false: 不使用 AndroidSurfaceView 渲染视频。AndroidSurfaceView 仅适用于 Android 平台。
   bool get useAndroidSurfaceView;
 
   @internal
@@ -51,11 +52,8 @@ abstract class VideoViewControllerBase {
   Future<void> dispose();
 }
 
-/// A AgoraVideoView controller for rendering local and remote video.
-/// On different platforms, the default view corresponding to this class is different:
-///  Android: . If you want to use , set the useAndroidSurfaceView property to true.
-///  iOS: . If you want to use Flutter Texture, set the useFlutterTexture property to true.
-///  macOS and Windows: .
+/// AgoraVideoView 的控制器，用于渲染本地和远端视频。
+/// 在不同平台上，该类对应的默认视图不同：Android:。如果你想要使用，则设置useAndroidSurfaceView 的属性为true。iOS:。 如果你想要使用 Flutter Texture，则设置useFlutterTexture 的属性为true。macOS 和 Windows：。
 class VideoViewController
     with VideoViewControllerBaseMixin
     implements VideoViewControllerBase {

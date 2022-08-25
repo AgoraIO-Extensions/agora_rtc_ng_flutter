@@ -21,22 +21,27 @@ extension RtcEngineExt on RtcEngine {
   }
 }
 
-/// @nodoc
+/// 错误码及错误描述。
+///
 class AgoraRtcException implements Exception {
   /// @nodoc
   AgoraRtcException({required this.code, this.message});
 
-  /// @nodoc
+  /// 错误码，详见 ErrorCodeType 。
   final int code;
 
-  /// @nodoc
+  /// 错误描述。
   final String? message;
 
   @override
   String toString() => 'AgoraRtcException($code, $message)';
 }
 
-/// @nodoc
+/// 创建RtcEngine 对象。
+/// 目前 Agora RTC SDK v4.0.0 只支持每个 app 创建一个RtcEngine 对象。
+///
+/// Returns
+/// RtcEngine 对象。
 RtcEngine createAgoraRtcEngine() {
   return impl.RtcEngineImpl.create();
 }
