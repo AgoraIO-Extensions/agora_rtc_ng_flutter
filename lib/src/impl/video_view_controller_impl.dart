@@ -1,7 +1,7 @@
-import 'package:agora_rtc_ng/src/agora_base.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
-import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart';
-import 'package:agora_rtc_ng/src/render/video_view_controller.dart';
+import 'package:agora_rtc_engine/src/agora_base.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine_ex.dart';
+import 'package:agora_rtc_engine/src/impl/agora_rtc_engine_impl.dart';
+import 'package:agora_rtc_engine/src/render/video_view_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 

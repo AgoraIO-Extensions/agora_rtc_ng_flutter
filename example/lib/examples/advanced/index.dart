@@ -1,20 +1,20 @@
 import 'dart:io';
 
-import 'package:agora_rtc_ng_example/examples/advanced/media_player/media_player.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/push_encoded_video_frame/push_encoded_video_frame.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/push_video_frame/push_video_frame.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/rtmp_streaming/rtmp_streaming.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/screen_sharing/screen_sharing.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/send_multi_camera_stream/send_multi_camera_stream.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/send_multi_video_stream/send_multi_video_stream.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/set_beauty_effect/set_beauty_effect.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/set_encryption/set_encryption.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/set_video_encoder_configuration/set_video_encoder_configuration.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/spatial_audio_with_media_player/spatial_audio_with_media_player.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/start_direct_cdn_streaming/start_direct_cdn_streaming.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/start_local_video_transcoder/start_local_video_transcoder.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/stream_message/stream_message.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/take_snapshot/take_snapshot.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/media_player/media_player.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/push_encoded_video_frame/push_encoded_video_frame.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/push_video_frame/push_video_frame.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/rtmp_streaming/rtmp_streaming.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/screen_sharing/screen_sharing.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/send_multi_camera_stream/send_multi_camera_stream.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/send_multi_video_stream/send_multi_video_stream.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/set_beauty_effect/set_beauty_effect.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/set_encryption/set_encryption.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/set_video_encoder_configuration/set_video_encoder_configuration.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/spatial_audio_with_media_player/spatial_audio_with_media_player.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/start_direct_cdn_streaming/start_direct_cdn_streaming.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/start_local_video_transcoder/start_local_video_transcoder.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/stream_message/stream_message.dart';
+import 'package:agora_rtc_engine_example/examples/advanced/take_snapshot/take_snapshot.dart';
 import 'package:flutter/foundation.dart';
 
 import 'audio_mixing/audio_mixing.dart';

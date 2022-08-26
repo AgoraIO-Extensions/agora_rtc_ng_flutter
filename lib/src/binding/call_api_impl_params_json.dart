@@ -1,4 +1,4 @@
-import 'package:agora_rtc_ng/src/binding_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding_forward_export.dart';
 part 'call_api_impl_params_json.g.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable

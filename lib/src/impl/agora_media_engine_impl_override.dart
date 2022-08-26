@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
-import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart';
-import 'package:agora_rtc_ng/src/binding/agora_media_engine_impl.dart'
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/src/binding/agora_media_base_event_impl.dart';
+import 'package:agora_rtc_engine/src/binding/agora_media_engine_impl.dart'
     as media_engine_impl_binding;
-import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart';
-import 'package:agora_rtc_ng/src/impl/api_caller.dart';
-import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
+import 'package:agora_rtc_engine/src/impl/agora_rtc_engine_impl.dart';
+import 'package:agora_rtc_engine/src/impl/api_caller.dart';
+import 'package:agora_rtc_engine/src/impl/disposable_object.dart';
 import 'package:iris_event/iris_event.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable

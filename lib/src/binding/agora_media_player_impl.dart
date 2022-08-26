@@ -1,5 +1,5 @@
-import 'package:agora_rtc_ng/src/binding_forward_export.dart';
-import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding/impl_forward_export.dart';
 // ignore_for_file: public_member_api_docs, unused_local_variable, annotate_overrides
 
 class MediaPlayerImpl implements MediaPlayer {

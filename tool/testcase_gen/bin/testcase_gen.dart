@@ -57,7 +57,7 @@ void main(List<String> arguments) {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
@@ -119,7 +119,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
@@ -168,7 +168,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
@@ -221,7 +221,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
@@ -274,7 +274,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
@@ -331,7 +331,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
@@ -385,7 +385,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;
@@ -438,7 +438,7 @@ testWidgets('{{TEST_CASE_NAME}}', (WidgetTester tester) async {
       testCaseFileTemplate: '''
 $defaultHeader
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:integration_test_app/main.dart' as app;

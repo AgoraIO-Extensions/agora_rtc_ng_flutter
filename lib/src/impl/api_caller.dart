@@ -4,10 +4,10 @@ import 'dart:ffi' as ffi;
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
-import 'package:agora_rtc_ng/agora_rtc_ng.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:async/async.dart';
 
-import 'package:agora_rtc_ng/src/impl/native_iris_api_engine_bindings.dart';
+import 'package:agora_rtc_engine/src/impl/native_iris_api_engine_bindings.dart';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:iris_event/iris_event.dart';

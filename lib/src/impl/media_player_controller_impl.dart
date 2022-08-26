@@ -1,14 +1,14 @@
-import 'package:agora_rtc_ng/src/agora_media_base.dart';
-import 'package:agora_rtc_ng/src/agora_base.dart';
-import 'package:agora_rtc_ng/src/agora_media_player.dart';
-import 'package:agora_rtc_ng/src/agora_media_player_types.dart';
-import 'package:agora_rtc_ng/src/agora_media_player_source.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
-import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart';
-import 'package:agora_rtc_ng/src/impl/media_player_impl.dart';
-import 'package:agora_rtc_ng/src/impl/video_view_controller_impl.dart';
-import 'package:agora_rtc_ng/src/render/media_player_controller.dart';
+import 'package:agora_rtc_engine/src/agora_media_base.dart';
+import 'package:agora_rtc_engine/src/agora_base.dart';
+import 'package:agora_rtc_engine/src/agora_media_player.dart';
+import 'package:agora_rtc_engine/src/agora_media_player_types.dart';
+import 'package:agora_rtc_engine/src/agora_media_player_source.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine_ex.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/src/impl/agora_rtc_engine_impl.dart';
+import 'package:agora_rtc_engine/src/impl/media_player_impl.dart';
+import 'package:agora_rtc_engine/src/impl/video_view_controller_impl.dart';
+import 'package:agora_rtc_engine/src/render/media_player_controller.dart';
 
 class MediaPlayerControllerImpl
     with VideoViewControllerBaseMixin

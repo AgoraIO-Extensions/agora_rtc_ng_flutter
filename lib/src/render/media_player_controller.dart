@@ -1,9 +1,9 @@
-import 'package:agora_rtc_ng/src/agora_base.dart';
-import 'package:agora_rtc_ng/src/agora_media_player.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
-import 'package:agora_rtc_ng/src/impl/media_player_controller_impl.dart';
-import 'package:agora_rtc_ng/src/render/video_view_controller.dart';
+import 'package:agora_rtc_engine/src/agora_base.dart';
+import 'package:agora_rtc_engine/src/agora_media_player.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine_ex.dart';
+import 'package:agora_rtc_engine/src/impl/media_player_controller_impl.dart';
+import 'package:agora_rtc_engine/src/render/video_view_controller.dart';
 
 /// AgoraVideoView 的控制器，用于渲染媒体播放器的视频。
 ///

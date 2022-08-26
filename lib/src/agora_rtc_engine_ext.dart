@@ -1,4 +1,4 @@
-import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart';
+import 'package:agora_rtc_engine/src/impl/agora_rtc_engine_impl.dart';
 import 'agora_media_player.dart';
 import 'agora_rtc_engine.dart';
 import 'agora_rtc_engine_ex.dart';

@@ -1,10 +1,10 @@
-import 'package:agora_rtc_ng/src/binding_forward_export.dart';
-import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
-import 'package:agora_rtc_ng/src/binding/agora_media_recorder_impl.dart'
+import 'package:agora_rtc_engine/src/binding_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding/impl_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding/agora_media_recorder_impl.dart'
     as media_recorder_impl_binding;
-import 'package:agora_rtc_ng/src/impl/agora_rtc_engine_impl.dart'
+import 'package:agora_rtc_engine/src/impl/agora_rtc_engine_impl.dart'
     as rtc_engine_impl;
-import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
+import 'package:agora_rtc_engine/src/impl/disposable_object.dart';
 import 'package:iris_event/iris_event.dart';
 
 // ignore_for_file: public_member_api_docs, unused_local_variable

@@ -2,35 +2,35 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:agora_rtc_ng/src/agora_base.dart';
-import 'package:agora_rtc_ng/src/agora_media_base.dart';
-import 'package:agora_rtc_ng/src/agora_media_engine.dart';
-import 'package:agora_rtc_ng/src/agora_media_player.dart';
-import 'package:agora_rtc_ng/src/agora_media_recorder.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
-import 'package:agora_rtc_ng/src/agora_rtc_engine_ext.dart';
-import 'package:agora_rtc_ng/src/agora_spatial_audio.dart';
-import 'package:agora_rtc_ng/src/audio_device_manager.dart';
-import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_ex_impl.dart'
+import 'package:agora_rtc_engine/src/agora_base.dart';
+import 'package:agora_rtc_engine/src/agora_media_base.dart';
+import 'package:agora_rtc_engine/src/agora_media_engine.dart';
+import 'package:agora_rtc_engine/src/agora_media_player.dart';
+import 'package:agora_rtc_engine/src/agora_media_recorder.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine_ex.dart';
+import 'package:agora_rtc_engine/src/agora_rtc_engine_ext.dart';
+import 'package:agora_rtc_engine/src/agora_spatial_audio.dart';
+import 'package:agora_rtc_engine/src/audio_device_manager.dart';
+import 'package:agora_rtc_engine/src/binding/agora_rtc_engine_ex_impl.dart'
     as rtc_engine_ex_binding;
-import 'package:agora_rtc_ng/src/binding/agora_rtc_engine_impl.dart'
+import 'package:agora_rtc_engine/src/binding/agora_rtc_engine_impl.dart'
     as rtc_engine_binding;
-import 'package:agora_rtc_ng/src/binding/agora_media_base_event_impl.dart'
+import 'package:agora_rtc_engine/src/binding/agora_media_base_event_impl.dart'
     as media_base_event_binding;
 
-import 'package:agora_rtc_ng/src/impl/agora_media_recorder_impl_override.dart'
+import 'package:agora_rtc_engine/src/impl/agora_media_recorder_impl_override.dart'
     as media_recorder_impl;
-import 'package:agora_rtc_ng/src/impl/agora_spatial_audio_impl_override.dart'
+import 'package:agora_rtc_engine/src/impl/agora_spatial_audio_impl_override.dart'
     as agora_spatial_audio_impl;
-import 'package:agora_rtc_ng/src/impl/agora_media_engine_impl_override.dart'
+import 'package:agora_rtc_engine/src/impl/agora_media_engine_impl_override.dart'
     as media_engine_impl;
-import 'package:agora_rtc_ng/src/impl/disposable_object.dart';
-import 'package:agora_rtc_ng/src/impl/media_player_impl.dart'
+import 'package:agora_rtc_engine/src/impl/disposable_object.dart';
+import 'package:agora_rtc_engine/src/impl/media_player_impl.dart'
     as media_player_impl;
-import 'package:agora_rtc_ng/src/impl/audio_device_manager_impl.dart'
+import 'package:agora_rtc_engine/src/impl/audio_device_manager_impl.dart'
     as audio_device_manager_impl;
-import 'package:agora_rtc_ng/src/binding/impl_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding/impl_forward_export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,6 @@ import 'package:iris_event/iris_event.dart';
 
 import 'global_video_view_controller.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as path;
 
 // ignore_for_file: public_member_api_docs
 
@@ -245,7 +244,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
           await engineMethodChannel.invokeMethod('getExternalFilesDir');
       if (externalFilesDir != null) {
         // Reset the sdk log file to ensure the iris log path has been set
-        await setLogFile(path.join(externalFilesDir, 'agorasdk.log'));
+        await setLogFile('$externalFilesDir/agorasdk.log');
       }
     }
 

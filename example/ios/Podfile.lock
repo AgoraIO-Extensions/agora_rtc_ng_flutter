@@ -1,5 +1,5 @@
 PODS:
-  - agora_rtc_ng (6.0.0-beta.2):
+  - agora_rtc_engine (6.0.0-beta.2):
     - AgoraRtcWrapper
     - Flutter
   - AgoraRtcWrapper (3.6.2)
@@ -14,8 +14,8 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - agora_rtc_ng (from `.symlinks/plugins/agora_rtc_ng/ios`)
-  - AgoraRtcWrapper (from `.symlinks/plugins/agora_rtc_ng/ios`)
+  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
+  - AgoraRtcWrapper (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - Flutter (from `Flutter`)
   - iris_event (from `.symlinks/plugins/iris_event/ios`)
   - iris_event_handler (from `.symlinks/plugins/iris_event/ios`)
@@ -23,10 +23,10 @@ DEPENDENCIES:
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 EXTERNAL SOURCES:
-  agora_rtc_ng:
-    :path: ".symlinks/plugins/agora_rtc_ng/ios"
+  agora_rtc_engine:
+    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   AgoraRtcWrapper:
-    :path: ".symlinks/plugins/agora_rtc_ng/ios"
+    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   Flutter:
     :path: Flutter
   iris_event:
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  agora_rtc_ng: 71c5f5e090491135af7302b1e6b26cf80b221cfe
+  agora_rtc_engine: 1afc0934cce5c4e5bcfada1ca0b5dae5b747351b
   AgoraRtcWrapper: 564d09d8441eeb900f7790b8c849645ae7fa26b3
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   iris_event: 5e57592332e13d2b019185be65cf69bdb85d9146
@@ -47,6 +47,6 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
 
-PODFILE CHECKSUM: b502f4e15f09f7a6e3fba4db7a7098f72466936b
+PODFILE CHECKSUM: 3538fa4340ee4af46531873dda7538947b95865d
 
 COCOAPODS: 1.11.3

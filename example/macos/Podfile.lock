@@ -1,5 +1,5 @@
 PODS:
-  - agora_rtc_ng (0.0.1):
+  - agora_rtc_engine (0.0.1):
     - AgoraRtcWrapper
     - FlutterMacOS
   - AgoraRtcWrapper (3.6.2)
@@ -12,18 +12,18 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - agora_rtc_ng (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos`)
-  - AgoraRtcWrapper (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos`)
+  - agora_rtc_engine (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos`)
+  - AgoraRtcWrapper (from `Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - iris_event (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
   - iris_event_handler (from `Flutter/ephemeral/.symlinks/plugins/iris_event/macos`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
 
 EXTERNAL SOURCES:
-  agora_rtc_ng:
-    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos
+  agora_rtc_engine:
+    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos
   AgoraRtcWrapper:
-    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_ng/macos
+    :path: Flutter/ephemeral/.symlinks/plugins/agora_rtc_engine/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
   iris_event:
@@ -34,13 +34,13 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
 
 SPEC CHECKSUMS:
-  agora_rtc_ng: 3d55b53282afe70dc8c9e922ba7e64c911cf028a
+  agora_rtc_engine: 9ae7f2092d6ccb997f2340ce9d8804a3cbc52e57
   AgoraRtcWrapper: 5ec7ed0a24c3d5a15783b24b7db8e670e99fb6a8
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
   iris_event: b013c00dd8b6724d4191f1f3144300786d04eaa5
   iris_event_handler: fbe9089fe354cec759b6568a273cf13d365f7579
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
 
-PODFILE CHECKSUM: 4f59d30a0204c4252729cd4af0954e4709c5007e
+PODFILE CHECKSUM: 39dd8f3daa6dacd6813afb1ae952a19fac9bd6c0
 
 COCOAPODS: 1.11.3

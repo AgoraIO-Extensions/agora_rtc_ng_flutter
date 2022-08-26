@@ -1,4 +1,4 @@
-import 'package:agora_rtc_ng/src/binding_forward_export.dart';
+import 'package:agora_rtc_engine/src/binding_forward_export.dart';
 
 /// 用于在客户端录制音视频流。
 /// 该类支持录制以下内容：本地麦克风采集且经 SDK 编码为 AAC 格式的音频。本地摄像头采集且经 SDK 编码的视频。
