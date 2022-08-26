@@ -104,7 +104,7 @@ class _State extends State<MediaRecorder> {
       await [Permission.microphone, Permission.camera].request();
     }
 
-    await _engine.joinChannelWithOptions(
+    await _engine.joinChannel(
       token: config.token,
       channelId: _controller.text,
       uid: config.uid,

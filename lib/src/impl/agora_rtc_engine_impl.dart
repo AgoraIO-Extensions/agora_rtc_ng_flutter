@@ -710,7 +710,7 @@ class RtcEngineImpl extends rtc_engine_ex_binding.RtcEngineExImpl
   }
 
   @override
-  Future<void> joinChannelWithOptions(
+  Future<void> joinChannel(
       {required String token,
       required String channelId,
       required int uid,

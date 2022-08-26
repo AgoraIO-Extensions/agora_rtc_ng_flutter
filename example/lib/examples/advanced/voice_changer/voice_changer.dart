@@ -149,7 +149,7 @@ class _State extends State<VoiceChanger> {
 
     await _engine.enableAudio();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await _engine.joinChannelWithOptions(
+    await _engine.joinChannel(
         token: config.token,
         channelId: _channelId.text,
         uid: 0,

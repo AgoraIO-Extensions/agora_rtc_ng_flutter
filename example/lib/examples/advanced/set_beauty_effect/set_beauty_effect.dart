@@ -119,11 +119,10 @@ class _State extends State<SetBeautyEffect> {
 
   void _joinChannel() async {
     await _engine.joinChannel(
-      token: config.token,
-      channelId: _channelIdController.text,
-      info: '',
-      uid: 0,
-    );
+        token: config.token,
+        channelId: _channelIdController.text,
+        uid: 0,
+        options: const ChannelMediaOptions());
   }
 
   _leaveChannel() async {

@@ -115,8 +115,8 @@ class _RtmpStreamingState extends State<RtmpStreaming> {
     await _engine.joinChannel(
         token: config.token,
         channelId: _channelIdController.text,
-        info: '',
-        uid: uid);
+        uid: uid,
+        options: const ChannelMediaOptions());
   }
 
   void _leaveChannel() async {

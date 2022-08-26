@@ -635,40 +635,6 @@ extension RtcEngineEventHandlerOnFirstLocalVideoFramePublishedJsonBufferExt
 }
 
 @JsonSerializable(explicitToJson: true)
-class RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson {
-  const RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson(
-      {this.connection, this.sourceType, this.width, this.height});
-
-  @JsonKey(name: 'connection')
-  final RtcConnection? connection;
-  @JsonKey(name: 'sourceType')
-  final VideoSourceType? sourceType;
-  @JsonKey(name: 'width')
-  final int? width;
-  @JsonKey(name: 'height')
-  final int? height;
-  factory RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson.fromJson(
-          Map<String, dynamic> json) =>
-      _$RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJsonFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJsonToJson(this);
-}
-
-extension RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJsonBufferExt
-    on RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson {
-  RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson fillBuffers(
-      List<Uint8List> bufferList) {
-    if (bufferList.isEmpty) return this;
-    return this;
-  }
-
-  List<Uint8List> collectBufferList() {
-    final bufferList = <Uint8List>[];
-    return bufferList;
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class RtcEngineEventHandlerOnFirstRemoteVideoDecodedJson {
   const RtcEngineEventHandlerOnFirstRemoteVideoDecodedJson(
       {this.connection, this.remoteUid, this.width, this.height, this.elapsed});
@@ -707,10 +673,17 @@ extension RtcEngineEventHandlerOnFirstRemoteVideoDecodedJsonBufferExt
 @JsonSerializable(explicitToJson: true)
 class RtcEngineEventHandlerOnVideoSizeChangedJson {
   const RtcEngineEventHandlerOnVideoSizeChangedJson(
-      {this.connection, this.uid, this.width, this.height, this.rotation});
+      {this.connection,
+      this.sourceType,
+      this.uid,
+      this.width,
+      this.height,
+      this.rotation});
 
   @JsonKey(name: 'connection')
   final RtcConnection? connection;
+  @JsonKey(name: 'sourceType')
+  final VideoSourceType? sourceType;
   @JsonKey(name: 'uid')
   final int? uid;
   @JsonKey(name: 'width')

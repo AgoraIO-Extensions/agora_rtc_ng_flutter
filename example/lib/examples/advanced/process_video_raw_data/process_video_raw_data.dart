@@ -123,7 +123,7 @@ class _State extends State<ProcessVideoRawData> {
   }
 
   Future<void> _joinChannel() async {
-    await _engine.joinChannelWithOptions(
+    await _engine.joinChannel(
       token: config.token,
       channelId: _controller.text,
       uid: config.uid,

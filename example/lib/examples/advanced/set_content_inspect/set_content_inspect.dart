@@ -102,11 +102,10 @@ class _State extends State<SetContentInspect> {
 
   Future<void> _joinChannel() async {
     await _engine.joinChannel(
-      token: config.token,
-      channelId: _controller.text,
-      info: '',
-      uid: config.uid,
-    );
+        token: config.token,
+        channelId: _controller.text,
+        uid: config.uid,
+        options: const ChannelMediaOptions());
   }
 
   void _leaveChannel() async {
@@ -117,7 +116,8 @@ class _State extends State<SetContentInspect> {
           config: const ContentInspectConfig(
             modules: [
               ContentInspectModule(
-                  type: ContentInspectType.contentInspectModeration, interval: 0)
+                  type: ContentInspectType.contentInspectModeration,
+                  interval: 0)
             ],
             moduleCount: 1,
           ));

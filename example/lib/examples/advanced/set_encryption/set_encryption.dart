@@ -140,8 +140,8 @@ class _SetEncryptionState extends State<SetEncryption> {
     await _engine.joinChannel(
         token: config.token,
         channelId: _controller.text,
-        info: '',
-        uid: config.uid);
+        uid: config.uid,
+        options: const ChannelMediaOptions());
   }
 
   Future<void> _leaveChannel() async {

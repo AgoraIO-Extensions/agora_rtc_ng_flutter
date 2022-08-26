@@ -322,26 +322,6 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
         onFirstLocalVideoFramePublished!(connection, elapsed);
         break;
 
-      case 'onVideoSourceFrameSizeChangedEx':
-        if (onVideoSourceFrameSizeChanged == null) break;
-        RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson paramJson =
-            RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson.fromJson(
-                jsonMap);
-        paramJson = paramJson.fillBuffers(buffers);
-        RtcConnection? connection = paramJson.connection;
-        VideoSourceType? sourceType = paramJson.sourceType;
-        int? width = paramJson.width;
-        int? height = paramJson.height;
-        if (connection == null ||
-            sourceType == null ||
-            width == null ||
-            height == null) {
-          break;
-        }
-        connection = connection.fillBuffers(buffers);
-        onVideoSourceFrameSizeChanged!(connection, sourceType, width, height);
-        break;
-
       case 'onFirstRemoteVideoDecodedEx':
         if (onFirstRemoteVideoDecoded == null) break;
         RtcEngineEventHandlerOnFirstRemoteVideoDecodedJson paramJson =
@@ -371,11 +351,13 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
             RtcEngineEventHandlerOnVideoSizeChangedJson.fromJson(jsonMap);
         paramJson = paramJson.fillBuffers(buffers);
         RtcConnection? connection = paramJson.connection;
+        VideoSourceType? sourceType = paramJson.sourceType;
         int? uid = paramJson.uid;
         int? width = paramJson.width;
         int? height = paramJson.height;
         int? rotation = paramJson.rotation;
         if (connection == null ||
+            sourceType == null ||
             uid == null ||
             width == null ||
             height == null ||
@@ -383,7 +365,8 @@ extension RtcEngineEventHandlerExt on RtcEngineEventHandler {
           break;
         }
         connection = connection.fillBuffers(buffers);
-        onVideoSizeChanged!(connection, uid, width, height, rotation);
+        onVideoSizeChanged!(
+            connection, sourceType, uid, width, height, rotation);
         break;
 
       case 'onLocalVideoStateChanged':

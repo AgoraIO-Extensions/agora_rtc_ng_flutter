@@ -113,11 +113,10 @@ class _State extends State<StartDirectCDNStreaming> {
 
   Future<void> _joinChannel() async {
     await _engine.joinChannel(
-      token: config.token,
-      channelId: _controller.text,
-      info: '',
-      uid: config.uid,
-    );
+        token: config.token,
+        channelId: _controller.text,
+        uid: config.uid,
+        options: const ChannelMediaOptions());
   }
 
   Future<void> _leaveChannel() async {

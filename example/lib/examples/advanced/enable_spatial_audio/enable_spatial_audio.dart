@@ -101,11 +101,10 @@ class _State extends State<EnableSpatialAudio> {
       await Permission.microphone.request();
     }
     await _engine.joinChannel(
-      token: config.token,
-      channelId: _controller0.text,
-      info: '',
-      uid: 1000,
-    );
+        token: config.token,
+        channelId: _controller0.text,
+        uid: 1000,
+        options: const ChannelMediaOptions());
   }
 
   _leaveChannel() async {

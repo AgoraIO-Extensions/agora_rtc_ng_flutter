@@ -513,6 +513,8 @@ ImageTrackOptions _$ImageTrackOptionsFromJson(Map<String, dynamic> json) =>
     ImageTrackOptions(
       imageUrl: json['imageUrl'] as String?,
       fps: json['fps'] as int?,
+      mirrorMode:
+          $enumDecodeNullable(_$VideoMirrorModeTypeEnumMap, json['mirrorMode']),
     );
 
 Map<String, dynamic> _$ImageTrackOptionsToJson(ImageTrackOptions instance) {
@@ -526,8 +528,15 @@ Map<String, dynamic> _$ImageTrackOptionsToJson(ImageTrackOptions instance) {
 
   writeNotNull('imageUrl', instance.imageUrl);
   writeNotNull('fps', instance.fps);
+  writeNotNull('mirrorMode', _$VideoMirrorModeTypeEnumMap[instance.mirrorMode]);
   return val;
 }
+
+const _$VideoMirrorModeTypeEnumMap = {
+  VideoMirrorModeType.videoMirrorModeAuto: 0,
+  VideoMirrorModeType.videoMirrorModeEnabled: 1,
+  VideoMirrorModeType.videoMirrorModeDisabled: 2,
+};
 
 ChannelMediaOptions _$ChannelMediaOptionsFromJson(Map<String, dynamic> json) =>
     ChannelMediaOptions(

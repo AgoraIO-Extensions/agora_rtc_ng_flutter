@@ -489,47 +489,6 @@ Map<String,
       'elapsed': instance.elapsed,
     };
 
-RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson
-    _$RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJsonFromJson(
-            Map<String, dynamic> json) =>
-        RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson(
-          connection: json['connection'] == null
-              ? null
-              : RtcConnection.fromJson(
-                  json['connection'] as Map<String, dynamic>),
-          sourceType:
-              $enumDecodeNullable(_$VideoSourceTypeEnumMap, json['sourceType']),
-          width: json['width'] as int?,
-          height: json['height'] as int?,
-        );
-
-Map<String, dynamic>
-    _$RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJsonToJson(
-            RtcEngineEventHandlerOnVideoSourceFrameSizeChangedJson instance) =>
-        <String, dynamic>{
-          'connection': instance.connection?.toJson(),
-          'sourceType': _$VideoSourceTypeEnumMap[instance.sourceType],
-          'width': instance.width,
-          'height': instance.height,
-        };
-
-const _$VideoSourceTypeEnumMap = {
-  VideoSourceType.videoSourceCameraPrimary: 0,
-  VideoSourceType.videoSourceCamera: 0,
-  VideoSourceType.videoSourceCameraSecondary: 1,
-  VideoSourceType.videoSourceScreenPrimary: 2,
-  VideoSourceType.videoSourceScreen: 2,
-  VideoSourceType.videoSourceScreenSecondary: 3,
-  VideoSourceType.videoSourceCustom: 4,
-  VideoSourceType.videoSourceMediaPlayer: 5,
-  VideoSourceType.videoSourceRtcImagePng: 6,
-  VideoSourceType.videoSourceRtcImageJpeg: 7,
-  VideoSourceType.videoSourceRtcImageGif: 8,
-  VideoSourceType.videoSourceRemote: 9,
-  VideoSourceType.videoSourceTranscoded: 10,
-  VideoSourceType.videoSourceUnknown: 100,
-};
-
 RtcEngineEventHandlerOnFirstRemoteVideoDecodedJson
     _$RtcEngineEventHandlerOnFirstRemoteVideoDecodedJsonFromJson(
             Map<String, dynamic> json) =>
@@ -562,6 +521,8 @@ RtcEngineEventHandlerOnVideoSizeChangedJson
               ? null
               : RtcConnection.fromJson(
                   json['connection'] as Map<String, dynamic>),
+          sourceType:
+              $enumDecodeNullable(_$VideoSourceTypeEnumMap, json['sourceType']),
           uid: json['uid'] as int?,
           width: json['width'] as int?,
           height: json['height'] as int?,
@@ -572,11 +533,29 @@ Map<String, dynamic> _$RtcEngineEventHandlerOnVideoSizeChangedJsonToJson(
         RtcEngineEventHandlerOnVideoSizeChangedJson instance) =>
     <String, dynamic>{
       'connection': instance.connection?.toJson(),
+      'sourceType': _$VideoSourceTypeEnumMap[instance.sourceType],
       'uid': instance.uid,
       'width': instance.width,
       'height': instance.height,
       'rotation': instance.rotation,
     };
+
+const _$VideoSourceTypeEnumMap = {
+  VideoSourceType.videoSourceCameraPrimary: 0,
+  VideoSourceType.videoSourceCamera: 0,
+  VideoSourceType.videoSourceCameraSecondary: 1,
+  VideoSourceType.videoSourceScreenPrimary: 2,
+  VideoSourceType.videoSourceScreen: 2,
+  VideoSourceType.videoSourceScreenSecondary: 3,
+  VideoSourceType.videoSourceCustom: 4,
+  VideoSourceType.videoSourceMediaPlayer: 5,
+  VideoSourceType.videoSourceRtcImagePng: 6,
+  VideoSourceType.videoSourceRtcImageJpeg: 7,
+  VideoSourceType.videoSourceRtcImageGif: 8,
+  VideoSourceType.videoSourceRemote: 9,
+  VideoSourceType.videoSourceTranscoded: 10,
+  VideoSourceType.videoSourceUnknown: 100,
+};
 
 RtcEngineEventHandlerOnLocalVideoStateChangedJson
     _$RtcEngineEventHandlerOnLocalVideoStateChangedJsonFromJson(

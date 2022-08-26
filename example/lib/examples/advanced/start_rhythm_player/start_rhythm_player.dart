@@ -122,11 +122,11 @@ class _State extends State<StartRhythmPlayer> {
           beatsPerMinute: _beatsPerMinute.toInt()),
     );
 
-    await _engine.joinChannelWithOptions(
+    await _engine.joinChannel(
       token: config.token,
       channelId: _controller0.text,
       uid: 0,
-      options: ChannelMediaOptions(publishRhythmPlayerTrack: true),
+      options: const ChannelMediaOptions(publishRhythmPlayerTrack: true),
     );
   }
 

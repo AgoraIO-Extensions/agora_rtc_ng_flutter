@@ -39,11 +39,11 @@ enum AudioRoute {
   @JsonValue(5)
   routeHeadsetbluetooth,
 
-  /// @nodoc
+  /// 7: 音频路由为 USB 外围设备。（仅适用于 macOS）
   @JsonValue(6)
   routeUsb,
 
-  /// @nodoc
+  /// 6: 音频路由为 HDMI 外围设备。（仅适用于 macOS）
   @JsonValue(7)
   routeHdmi,
 
@@ -777,11 +777,11 @@ class VideoFrame {
   @JsonKey(name: 'metadata_size')
   final int? metadataSize;
 
-  /// 该参数仅适用于 Texture 格式的视频数据。为一个输入的 4x4 变换矩阵，典型值为一个单位矩阵。
+  /// 该参数仅适用于 Texture 格式的视频数据。Texture ID。
   @JsonKey(name: 'textureId')
   final int? textureId;
 
-  /// @nodoc
+  /// 该参数仅适用于 Texture 格式的视频数据。为一个输入的 4x4 变换矩阵，典型值为一个单位矩阵。
   @JsonKey(name: 'matrix')
   final List<double>? matrix;
 
@@ -1019,7 +1019,7 @@ extension AudioFramePositionExt on AudioFramePosition {
 }
 
 /// 音频数据格式。
-///
+/// 你可以在以下回调的返回值中传入AudioParams 对象，用于设置对应回调报告的音频数据格式：：设置 onRecordAudioFrame 回调的数据格式。：设置 onPlaybackAudioFrame 回调的数据格式。：设置 onMixedAudioFrame 回调的数据格式。SDK 会通过AudioParams 中的samplesPerCall、sampleRate 和channel 参数计算采样间隔，并根据该采样间隔触发onRecordAudioFrame、onPlaybackAudioFrame 和onMixedAudioFrame 回调。采样间隔 =samplesPerCall/(sampleRate ×channel)。请确保采样间隔不得小于 0.01 (s)。
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioParams {
   /// @nodoc
@@ -1030,11 +1030,11 @@ class AudioParams {
   @JsonKey(name: 'sample_rate')
   final int? sampleRate;
 
-  /// @nodoc
+  /// 数据的声道数，取值如下：1：单声道（默认值）2：双声道
   @JsonKey(name: 'channels')
   final int? channels;
 
-  /// @nodoc
+  /// 数据的使用模式。详见 RawAudioFrameOpModeType 。
   @JsonKey(name: 'mode')
   final RawAudioFrameOpModeType? mode;
 

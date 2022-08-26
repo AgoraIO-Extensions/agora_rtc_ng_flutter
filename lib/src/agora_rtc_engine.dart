@@ -123,51 +123,50 @@ extension AudioMixingReasonTypeExt on AudioMixingReasonType {
   }
 }
 
-/// 导入的外部视频源状态。
-///
+/// @nodoc
 @JsonEnum(alwaysCreate: true)
 enum InjectStreamStatus {
-  /// 0: 外部视频流导入成功。
+  /// @nodoc
   @JsonValue(0)
   injectStreamStatusStartSuccess,
 
-  /// 1: 外部视频流已存在。
+  /// @nodoc
   @JsonValue(1)
   injectStreamStatusStartAlreadyExists,
 
-  /// 2: 外部视频流导入未经授权。
+  /// @nodoc
   @JsonValue(2)
   injectStreamStatusStartUnauthorized,
 
-  /// 3: 导入外部视频流超时。
+  /// @nodoc
   @JsonValue(3)
   injectStreamStatusStartTimedout,
 
-  /// 4: 外部视频流导入失败。
+  /// @nodoc
   @JsonValue(4)
   injectStreamStatusStartFailed,
 
-  /// 5: 外部视频流停止导入成功。
+  /// @nodoc
   @JsonValue(5)
   injectStreamStatusStopSuccess,
 
-  /// 6: 未找到要停止导入的外部视频流。
+  /// @nodoc
   @JsonValue(6)
   injectStreamStatusStopNotFound,
 
-  /// 7: 要停止导入的外部视频流未经授权。
+  /// @nodoc
   @JsonValue(7)
   injectStreamStatusStopUnauthorized,
 
-  /// 8: 停止导入外部视频流超时。
+  /// @nodoc
   @JsonValue(8)
   injectStreamStatusStopTimedout,
 
-  /// 9: 停止导入外部视频流失败。
+  /// @nodoc
   @JsonValue(9)
   injectStreamStatusStopFailed,
 
-  /// 10: 导入的外部视频流被中断。
+  /// @nodoc
   @JsonValue(10)
   injectStreamStatusBroken,
 }
@@ -657,8 +656,7 @@ class Region {
   Map<String, dynamic> toJson() => _$RegionToJson(this);
 }
 
-/// 输入外部音视频流的配置。
-///
+/// @nodoc
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class InjectStreamConfig {
   /// @nodoc
@@ -672,35 +670,35 @@ class InjectStreamConfig {
       this.audioBitrate,
       this.audioChannels});
 
-  /// 外部视频流输入后的宽度。默认值为 0，即保留视频原始宽度。
+  /// @nodoc
   @JsonKey(name: 'width')
   final int? width;
 
-  /// 外部视频流输入后的高度。默认值为 0，即保留视频原始高度。
+  /// @nodoc
   @JsonKey(name: 'height')
   final int? height;
 
-  /// 外部视频流输入的 GOP（帧）。默认值为 30 帧。
+  /// @nodoc
   @JsonKey(name: 'videoGop')
   final int? videoGop;
 
-  /// 外部视频流输入的帧率（fps）。默认值为 15 fps。
+  /// @nodoc
   @JsonKey(name: 'videoFramerate')
   final int? videoFramerate;
 
-  /// 外部视频流输入的码率（Kbps）。默认设置为 400 Kbps。视频码率的设置与分辨率相关。如果设置的视频码率超出合理范围，SDK 会按照合理区间自动设置码率。
+  /// @nodoc
   @JsonKey(name: 'videoBitrate')
   final int? videoBitrate;
 
-  /// 外部音频流输入的采样率。默认值为 48000 Hz。详见 AudioSampleRateType 。 声网建议目前采用默认值，不要自行设置。
+  /// @nodoc
   @JsonKey(name: 'audioSampleRate')
   final AudioSampleRateType? audioSampleRate;
 
-  /// 外部音频流输入的码率（Kbps）。默认值为 48 Kbps。声网建议目前采用默认值，不要自行设置。
+  /// @nodoc
   @JsonKey(name: 'audioBitrate')
   final int? audioBitrate;
 
-  /// 外部音频流输入后的频道数。1: 单声道（默认）2: 双声道声网建议目前采用默认值，不要自行设置。
+  /// @nodoc
   @JsonKey(name: 'audioChannels')
   final int? audioChannels;
 
@@ -1141,7 +1139,7 @@ class AdvancedAudioOptions {
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class ImageTrackOptions {
   /// @nodoc
-  const ImageTrackOptions({this.imageUrl, this.fps});
+  const ImageTrackOptions({this.imageUrl, this.fps, this.mirrorMode});
 
   /// 垫片图片的 URL，目前仅支持本地 PNG 格式的图片。支持从本地绝对路径或相对路径添加垫片图片。
   @JsonKey(name: 'imageUrl')
@@ -1150,6 +1148,10 @@ class ImageTrackOptions {
   /// 视频帧率，取值范围为 [1,30]。默认值为 1。
   @JsonKey(name: 'fps')
   final int? fps;
+
+  /// @nodoc
+  @JsonKey(name: 'mirrorMode')
+  final VideoMirrorModeType? mirrorMode;
 
   /// @nodoc
   factory ImageTrackOptions.fromJson(Map<String, dynamic> json) =>
@@ -1502,7 +1504,6 @@ class RtcEngineEventHandler {
     this.onLastmileQuality,
     this.onFirstLocalVideoFrame,
     this.onFirstLocalVideoFramePublished,
-    this.onVideoSourceFrameSizeChanged,
     this.onFirstRemoteVideoDecoded,
     this.onVideoSizeChanged,
     this.onLocalVideoStateChanged,
@@ -1732,10 +1733,6 @@ class RtcEngineEventHandler {
   final void Function(RtcConnection connection, int elapsed)?
       onFirstLocalVideoFramePublished;
 
-  /// @nodoc
-  final void Function(RtcConnection connection, VideoSourceType sourceType,
-      int width, int height)? onVideoSourceFrameSizeChanged;
-
   /// 已接收到远端视频并完成解码回调。
   /// SDK 会在以下时机触发该回调：远端用户首次上线后发送视频。远端用户视频离线再上线后发送视频。出现这种中断的可能原因包括：远端用户离开频道。远端用户掉线。远端用户调用 muteLocalVideoStream 方法停止发送本地视频流。远端用户调用 disableVideo 方法关闭视频模块。
   ///
@@ -1755,8 +1752,8 @@ class RtcEngineEventHandler {
   /// * [width] 视频流的宽度（像素）。
   /// * [height] 视频流的高度（像素）。
   /// * [rotation] 旋转信息，取值范围 [0,360)。
-  final void Function(RtcConnection connection, int uid, int width, int height,
-      int rotation)? onVideoSizeChanged;
+  final void Function(RtcConnection connection, VideoSourceType sourceType,
+      int uid, int width, int height, int rotation)? onVideoSizeChanged;
 
   /// 本地视频状态发生改变回调。
   /// 本地视频的状态发生改变时，SDK 会触发该回调返回当前的本地视频状态。你可以通过该回调了解当前视频的状态以及出现故障的原因，方便排查问题。 SDK 会在如下情况触发onLocalVideoStateChanged 回调，状态为localVideoStreamStateFailed，错误码为localVideoStreamErrorCaptureFailure：应用退到后台，系统回收摄像头。摄像头正常启动，但连续 4 秒都没有输出采集的视频。摄像头输出采集的视频帧时，如果连续 15 帧中，所有视频帧都一样，SDK 触发onLocalVideoStateChanged 回调，状态为localVideoStreamStateCapturing，错误码为localVideoStreamErrorCaptureFailure。注意，帧重复检测仅针对分辨率大于 200 × 200、帧率大于等于 10 fps、码率小于 20 Kbps 的视频帧。对某些机型而言，当本地视频采集设备正在使用中时，SDK 不会在本地视频状态发生改变时触发该回调，你需要自行做超时判断。
@@ -4038,18 +4035,11 @@ abstract class RtcEngine {
   ///
   Future<void> clearVideoWatermarks();
 
-  /// 输入在线媒体流。
-  /// 请确保已开通旁路推流的功能，详见旁路推流中的前提条件。在直播场景中，只有角色为主播的用户才能调用该方法。频道内同一时间只允许输入一个在线媒体流。该方法需要在加入频道后调用。该方法将正在播放的音视频作为音视频源导入到正在进行的直播中。可主要应用于赛事直播、多人看视频互动等直播场景。调用该方法后，SDK 会在本地触发 回调，报告输入在线媒体流的状态；成功输入媒体流后，该音视频流会出现在频道中，频道内所有用户都会收到 onUserJoined 回调，其中uid 为 666。
-  ///
-  /// * [url] 添加到直播中的视频流 URL 地址。支持 RTMP、HLS、HTTP-FLV 协议传输。支持的音频编码格式：AAC；支持的视频编码格式：H.264(AVC)。
-  /// * [config] 所添加的视频流属性定义，详见: InjectStreamConfig 。
+  /// @nodoc
   Future<void> addInjectStreamUrl(
       {required String url, required InjectStreamConfig config});
 
-  /// 删除导入的外部媒体流。
-  /// 成功删除外部视频源 URL 地址后会触发 onUserOffline 回调，uid 为666。
-  ///
-  /// * [url] 已导入、待删除的外部视频源 URL 地址。
+  /// @nodoc
   Future<void> removeInjectStreamUrl(String url);
 
   /// @nodoc
@@ -4296,13 +4286,6 @@ abstract class RtcEngine {
   /// * [info] (非必选项) 预留参数。
   /// * [uid] 用户 ID。该参数用于标识在实时音视频互动频道中的用户。你需要自行设置和管理用户 ID，并确保同一频道内的每个用户 ID 是唯一的。该参数为 32 位无符号整数。 建议设置范围：1 到 232-1。如果不指定（即设为 0），SDK 会自动分配一个，并在onJoinChannelSuccess 回调中返回， 应用层必须记住该返回值并维护，SDK 不对该返回值进行维护。
   Future<void> joinChannel(
-      {required String token,
-      required String channelId,
-      required String info,
-      required int uid});
-
-  /// @nodoc
-  Future<void> joinChannelWithOptions(
       {required String token,
       required String channelId,
       required int uid,

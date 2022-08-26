@@ -106,8 +106,8 @@ class _State extends State<EnableVirtualBackground> {
     await _engine.joinChannel(
         token: config.token,
         channelId: _controller.text,
-        info: '',
-        uid: config.uid);
+        uid: config.uid,
+        options: const ChannelMediaOptions());
   }
 
   _leaveChannel() async {

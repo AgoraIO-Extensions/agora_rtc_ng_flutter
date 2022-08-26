@@ -120,7 +120,10 @@ class _State extends State<PreCallTest> {
 
   void _joinChannel() async {
     await _engine.joinChannel(
-        token: config.token, channelId: channelId, info: '', uid: config.uid);
+        token: config.token,
+        channelId: channelId,
+        uid: config.uid,
+        options: const ChannelMediaOptions());
   }
 
   _leaveChannel() async {

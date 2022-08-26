@@ -558,7 +558,7 @@ enum InterfaceIdType {
   @JsonValue(7)
   agoraIidRtcConnection,
 
-  /// 该接口类已废弃。
+  /// @nodoc
   @JsonValue(8)
   agoraIidSignalingEngine,
 
@@ -574,7 +574,7 @@ enum InterfaceIdType {
   @JsonValue(11)
   agoraIidLocalSpatialAudio,
 
-  /// @nodoc
+  ///  MediaRecorder 接口类。
   @JsonValue(12)
   agoraIidMediaRecorder,
 }
@@ -1419,7 +1419,7 @@ class EncodedVideoFrameInfo {
   @JsonKey(name: 'uid')
   final int? uid;
 
-  /// 视频流类型。
+  /// 视频流类型。详见 VideoStreamType 。
   @JsonKey(name: 'streamType')
   final VideoStreamType? streamType;
 
@@ -2190,7 +2190,7 @@ class RemoteAudioStats {
   @JsonKey(name: 'qoeQuality')
   final int? qoeQuality;
 
-  /// @nodoc
+  /// 接收远端音频时，本地用户主观体验质量较差的原因。详见 ExperiencePoorReason 。
   @JsonKey(name: 'qualityChangedReason')
   final int? qualityChangedReason;
 
@@ -4870,15 +4870,15 @@ class ScreenCaptureParameters {
   @JsonKey(name: 'excludeWindowCount')
   final int? excludeWindowCount;
 
-  /// @nodoc
+  /// （仅适用于 macOS）描边的宽度 (px)。默认值为 5，取值范围为 (0,50]。该参数仅在highLighted 设置为true 时生效。
   @JsonKey(name: 'highLightWidth')
   final int? highLightWidth;
 
-  /// @nodoc
+  /// （仅适用于 macOS）描边的 RGBA 颜色。默认值为 0xFF8CBF26。在 macOS 平台上，COLOR_CLASS 指NSColor。
   @JsonKey(name: 'highLightColor')
   final int? highLightColor;
 
-  /// @nodoc
+  /// （仅适用于 macOS）是否对共享的窗口或屏幕进行描边：true: 描边。false: （默认）不描边。当你在共享窗口或屏幕的部分区域时，如果将该参数设置为true，SDK 会对整个窗口或屏幕进行描边。
   @JsonKey(name: 'enableHighLight')
   final bool? enableHighLight;
 

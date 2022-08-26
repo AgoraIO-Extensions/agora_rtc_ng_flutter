@@ -180,15 +180,15 @@ extension MediaPlayerErrorExt on MediaPlayerError {
 ///
 @JsonEnum(alwaysCreate: true)
 enum MediaStreamType {
-  /// @nodoc
+  /// 0: 未知类型。
   @JsonValue(0)
   streamTypeUnknown,
 
-  /// @nodoc
+  /// 1: 视频流。
   @JsonValue(1)
   streamTypeVideo,
 
-  /// @nodoc
+  /// 2: 音频流。
   @JsonValue(2)
   streamTypeAudio,
 

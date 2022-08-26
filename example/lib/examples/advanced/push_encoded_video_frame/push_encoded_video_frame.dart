@@ -117,8 +117,8 @@ class _State extends State<PushEncodedVideoFrame> {
     await _engine.joinChannel(
         token: config.token,
         channelId: _channelIdController.text,
-        info: '',
-        uid: config.uid);
+        uid: config.uid,
+        options: const ChannelMediaOptions());
   }
 
   Future<void> _leaveChannel() async {

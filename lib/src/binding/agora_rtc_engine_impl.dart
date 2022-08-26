@@ -4518,32 +4518,10 @@ class RtcEngineImpl implements RtcEngine {
   Future<void> joinChannel(
       {required String token,
       required String channelId,
-      required String info,
-      required int uid}) async {
-    final apiType =
-        '${isOverrideClassName ? className : 'RtcEngine'}_joinChannel';
-    final param = createParams(
-        {'token': token, 'channelId': channelId, 'info': info, 'uid': uid});
-    final callApiResult =
-        await apiCaller.callIrisApi(apiType, jsonEncode(param), buffers: null);
-    if (callApiResult.irisReturnCode < 0) {
-      throw AgoraRtcException(code: callApiResult.irisReturnCode);
-    }
-    final rm = callApiResult.data;
-    final result = rm['result'];
-    if (result < 0) {
-      throw AgoraRtcException(code: result);
-    }
-  }
-
-  @override
-  Future<void> joinChannelWithOptions(
-      {required String token,
-      required String channelId,
       required int uid,
       required ChannelMediaOptions options}) async {
     final apiType =
-        '${isOverrideClassName ? className : 'RtcEngine'}_joinChannelWithOptions';
+        '${isOverrideClassName ? className : 'RtcEngine'}_joinChannel';
     final param = createParams({
       'token': token,
       'channelId': channelId,

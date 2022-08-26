@@ -132,8 +132,8 @@ class _State extends State<ChannelMediaRelay> {
     await _engine.joinChannel(
         token: config.token,
         channelId: _channelController.text,
-        info: '',
-        uid: 0);
+        uid: 0,
+        options: const ChannelMediaOptions());
 
     setState(() {
       isJoined = true;

@@ -137,7 +137,7 @@ class _State extends State<StartLocalVideoTranscoder> {
   }
 
   Future<void> _joinChannel() async {
-    await _engine.joinChannelWithOptions(
+    await _engine.joinChannel(
       token: config.token,
       channelId: _controller.text,
       uid: config.uid,

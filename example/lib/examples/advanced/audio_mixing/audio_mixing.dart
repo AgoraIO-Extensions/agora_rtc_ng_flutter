@@ -95,7 +95,11 @@ class _AudioMixingState extends State<AudioMixing> {
   }
 
   Future<void> _joinChannel() async {
-    _engine.joinChannel(token: '', channelId: _controller.text, info: '', uid: 0);
+    _engine.joinChannel(
+        token: '',
+        channelId: _controller.text,
+        uid: 0,
+        options: const ChannelMediaOptions());
   }
 
   Future<void> _leaveChannel() async {
