@@ -1,7 +1,7 @@
 import 'package:agora_rtc_ng/src/binding_forward_export.dart';
 part 'event_handler_param_json.g.dart';
 
-// ignore_for_file: public_member_api_docs, unused_local_variable
+// ignore_for_file: public_member_api_docs, unused_local_variable, prefer_is_empty
 
 @JsonSerializable(explicitToJson: true)
 class RtcEngineEventHandlerOnJoinChannelSuccessJson {

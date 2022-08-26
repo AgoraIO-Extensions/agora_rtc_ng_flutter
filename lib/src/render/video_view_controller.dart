@@ -2,7 +2,6 @@ import 'package:agora_rtc_ng/src/agora_base.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine.dart';
 import 'package:agora_rtc_ng/src/agora_rtc_engine_ex.dart';
 import 'package:agora_rtc_ng/src/impl/video_view_controller_impl.dart';
-import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
 /// AgoraVideoView 的控制器，用于渲染本地和远端视频。

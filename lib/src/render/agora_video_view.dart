@@ -1,6 +1,6 @@
-import 'package:agora_rtc_ng/src/impl/video_view_controller_impl.dart';
 import 'package:agora_rtc_ng/src/render/video_view_controller.dart';
 import 'package:flutter/material.dart';
+
 import '../impl/agora_video_view_impl.dart';
 
 /// AgoraVideoView 类，用于渲染本地和远端视频。

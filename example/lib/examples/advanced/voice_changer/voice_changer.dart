@@ -2,7 +2,6 @@ import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/advanced/voice_changer/voice_changer.config.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// VoiceChanger Example
@@ -45,9 +44,6 @@ class _State extends State<VoiceChanger> {
 
   AudioReverbType _selectedAudioReverbType =
       AudioReverbType.audioReverbDryLevel;
-
-  double _audioEffectPresetParam1 = 0;
-  double _audioEffectPresetParam2 = 0;
 
   final List<VoiceBeautifierPreset> _voiceBeautifierPresets = [
     VoiceBeautifierPreset.voiceBeautifierOff,

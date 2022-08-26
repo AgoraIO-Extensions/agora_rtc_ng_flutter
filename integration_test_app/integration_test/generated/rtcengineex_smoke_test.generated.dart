@@ -561,6 +561,7 @@ void rtcEngineExSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         const String connectionChannelId = "hello";
         const int connectionLocalUid = 10;
@@ -569,6 +570,7 @@ void rtcEngineExSmokeTestCases() {
           localUid: connectionLocalUid,
         );
         await rtcEngineEx.setSubscribeAudioBlacklistEx(
+          uidList: uidList,
           uidNumber: uidNumber,
           connection: connection,
         );
@@ -602,6 +604,7 @@ void rtcEngineExSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         const String connectionChannelId = "hello";
         const int connectionLocalUid = 10;
@@ -610,6 +613,7 @@ void rtcEngineExSmokeTestCases() {
           localUid: connectionLocalUid,
         );
         await rtcEngineEx.setSubscribeAudioWhitelistEx(
+          uidList: uidList,
           uidNumber: uidNumber,
           connection: connection,
         );
@@ -643,6 +647,7 @@ void rtcEngineExSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         const String connectionChannelId = "hello";
         const int connectionLocalUid = 10;
@@ -651,6 +656,7 @@ void rtcEngineExSmokeTestCases() {
           localUid: connectionLocalUid,
         );
         await rtcEngineEx.setSubscribeVideoBlacklistEx(
+          uidList: uidList,
           uidNumber: uidNumber,
           connection: connection,
         );
@@ -684,6 +690,7 @@ void rtcEngineExSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         const String connectionChannelId = "hello";
         const int connectionLocalUid = 10;
@@ -692,6 +699,7 @@ void rtcEngineExSmokeTestCases() {
           localUid: connectionLocalUid,
         );
         await rtcEngineEx.setSubscribeVideoWhitelistEx(
+          uidList: uidList,
           uidNumber: uidNumber,
           connection: connection,
         );

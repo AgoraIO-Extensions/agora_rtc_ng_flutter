@@ -5,5 +5,5 @@ import 'generated/localspatialaudioengine_smoke_test.generated.dart'
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  generated.mediaEngineSmokeTestCases();
+  generated.localSpatialAudioEngineSmokeTestCases();
 }

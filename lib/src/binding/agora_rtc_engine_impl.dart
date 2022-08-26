@@ -4551,7 +4551,6 @@ class RtcEngineImpl implements RtcEngine {
     if (options != null) {
       buffers.addAll(options.collectBufferList());
     }
-    ;
     final callApiResult = await apiCaller
         .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {
@@ -4575,7 +4574,6 @@ class RtcEngineImpl implements RtcEngine {
     if (options != null) {
       buffers.addAll(options.collectBufferList());
     }
-    ;
     final callApiResult = await apiCaller
         .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {
@@ -4746,7 +4744,6 @@ class RtcEngineImpl implements RtcEngine {
     if (streamConfig != null) {
       buffers.addAll(streamConfig.collectBufferList());
     }
-    ;
     final callApiResult = await apiCaller
         .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {
@@ -4819,7 +4816,6 @@ class RtcEngineImpl implements RtcEngine {
     if (options != null) {
       buffers.addAll(options.collectBufferList());
     }
-    ;
     final callApiResult = await apiCaller
         .callIrisApi(apiType, jsonEncode(param), buffers: buffers);
     if (callApiResult.irisReturnCode < 0) {

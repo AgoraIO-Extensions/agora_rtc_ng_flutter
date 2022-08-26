@@ -85,59 +85,59 @@ void mediaPlayerControllerSmokeTestCases() {
 //  skip: !(),
   );
 
-//   testWidgets(
-//     'openWithMediaSource',
-//     (WidgetTester tester) async {
-//       app.main();
-//       await tester.pumpAndSettle();
+  testWidgets(
+    'openWithMediaSource',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
 
-//       String engineAppId = const String.fromEnvironment('TEST_APP_ID',
-//           defaultValue: '<YOUR_APP_ID>');
+      String engineAppId = const String.fromEnvironment('TEST_APP_ID',
+          defaultValue: '<YOUR_APP_ID>');
 
-//       RtcEngine rtcEngine = createAgoraRtcEngine();
-//       await rtcEngine.initialize(RtcEngineContext(
-//         appId: engineAppId,
-//         areaCode: AreaCode.areaCodeGlob.value(),
-//       ));
+      RtcEngine rtcEngine = createAgoraRtcEngine();
+      await rtcEngine.initialize(RtcEngineContext(
+        appId: engineAppId,
+        areaCode: AreaCode.areaCodeGlob.value(),
+      ));
 
-//       final mediaPlayerController = MediaPlayerController(
-//           rtcEngine: rtcEngine, canvas: const VideoCanvas(uid: 0));
-//       await mediaPlayerController.initialize();
+      final mediaPlayerController = MediaPlayerController(
+          rtcEngine: rtcEngine, canvas: const VideoCanvas(uid: 0));
+      await mediaPlayerController.initialize();
 
-//       try {
-//         const String sourceUrl = "hello";
-//         const String sourceUri = "hello";
-//         const int sourceStartPos = 10;
-//         const bool sourceAutoPlay = true;
-//         const bool sourceEnableCache = true;
-//         const bool sourceIsAgoraSource = true;
-//         const bool sourceIsLiveSource = true;
-//         const MediaSource source = MediaSource(
-//           url: sourceUrl,
-//           uri: sourceUri,
-//           startPos: sourceStartPos,
-//           autoPlay: sourceAutoPlay,
-//           enableCache: sourceEnableCache,
-//           isAgoraSource: sourceIsAgoraSource,
-//           isLiveSource: sourceIsLiveSource,
-//         );
-//         await mediaPlayerController.openWithMediaSource(
-//           source,
-//         );
-//       } catch (e) {
-//         if (e is! AgoraRtcException) {
-//           debugPrint('[openWithMediaSource] error: ${e.toString()}');
-//         }
-//         expect(e is AgoraRtcException, true);
-//         debugPrint(
-//             '[openWithMediaSource] errorcode: ${(e as AgoraRtcException).code}');
-//       }
+      try {
+        const String sourceUrl = "hello";
+        const String sourceUri = "hello";
+        const int sourceStartPos = 10;
+        const bool sourceAutoPlay = true;
+        const bool sourceEnableCache = true;
+        const bool sourceIsAgoraSource = true;
+        const bool sourceIsLiveSource = true;
+        const MediaSource source = MediaSource(
+          url: sourceUrl,
+          uri: sourceUri,
+          startPos: sourceStartPos,
+          autoPlay: sourceAutoPlay,
+          enableCache: sourceEnableCache,
+          isAgoraSource: sourceIsAgoraSource,
+          isLiveSource: sourceIsLiveSource,
+        );
+        await mediaPlayerController.openWithMediaSource(
+          source,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[openWithMediaSource] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[openWithMediaSource] errorcode: ${(e as AgoraRtcException).code}');
+      }
 
-//       await mediaPlayerController.dispose();
-//       await rtcEngine.release();
-//     },
-// //  skip: !(),
-//   );
+      await mediaPlayerController.dispose();
+      await rtcEngine.release();
+    },
+//  skip: !(),
+  );
 
   testWidgets(
     'play',

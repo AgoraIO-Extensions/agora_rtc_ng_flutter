@@ -1377,9 +1377,11 @@ void rtcEngineSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         await rtcEngine.setSubscribeAudioBlacklist(
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         );
       } catch (e) {
         if (e is! AgoraRtcException) {
@@ -1411,9 +1413,11 @@ void rtcEngineSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         await rtcEngine.setSubscribeAudioWhitelist(
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         );
       } catch (e) {
         if (e is! AgoraRtcException) {
@@ -1445,9 +1449,11 @@ void rtcEngineSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         await rtcEngine.setSubscribeVideoBlacklist(
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         );
       } catch (e) {
         if (e is! AgoraRtcException) {
@@ -1479,9 +1485,11 @@ void rtcEngineSmokeTestCases() {
       ));
 
       try {
+        const List<int> uidList = [];
         const int uidNumber = 10;
         await rtcEngine.setSubscribeVideoWhitelist(
-          uidNumber,
+          uidList: uidList,
+          uidNumber: uidNumber,
         );
       } catch (e) {
         if (e is! AgoraRtcException) {
@@ -8498,11 +8506,14 @@ void rtcEngineSmokeTestCases() {
 
       try {
         const bool enable = true;
+        const VideoMirrorModeType optionsMirrorMode =
+            VideoMirrorModeType.videoMirrorModeAuto;
         const String optionsImageUrl = "hello";
         const int optionsFps = 10;
         const ImageTrackOptions options = ImageTrackOptions(
           imageUrl: optionsImageUrl,
           fps: optionsFps,
+          mirrorMode: optionsMirrorMode,
         );
         await rtcEngine.enableVideoImageSource(
           enable: enable,
@@ -8558,45 +8569,6 @@ void rtcEngineSmokeTestCases() {
 
   testWidgets(
     'joinChannel',
-    (WidgetTester tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-
-      String engineAppId = const String.fromEnvironment('TEST_APP_ID',
-          defaultValue: '<YOUR_APP_ID>');
-
-      RtcEngine rtcEngine = createAgoraRtcEngine();
-      await rtcEngine.initialize(RtcEngineContext(
-        appId: engineAppId,
-        areaCode: AreaCode.areaCodeGlob.value(),
-      ));
-
-      try {
-        const String token = "hello";
-        const String channelId = "hello";
-        const String info = "hello";
-        const int uid = 10;
-        await rtcEngine.joinChannel(
-          token: token,
-          channelId: channelId,
-          info: info,
-          uid: uid,
-        );
-      } catch (e) {
-        if (e is! AgoraRtcException) {
-          debugPrint('[joinChannel] error: ${e.toString()}');
-        }
-        expect(e is AgoraRtcException, true);
-        debugPrint('[joinChannel] errorcode: ${(e as AgoraRtcException).code}');
-      }
-
-      await rtcEngine.release();
-    },
-//  skip: !(),
-  );
-
-  testWidgets(
-    'joinChannelWithOptions',
     (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -8687,7 +8659,7 @@ void rtcEngineSmokeTestCases() {
           customVideoTrackId: optionsCustomVideoTrackId,
           isAudioFilterable: optionsIsAudioFilterable,
         );
-        await rtcEngine.joinChannelWithOptions(
+        await rtcEngine.joinChannel(
           token: token,
           channelId: channelId,
           uid: uid,
@@ -8695,11 +8667,10 @@ void rtcEngineSmokeTestCases() {
         );
       } catch (e) {
         if (e is! AgoraRtcException) {
-          debugPrint('[joinChannelWithOptions] error: ${e.toString()}');
+          debugPrint('[joinChannel] error: ${e.toString()}');
         }
         expect(e is AgoraRtcException, true);
-        debugPrint(
-            '[joinChannelWithOptions] errorcode: ${(e as AgoraRtcException).code}');
+        debugPrint('[joinChannel] errorcode: ${(e as AgoraRtcException).code}');
       }
 
       await rtcEngine.release();
@@ -8995,13 +8966,11 @@ void rtcEngineSmokeTestCases() {
       try {
         const String filePath = "hello";
         const bool loopback = true;
-        const bool replace = true;
         const int cycle = 10;
         const int startPos = 10;
         await rtcEngine.startAudioMixing(
           filePath: filePath,
           loopback: loopback,
-          replace: replace,
           cycle: cycle,
           startPos: startPos,
         );
@@ -9562,6 +9531,40 @@ void rtcEngineSmokeTestCases() {
         expect(e is AgoraRtcException, true);
         debugPrint(
             '[unregisterAudioEncodedFrameObserver] errorcode: ${(e as AgoraRtcException).code}');
+      }
+
+      await rtcEngine.release();
+    },
+//  skip: !(),
+  );
+
+  testWidgets(
+    'setParameters',
+    (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      String engineAppId = const String.fromEnvironment('TEST_APP_ID',
+          defaultValue: '<YOUR_APP_ID>');
+
+      RtcEngine rtcEngine = createAgoraRtcEngine();
+      await rtcEngine.initialize(RtcEngineContext(
+        appId: engineAppId,
+        areaCode: AreaCode.areaCodeGlob.value(),
+      ));
+
+      try {
+        const String parameters = "hello";
+        await rtcEngine.setParameters(
+          parameters,
+        );
+      } catch (e) {
+        if (e is! AgoraRtcException) {
+          debugPrint('[setParameters] error: ${e.toString()}');
+        }
+        expect(e is AgoraRtcException, true);
+        debugPrint(
+            '[setParameters] errorcode: ${(e as AgoraRtcException).code}');
       }
 
       await rtcEngine.release();

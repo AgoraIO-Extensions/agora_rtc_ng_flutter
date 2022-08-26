@@ -309,6 +309,7 @@ abstract class RtcEngineEx implements RtcEngine {
       required RtcConnection connection});
 
   /// @nodoc
+  @override
   Future<void> enableWirelessAccelerate(bool enabled);
 
   /// 获取视频截图。

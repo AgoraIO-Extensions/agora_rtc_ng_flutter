@@ -15,7 +15,6 @@ import 'package:agora_rtc_ng_example/examples/advanced/start_direct_cdn_streamin
 import 'package:agora_rtc_ng_example/examples/advanced/start_local_video_transcoder/start_local_video_transcoder.dart';
 import 'package:agora_rtc_ng_example/examples/advanced/stream_message/stream_message.dart';
 import 'package:agora_rtc_ng_example/examples/advanced/take_snapshot/take_snapshot.dart';
-import 'package:agora_rtc_ng_example/examples/advanced/process_audio_raw_data/process_audio_raw_data.dart';
 import 'package:flutter/foundation.dart';
 
 import 'audio_mixing/audio_mixing.dart';

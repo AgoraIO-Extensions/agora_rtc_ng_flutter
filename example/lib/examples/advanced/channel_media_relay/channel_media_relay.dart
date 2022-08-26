@@ -17,7 +17,6 @@ class _State extends State<ChannelMediaRelay> {
   late final RtcEngine _engine;
   bool _isReadyPreview = false;
   bool isJoined = false;
-  final int _myUid = 1000;
   int? remoteUid;
   bool isRelaying = false;
   late final TextEditingController _channelMediaRelayController;

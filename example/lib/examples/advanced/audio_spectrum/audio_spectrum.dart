@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:agora_rtc_ng/agora_rtc_ng.dart' hide Size;
+import 'package:agora_rtc_ng/agora_rtc_ng.dart';
 import 'package:agora_rtc_ng_example/config/agora.config.dart' as config;
 import 'package:agora_rtc_ng_example/examples/example_actions_widget.dart';
 import 'package:agora_rtc_ng_example/examples/log_sink.dart';
