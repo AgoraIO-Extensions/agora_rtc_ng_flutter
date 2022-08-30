@@ -302,8 +302,7 @@ class _State extends State<StartLocalVideoTranscoder> {
               const Text('PrimaryScreenSource:'),
               Switch(
                 value: _isPrimaryScreenSource,
-                onChanged: _isStartLocalvideoTranscoder &&
-                        _videoDevices.length >= 2
+                onChanged: _isStartLocalvideoTranscoder
                     ? (v) async {
                         if (!v) {
                           transcodingVideoStreams.removeWhere((element) =>
