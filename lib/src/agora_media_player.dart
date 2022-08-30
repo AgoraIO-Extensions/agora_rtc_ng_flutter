@@ -280,10 +280,7 @@ abstract class MediaPlayer {
   /// * [observer] 音频帧观测器，观测每帧音频的接收，详见 MediaPlayerAudioFrameObserver 。
   void registerAudioFrameObserver(MediaPlayerAudioFrameObserver observer);
 
-  /// 取消注册音频帧观测器 。
-  ///
-  ///
-  /// * [observer] 音频帧观测器，详见 MediaPlayerAudioFrameObserver 。
+  /// @nodoc
   void unregisterAudioFrameObserver(MediaPlayerAudioFrameObserver observer);
 
   /// 注册视频帧观测器。
@@ -292,13 +289,14 @@ abstract class MediaPlayer {
   /// * [observer] 视频帧观测器，观测每帧视频的接收。详见 MediaPlayerVideoFrameObserver 。
   void registerVideoFrameObserver(MediaPlayerVideoFrameObserver observer);
 
-  /// 取消注册视频帧观测器。
-  ///
-  ///
-  /// * [observer] 视频帧观测器，观测每帧视频的接收，详见 MediaPlayerVideoFrameObserver 。
+  /// @nodoc
   void unregisterVideoFrameObserver(MediaPlayerVideoFrameObserver observer);
 
-  /// @nodoc
+  /// 设置媒体播放器的私有选项。
+  /// 媒体播放器支持通过 key 和 value 来设置私有选项。 一般情况下，你无需知晓私有选项设置，使用媒体播放器默认的选项设置即可。请确保在 open 之前调用该方法。如果你使用客户端旁路推流功能，且在推流过程中发送 SEI 信息，你需要调用setPlayerOptionInInt("sei_data_with_uuid", 1) 方法，否则会导致 SEI 信息的丢失。
+  ///
+  /// * [key] key 值。
+  /// * [value] value 值。
   Future<void> setPlayerOptionInInt({required String key, required int value});
 
   /// @nodoc

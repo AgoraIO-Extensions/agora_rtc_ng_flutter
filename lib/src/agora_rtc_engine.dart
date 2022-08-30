@@ -25,7 +25,7 @@ enum MediaDeviceType {
   @JsonValue(3)
   videoCaptureDevice,
 
-  /// @nodoc
+  /// 4: 音频应用播放设备。
   @JsonValue(4)
   audioApplicationPlayoutDevice,
 }
@@ -1205,7 +1205,7 @@ class ChannelMediaOptions {
   @JsonKey(name: 'publishCameraTrack')
   final bool? publishCameraTrack;
 
-  /// @nodoc
+  /// 设置是否发布第二个摄像头采集的视频：true：发布第二个摄像头采集的视频。false：（默认）不发布第二个摄像头采集的视频。
   @JsonKey(name: 'publishSecondaryCameraTrack')
   final bool? publishSecondaryCameraTrack;
 
@@ -1213,15 +1213,15 @@ class ChannelMediaOptions {
   @JsonKey(name: 'publishMicrophoneTrack')
   final bool? publishMicrophoneTrack;
 
-  /// @nodoc
+  /// 设置是否发布屏幕采集的视频：true：发布屏幕采集到的视频。false：（默认）不发布屏幕采集到的视频。
   @JsonKey(name: 'publishScreenCaptureVideo')
   final bool? publishScreenCaptureVideo;
 
-  /// @nodoc
+  /// 设置是否发布屏幕采集的音频：true：发布屏幕采集到的音频。false：（默认）不发布屏幕采集到的音频。
   @JsonKey(name: 'publishScreenCaptureAudio')
   final bool? publishScreenCaptureAudio;
 
-  /// @nodoc
+  /// 设置是否发布屏幕采集的视频：true：发布屏幕采集到的视频。false：（默认）不发布屏幕采集到的视频。
   @JsonKey(name: 'publishScreenTrack')
   final bool? publishScreenTrack;
 
@@ -1310,7 +1310,7 @@ class ChannelMediaOptions {
   @JsonKey(name: 'mediaPlayerAudioDelayMs')
   final int? mediaPlayerAudioDelayMs;
 
-  /// （可选）在服务端生成的用于鉴权的动态密钥。详见该参数仅在调用 updateChannelMediaOptions 或 updateChannelMediaOptionsEx 时生效。请确保用于生成 token 的 App ID、频道名和用户名和 initialize 方法初始化引擎时用的 App ID，以及 joinChannelWithOptions 或 joinChannelEx 方法加入频道时设置的频道名和用户名是一致的。
+  /// （可选）在服务端生成的用于鉴权的动态密钥。详见该参数仅在调用 updateChannelMediaOptions 或 updateChannelMediaOptionsEx 时生效。请确保用于生成 token 的 App ID、频道名和用户名和 initialize 方法初始化引擎时用的 App ID，以及 joinChannel [2/2] 或 joinChannelEx 方法加入频道时设置的频道名和用户名是一致的。
   @JsonKey(name: 'token')
   final String? token;
 
@@ -1580,25 +1580,25 @@ class RtcEngineEventHandler {
   /// 该回调方法表示该客户端成功加入了指定的频道。
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
-  /// * [elapsed] 从本地调用joinChannelWithOptions 开始到发生此事件过去的时间（毫秒）。
+  /// * [elapsed] 从本地调用joinChannel [2/2] 开始到发生此事件过去的时间（毫秒）。
   final void Function(RtcConnection connection, int elapsed)?
       onJoinChannelSuccess;
 
   /// 成功重新加入频道回调。
   /// 有时候由于网络原因，客户端可能会和服务器失去连接，SDK 会进行自动重连，自动重连成功后触发此回调方法。
   ///
-  /// * [elapsed] 从调用 joinChannel 或 joinChannelWithOptions 方法到触发该回调的时间间隔（毫秒）。
+  /// * [elapsed] 从调用 joinChannel [1/2] 或 joinChannel [2/2] 方法到触发该回调的时间间隔（毫秒）。
   final void Function(RtcConnection connection, int elapsed)?
       onRejoinChannelSuccess;
 
   /// 代理连接状态回调。
-  /// 通过该回调你可以监听 SDK 连接代理的状态。例如，当用户调用 setCloudProxy 设置代理并成功加入频道后， SDK 会触发该回调报告用户 ID、连接的代理类型和从调用 joinChannel 到触发该回调经过的时间等。
+  /// 通过该回调你可以监听 SDK 连接代理的状态。例如，当用户调用 setCloudProxy 设置代理并成功加入频道后， SDK 会触发该回调报告用户 ID、连接的代理类型和从调用 joinChannel [1/2] 到触发该回调经过的时间等。
   ///
   /// * [channel] 频道名称。
   /// * [uid] 用户 ID
   ///
   /// * [localProxyIp] 预留参数，暂不支持。
-  /// * [elapsed] 从调用joinChannel 到 SDK 触发该回调的经过的时间（毫秒）。
+  /// * [elapsed] 从调用joinChannel [1/2] 到 SDK 触发该回调的经过的时间（毫秒）。
   final void Function(String channel, int uid, ProxyType proxyType,
       String localProxyIp, int elapsed)? onProxyConnected;
 
@@ -1720,16 +1720,16 @@ class RtcEngineEventHandler {
   /// * [connection] Connection 信息。详见 RtcConnection 。
   /// * [width] 本地渲染视频的宽 (px) 。
   /// * [height] 本地渲染视频的高 (px)。
-  /// * [elapsed] 从调用joinChannelWithOptions 到发生此事件过去的时间（毫秒）。如果在joinChannelWithOptions 前调用了 startPreview ，则是从startPreview到发生此事件过去的时间。
+  /// * [elapsed] 从调用joinChannel [2/2] 到发生此事件过去的时间（毫秒）。如果在joinChannel [2/2] 前调用了 startPreview ，则是从startPreview到发生此事件过去的时间。
   final void Function(
           RtcConnection connection, int width, int height, int elapsed)?
       onFirstLocalVideoFrame;
 
   /// 已发布本地视频首帧回调。
-  /// SDK 会在以下三种时机触发该回调：开启本地视频的情况下，调用joinChannelWithOptions 成功加入频道后。调用 muteLocalVideoStream (true)，再调用muteLocalVideoStream(false) 后。调用 disableVideo ，再调用 enableVideo 后。
+  /// SDK 会在以下三种时机触发该回调：开启本地视频的情况下，调用joinChannel [2/2] 成功加入频道后。调用 muteLocalVideoStream (true)，再调用muteLocalVideoStream(false) 后。调用 disableVideo ，再调用 enableVideo 后。
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
-  /// * [elapsed] 从调用joinChannelWithOptions 方法到触发该回调的时间间隔（毫秒）。
+  /// * [elapsed] 从调用joinChannel [2/2] 方法到触发该回调的时间间隔（毫秒）。
   final void Function(RtcConnection connection, int elapsed)?
       onFirstLocalVideoFramePublished;
 
@@ -1740,7 +1740,7 @@ class RtcEngineEventHandler {
   /// * [remoteUid] 用户 ID，指定是哪个用户的视频流。
   /// * [width] 视频流宽（px）。
   /// * [height] 视频流高（px）。
-  /// * [elapsed] 从本地调用joinChannelWithOptions 开始到该回调触发的延迟（毫秒)。
+  /// * [elapsed] 从本地调用joinChannel [2/2] 开始到该回调触发的延迟（毫秒)。
   final void Function(RtcConnection connection, int remoteUid, int width,
       int height, int elapsed)? onFirstRemoteVideoDecoded;
 
@@ -1771,7 +1771,7 @@ class RtcEngineEventHandler {
   /// * [remoteUid] 发生视频状态改变的远端用户 ID。
   /// * [state] 远端视频流状态，详见 RemoteVideoState 。
   /// * [reason] 远端视频流状态改变的具体原因，详见 RemoteVideoStateReason 。
-  /// * [elapsed] 从本地用户调用joinChannelWithOptions 方法到发生本事件经历的时间，单位为毫秒。
+  /// * [elapsed] 从本地用户调用joinChannel [2/2] 方法到发生本事件经历的时间，单位为毫秒。
   final void Function(
       RtcConnection connection,
       int remoteUid,
@@ -1786,16 +1786,16 @@ class RtcEngineEventHandler {
   /// * [connection] Connection 信息。详见 RtcConnection 。
   /// * [width] 视频流宽（px）。
   /// * [height] 视频流高（px）。
-  /// * [elapsed]  从本地调用joinChannelWithOptions 到发生此事件过去的时间（毫秒)。
+  /// * [elapsed]  从本地调用joinChannel [2/2] 到发生此事件过去的时间（毫秒)。
   final void Function(RtcConnection connection, int remoteUid, int width,
       int height, int elapsed)? onFirstRemoteVideoFrame;
 
   /// 远端用户（通信场景）/主播（直播场景）加入当前频道回调。
-  /// 通信场景下，该回调提示有远端用户加入了频道。如果加入之前，已经有其他用户在频道中了，新加入的用户也会收到这些已有用户加入频道的回调。直播场景下，该回调提示有主播加入了频道。如果加入之前，已经有主播在频道中了，新加入的用户也会收到已有主播加入频道的回调。Agora 建议连麦主播不超过 17 人。该回调在如下情况下会被触发：远端用户/主播调用joinChannelWithOptions 方法加入频道。远端用户加入频道后将用户角色改变为主播。远端用户/主播网络中断后重新加入频道。
+  /// 通信场景下，该回调提示有远端用户加入了频道。如果加入之前，已经有其他用户在频道中了，新加入的用户也会收到这些已有用户加入频道的回调。直播场景下，该回调提示有主播加入了频道。如果加入之前，已经有主播在频道中了，新加入的用户也会收到已有主播加入频道的回调。Agora 建议连麦主播不超过 17 人。该回调在如下情况下会被触发：远端用户/主播调用joinChannel [2/2] 方法加入频道。远端用户加入频道后将用户角色改变为主播。远端用户/主播网络中断后重新加入频道。
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
   /// * [remoteUid] 新加入频道的远端用户/主播 ID。
-  /// * [elapsed] 从本地用户调用joinChannelWithOptions 到该回调触发的延迟（毫秒)。
+  /// * [elapsed] 从本地用户调用joinChannel [2/2] 到该回调触发的延迟（毫秒)。
   final void Function(RtcConnection connection, int remoteUid, int elapsed)?
       onUserJoined;
 
@@ -1888,7 +1888,8 @@ class RtcEngineEventHandler {
   final void Function(RtcConnection connection, RemoteVideoStats stats)?
       onRemoteVideoStats;
 
-  /// @nodoc
+  /// 摄像头就绪回调。
+  /// 弃用:请改用 onLocalVideoStateChanged 中的localVideoStreamStateCapturing(1)。该回调提示已成功打开摄像头，可以开始捕获视频。
   final void Function()? onCameraReady;
 
   /// 相机对焦区域已改变回调。
@@ -1935,7 +1936,7 @@ class RtcEngineEventHandler {
       onRhythmPlayerStateChanged;
 
   /// 网络连接中断，且 SDK 无法在 10 秒内连接服务器回调。
-  /// SDK 在调用joinChannelWithOptions 后，无论是否加入成功，只要 10 秒和服务器无法连接就会触发该回调。如果 SDK 在断开连接后，20 分钟内还是没能重新加入频道，SDK 会停止尝试重连。
+  /// SDK 在调用joinChannel [2/2] 后，无论是否加入成功，只要 10 秒和服务器无法连接就会触发该回调。如果 SDK 在断开连接后，20 分钟内还是没能重新加入频道，SDK 会停止尝试重连。
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
   final void Function(RtcConnection connection)? onConnectionLost;
@@ -1978,7 +1979,7 @@ class RtcEngineEventHandler {
 
   /// Token 已过期回调。
   /// 在通话过程中如果 Token 已失效，SDK 会触发该回调，提醒 app 更新 Token。
-  ///  当收到该回调时，你需要重新在服务端生成新的 Token，然后调用 joinChannelWithOptions 重新加入频道。
+  ///  当收到该回调时，你需要重新在服务端生成新的 Token，然后调用 joinChannel [2/2] 重新加入频道。
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
   final void Function(RtcConnection connection)? onRequestToken;
@@ -1993,10 +1994,10 @@ class RtcEngineEventHandler {
       onTokenPrivilegeWillExpire;
 
   /// 已发布本地音频首帧回调。
-  /// SDK 会在以下时机触发该回调：开启本地音频的情况下，调用joinChannelWithOptions 成功加入频道后。调用 muteLocalAudioStream (true)，再调用muteLocalAudioStream(false) 后。调用 disableAudio ，再调用 enableAudio 后。
+  /// SDK 会在以下时机触发该回调：开启本地音频的情况下，调用joinChannel [2/2] 成功加入频道后。调用 muteLocalAudioStream (true)，再调用muteLocalAudioStream(false) 后。调用 disableAudio ，再调用 enableAudio 后。
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
-  /// * [elapsed]  从调用joinChannelWithOptions 方法到触发该回调的时间间隔（毫秒）。
+  /// * [elapsed]  从调用joinChannel [2/2] 方法到触发该回调的时间间隔（毫秒）。
   final void Function(RtcConnection connection, int elapsed)?
       onFirstLocalAudioFramePublished;
 
@@ -2005,7 +2006,7 @@ class RtcEngineEventHandler {
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
   /// * [userId] 发送音频帧的远端用户的用户 ID。
-  /// * [elapsed] 从本地用户调用joinChannelWithOptions 直至该回调触发的延迟，单位为毫秒。
+  /// * [elapsed] 从本地用户调用joinChannel [2/2] 直至该回调触发的延迟，单位为毫秒。
   final void Function(RtcConnection connection, int userId, int elapsed)?
       onFirstRemoteAudioFrame;
 
@@ -2014,7 +2015,7 @@ class RtcEngineEventHandler {
   ///
   /// * [connection] Connection 信息。详见 RtcConnection 。
   /// * [uid] 远端用户 ID。
-  /// * [elapsed] 从本地用户调用joinChannelWithOptions 直至该回调触发的延迟，单位为毫秒。
+  /// * [elapsed] 从本地用户调用joinChannel [2/2] 直至该回调触发的延迟，单位为毫秒。
   final void Function(RtcConnection connection, int uid, int elapsed)?
       onFirstRemoteAudioDecoded;
 
@@ -2035,7 +2036,7 @@ class RtcEngineEventHandler {
   /// * [remoteUid] 发生音频状态改变的远端用户 ID。
   ///
   /// * [reason]  远端音频流状态改变的具体原因，详见 RemoteAudioStateReason 。
-  /// * [elapsed]  从本地用户调用joinChannelWithOptions 方法到发生本事件经历的时间，单位为毫秒。
+  /// * [elapsed]  从本地用户调用joinChannel [2/2] 方法到发生本事件经历的时间，单位为毫秒。
   final void Function(
       RtcConnection connection,
       int remoteUid,
@@ -2051,9 +2052,9 @@ class RtcEngineEventHandler {
   final void Function(RtcConnection connection, int uid)? onActiveSpeaker;
 
   /// 视频鉴黄结果回调。
-  /// 调用 enableContentInspect 启用视频内容审核服务，并设置 ContentInspectConfig 中的type 为CONTENT_INSPECT_MODERATION 后，SDK 会触发 onContentInspectResult 回调，报告鉴黄结果。
+  /// 调用 enableContentInspect 启用视频内容审核服务，并设置 ContentInspectConfig 中的type 为contentInspectModeration 后，SDK 会触发 onContentInspectResult 回调，报告鉴黄结果。
   ///
-  /// * [result] 鉴黄结果。详见 CONTENT_INSPECT_RESULT 。
+  /// * [result] 鉴黄结果。详见 ContentInspectResult 。
   final void Function(ContentInspectResult result)? onContentInspectResult;
 
   /// 视频截图结果回调。
@@ -2536,27 +2537,27 @@ class Metadata {
 ///
 @JsonEnum(alwaysCreate: true)
 enum DirectCdnStreamingError {
-  /// @nodoc
+  /// 0：推流状态正常。
   @JsonValue(0)
   directCdnStreamingErrorOk,
 
-  /// @nodoc
+  /// 1：一般性错误，没有明确原因。你可以尝试重新推流。
   @JsonValue(1)
   directCdnStreamingErrorFailed,
 
-  /// @nodoc
+  /// 2：音频推流出错。例如，本地音频采集设备未正常工作、被其他进程占用或没有使用权限。
   @JsonValue(2)
   directCdnStreamingErrorAudioPublication,
 
-  /// @nodoc
+  /// 3：视频推流出错。例如，本地视频采集设备未正常工作、被其他进程占用或没有使用权限。
   @JsonValue(3)
   directCdnStreamingErrorVideoPublication,
 
-  /// @nodoc
+  /// 4：连接 CDN 失败。
   @JsonValue(4)
   directCdnStreamingErrorNetConnect,
 
-  /// @nodoc
+  /// 5：URL 已用于推流。请使用新的 URL。
   @JsonValue(5)
   directCdnStreamingErrorBadName,
 }
@@ -2578,23 +2579,23 @@ extension DirectCdnStreamingErrorExt on DirectCdnStreamingError {
 ///
 @JsonEnum(alwaysCreate: true)
 enum DirectCdnStreamingState {
-  /// @nodoc
+  /// 0：初始状态，即推流尚未开始。
   @JsonValue(0)
   directCdnStreamingStateIdle,
 
-  /// @nodoc
+  /// 1：正在推流中。当你调用 startDirectCdnStreaming 成功推流时，SDK 会返回该值。
   @JsonValue(1)
   directCdnStreamingStateRunning,
 
-  /// @nodoc
+  /// 2：推流已正常结束。当你调用 stopDirectCdnStreaming 主动停止推流时，SDK 会返回该值。
   @JsonValue(2)
   directCdnStreamingStateStopped,
 
-  /// @nodoc
+  /// 3：推流失败。你可以通过 onDirectCdnStreamingStateChanged 回调报告的信息排查问题，然后重新推流。
   @JsonValue(3)
   directCdnStreamingStateFailed,
 
-  /// @nodoc
+  /// 4：尝试重新连接 Agora 服务器和 CDN。最多尝试重连 10 次，如仍未成功恢复连接，则推流状态变为directCdnStreamingStateFailed。
   @JsonValue(4)
   directCdnStreamingStateRecovering,
 }
@@ -2709,7 +2710,7 @@ class DirectCdnStreamingMediaOptions {
   @JsonKey(name: 'publishMediaPlayerId')
   final int? publishMediaPlayerId;
 
-  /// @nodoc
+  /// 调用 createCustomVideoTrack 方法返回的视频轨道 ID。默认值为 0。
   @JsonKey(name: 'customVideoTrackId')
   final int? customVideoTrackId;
 
@@ -2768,7 +2769,7 @@ abstract class RtcEngine {
   Future<void> renewToken(String token);
 
   /// 设置频道场景。
-  /// SDK 初始化后默认的频道场景为直播场景。你可以调用该方法设置 Agora 频道的使用场景。Agora SDK 会针对不同的使用场景采用不同的优化策略，如通信场景偏好流畅，直播场景偏好画质。为保证实时音视频质量，相同频道内的用户必须使用同一种频道场景。该方法必须在joinChannelWithOptions 前调用和进行设置，进入频道后无法再设置。
+  /// SDK 初始化后默认的频道场景为直播场景。你可以调用该方法设置 Agora 频道的使用场景。Agora SDK 会针对不同的使用场景采用不同的优化策略，如通信场景偏好流畅，直播场景偏好画质。为保证实时音视频质量，相同频道内的用户必须使用同一种频道场景。该方法必须在joinChannel [2/2] 前调用和进行设置，进入频道后无法再设置。
   ///
   /// * [profile] 频道使用场景。详见 ChannelProfileType 。
   Future<void> setChannelProfile(ChannelProfileType profile);
@@ -2907,7 +2908,7 @@ abstract class RtcEngine {
   Future<void> muteLocalAudioStream(bool mute);
 
   /// 取消或恢复订阅所有远端用户的音频流。
-  /// 成功调用该方法后，本地用户会取消或恢复订阅所有远端用户的音频流，包括在调用该方法后加入频道的用户的音频流。该方法需要在加入频道后调用。如果需要在加入频道前设置默认不订阅远端用户音频流，可以在调用 joinChannelWithOptions 加入频道时设置autoSubscribeAudio 为false。
+  /// 成功调用该方法后，本地用户会取消或恢复订阅所有远端用户的音频流，包括在调用该方法后加入频道的用户的音频流。该方法需要在加入频道后调用。如果需要在加入频道前设置默认不订阅远端用户音频流，可以在调用 joinChannel [2/2] 加入频道时设置autoSubscribeAudio 为false。
   ///
   /// * [mute] 是否取消订阅所有远端用户的音频流：true: 取消订阅所有远端用户的音频流。false:（默认）订阅所有远端用户的音频流。
   Future<void> muteAllRemoteAudioStreams(bool mute);
@@ -2938,7 +2939,7 @@ abstract class RtcEngine {
   Future<void> enableLocalVideo(bool enabled);
 
   /// 取消或恢复订阅所有远端用户的视频流。
-  /// 成功调用该方法后，本地用户会取消或恢复订阅所有远端用户的视频流，包括在调用该方法后加入频道的用户的视频流。该方法需要在加入频道后调用。如果需要在加入频道前设置默认不订阅远端用户视频流，可以在调用 joinChannelWithOptions 加入频道时设置autoSubscribeVideo 为false。
+  /// 成功调用该方法后，本地用户会取消或恢复订阅所有远端用户的视频流，包括在调用该方法后加入频道的用户的视频流。该方法需要在加入频道后调用。如果需要在加入频道前设置默认不订阅远端用户视频流，可以在调用 joinChannel [2/2] 加入频道时设置autoSubscribeVideo 为false。
   ///
   /// * [mute] 是否取消订阅所有远端用户的视频流。true: 取消订阅所有用户的视频流。false:（默认）订阅所有用户的视频流。
   Future<void> muteAllRemoteVideoStreams(bool mute);
@@ -2966,7 +2967,14 @@ abstract class RtcEngine {
   Future<void> setRemoteVideoStreamType(
       {required int uid, required VideoStreamType streamType});
 
-  /// @nodoc
+  /// 设置远端视频流的订阅选项。
+  /// 当远端发送双流时，可调用此方法来设置远端视频流的订阅选项。Agora 建议你在收到 onUserJoined 回调后再调用该方法。
+  ///
+  /// * [uid] 远端用户 ID。
+  /// * [options] 视频流的订阅设置，详见 VideoSubscriptionOptions 。
+  ///
+  /// Returns
+  /// 0: 方法调用成功。< 0: 方法调用失败。
   Future<void> setRemoteVideoSubscriptionOptions(
       {required int uid, required VideoSubscriptionOptions options});
 
@@ -3147,7 +3155,7 @@ abstract class RtcEngine {
   Future<void> setEffectsVolume(int volume);
 
   /// 将音效文件加载至内存。
-  /// 为保证通信畅通，请注意控制预加载音效文件的大小，并在joinChannelWithOptions 前就使用该方法完成音效预加载。该方法不支持在线音频文件。该方法支持的音频文件格式见Agora RTC SDK 支持播放哪些格式的音频文件。
+  /// 为保证通信畅通，请注意控制预加载音效文件的大小，并在joinChannel [2/2] 前就使用该方法完成音效预加载。该方法不支持在线音频文件。该方法支持的音频文件格式见Agora RTC SDK 支持播放哪些格式的音频文件。
   ///
   /// * [soundId] 音效的 ID。每个音效的 ID 具有唯一性。
   /// * [filePath] 文件路径：Android: 文件路径，需精确到文件名及后缀。支持在线文件的 URL 地址，本地文件的 URI 地址、绝对路径或以/assets/ 开头的路径。
@@ -3156,7 +3164,17 @@ abstract class RtcEngine {
   Future<void> preloadEffect(
       {required int soundId, required String filePath, int startPos = 0});
 
-  /// @nodoc
+  /// 播放指定的本地或在线音效文件。
+  /// 你可以多次调用该方法，传入不同的soundID 和filePath，同时播放多个音效文件。为获得最佳用户体验，Agora 推荐同时播放的音效文件不超过 3 个。 音效文件播放结束后，SDK 会触发onAudioEffectFinished 回调。该方法需要在加入频道后调用。
+  ///
+  /// * [soundId] 音效的 ID。每个音效的 ID 具有唯一性。如果你已通过 preloadEffect 将音效加载至内存，请确保该参数与preloadEffect 中设置的soundId 相同。
+  /// * [filePath] 播放文件的绝对路径或 URL 地址，需精确到文件名及后缀。例如C:\music\audio.mp4。支持的音频格式包括 MP3、AAC、M4A、MP4、WAV、3GP。详见支持的媒体格式。如果你已通过 preloadEffect 将音效加载至内存，请确保该参数与preloadEffect 中设置的filePath 相同。
+  /// * [loopCount] 音效循环播放的次数。≥ 0: 循环播放次数。例如，1 表示循环播放 1 次，即总计播放 2 次。-1: 无限循环播放。
+  /// * [pitch] 音效的音调，取值范围为 [0.5,2.0]。默认值为 1.0，表示原始音调。取值越小，则音调越低。
+  /// * [pan] 音效的空间位置。取值范围为 [-1.0,1.0]，例如：-1.0：音效出现在左边0.0：音效出现在正前方1.0：音效出现在右边
+  /// * [gain] 音效的音量。取值范围为 [0.0,100.0]。默认值为 100.0，表示原始音量。取值越小，则音量越低。
+  /// * [publish] 是否将音效发布至远端：true: 将音效发布至远端。本地用户和远端用户都能听到音效。false: 不将音效发布至远端。只有本地用户能听到音效。
+  /// * [startPos] 音效文件的播放位置，单位为毫秒。
   Future<void> playEffect(
       {required int soundId,
       required String filePath,
@@ -3386,7 +3404,12 @@ abstract class RtcEngine {
   /// @nodoc
   Future<void> uploadLogFile(String requestId);
 
-  /// @nodoc
+  /// 更新远端视图显示模式。
+  /// 初始化远端用户视图后，你可以调用该方法更新远端用户视图在本地显示时的渲染和镜像模式。该方法只影响本地用户看到的视频画面。请在调用 setupRemoteVideo 方法初始化远端视图后，调用该方法。你可以在通话中多次调用该方法，多次更新远端用户视图的显示模式。
+  ///
+  /// * [uid] 远端用户 ID。
+  /// * [renderMode] 远端用户视图的渲染模式，详见 RenderModeType 。
+  /// * [mirrorMode] 远端用户视图的镜像模式，详见 VideoMirrorModeType 。
   Future<void> setRemoteRenderMode(
       {required int uid,
       required RenderModeType renderMode,
@@ -3473,8 +3496,7 @@ abstract class RtcEngine {
   Future<void> disableAudioSpectrumMonitor();
 
   /// 注册音频频谱观测器。
-  /// 成功注册音频频谱观测器并调用 enableAudioSpectrumMonitor 开启音频频谱监测后，SDK
-  ///  会按照你设置的时间间隔报告你在 AudioSpectrumObserver 类中实现的回调。该方法在加入频道前后均可调用。
+  /// 成功注册音频频谱观测器并调用 enableAudioSpectrumMonitor 开启音频频谱监测后，SDK 会按照你设置的时间间隔报告你在 AudioSpectrumObserver 类中实现的回调。该方法在加入频道前后均可调用。
   ///
   /// * [observer] 音频频谱观测器。详见 AudioSpectrumObserver 。
   void registerAudioSpectrumObserver(AudioSpectrumObserver observer);
@@ -3534,7 +3556,14 @@ abstract class RtcEngine {
   /// @nodoc
   Future<int> getLoopbackRecordingVolume();
 
-  /// @nodoc
+  /// 开启耳返功能。
+  /// 该方法打开或关闭耳返功能。
+  ///
+  /// * [enabled] 开启/关闭耳返功能:true: 开启耳返功能。false: （默认）关闭耳返功能。
+  ///
+  ///
+  /// Returns
+  /// 0: 方法调用成功。< 0: 方法调用失败。
   Future<void> enableInEarMonitoring(
       {required bool enabled,
       required EarMonitoringFilterType includeAudioFilters});
@@ -3593,7 +3622,17 @@ abstract class RtcEngine {
       required String value,
       MediaSourceType type = MediaSourceType.unknownMediaSource});
 
-  /// @nodoc
+  /// 获取插件的详细信息。
+  ///
+  ///
+  /// * [key] 插件属性的 Key。
+  /// * [extension] 插件的名称。
+  /// * [provider] 提供插件的服务商名称。
+  /// * [sourceType] 插件的媒体源类型。详见 MediaSourceType 。
+  /// * [buf_len] 插件属性 JSON 字符串的最大长度。最大值为 512 字节。
+  ///
+  /// Returns
+  /// 0: 方法调用成功< 0: 方法调用失败
   Future<String> getExtensionProperty(
       {required String provider,
       required String extension,
@@ -3602,7 +3641,7 @@ abstract class RtcEngine {
       MediaSourceType type = MediaSourceType.unknownMediaSource});
 
   /// 设置摄像头采集配置。
-  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之前调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之前。
+  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之前调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之前。
   ///
   /// * [config] 摄像头采集配置，详见 CameraCapturerConfiguration 。
   Future<void> setCameraCapturerConfiguration(
@@ -3628,25 +3667,25 @@ abstract class RtcEngine {
   Future<void> destroyCustomEncodedVideoTrack(int videoTrackId);
 
   /// 切换前置/后置摄像头。
-  /// 该方法需要在相机启动（如通过调用 startPreview 或 joinChannelWithOptions 实现）后调用。该方法仅适用于 Android 和 iOS。
+  /// 该方法需要在相机启动（如通过调用 startPreview 或 joinChannel [2/2] 实现）后调用。该方法仅适用于 Android 和 iOS。
   Future<void> switchCamera();
 
   /// 检测设备是否支持摄像头缩放功能。
-  /// 请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。该方法仅适用于 Android 和 iOS。
+  /// 请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。该方法仅适用于 Android 和 iOS。
   ///
   /// Returns
   /// true: 设备支持相机缩放功能。false: 设备不支持相机缩放功能。
   Future<bool> isCameraZoomSupported();
 
   /// 检查设备摄像头是否支持人脸检测。
-  /// 请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。该方法仅适用于 Android。
+  /// 请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。该方法仅适用于 Android。
   ///
   /// Returns
   /// true: 设备摄像头支持人脸检测。false: 设备摄像头不支持人脸检测。
   Future<bool> isCameraFaceDetectSupported();
 
   /// 检测设备是否支持闪光灯常开。
-  /// 请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。
+  /// 请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。
   ///  该方法仅适用于 Android 和 iOS。一般情况下，app 默认开启前置摄像头，因此如果你的前置摄像头不支持闪光灯常开，直接使用该方法会返回false。如果需要检查后置摄像头是否支持闪光灯常开，需要先使用 switchCamera 切换摄像头，再使用该方法。在系统版本 15 的 iPad 上，即使 isCameraTorchSupported 返回true，也可能因系统问题导致你无法通过 setCameraTorchOn 成功开启闪光灯。
   ///
   /// Returns
@@ -3654,40 +3693,40 @@ abstract class RtcEngine {
   Future<bool> isCameraTorchSupported();
 
   /// 检测设备是否支持手动对焦功能。
-  /// 请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。该方法仅适用于 Android 和 iOS。
+  /// 请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。该方法仅适用于 Android 和 iOS。
   ///
   /// Returns
   /// true: 设备支持手动对焦功能。false: 设备不支持手动对焦功能。
   Future<bool> isCameraFocusSupported();
 
   /// 检测设备是否支持人脸对焦功能。
-  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。
+  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。
   ///
   /// Returns
   /// true: 设备支持人脸对焦功能。false: 设备不支持人脸对焦功能。
   Future<bool> isCameraAutoFocusFaceModeSupported();
 
   /// 设置摄像头缩放比例。
-  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之前调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之前。
+  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之前调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之前。
   ///
   /// * [factor] 相机缩放比例，有效范围从 1.0 到最大缩放比例。你可以通过 getCameraMaxZoomFactor 方法获取设备支持的最大缩放比例。
   Future<void> setCameraZoomFactor(double factor);
 
   /// 开启/关闭本地人脸检测。
-  /// 该方法在加入频道前后都能调用。该方法仅适用于 Android 和 iOS。开启本地人脸检测后，SDK 会触发 onFacePositionChanged 回调向你报告人脸检测的信息：摄像头采集的画面大小人脸在 view 中的位置人脸距设备屏幕的距离该方法需要在相机启动（如通过调用startPreviewjoinChannelWithOptions 实现）后调用。
+  /// 该方法在加入频道前后都能调用。该方法仅适用于 Android 和 iOS。开启本地人脸检测后，SDK 会触发 onFacePositionChanged 回调向你报告人脸检测的信息：摄像头采集的画面大小人脸在 view 中的位置人脸距设备屏幕的距离该方法需要在相机启动（如通过调用startPreviewjoinChannel [2/2] 实现）后调用。
   ///
   /// * [enabled] 是否开启人脸检测：true：开启人脸检测。false：（默认）关闭人脸检测。
   Future<void> enableFaceDetection(bool enabled);
 
   /// 获取摄像头支持最大缩放比例。
-  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。
+  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。
   ///
   /// Returns
   /// 设备摄像头支持的最大缩放比例。
   Future<double> getCameraMaxZoomFactor();
 
   /// 设置手动对焦位置，并触发对焦。
-  /// 该方法需要在相机启动（如通过调用 startPreview 或 joinChannelWithOptions 实现）后调用。
+  /// 该方法需要在相机启动（如通过调用 startPreview 或 joinChannel [2/2] 实现）后调用。
   ///  成功调用该方法后，本地会触发 onCameraFocusAreaChanged 回调。该方法仅适用于 Android 和 iOS。
   ///
   /// * [positionX] 触摸点相对于视图的横坐标。
@@ -3696,19 +3735,19 @@ abstract class RtcEngine {
       {required double positionX, required double positionY});
 
   /// 设置是否打开闪光灯。
-  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之前调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之前。
+  /// 该方法仅适用于 Android 和 iOS。请在启动摄像头之前调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之前。
   ///
   /// * [isOn] 是否打开闪光灯：true: 打开闪光灯。false:（默认）关闭闪光灯。
   Future<void> setCameraTorchOn(bool isOn);
 
   /// 设置是否开启人脸对焦功能。
-  /// SDK 默认在 Android 平台关闭人脸自动对焦，在 iOS 平台开启人脸自动对焦。如需自行设置人脸自动对焦，请调用该方法。该方法仅适用于 Android 和 iOS。该方法需在摄像头启动后调用，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。
+  /// SDK 默认在 Android 平台关闭人脸自动对焦，在 iOS 平台开启人脸自动对焦。如需自行设置人脸自动对焦，请调用该方法。该方法仅适用于 Android 和 iOS。该方法需在摄像头启动后调用，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。
   ///
   /// * [enabled] 是否开启人脸对焦：true: 开启人脸对焦功能。false: 关闭人脸对焦功能。
   Future<void> setCameraAutoFocusFaceModeEnabled(bool enabled);
 
   /// 检测设备是否支持手动曝光功能。
-  /// 请在启动摄像头之后调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之后。
+  /// 请在启动摄像头之后调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之后。
   ///  该方法仅适用于 Android 和 iOS。
   ///
   /// Returns
@@ -3716,7 +3755,7 @@ abstract class RtcEngine {
   Future<bool> isCameraExposurePositionSupported();
 
   /// 设置手动曝光位置。
-  /// 该方法需要在相机启动（如通过调用 startPreview 或 joinChannelWithOptions 实现）后调用。成功调用该方法后，本地会触发 onCameraExposureAreaChanged 回调。该方法仅适用于 Android 和 iOS。
+  /// 该方法需要在相机启动（如通过调用 startPreview 或 joinChannel [2/2] 实现）后调用。成功调用该方法后，本地会触发 onCameraExposureAreaChanged 回调。该方法仅适用于 Android 和 iOS。
   ///
   /// * [positionXinView] 触摸点相对于视图的横坐标。
   /// * [positionYinView] 触摸点相对于视图的纵坐标。
@@ -3724,14 +3763,14 @@ abstract class RtcEngine {
       {required double positionXinView, required double positionYinView});
 
   /// 检测设备是否支持自动曝光功能。
-  /// 该方法仅适用于 iOS。请在启动摄像头之前调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之前。
+  /// 该方法仅适用于 iOS。请在启动摄像头之前调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之前。
   ///
   /// Returns
   /// true: 设备支持自动曝光功能。false: 设备不支持自动曝光功能。
   Future<bool> isCameraAutoExposureFaceModeSupported();
 
   /// 设置是否开启自动曝光功能。
-  /// 该方法仅适用于 iOS。请在启动摄像头之前调用该方法，如 joinChannelWithOptions 、 enableVideo 或者 enableLocalVideo 之前。
+  /// 该方法仅适用于 iOS。请在启动摄像头之前调用该方法，如 joinChannel [2/2] 、 enableVideo 或者 enableLocalVideo 之前。
   ///
   /// * [enabled] 是否开启自动曝光：true: 开启自动曝光。false: 关闭自动曝光。
   Future<void> setCameraAutoExposureFaceModeEnabled(bool enabled);
@@ -3774,7 +3813,7 @@ abstract class RtcEngine {
       AudioSessionOperationRestriction restriction);
 
   /// 通过屏幕 ID 共享屏幕。
-  /// 共享一个屏幕或该屏幕的部分区域。开启屏幕共享有如下两种方案，你可以根据实际场景进行选择：在加入频道前调用该方法，然后调用 joinChannelWithOptions 加入频道并设置publishScreenTrack 或publishSecondaryScreenTrack 为true，即可开始屏幕共享。在加入频道后调用该方法，然后调用 updateChannelMediaOptions 设置publishScreenTrack 或publishSecondaryScreenTrack 为true，即可开始屏幕共享。该方法仅适用于 Windows 和 macOS。
+  /// 共享一个屏幕或该屏幕的部分区域。开启屏幕共享有如下两种方案，你可以根据实际场景进行选择：在加入频道前调用该方法，然后调用 joinChannel [2/2] 加入频道并设置publishScreenTrack 或publishSecondaryScreenTrack 为true，即可开始屏幕共享。在加入频道后调用该方法，然后调用 updateChannelMediaOptions 设置publishScreenTrack 或publishSecondaryScreenTrack 为true，即可开始屏幕共享。该方法仅适用于 Windows 和 macOS。
   ///
   /// * [displayId] 指定待共享的屏幕 ID。
   /// * [regionRect] （可选）指定待共享区域相对于整个屏幕的位置。如不填，则表示共享整个屏幕。详见 Rectangle 。
@@ -3785,7 +3824,7 @@ abstract class RtcEngine {
       required ScreenCaptureParameters captureParams});
 
   /// 通过指定区域共享屏幕。
-  /// 开启屏幕共享有如下两种方案，你可以根据实际场景进行选择： 在加入频道前调用该方法，然后调用 joinChannelWithOptions 加入频道并设置 publishScreenTrack 或 publishSecondaryScreenTrack 为 true，即可开始屏幕共享。
+  /// 开启屏幕共享有如下两种方案，你可以根据实际场景进行选择： 在加入频道前调用该方法，然后调用 joinChannel [2/2] 加入频道并设置 publishScreenTrack 或 publishSecondaryScreenTrack 为 true，即可开始屏幕共享。
   ///  在加入频道后调用该方法，然后调用 updateChannelMediaOptions 设置 publishScreenTrack 或 publishSecondaryScreenTrack 为 true，即可开始屏幕共享。 弃用：该方法已废弃。请改用 startScreenCaptureByDisplayId 。如果你需要在设备外接其他显示屏的情况下开启屏幕共享，Agora 强烈建议你使用startScreenCaptureByDisplayId。共享一个屏幕或该屏幕的部分区域。你需要在该方法中指定想要共享的屏幕区域。该方法仅适用于 Windows 平台。
   ///
   /// * [screenRect] 指定待共享的屏幕相对于虚拟屏的位置。
@@ -3804,7 +3843,7 @@ abstract class RtcEngine {
   Future<DeviceInfo> getAudioDeviceInfo();
 
   /// 通过窗口 ID 共享窗口。
-  /// 开启屏幕共享有如下两种方案，你可以根据实际场景进行选择： 在加入频道前调用该方法，然后调用 joinChannelWithOptions 加入频道并设置 publishScreenTrack 或 publishSecondaryScreenTrack 为 true，即可开始屏幕共享。
+  /// 开启屏幕共享有如下两种方案，你可以根据实际场景进行选择： 在加入频道前调用该方法，然后调用 joinChannel [2/2] 加入频道并设置 publishScreenTrack 或 publishSecondaryScreenTrack 为 true，即可开始屏幕共享。
   ///  在加入频道后调用该方法，然后调用 updateChannelMediaOptions 设置 publishScreenTrack 或 publishSecondaryScreenTrack 为 true，即可开始屏幕共享。 共享一个窗口或该窗口的部分区域。用户需要在该方法中指定想要共享的窗口 ID。该方法仅适用于 macOS 和 Windows 平台。Agora SDK 的窗口共享功能依赖于 WGC（Windows Graphics Capture）或 GDI（Graphics Device Interface）采集，WGC 在早于 Windows 10 2004 的系统上无法设置关闭鼠标采集，因此，当你在搭载早于 Windows 10 2004 系统的设备上进行窗口共享时，可能出现captureMouseCursor(false) 不生效的现象。详见 ScreenCaptureParameters 。该方法支持共享通用 Windows 平台（UWP）应用窗口。声网使用最新版 SDK 对主流的 UWP 应用进行了测试，结果如下：
   ///
   /// * [windowId] 指定待共享的窗口 ID。
@@ -3841,7 +3880,7 @@ abstract class RtcEngine {
       ScreenCaptureParameters captureParams);
 
   /// 开始屏幕共享。
-  /// 开启屏幕共享有如下两种方案，你可以根据实际场景进行选择：在加入频道前调用该方法，然后调用 joinChannelWithOptions 加入频道并设置publishScreenCaptureVideotrue，即可开始屏幕共享。在加入频道后调用该方法，然后调用 updateChannelMediaOptions 设置publishScreenCaptureVideotrue，即可开始屏幕共享。该方法适用于 Android 平台。
+  /// 开启屏幕共享有如下两种方案，你可以根据实际场景进行选择：在加入频道前调用该方法，然后调用 joinChannel [2/2] 加入频道并设置publishScreenCaptureVideotrue，即可开始屏幕共享。在加入频道后调用该方法，然后调用 updateChannelMediaOptions 设置publishScreenCaptureVideotrue，即可开始屏幕共享。该方法适用于 Android 平台。
   ///
   /// * [captureParams] 屏幕共享的编码参数配置。默认的分辨率为 1920 x 1080，即 2,073,600 像素。该像素值为计费标准。详见 ScreenCaptureParameters2 。
   Future<void> startScreenCapture(ScreenCaptureParameters2 captureParams);
@@ -3857,8 +3896,7 @@ abstract class RtcEngine {
   Future<void> stopScreenCapture();
 
   /// 获取通话 ID。
-  /// 客户端在每次加入频道后会生成一个对应的callId，标识该客户端的此次通话。有些方法，如 rate 、 complain 等，
-  ///  需要在通话结束后调用，向 SDK 提交反馈。这些方法中需要填入指定的callId 参数。该方法需要在加入频道后调用。
+  /// 客户端在每次加入频道后会生成一个对应的callId，标识该客户端的此次通话。有些方法，如 rate 、 complain 等，需要在通话结束后调用，向 SDK 提交反馈。这些方法中需要填入指定的callId 参数。该方法需要在加入频道后调用。
   ///
   /// Returns
   /// 通话 ID。
@@ -3987,7 +4025,12 @@ abstract class RtcEngine {
   /// 当前网络连接状态。详见 ConnectionStateType 。
   Future<ConnectionStateType> getConnectionState();
 
-  /// @nodoc
+  /// 添加主回调事件。
+  /// RtcEngineEventHandler 接口类用于 SDK 向 app 发送回调事件通知，app 通过继承该接口类的方法获取 SDK 的事件通知。
+  ///  接口类的所有方法都有缺省（空）实现，app 可以根据需要只继承关心的事件。在回调方法中，app 不应该做耗时或者调用可能会引起阻塞的 API（如sendStreamMessage），
+  ///  否则可能影响 SDK 的运行。
+  ///
+  /// * [eventHandler] 待添加的回调事件，详见 RtcEngineEventHandler 。
   void registerEventHandler(RtcEngineEventHandler eventHandler);
 
   /// @nodoc
@@ -4064,7 +4107,7 @@ abstract class RtcEngine {
       required int value});
 
   /// 注册媒体 metadata 观测器用于接收或发送 metadata。
-  /// 你需要自行实现 MetadataObserver 类并在本方法中指定 metadata 类型。本方法允许你为视频流添加同步的 metadata，用于多样化的直播互动，如发送购物链接、电子优惠券和在线测试。请在joinChannelWithOptions 前调用该方法。
+  /// 你需要自行实现 MetadataObserver 类并在本方法中指定 metadata 类型。本方法允许你为视频流添加同步的 metadata，用于多样化的直播互动，如发送购物链接、电子优惠券和在线测试。请在joinChannel [2/2] 前调用该方法。
   ///
   /// * [observer] metadata 观测器。详见 MetadataObserver 。
   /// * [type] metadata 类型。目前仅支持videoMetadata。
@@ -4100,7 +4143,13 @@ abstract class RtcEngine {
   Future<void> registerLocalUserAccount(
       {required String appId, required String userAccount});
 
-  /// @nodoc
+  /// 使用 User Account 加入频道，并设置是否自动订阅音频或视频流。
+  /// 为保证通信质量，请确保频道内使用同一类型的数据标识用户身份。即同一频道内需要统一使用 UID 或 User Account。如果有用户通过 Agora Web SDK 加入频道，请确保 Web 加入的用户也是同样类型。用户成功加入频道后，默认订阅频道内所有其他用户的音频流和视频流，因此产生用量并影响计费。如果想取消订阅，可以通过调用相应的mute 方法实现。该方法允许本地用户使用 User Account 加入频道。成功加入频道后，会触发以下回调：本地： onLocalUserRegistered 、 onJoinChannelSuccess 和 onConnectionStateChanged 回调。远端：通信场景下的用户和直播场景下的主播加入频道后，远端会分别触发 onUserJoined 和 onUserInfoUpdated 回调。
+  ///
+  /// * [userAccount] 用户 User Account。该参数用于标识实时音视频互动频道中的用户。你需要自行设置和管理用户的 User Account，并确保同一频道中每个用户的 User Account 是唯一的。 该参数为必填，最大不超过 255 字节，不可填NULL。以下为支持的字符集范围（共 89 个字符）：26 个小写英文字母 a-z26 个大写英文字母 A-Z10 个数字 0-9空格"!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
+  /// * [token] 在服务端生成的用于鉴权的动态密钥。详见
+  /// * [channelId] 频道名。该参数标识用户进行实时音视频互动的频道。App ID 一致的前提下，填入相同频道名的用户会进入同一个频道进行音视频互动。该参数为长度在 64 字节以内的字符串。以下为支持的字符集范围（共 89 个字符）:26 个小写英文字母 a~z26 个大写英文字母 A~Z10 个数字 0~9空格"!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
+  /// * [options] 频道媒体设置选项。详见 ChannelMediaOptions 。
   Future<void> joinChannelWithUserAccountEx(
       {required String token,
       required String channelId,
@@ -4125,7 +4174,7 @@ abstract class RtcEngine {
   Future<UserInfo> getUserInfoByUid(int uid);
 
   /// 开始跨频道媒体流转发。该方法可用于实现跨频道连麦等场景。
-  /// 成功调用该方法后，SDK 会触发 onChannelMediaRelayStateChanged 和 onChannelMediaRelayEvent 回调，并在回调中报告当前的跨频道媒体流转发状态和事件。如果onChannelMediaRelayStateChanged 回调报告relayStateRunning (2) 和relayOk (0)，且onChannelMediaRelayEvent 回调报告relayEventPacketSentToDestChannel (4)， 则表示 SDK 开始在源频道和目标频道之间转发媒体流。如果onChannelMediaRelayStateChanged 回调报告relayStateFailure (3)， 则表示跨频道媒体流转发出现异常。请在成功加入频道后调用该方法。在直播场景中，只有角色为主播的用户才能调用该方法。成功调用该方法后，若你想再次调用该方法，必须先调用 stopChannelMediaRelay 方法退出当前的转发状态。跨频道媒体流转发功能需要联系技术支持开通。该功能不支持 String 型 UID。
+  /// 成功调用该方法后，SDK 会触发 onChannelMediaRelayStateChanged 和 onChannelMediaRelayEvent 回调，并在回调中报告当前的跨频道媒体流转发状态和事件。如果onChannelMediaRelayStateChanged 回调报告relayStateRunning (2) 和relayOk (0)，且onChannelMediaRelayEvent 回调报告relayEventPacketSentToDestChannel (4)， 则表示 SDK 开始在源频道和目标频道之间转发媒体流。如果onChannelMediaRelayStateChanged 回调报告relayStateFailure (3)， 则表示跨频道媒体流转发出现异常。请在成功加入频道后调用该方法。在直播场景中，只有角色为主播的用户才能调用该方法。成功调用该方法后，若你想再次调用该方法，必须先调用 stopChannelMediaRelay 方法退出当前的转发状态。跨频道媒体流转发功能需要开通。该功能不支持 String 型 UID。
   ///
   /// * [configuration] 跨频道媒体流转发参数配置。详见 ChannelMediaRelayConfiguration 。
   Future<void> startChannelMediaRelay(
@@ -4213,7 +4262,7 @@ abstract class RtcEngine {
   Future<void> takeSnapshot({required int uid, required String filePath});
 
   /// 开启/关闭视频内容审核。
-  /// 开启视频内容审核后，SDK 会根据你在 ContentInspectConfig 中设置的内容审核模块类型和频率对本地用户发送的视频进行截图、审核和上传。审核完成后，Agora 内容审核服务器会以 HTTPS 请求的形式，向你的服务器发送审核结果，并将所有截图发送至你指定的第三方云存储。如果你将ContentInspectModule 中的type 设置为CONTENT_INSPECT_MODERATION（视频鉴黄），审核完成后，SDK 会触发 onContentInspectResult 回调，报告鉴黄结果。调用该方法前，请确保已开通 Agora 视频内容审核服务。
+  /// 开启视频内容审核后，SDK 会根据你在 ContentInspectConfig 中设置的内容审核模块类型和频率对本地用户发送的视频进行截图、审核和上传。审核完成后，Agora 内容审核服务器会以 HTTPS 请求的形式，向你的服务器发送审核结果，并将所有截图发送至你指定的第三方云存储。如果你将ContentInspectModule 中的type 设置为contentInspectModeration（视频鉴黄），审核完成后，SDK 会触发 onContentInspectResult 回调，报告鉴黄结果。调用该方法前，请确保已开通 Agora 视频内容审核服务。
   ///
   /// * [enabled] 设置是否开启视频内容审核：true：开启。false：关闭。
   /// * [config] 内容审核配置。详见 ContentInspectConfig 。
@@ -4245,7 +4294,7 @@ abstract class RtcEngine {
   Future<void> setLocalAccessPoint(LocalAccessPointConfiguration config);
 
   /// 设置音频的高级选项。
-  /// 如果你对音频处理有进阶需求，例如需要采集和发送立体声，可以调用该方法设置音频的高级选项。该方法仅适用于 Android 和 iOS 平台。你需要在 joinChannelWithOptions 、 enableAudio 和 enableLocalAudio 前调用该方法。
+  /// 如果你对音频处理有进阶需求，例如需要采集和发送立体声，可以调用该方法设置音频的高级选项。该方法仅适用于 Android 和 iOS 平台。你需要在 joinChannel [2/2] 、 enableAudio 和 enableLocalAudio 前调用该方法。
   ///
   /// Returns
   /// 音频的高级选项。详见 AdvancedAudioOptions 。
@@ -4269,22 +4318,7 @@ abstract class RtcEngine {
   /// @nodoc
   Future<void> enableWirelessAccelerate(bool enabled);
 
-  /// 加入频道。
-  /// 在网络状况不理想的情况下，客户端可能会与 Agora 服务器失去连接；SDK 会自动尝试重连，重连成功后，本地会触发 onRejoinChannelSuccess 回调。
-  ///  成功调用该方法加入频道后会触发以下回调：
-  ///  本地会触发 onJoinChannelSuccess 和 onConnectionStateChanged 回调。
-  ///  通信场景下的用户和直播场景下的主播加入频道后，远端会触发 onUserJoined 回调。 该方法让用户加入通话频道，在同一个频道内的用户可以互相通话，多个用户加入同一个频道，可以群聊。 使用不同 App ID 的 app 不能互通。
-  ///  用户成功加入频道后，默认订阅频道内所有其他用户的音频流和视频流，因此产生用量并影响计费。如果想取消订阅，可以通过调用相应的mute 方法实现。
-  ///
-  /// * [channelId] 频道名。该参数标识用户进行实时音视频互动的频道。App ID 一致的前提下，填入相同频道名的用户会进入同一个频道进行音视频互动。该参数为长度在 64 字节以内的字符串。以下为支持的字符集范围（共 89 个字符）: 26 个小写英文字母 a~z
-  ///  26 个大写英文字母 A~Z
-  ///  10 个数字 0~9
-  ///  空格
-  ///  "!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
-  /// * [token] 在服务端生成的用于鉴权的动态密钥。详见
-  ///
-  /// * [info] (非必选项) 预留参数。
-  /// * [uid] 用户 ID。该参数用于标识在实时音视频互动频道中的用户。你需要自行设置和管理用户 ID，并确保同一频道内的每个用户 ID 是唯一的。该参数为 32 位无符号整数。 建议设置范围：1 到 232-1。如果不指定（即设为 0），SDK 会自动分配一个，并在onJoinChannelSuccess 回调中返回， 应用层必须记住该返回值并维护，SDK 不对该返回值进行维护。
+  /// @nodoc
   Future<void> joinChannel(
       {required String token,
       required String channelId,
@@ -4292,90 +4326,125 @@ abstract class RtcEngine {
       required ChannelMediaOptions options});
 
   /// 离开频道。
-  /// 该方法会把会话相关的所有资源释放掉。该方法是异步操作，调用返回时并没有真正退出频道。成功加入频道后，必须调用本方法或者leaveChannel 结束通话，否则无法开始下一次通话。成功调用该方法离开频道后会触发以下回调：本地： onLeaveChannel 回调。远端：通信场景下的用户和直播场景下的主播离开频道后，远端会触发 onUserOffline 回调。如果你调用了本方法后立即调用 release 方法，SDK 将无法触发onLeaveChannel 回调。
+  /// 如果你调用了本方法后立即调用 release 方法，SDK 将无法触发onLeaveChannel 回调。离开频道，即挂断或退出通话。加入频道后，必须调用本方法或 leaveChannel 结束通话，才能开始下一次通话。不管当前是否在通话中，都可以调用该方法，没有副作用。该方法会把会话相关的所有资源释放掉。该方法是异步操作，调用返回时并没有真正退出频道。在真正退出频道后，SDK 会触发 onLeaveChannel 回调。
+  ///  成功调用该方法离开频道后，本地会触发onLeaveChannel 回调；
+  ///  通信场景下的用户和直播场景下的主播离开频道后，远端会触发 onUserOffline 回调。
+  ///
+  /// * [options] 离开频道的选项，详见 LeaveChannelOptions 。
   Future<void> leaveChannel({LeaveChannelOptions? options});
 
-  /// 设置用户角色。
-  /// 如果你在加入频道前调用该方法设置用户角色为主播、并且通过 setupLocalVideo 方法设置了本地视频属性，则用户加入频道时会自动开启本地视频预览。在加入频道前和加入频道后均可调用该方法设置用户角色。如果你在加入频道后调用该方法切换用户角色，调用成功后：本地会触发 onClientRoleChanged 回调。远端会触发 onUserJoined 或 onUserOffline (userOfflineBecomeAudience) 回调。
+  /// 设置直播场景下的用户角色和级别。
+  /// 直播场景下，SDK 会默认设置用户角色为观众，你可以调用该方法设置用户角色为主播。该方法在加入频道前后均可调用。如果你在加入频道前调用该方法设置用户角色为主播、并且通过 setupLocalVideo 方法设置了本地视频属性，则用户加入频道时会自动开启本地视频预览。如果你在加入频道后调用该方法切换用户角色，调用成功后，SDK 会自动进行如下操作：调用 muteLocalAudioStream 和 muteLocalVideoStream 修改发布状态。本地触发 onClientRoleChanged 回调。远端触发 onUserJoined 或 onUserOffline 回调。该方法仅适用于直播场景（ setChannelProfile 中profile 设为channelProfileLiveBroadcasting）。
+  ///
+  /// * [role] 直播场景中的用户角色。详见 ClientRoleType 。
+  /// * [options] 用户具体设置，包含用户级别。详见 ClientRoleOptions 。
   Future<void> setClientRole(
       {required ClientRoleType role, ClientRoleOptions? options});
 
-  /// @nodoc
+  /// 开始语音通话回路测试。
+  /// 该方法启动语音通话测试，目的是测试系统的音频设备（耳麦、扬声器等）和网络连接是否正常。在测试过程中，用户先说一段话，声音会在设置的时间间隔（单位为秒）后回放出来。如果用户能正常听到自己刚才说的话，就表示系统音频设备和网络连接都是正常的。请在加入频道前调用该方法。
+  ///  调用startEchoTest 后必须调用 stopEchoTest 以结束测试，否则不能进行下一次回声测试，也无法加入频道。直播场景下，该方法仅能由用户角色为主播的用户调用。
+  ///
+  /// * [intervalInSeconds] 设置返回语音通话回路测试结果的时间间隔，取值范围为 [2,10]，单位为秒，默认为 10 秒。
   Future<void> startEchoTest({int intervalInSeconds = 10});
 
-  /// 开启视频预览。
-  /// 该方法用于启动本地视频预览。调用该 API 前，必须：调用 setupLocalVideo 设置预览窗口及属性。调用 enableVideo 开启视频功能。本地预览默认开启镜像功能。如果调用 leaveChannel [1/2] 退出频道，本地预览依然处于开启状态，如需要关闭本地预览，需要调用 stopPreview1 。
+  /// 开启视频预览并指定预览的视频源。
+  /// 该方法用于启动本地视频预览。调用该 API 前，必须： 调用 setupLocalVideo 设置预览窗口及属性。
+  ///  调用 enableVideo 开启视频功能。 本地预览默认开启镜像功能。如果调用 leaveChannel 退出频道，本地预览依然处于开启状态，如需要关闭本地预览，需要调用 stopPreview 。该方法中设置的视频源类型需要跟 setupLocalVideo 中 VideoCanvas 的视频源类型一致。
+  ///
+  /// * [sourceType] 视频源的类型，详见 VideoSourceType 。
   Future<void> startPreview(
       {VideoSourceType sourceType = VideoSourceType.videoSourceCameraPrimary});
 
   /// 停止视频预览。
   /// 调用 startPreview 开启预览后，如果你想关闭本地视频预览，请调用该方法。请在加入频道前或离开频道后调用该方法。
+  ///
+  /// * [sourceType] 视频源的类型，详见 VideoSourceType 。
   Future<void> stopPreview(
       {VideoSourceType sourceType = VideoSourceType.videoSourceCameraPrimary});
 
-  /// 设置音频编码属性和音频场景。
-  /// 弃用：此方法已废弃，如需设置音频编码属性，请改用 setAudioProfile [2/2] ；如需设置音频场景，请改用 setAudioScenario 。该方法在加入频道前后均可调用。在有高音质需求的场景（例如音乐教学场景）中，建议将profile 设置为audioProfileMusicHighQuality(4)，scenario 设置为audioScenarioGameStreaming(3)。
-  ///
-  /// * [profile] 音频编码属性，包含采样率、码率、编码模式和声道数。详见 AudioProfileType 。
-  /// * [scenario] 音频场景。详见 AudioScenarioType 。不同的音频场景下，设备的音量类型是不同的。
+  /// @nodoc
   Future<void> setAudioProfile(
       {required AudioProfileType profile,
       AudioScenarioType scenario = AudioScenarioType.audioScenarioDefault});
 
-  /// @nodoc
+  /// 开始客户端录音。
+  /// Agora SDK 支持通话过程中在客户端进行录音。调用该方法后，你可以录制频道内用户的音频，并得到一个录音文件。录音文件格式可以为:WAV: 音质保真度较高，文件较大。例如，采样率为 32000 Hz，录音时长为 10 分钟的文件大小约为 73 M。AAC: 音质保真度较低，文件较小。例如，采样率为 32000 Hz，录音音质为audioRecordingQualityMedium，录音时长为 10 分钟的文件大小约为 2 M。用户离开频道后，录音会自动停止。该方法需要在加入频道后调用。
+  ///
+  /// * [config] 录音配置。详见 AudioRecordingConfiguration 。
   Future<void> startAudioRecording(AudioRecordingConfiguration config);
 
-  /// @nodoc
+  /// 开始播放音乐文件。
+  /// 该方法支持将本地或在线音乐文件和麦克风采集的音频进行混音或替换。成功播放音乐文件后，本地会触发 onAudioMixingStateChanged (audioMixingStatePlaying) 回调。播放结束后，本地会触发onAudioMixingStateChanged(audioMixingStateStopped) 回调。该方法支持的音频文件格式见Agora RTC SDK 支持播放哪些格式的音频文件。该方法在加入频道前后均可调用。如需多次调用startAudioMixing，请确保调用间隔大于 500 ms。如果本地音乐文件不存在、文件格式不支持或无法访问在线音乐文件 URL，则 SDK 会报告警告码 701。
+  ///
+  /// * [filePath] 文件路径：Android: 文件路径，需精确到文件名及后缀。支持在线文件的 URL 地址，本地文件的 URI 地址、绝对路径或以/assets/ 开头的路径。
+  ///  通过绝对路径访问本地文件可能会遇到权限问题，Agora 推荐使用 URI 地址访问本地文件。例如content://com.android.providers.media.documents/document/audio%3A14441。Windows: 音频文件的绝对路径或 URL 地址，需精确到文件名及后缀。例如C:\music\audio.mp4。iOS 或 macOS: 音频文件的绝对路径或 URL 地址，需精确到文件名及后缀。例如/var/mobile/Containers/Data/audio.mp4。
+  /// * [loopback] 是否只在本地播放音乐文件：true: 只在本地播放音乐文件，只有本地用户能听到音乐。false: 将本地播放的音乐文件发布至远端，本地用户和远端用户都能听到音乐。
+  /// * [replace] 是否用音乐文件替换麦克风采集的音频：true: 替换。用户只能听到音乐。false: 不替换。用户可以听到音乐和麦克风采集的音频。
+  /// * [cycle] 音乐文件的播放次数。≥ 0: 播放次数。例如，0 表示不播放；1 表示播放 1 次。-1: 无限循环播放。
+  /// * [startPos] 音乐文件的播放位置，单位为毫秒。
   Future<void> startAudioMixing(
       {required String filePath,
       required bool loopback,
       required int cycle,
       int startPos = 0});
 
-  /// 设置本地视图显示模式。
-  /// 弃用：该方法已废弃，请使用 setLocalRenderMode [2/2] 作为替代。该方法设置本地视图显示模式。 App 可以多次调用此方法更改显示模式。
-  ///
-  /// * [renderMode] 本地视图显示模式。详见 RenderModeType 。
+  /// @nodoc
   Future<void> setLocalRenderMode(
       {required RenderModeType renderMode,
       VideoMirrorModeType mirrorMode =
           VideoMirrorModeType.videoMirrorModeAuto});
 
-  /// @nodoc
+  /// 开关双流模式。
+  /// 你可以在发流端调用该方法开启或关闭双流模式。双流指视频大流和视频小流： 视频大流：高分辨率、高帧率的视频流。
+  ///  视频小流：低分辨率、低帧率的视频流。 开启双流模式后，你可以在收流端调用 setRemoteVideoStreamType 选择接收视频大流或视频小流。 该方法可以在加入频道前后调用。
+  ///
+  /// * [enabled] 是否开启双流模式： true: 开启双流模式。
+  ///  false: 关闭双流模式。
+  /// * [sourceType] 视频源的类型。详见 VideoSourceType 。
+  ///
+  /// * [streamConfig] 视频小流的配置。详见 SimulcastStreamConfig
   Future<void> enableDualStreamMode(
       {required bool enabled,
       VideoSourceType sourceType = VideoSourceType.videoSourceCameraPrimary,
       SimulcastStreamConfig? streamConfig});
 
-  /// @nodoc
+  /// 创建数据流。
+  /// 该方法用于创建数据流。每个用户在每个频道中最多只能创建 5 个数据流。
+  ///
+  /// * [config] 数据流设置。详见 DataStreamConfig 。
+  ///
+  /// Returns
+  /// 创建的数据流的 ID：方法调用成功。< 0：方法调用失败。
   Future<int> createDataStream(DataStreamConfig config);
 
-  /// @nodoc
+  /// 添加本地视频水印。
+  /// 该方法将一张 PNG 图片作为水印添加到本地发布的直播视频流上，同一直播频道中的用户、旁路直播观众和采集设备都能看到或采集到该水印图片。
+  ///  Agora 当前只支持在直播视频流中添加一个水印，后添加的水印会替换掉之前添加的水印。水印坐标和 setVideoEncoderConfiguration 方法中的设置有依赖关系：如果视频编码方向（ OrientationMode ）固定为横屏或自适应模式下的横屏，那么水印使用横屏坐标。如果视频编码方向（OrientationMode）固定为竖屏或自适应模式下的竖屏，那么水印使用竖屏坐标。设置水印坐标时，水印的图像区域不能超出setVideoEncoderConfiguration 方法中设置的视频尺寸，否则超出部分将被裁剪。你需要在调用 enableVideo 方法之后再调用该方法。如果你只是在旁路推流时添加水印，你可以使用该方法或 setLiveTranscoding 方法设置水印。待添加水印图片必须是 PNG 格式。该方法支持所有像素格式的 PNG 图片：RGBA、RGB、Palette、Gray 和 Alpha_gray。如果待添加的 PNG 图片的尺寸与你在该方法中设置的尺寸不一致，SDK 会对 PNG 图片进行缩放或裁剪，以与设置相符。如果你已经使用 startPreview 方法开启本地视频预览，那么该方法的visibleInPreview 可设置水印在预览时是否可见。如果你已设置本地视频为镜像模式，那么此处的本地水印也为镜像。为避免本地用户看本地视频时的水印也被镜像，Agora 建议你不要对本地视频同时使用镜像和水印功能，请在应用层实现本地水印功能。
+  ///
+  /// * [watermarkUrl] 待添加的水印图片的本地路径。该方法支持从本地绝对/相对路径添加水印图片。
+  /// * [options] 待添加的水印图片的设置选项，详见 WatermarkOptions 。
   Future<void> addVideoWatermark(
       {required String watermarkUrl, required WatermarkOptions options});
 
-  /// 使用 User Account 和 Token 加入频道。
-  /// 该方法允许本地用户使用 User Account 和 Token 加入频道。成功加入频道后，会触发以下回调：本地： onLocalUserRegistered 、 onJoinChannelSuccess 和 onConnectionStateChanged 回调。通信场景下的用户和直播场景下的主播加入频道后，远端会依次触发 onUserJoined 和 onUserInfoUpdated 回调。用户成功加入频道后，默认订阅频道内所有其他用户的音频流和视频流，因此产生用量并影响计费。如果想取消订阅，可以通过调用相应的mute 方法实现。为保证通信质量，请确保频道内使用同一类型的数据标识用户身份。即同一频道内需要统一使用 UID 或 User Account。如果有用户通过 Agora Web SDK 加入频道，请确保 Web 加入的用户也是同样类型。
+  /// 使用 User Account 和 Token 加入频道，并设置是否自动订阅音频或视频流。
+  /// 该方法允许本地用户使用 User Account 加入频道。成功加入频道后，会触发以下回调：本地： onLocalUserRegistered 、 onJoinChannelSuccess 和 onConnectionStateChanged 回调。远端：通信场景下的用户和直播场景下的主播加入频道后，远端会分别触发 onUserJoined 和 onUserInfoUpdated 回调。用户成功加入频道后，默认订阅频道内所有其他用户的音频流和视频流，因此产生用量并影响计费。如果想取消订阅，可以通过调用相应的mute 方法实现。为保证通信质量，请确保频道内使用同一类型的数据标识用户身份。即同一频道内需要统一使用 UID 或 User Account。如果有用户通过 Agora Web SDK 加入频道，请确保 Web 加入的用户也是同样类型。
   ///
-  /// * [userAccount] 用户 User Account。该参数用于标识实时音视频互动频道中的用户。你需要自行设置和管理用户的 User Account，并确保同一频道中每个用户的 User Account 是唯一的。 该参数为必填，最大不超过 255 字节，不可填 NULL。以下为支持的字符集范围（共 89 个字符）： 26 个小写英文字母 a-z
-  ///  26 个大写英文字母 A-Z
-  ///  10 个数字 0-9
-  ///  空格
-  ///  "!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
+  /// * [options] 频道媒体设置选项。详见 ChannelMediaOptions 。
   /// * [token] 在服务端生成的用于鉴权的动态密钥。详见
-  ///
-  /// * [channelId] 频道名。该参数标识用户进行实时音视频互动的频道。App ID 一致的前提下，填入相同频道名的用户会进入同一个频道进行音视频互动。该参数为长度在 64 字节以内的字符串。以下为支持的字符集范围（共 89 个字符）: 26 个小写英文字母 a~z
-  ///  26 个大写英文字母 A~Z
-  ///  10 个数字 0~9
-  ///  空格
-  ///  "!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
+  /// * [channelId] 频道名。该参数标识用户进行实时音视频互动的频道。App ID 一致的前提下，填入相同频道名的用户会进入同一个频道进行音视频互动。该参数为长度在 64 字节以内的字符串。以下为支持的字符集范围（共 89 个字符）:26 个小写英文字母 a~z26 个大写英文字母 A~Z10 个数字 0~9空格"!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
+  /// * [userAccount] 用户 User Account。该参数用于标识实时音视频互动频道中的用户。你需要自行设置和管理用户的 User Account，并确保同一频道中每个用户的 User Account 是唯一的。 该参数为必填，最大不超过 255 字节，不可填NULL。以下为支持的字符集范围（共 89 个字符）：26 个小写英文字母 a-z26 个大写英文字母 A-Z10 个数字 0-9空格"!"、"#"、"$"、"%"、"&"、"("、")"、"+"、"-"、":"、";"、"<"、"="、"."、">"、"?"、"@"、"["、"]"、"^"、"_"、"{"、"}"、"|"、"~"、","
   Future<void> joinChannelWithUserAccount(
       {required String token,
       required String channelId,
       required String userAccount,
       ChannelMediaOptions? options});
 
-  /// @nodoc
+  /// 获取 AudioDeviceManager 对象，以管理音频设备。
+  ///
+  ///
+  /// Returns
+  /// 一个 AudioDeviceManager 对象。
   AudioDeviceManager getAudioDeviceManager();
 
   /// 获取 VideoDeviceManager 对象，以管理视频设备。
@@ -4636,11 +4705,11 @@ enum VideoProfileType {
   @JsonValue(72)
   videoProfileLandscape4k3,
 
-  /// @nodoc
+  /// 1000: 分辨率 120 × 160，帧率 15 fps，码率 65 Kbps。
   @JsonValue(1000)
   videoProfilePortrait120p,
 
-  /// @nodoc
+  /// 1002: 分辨率 120 × 120，帧率 15 fps，码率 50 Kbps。
   @JsonValue(1002)
   videoProfilePortrait120p3,
 

@@ -98,7 +98,7 @@ enum MediaPlayerError {
   @JsonValue(-1)
   playerErrorInvalidArguments,
 
-  /// @nodoc
+  /// -2: 内部错误。
   @JsonValue(-2)
   playerErrorInternal,
 
@@ -150,7 +150,7 @@ enum MediaPlayerError {
   @JsonValue(-14)
   playerErrorNotSupported,
 
-  /// @nodoc
+  /// -15: 媒体资源网络路径的鉴权信息已过期。
   @JsonValue(-15)
   playerErrorTokenExpired,
 

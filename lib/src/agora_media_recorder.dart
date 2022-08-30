@@ -33,6 +33,7 @@ abstract class MediaRecorder {
   /// 0(ERR_OK): 方法调用成功< 0: 方法调用失败：-7: RtcEngine 尚未初始化就调用方法。
   Future<void> stopRecording(RtcConnection connection);
 
-  /// @nodoc
+  /// 释放 MediaRecorder 对象。
+  /// 该方法释放 MediaRecorder 对象使用的 RtcEngine 对象和其他所有资源。调用该方法后，如果需要再次开启录制，需要重新调用 getMediaRecorder 获取 MediaRecorder 对象。
   Future<void> release();
 }

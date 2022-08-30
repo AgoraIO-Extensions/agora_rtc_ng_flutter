@@ -542,7 +542,7 @@ enum InterfaceIdType {
   @JsonValue(3)
   agoraIidParameterEngine,
 
-  /// @nodoc
+  ///  MediaEngine 接口类。
   @JsonValue(4)
   agoraIidMediaEngine,
 
@@ -624,11 +624,11 @@ enum QualityType {
   @JsonValue(6)
   qualityDown,
 
-  /// @nodoc
+  /// 7: 暂时无法检测网络质量（未使用）。
   @JsonValue(7)
   qualityUnsupported,
 
-  /// @nodoc
+  /// 8: 网络质量检测已开始还没完成。
   @JsonValue(8)
   qualityDetecting,
 }
@@ -1051,15 +1051,15 @@ enum AudioCodecType {
   @JsonValue(1)
   audioCodecOpus,
 
-  /// @nodoc
+  /// 3: PCMA。
   @JsonValue(3)
   audioCodecPcma,
 
-  /// @nodoc
+  /// 4: PCMU。
   @JsonValue(4)
   audioCodecPcmu,
 
-  /// @nodoc
+  /// 5: G722。
   @JsonValue(5)
   audioCodecG722,
 
@@ -1071,7 +1071,7 @@ enum AudioCodecType {
   @JsonValue(9)
   audioCodecHeaac,
 
-  /// @nodoc
+  /// 10: JC1。
   @JsonValue(10)
   audioCodecJc1,
 
@@ -1242,7 +1242,7 @@ class EncodedAudioFrameInfo {
   @JsonKey(name: 'advancedSettings')
   final EncodedAudioFrameAdvancedSettings? advancedSettings;
 
-  /// @nodoc
+  /// 采集外部编码视频帧的 Unix 时间戳 (ms)。
   @JsonKey(name: 'captureTimeMs')
   final int? captureTimeMs;
 
@@ -1322,11 +1322,11 @@ extension H264PacketizeModeExt on H264PacketizeMode {
 ///
 @JsonEnum(alwaysCreate: true)
 enum VideoStreamType {
-  /// 0: 视频大流。
+  /// 0: 视频大流，即高分辨率、高码率视频流。
   @JsonValue(0)
   videoStreamHigh,
 
-  /// 1: 视频小流。
+  /// 1: 视频小流，即低分辨率、低码率视频流。
   @JsonValue(1)
   videoStreamLow,
 }
@@ -1344,17 +1344,18 @@ extension VideoStreamTypeExt on VideoStreamType {
   }
 }
 
-/// @nodoc
+/// 视频订阅设置。
+///
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class VideoSubscriptionOptions {
   /// @nodoc
   const VideoSubscriptionOptions({this.type, this.encodedFrameOnly});
 
-  /// @nodoc
+  /// 订阅的视频流类型，默认值为videoStreamHigh，即订阅视频大流。详见 VideoStreamType 。
   @JsonKey(name: 'type')
   final VideoStreamType? type;
 
-  /// @nodoc
+  /// 是否仅订阅编码后的视频流：true：仅订阅编码后的视频数据（结构化数据）。false：（默认）订阅原始视频数据。
   @JsonKey(name: 'encodedFrameOnly')
   final bool? encodedFrameOnly;
 
@@ -1411,7 +1412,7 @@ class EncodedVideoFrameInfo {
   @JsonKey(name: 'trackId')
   final int? trackId;
 
-  /// @nodoc
+  /// 采集外部编码视频帧的 Unix 时间戳 (ms)。
   @JsonKey(name: 'captureTimeMs')
   final int? captureTimeMs;
 
@@ -2078,23 +2079,23 @@ extension ExperienceQualityTypeExt on ExperienceQualityType {
 ///
 @JsonEnum(alwaysCreate: true)
 enum ExperiencePoorReason {
-  /// @nodoc
+  /// 0: 无原因，说明主观体验质量较好。
   @JsonValue(0)
   experienceReasonNone,
 
-  /// @nodoc
+  /// 1: 远端用户的网络较差。
   @JsonValue(1)
   remoteNetworkQualityPoor,
 
-  /// @nodoc
+  /// 2: 本地用户的网络较差。
   @JsonValue(2)
   localNetworkQualityPoor,
 
-  /// @nodoc
+  /// 4: 本地用户的 Wi-FI 或者移动数据网络信号弱。
   @JsonValue(4)
   wirelessSignalPoor,
 
-  /// @nodoc
+  /// 8: 本地用户同时开启 Wi-Fi 和蓝牙，二者信号互相干扰，导致音频传输质量下降。
   @JsonValue(8)
   wifiBluetoothCoexist,
 }
@@ -2230,11 +2231,11 @@ enum AudioProfileType {
   @JsonValue(5)
   audioProfileMusicHighQualityStereo,
 
-  /// @nodoc
+  /// 6: 指定 16 kHz 采样率，语音编码，单声道，应用回声消除算法 AES。
   @JsonValue(6)
   audioProfileIot,
 
-  /// @nodoc
+  /// 枚举值边界。
   @JsonValue(7)
   audioProfileNum,
 }
@@ -2276,7 +2277,7 @@ enum AudioScenarioType {
   @JsonValue(8)
   audioScenarioMeeting,
 
-  /// @nodoc
+  /// 枚举的数量。
   @JsonValue(9)
   audioScenarioNum,
 }
@@ -2389,19 +2390,19 @@ extension ScreenScenarioTypeExt on ScreenScenarioType {
 ///
 @JsonEnum(alwaysCreate: true)
 enum CaptureBrightnessLevelType {
-  /// @nodoc
+  /// -1: SDK 未检测出本地采集的画质亮度级别。请等待几秒，通过下一次回调的captureBrightnessLevel 获取亮度级别。
   @JsonValue(-1)
   captureBrightnessLevelInvalid,
 
-  /// @nodoc
+  /// 0: 本地采集的画质亮度正常。
   @JsonValue(0)
   captureBrightnessLevelNormal,
 
-  /// @nodoc
+  /// 1: 本地采集的画质亮度偏亮。
   @JsonValue(1)
   captureBrightnessLevelBright,
 
-  /// @nodoc
+  /// 2: 本地采集的画质亮度偏暗。
   @JsonValue(2)
   captureBrightnessLevelDark,
 }
@@ -2469,7 +2470,7 @@ enum LocalAudioStreamError {
   @JsonValue(2)
   localAudioStreamErrorDeviceNoPermission,
 
-  /// @nodoc
+  /// 3：（仅适用于 Android 和 iOS）本地音频采集设备已经在使用中。请提示用户检查麦克风是否被其他应用占用。麦克风空闲约 5 秒后本地音频采集会自动恢复，你也可以在麦克风空闲后尝试重新加入频道。
   @JsonValue(3)
   localAudioStreamErrorDeviceBusy,
 
@@ -2481,23 +2482,23 @@ enum LocalAudioStreamError {
   @JsonValue(5)
   localAudioStreamErrorEncodeFailure,
 
-  /// @nodoc
+  /// 6:（仅适用于 Windows）无本地音频采集设备。请提示用户在设备的控制面板中检查麦克风是否与设备连接正常，检查麦克风是否正常工作。
   @JsonValue(6)
   localAudioStreamErrorNoRecordingDevice,
 
-  /// @nodoc
+  /// 7:（仅适用于 Windows）无本地音频播放设备。请提示用户在设备的控制面板中检查扬声器是否与设备连接正常，检查扬声器是否正常工作。
   @JsonValue(7)
   localAudioStreamErrorNoPlayoutDevice,
 
-  /// @nodoc
+  /// 8:（仅适用于 Android 和 iOS）本地音频采集被系统来电、Siri、闹钟中断。如需恢复本地音频采集，请用户中止电话、Siri、闹钟。
   @JsonValue(8)
   localAudioStreamErrorInterrupted,
 
-  /// @nodoc
+  /// 9：（仅适用于 Windows）本地音频采集设备的 ID 无效。请检查音频采集设备 ID。
   @JsonValue(9)
   localAudioStreamErrorRecordInvalidId,
 
-  /// @nodoc
+  /// 10：（仅适用于 Windows）本地音频播放设备的 ID 无效。请检查音频播放设备 ID。
   @JsonValue(10)
   localAudioStreamErrorPlayoutInvalidId,
 }
@@ -2577,7 +2578,7 @@ enum LocalVideoStreamError {
   @JsonValue(5)
   localVideoStreamErrorEncodeFailure,
 
-  /// @nodoc
+  /// 6：（仅适用于 iOS）应用处于后台。请提示用户应用处于后台时，无法正常进行视频采集。
   @JsonValue(6)
   localVideoStreamErrorCaptureInbackground,
 
@@ -2589,7 +2590,7 @@ enum LocalVideoStreamError {
   @JsonValue(8)
   localVideoStreamErrorDeviceNotFound,
 
-  /// @nodoc
+  /// 9：（仅适用于 macOS）当前正在使用的视频采集设备已经断开连接（例如，被拔出）。
   @JsonValue(9)
   localVideoStreamErrorDeviceDisconnected,
 
@@ -2597,7 +2598,7 @@ enum LocalVideoStreamError {
   @JsonValue(10)
   localVideoStreamErrorDeviceInvalidId,
 
-  /// @nodoc
+  /// 101：由于系统压力过大，导致当前视频采集设备不可用。
   @JsonValue(101)
   localVideoStreamErrorDeviceSystemPressure,
 
@@ -2609,7 +2610,7 @@ enum LocalVideoStreamError {
   @JsonValue(12)
   localVideoStreamErrorScreenCaptureWindowClosed,
 
-  /// @nodoc
+  /// 13:（仅适用于 Windows）待共享的窗口被其他窗口遮挡住，被遮挡住的部分在共享时会被 SDK 涂黑。
   @JsonValue(13)
   localVideoStreamErrorScreenCaptureWindowOccluded,
 
@@ -2975,7 +2976,7 @@ class AudioVolumeInfo {
   @JsonKey(name: 'vad')
   final int? vad;
 
-  /// @nodoc
+  /// 本地用户的人声音调（Hz）。取值范围为 [0.0,4000.0]。voicePitch 无法报告远端用户的人声音调。对于远端用户，voicePitch 的值始终为 0.0。
   @JsonKey(name: 'voicePitch')
   final double? voicePitch;
 
@@ -3083,18 +3084,19 @@ extension VideoCodecTypeForStreamExt on VideoCodecTypeForStream {
   }
 }
 
-/// @nodoc
+/// 旁路推流输出视频的编解码规格。
+///
 @JsonEnum(alwaysCreate: true)
 enum VideoCodecProfileType {
-  /// @nodoc
+  /// 66: Baseline 级别的视频编码规格，一般用于低阶或需要额外容错的应用，比如视频通话、手机视频等。
   @JsonValue(66)
   videoCodecProfileBaseline,
 
-  /// @nodoc
+  /// 77: Main 级别的视频编码规格，一般用于主流消费类电子产品，如 MP4、便携的视频播放器、PSP、iPad 等。
   @JsonValue(77)
   videoCodecProfileMain,
 
-  /// @nodoc
+  /// 100: （默认）High 级别的视频编码规格，一般用于广播、视频碟片存储、高清电视。
   @JsonValue(100)
   videoCodecProfileHigh,
 }
@@ -3426,11 +3428,11 @@ class LiveStreamAdvancedFeature {
 ///
 @JsonEnum(alwaysCreate: true)
 enum ConnectionStateType {
-  /// 1: 网络连接断开。该状态表示 SDK 处于:调用joinChannelWithOptions 加入频道前的初始化阶段。或调用 leaveChannel 后的离开频道阶段。
+  /// 1: 网络连接断开。该状态表示 SDK 处于:调用joinChannel [2/2] 加入频道前的初始化阶段。或调用 leaveChannel 后的离开频道阶段。
   @JsonValue(1)
   connectionStateDisconnected,
 
-  /// 2: 建立网络连接中。该状态表示 SDK 在调用joinChannelWithOptions 后正在与指定的频道建立连接。如果成功加入频道，app 会收到 onConnectionStateChanged 回调，通知当前网络状态变成connectionStateConnected。建立连接后，SDK 还会初始化媒体，一切就绪后会回调 onJoinChannelSuccess 。
+  /// 2: 建立网络连接中。该状态表示 SDK 在调用joinChannel [2/2] 后正在与指定的频道建立连接。如果成功加入频道，app 会收到 onConnectionStateChanged 回调，通知当前网络状态变成connectionStateConnected。建立连接后，SDK 还会初始化媒体，一切就绪后会回调 onJoinChannelSuccess 。
   @JsonValue(2)
   connectionStateConnecting,
 
@@ -3442,7 +3444,7 @@ enum ConnectionStateType {
   @JsonValue(4)
   connectionStateReconnecting,
 
-  /// 5: 网络连接失败。该状态表示 SDK 已不再尝试重新加入频道，需要调用 leaveChannel 离开频道。如果用户还想重新加入频道，则需要再次调用joinChannelWithOptions。如果 SDK 因服务器端使用 RESTful API 禁止加入频道，则 app 会收到 onConnectionStateChanged 。
+  /// 5: 网络连接失败。该状态表示 SDK 已不再尝试重新加入频道，需要调用 leaveChannel 离开频道。如果用户还想重新加入频道，则需要再次调用joinChannel [2/2]。如果 SDK 因服务器端使用 RESTful API 禁止加入频道，则 app 会收到 onConnectionStateChanged 。
   @JsonValue(5)
   connectionStateFailed,
 }
@@ -3569,7 +3571,7 @@ class LiveTranscoding {
   @JsonKey(name: 'videoGop')
   final int? videoGop;
 
-  /// 用于旁路直播的输出视频的编码规格。可以设置为 66、77 或 100，详见 VIDEO_CODEC_PROFILE_TYPE 。如果你把这个参数设为其他值，Agora 服务器会将其调整为默认值。
+  /// 用于旁路直播的输出视频的编码规格。可以设置为 66、77 或 100，详见 VideoCodecProfileType 。如果你把这个参数设为其他值，Agora 服务器会将其调整为默认值。
   @JsonKey(name: 'videoCodecProfile')
   final VideoCodecProfileType? videoCodecProfile;
 
@@ -3902,7 +3904,7 @@ enum ConnectionChangedReasonType {
   @JsonValue(7)
   connectionChangedInvalidChannelName,
 
-  /// 8: 生成的 Token 无效。一般有以下原因：在控制台上启用了 App Certificate，但加入频道未使用 Token。当启用了 App Certificate，必须使用 Token。在调用joinChannelWithOptions 加入频道时指定的用户 ID 与生成 Token 时传入的用户 ID 不一致。
+  /// 8: 生成的 Token 无效。一般有以下原因：在控制台上启用了 App Certificate，但加入频道未使用 Token。当启用了 App Certificate，必须使用 Token。在调用joinChannel [2/2] 加入频道时指定的用户 ID 与生成 Token 时传入的用户 ID 不一致。
   @JsonValue(8)
   connectionChangedInvalidToken,
 
@@ -3910,7 +3912,7 @@ enum ConnectionChangedReasonType {
   @JsonValue(9)
   connectionChangedTokenExpired,
 
-  /// 10: 此用户被服务器禁止。一般有以下原因：用户已进入频道，再次调用加入频道的 API，例如joinChannelWithOptions，会返回此状态。停止调用该方法即可。用户在进行通话测试时尝试加入频道。等待通话测试结束后再加入频道即可。
+  /// 10: 此用户被服务器禁止。一般有以下原因：用户已进入频道，再次调用加入频道的 API，例如joinChannel [2/2]，会返回此状态。停止调用该方法即可。用户在进行通话测试时尝试加入频道。等待通话测试结束后再加入频道即可。
   @JsonValue(10)
   connectionChangedRejectedByServer,
 
@@ -4308,7 +4310,7 @@ class LowlightEnhanceOptions {
   @JsonKey(name: 'mode')
   final LowLightEnhanceMode? mode;
 
-  /// 暗光增强等级。详见 LOW_LIGHT_ENHANCE_LEVEL 。
+  /// 暗光增强等级。详见 LowLightEnhanceLevel 。
   @JsonKey(name: 'level')
   final LowLightEnhanceLevel? level;
 
@@ -4346,14 +4348,15 @@ extension LowLightEnhanceModeExt on LowLightEnhanceMode {
   }
 }
 
-/// @nodoc
+/// 暗光增强等级。
+///
 @JsonEnum(alwaysCreate: true)
 enum LowLightEnhanceLevel {
-  /// @nodoc
+  /// 0:（默认）优先画质的暗光增强，会处理视频图像的亮度、细节、噪声，消耗的性能适中，处理速度适中，综合画质最优。
   @JsonValue(0)
   lowLightEnhanceLevelHighQuality,
 
-  /// @nodoc
+  /// 1：优先性能的暗光增强，会处理视频图像的亮度、细节，消耗的性能较少，处理速度较快。
   @JsonValue(1)
   lowLightEnhanceLevelFast,
 }
@@ -4490,11 +4493,11 @@ class VirtualBackgroundSource {
   @JsonKey(name: 'color')
   final int? color;
 
-  /// @nodoc
+  /// 自定义背景图的本地绝对路径。支持 PNG 和 JPG 格式。如果路径无效，SDK 会用白色背景图替换原背景图。该参数仅在自定义背景图类型为backgroundImg 时生效。
   @JsonKey(name: 'source')
   final String? source;
 
-  /// @nodoc
+  /// 自定义背景图的模糊程度。该参数仅在自定义背景图类型为backgroundBlur 时生效。
   @JsonKey(name: 'blur_degree')
   final BackgroundBlurDegree? blurDegree;
 
@@ -5017,7 +5020,7 @@ class AudioRecordingConfiguration {
   @JsonKey(name: 'quality')
   final AudioRecordingQualityType? quality;
 
-  /// 录制的音频声道。目前支持如下取值：1:（默认）单声道。2: 双声道。实际录制的音频声道与你采集的音频声道有关：如果采集的音频为单声道，recordingChannel 设为2， 则录制的音频为经过单声道数据拷贝后的双声道数据，而不是立体声。如果采集的音频为双声道，recordingChannel 设为1，则录制的音频为经过双声道数据混合后的单声道数据。此外，集成方案也会影响最终录制的音频声道。因此，如果你希望录制立体声，请联系技术支持协助。
+  /// 录制的音频声道。目前支持如下取值：1:（默认）单声道。2: 双声道。实际录制的音频声道与你采集的音频声道有关：如果采集的音频为单声道，recordingChannel 设为2， 则录制的音频为经过单声道数据拷贝后的双声道数据，而不是立体声。如果采集的音频为双声道，recordingChannel 设为1，则录制的音频为经过双声道数据混合后的单声道数据。此外，集成方案也会影响最终录制的音频声道。因此，如果你希望录制立体声，请协助。
   @JsonKey(name: 'recordingChannel')
   final int? recordingChannel;
 
@@ -5434,7 +5437,7 @@ class UplinkNetworkInfo {
   /// @nodoc
   const UplinkNetworkInfo({this.videoEncoderTargetBitrateBps});
 
-  /// @nodoc
+  /// 目标视频编码器的码率 (bps)。
   @JsonKey(name: 'video_encoder_target_bitrate_bps')
   final int? videoEncoderTargetBitrateBps;
 

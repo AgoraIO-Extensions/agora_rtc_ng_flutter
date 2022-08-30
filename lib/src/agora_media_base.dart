@@ -31,7 +31,7 @@ enum AudioRoute {
   @JsonValue(3)
   routeSpeakerphone,
 
-  /// @nodoc
+  /// 4: 音频路由为外接的扬声器。（仅适用于 iOS 和 macOS）
   @JsonValue(4)
   routeLoudspeaker,
 
@@ -47,11 +47,11 @@ enum AudioRoute {
   @JsonValue(7)
   routeHdmi,
 
-  /// @nodoc
+  /// 8: 音频路由为 DisplayPort 外围设备。（仅适用于 macOS）
   @JsonValue(8)
   routeDisplayport,
 
-  /// @nodoc
+  /// 9: 音频路由为 Apple AirPlay。（仅适用于 macOS）
   @JsonValue(9)
   routeAirplay,
 }
@@ -216,18 +216,19 @@ extension MediaSourceTypeExt on MediaSourceType {
   }
 }
 
-/// @nodoc
+/// 鉴黄结果。
+///
 @JsonEnum(alwaysCreate: true)
 enum ContentInspectResult {
-  /// @nodoc
+  /// 1：正常图片。
   @JsonValue(1)
   contentInspectNeutral,
 
-  /// @nodoc
+  /// 2：性感图片。
   @JsonValue(2)
   contentInspectSexy,
 
-  /// @nodoc
+  /// 3：色情图片。
   @JsonValue(3)
   contentInspectPorn,
 }
@@ -249,15 +250,15 @@ extension ContentInspectResultExt on ContentInspectResult {
 ///
 @JsonEnum(alwaysCreate: true)
 enum ContentInspectType {
-  /// @nodoc
+  /// 0：（默认）该功能模块无实际功能。请不要将type 设为该值。
   @JsonValue(0)
   contentInspectInvalid,
 
-  /// @nodoc
+  /// 1：视频鉴黄。SDK 会对视频流进行截图、鉴黄，并将截图和审核结果上传。
   @JsonValue(1)
   contentInspectModeration,
 
-  /// @nodoc
+  /// 2：视频截图。SDK 会对视频流进行截图并上传。
   @JsonValue(2)
   contentInspectSupervision,
 }
@@ -401,7 +402,7 @@ class AudioPcmFrame {
   @JsonKey(name: 'num_channels_')
   final int? numChannels;
 
-  /// @nodoc
+  /// 音频数据的字节数。
   @JsonKey(name: 'bytes_per_sample')
   final BytesPerSample? bytesPerSample;
 
@@ -622,15 +623,15 @@ class ExternalVideoFrame {
   @JsonKey(name: 'textureId')
   final int? textureId;
 
-  /// @nodoc
+  /// 该参数仅适用于 Texture 格式的视频数据。为一个输入的 4x4 变换矩阵，典型值为一个单位矩阵。
   @JsonKey(name: 'matrix')
   final List<double>? matrix;
 
-  /// @nodoc
+  /// 该参数仅适用于 Texture 格式的视频数据。指 MetaData 的数据缓冲区，默认值为NULL。
   @JsonKey(name: 'metadata_buffer', ignore: true)
   final Uint8List? metadataBuffer;
 
-  /// @nodoc
+  /// 该参数仅适用于 Texture 格式的视频数据。指 MetaData 的大小，默认值为0。
   @JsonKey(name: 'metadata_size')
   final int? metadataSize;
 
@@ -725,35 +726,35 @@ class VideoFrame {
   @JsonKey(name: 'type')
   final VideoPixelFormat? type;
 
-  /// @nodoc
+  /// 视频像素宽度。
   @JsonKey(name: 'width')
   final int? width;
 
-  /// @nodoc
+  /// 视频像素高度。
   @JsonKey(name: 'height')
   final int? height;
 
-  /// @nodoc
+  /// 对 YUV 数据，表示 Y 缓冲区的行跨度；对 RGBA 数据，表示总的数据长度。
   @JsonKey(name: 'yStride')
   final int? yStride;
 
-  /// @nodoc
+  /// 对 YUV 数据，表示 U 缓冲区的行跨度；对 RGBA 数据，值为 0。
   @JsonKey(name: 'uStride')
   final int? uStride;
 
-  /// @nodoc
+  /// 对 YUV 数据，表示 V 缓冲区的行跨度；对 RGBA 数据，值为 0。
   @JsonKey(name: 'vStride')
   final int? vStride;
 
-  /// @nodoc
+  /// 对 YUV 数据，表示 Y 缓冲区的指针；对 RGBA 数据，表示数据缓冲区。
   @JsonKey(name: 'yBuffer', ignore: true)
   final Uint8List? yBuffer;
 
-  /// @nodoc
+  /// 对 YUV 数据，表示 U 缓冲区的指针；对 RGBA 数据，值为空。
   @JsonKey(name: 'uBuffer', ignore: true)
   final Uint8List? uBuffer;
 
-  /// @nodoc
+  /// 对 YUV 数据，表示 V 缓冲区的指针；对 RGBA 数据，值为空。
   @JsonKey(name: 'vBuffer', ignore: true)
   final Uint8List? vBuffer;
 
@@ -761,19 +762,19 @@ class VideoFrame {
   @JsonKey(name: 'rotation')
   final int? rotation;
 
-  /// @nodoc
+  /// 视频帧被渲染时的 Unix 时间戳（毫秒）。该时间戳可用于指导渲染视频帧。该参数为必填。
   @JsonKey(name: 'renderTimeMs')
   final int? renderTimeMs;
 
-  /// @nodoc
+  /// 保留参数。
   @JsonKey(name: 'avsync_type')
   final int? avsyncType;
 
-  /// @nodoc
+  /// 该参数仅适用于 Texture 格式的视频数据。指 MetaData 的数据缓冲区，默认值为NULL。
   @JsonKey(name: 'metadata_buffer', ignore: true)
   final Uint8List? metadataBuffer;
 
-  /// @nodoc
+  /// 该参数仅适用于 Texture 格式的视频数据。指 MetaData 的大小，默认值为0。
   @JsonKey(name: 'metadata_size')
   final int? metadataSize;
 
@@ -785,7 +786,7 @@ class VideoFrame {
   @JsonKey(name: 'matrix')
   final List<double>? matrix;
 
-  /// 表示人像分割算法的输出数据，跟视频帧的尺寸一致。每个像素点的取值范围为 [0,255]，其中 0 表示背景；255 代表前景（人像）。在用户自定义视频渲染场景下，该参数可帮助实现将视频背景自渲染为各种效果，例如：透明、纯色、图片、视频等等。该参数需要联系技术支持开通。
+  /// 表示人像分割算法的输出数据，跟视频帧的尺寸一致。每个像素点的取值范围为 [0,255]，其中 0 表示背景；255 代表前景（人像）。在用户自定义视频渲染场景下，该参数可帮助实现将视频背景自渲染为各种效果，例如：透明、纯色、图片、视频等等。该参数需要开通。
   @JsonKey(name: 'alphaBuffer', ignore: true)
   final Uint8List? alphaBuffer;
 
@@ -830,15 +831,15 @@ extension MediaPlayerSourceTypeExt on MediaPlayerSourceType {
 ///
 @JsonEnum(alwaysCreate: true)
 enum VideoModulePosition {
-  /// @nodoc
+  /// 1: 本地采集视频数据后的位置，对应onCaptureVideoFrame 回调。
   @JsonValue(1 << 0)
   positionPostCapturer,
 
-  /// @nodoc
+  /// 2: 接收远端发送视频前的位置，对应onRenderVideoFrame 回调。
   @JsonValue(1 << 1)
   positionPreRenderer,
 
-  /// @nodoc
+  /// 4: 本地视频编码前的位置，对应onPreEncodeVideoFrame 回调。
   @JsonValue(1 << 2)
   positionPreEncoder,
 
@@ -969,7 +970,7 @@ class AudioFrame {
   @JsonKey(name: 'renderTimeMs')
   final int? renderTimeMs;
 
-  /// @nodoc
+  /// 保留参数。
   @JsonKey(name: 'avsync_type')
   final int? avsyncType;
 
@@ -1019,14 +1020,14 @@ extension AudioFramePositionExt on AudioFramePosition {
 }
 
 /// 音频数据格式。
-/// 你可以在以下回调的返回值中传入AudioParams 对象，用于设置对应回调报告的音频数据格式：：设置 onRecordAudioFrame 回调的数据格式。：设置 onPlaybackAudioFrame 回调的数据格式。：设置 onMixedAudioFrame 回调的数据格式。SDK 会通过AudioParams 中的samplesPerCall、sampleRate 和channel 参数计算采样间隔，并根据该采样间隔触发onRecordAudioFrame、onPlaybackAudioFrame 和onMixedAudioFrame 回调。采样间隔 =samplesPerCall/(sampleRate ×channel)。请确保采样间隔不得小于 0.01 (s)。
+/// SDK 会通过AudioParams 中的samplesPerCall、sampleRate 和channel 参数计算采样间隔，并根据该采样间隔触发onRecordAudioFrame、onPlaybackAudioFrame 和onMixedAudioFrame 回调。采样间隔 =samplesPerCall/(sampleRate ×channel)。请确保采样间隔不得小于 0.01 (s)。
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class AudioParams {
   /// @nodoc
   const AudioParams(
       {this.sampleRate, this.channels, this.mode, this.samplesPerCall});
 
-  /// @nodoc
+  /// 数据的采样率，单位为 Hz，取值如下：800016000（默认值）320004410048000
   @JsonKey(name: 'sample_rate')
   final int? sampleRate;
 
@@ -1038,7 +1039,7 @@ class AudioParams {
   @JsonKey(name: 'mode')
   final RawAudioFrameOpModeType? mode;
 
-  /// @nodoc
+  /// 数据的采样点数，如旁路推流应用中通常为 1024。
   @JsonKey(name: 'samples_per_call')
   final int? samplesPerCall;
 
@@ -1148,7 +1149,7 @@ class AudioSpectrumObserver {
   /// 获取远端音频频谱。
   /// 成功调用 registerAudioSpectrumObserver 实现 AudioSpectrumObserver 中的onRemoteAudioSpectrum 回调并调用 enableAudioSpectrumMonitor 开启音频频谱监测后，SDK 会按照你设置的时间间隔触发该回调，报告接收到的远端音频数据的频谱。
   ///
-  /// * [spectrums] 远端用户的音频频谱信息，详见 UserAudioSpectrumInfo 。 数组数量等于 SDK 监测到的远端用户数量，数组为空表示没有监测到远端用户的音频频谱
+  /// * [spectrums] 远端用户的音频频谱信息，详见 UserAudioSpectrumInfo 。 数组数量等于 SDK 监测到的远端用户数量，数组为空表示没有监测到远端用户的音频频谱。
   /// * [spectrumNumber] 远端用户的数量。
   final void Function(
           List<UserAudioSpectrumInfo> spectrums, int spectrumNumber)?
@@ -1254,7 +1255,7 @@ class VideoFrameObserver {
       onSecondaryPreEncodeScreenVideoFrame;
 
   /// 获取远端发送的视频数据。
-  /// 成功注册视频数据观测器后，SDK 会在捕捉到每个视频帧时触发该回调。你可以在回调中获取远端发送的视频数据，然后根据场景需要，对视频数据进行处理。该功能仅支持视频处理模式为PROCESS_MODE_READ_ONLY 的场景。
+  /// 成功注册视频数据观测器后，SDK 会在捕捉到每个视频帧时触发该回调。你可以在回调中获取远端发送的视频数据，然后根据场景需要，对视频数据进行处理。该功能仅支持视频处理模式为processModeReadOnly 的场景。
   ///
   /// * [videoFrame] 视频帧数据。详见 VideoFrame 。
   /// * [remoteUid] 发送该帧视频的远端用户 ID。
@@ -1270,11 +1271,11 @@ class VideoFrameObserver {
 ///
 @JsonEnum(alwaysCreate: true)
 enum VideoFrameProcessMode {
-  /// @nodoc
+  /// 只读模式。只读模式下，你不修改视频帧，视频观测器相当于渲染器。
   @JsonValue(0)
   processModeReadOnly,
 
-  /// @nodoc
+  /// 读写模式。读写模式下，你会修改视频帧，视频观测器相当于视频 filter。
   @JsonValue(1)
   processModeReadWrite,
 }

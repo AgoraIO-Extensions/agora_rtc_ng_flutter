@@ -82,13 +82,13 @@ abstract class BaseSpatialAudioEngine {
   Future<void> setParameters(String params);
 
   /// 取消或恢复发布本地音频流。
-  /// 该方法不影响音频采集状态，因为没有禁用音频采集设备。该方法需要在 joinChannelWithOptions 后调用。在使用空间音效时，如需设置是否发布本地音频流，Agora 推荐调用该方法替代 RtcEngine 的 muteLocalAudioStream 方法。
+  /// 该方法不影响音频采集状态，因为没有禁用音频采集设备。该方法需要在 joinChannel [2/2] 后调用。在使用空间音效时，如需设置是否发布本地音频流，Agora 推荐调用该方法替代 RtcEngine 的 muteLocalAudioStream 方法。
   ///
   /// * [mute] 是否取消发布本地音频流。true: 取消发布本地音频流。false: 发布本地音频流。
   Future<void> muteLocalAudioStream(bool mute);
 
   /// 取消或恢复订阅所有远端用户的音频流。
-  /// 成功调用该方法后，本地用户会取消或恢复订阅所有远端用户的音频流，包括在调用该方法后加入频道的用户的音频流。该方法需要在 joinChannelWithOptions 后调用。在使用空间音效时，如需设置是否订阅所有远端用户的音频流，Agora 推荐调用该方法替代 RtcEngine 的 muteAllRemoteAudioStreams 方法。
+  /// 成功调用该方法后，本地用户会取消或恢复订阅所有远端用户的音频流，包括在调用该方法后加入频道的用户的音频流。该方法需要在 joinChannel [2/2] 后调用。在使用空间音效时，如需设置是否订阅所有远端用户的音频流，Agora 推荐调用该方法替代 RtcEngine 的 muteAllRemoteAudioStreams 方法。
   ///
   /// * [mute] 是否取消订阅所有远端用户的音频流：true: 取消订阅所有远端用户的音频流。false: 订阅所有远端用户的音频流。
   Future<void> muteAllRemoteAudioStreams(bool mute);
@@ -102,7 +102,7 @@ abstract class LocalSpatialAudioEngine implements BaseSpatialAudioEngine {
   Future<void> initialize();
 
   /// 更新远端用户的空间位置信息。
-  /// 成功调用该方法后，SDK 会根据本地和远端用户的相对位置计算空间音效参数。该方法需要在 joinChannelWithOptions 后调用。
+  /// 成功调用该方法后，SDK 会根据本地和远端用户的相对位置计算空间音效参数。该方法需要在 joinChannel [2/2] 后调用。
   ///
   /// * [uid] 用户 ID。需与用户加入频道时填写的用户 ID 一致。
   /// * [posInfo] 远端用户的空间位置信息。详见 RemoteVoicePositionInfo 。

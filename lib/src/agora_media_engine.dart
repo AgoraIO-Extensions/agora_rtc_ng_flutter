@@ -55,7 +55,13 @@ abstract class MediaEngine {
   /// * [observer] 视频帧接收观测器，详见 VideoEncodedFrameObserver 。
   void registerVideoEncodedFrameObserver(VideoEncodedFrameObserver observer);
 
-  /// @nodoc
+  /// 推送外部音频帧。
+  ///
+  ///
+  /// * [type] 音频采集设备类型。详见 MediaSourceType 。
+  /// * [frame] 外部音频帧。详见 AudioFrame 。
+  /// * [wrap] 设置是否占位使用。Agora 建议用户使用默认值。true: 占位使用；false:（默认）不占位使用。
+  /// * [sourceId] 外部音频源的 ID。如果你要发布自定义的外部音频源，则将该参数设置为你想要发布的自定义音频轨道 ID。
   Future<void> pushAudioFrame(
       {required MediaSourceType type,
       required AudioFrame frame,
@@ -81,7 +87,7 @@ abstract class MediaEngine {
   /// * [enabled] 是否启用外部视频源：true: 启用外部视频源。SDK 准备接收外部视频帧。false:（默认）不启用外部视频源。
   /// * [useTexture] 是否使用 texture 格式的外部视频帧：true: 使用 texture 格式的外部视频帧。false: 不使用 texture 格式的外部视频帧。
   /// * [sourceType] 是否对外部视频帧编码，详见 ExternalVideoSourceType 。
-  /// * [encodedVideoOption] 视频编码选项。如果sourceType 为encodedVideoFrame，则需要设置该参数。你可以联系技术支持了解如何设置该参数。
+  /// * [encodedVideoOption] 视频编码选项。如果sourceType 为encodedVideoFrame，则需要设置该参数。你可以了解如何设置该参数。
   Future<void> setExternalVideoSource(
       {required bool enabled,
       required bool useTexture,
@@ -90,7 +96,15 @@ abstract class MediaEngine {
       /// @nodoc
       SenderOptions encodedVideoOption = const SenderOptions()});
 
-  /// @nodoc
+  /// 设置外部音频采集参数。
+  /// 请在加入频道前调用该方法。
+  ///
+  /// * [enabled] 是否开启使用外部音频源的功能：true：开启外部音频源。false：（默认）关闭外部音频源。
+  /// * [sampleRate] 外部音频源的采样率 (Hz)，可设置为8000，16000，32000，44100 或48000。
+  /// * [channels] 外部音频源的声道数，可设置为1（单声道）或2（双声道）。
+  /// * [sourceNumber] 外部音频源的数量，取值为正整数。SDK 会根据该参数值创建对应数量的自采集音频轨道，并从 0 开始为音频轨道命名。你可以在 ChannelMediaOptions 中，设置publishCustomAudioSourceId 为你想要发布的音频轨道 ID。
+  /// * [localPlayback] 是否在本地播放外部音频源：true：在本地播放。false：（默认）不在本地播放。
+  /// * [publish] 是否将音频发布到远端：true：（默认）发布到远端。false：不发布到远端。
   Future<void> setExternalAudioSource(
       {required bool enabled,
       required int sampleRate,
@@ -146,6 +160,9 @@ abstract class MediaEngine {
   /// * [observer] 视频帧观测器，观测每帧视频的接收, 详见 VideoFrameObserver 。
   void unregisterVideoFrameObserver(VideoFrameObserver observer);
 
-  /// @nodoc
+  /// 为编码后的视频图像取消注册视频帧接收观测器。
+  ///
+  ///
+  /// * [observer] 视频帧观测器，观测每帧视频的接收, 详见 VideoEncodedFrameObserver 。
   void unregisterVideoEncodedFrameObserver(VideoEncodedFrameObserver observer);
 }

@@ -160,7 +160,15 @@ abstract class RtcEngineEx implements RtcEngine {
       required int uidNumber,
       required RtcConnection connection});
 
-  /// @nodoc
+  /// 设置远端视频流的订阅选项。
+  /// 当远端发送双流时，可调用此方法来设置远端视频流的订阅选项。
+  ///
+  /// * [connection] Connection 信息。详见 RtcConnection 。
+  /// * [options] 视频流的订阅设置，详见 VideoSubscriptionOptions 。
+  /// * [uid] 远端用户 ID。
+  ///
+  /// Returns
+  /// 0: 方法调用成功。< 0: 方法调用失败。
   Future<void> setRemoteVideoSubscriptionOptionsEx(
       {required int uid,
       required VideoSubscriptionOptions options,
@@ -308,7 +316,6 @@ abstract class RtcEngineEx implements RtcEngine {
       required SimulcastStreamConfig streamConfig,
       required RtcConnection connection});
 
-  /// @nodoc
   @override
   Future<void> enableWirelessAccelerate(bool enabled);
 
@@ -330,7 +337,14 @@ abstract class RtcEngineEx implements RtcEngine {
       required int uid,
       required String filePath});
 
-  /// @nodoc
+  /// 创建数据流。
+  /// 创建数据流。每个用户在每个频道中最多只能创建 5 个数据流。相比 createDataStreamEx ，本方法不支持数据可靠。接收方会丢弃超出发送时间 5 秒后的数据包。
+  ///
+  /// * [connection] Connection 信息。详见 RtcConnection 。
+  /// * [config] 数据流设置。详见 DataStreamConfig 。
+  ///
+  /// Returns
+  /// < 0：方法调用失败。
   Future<int> createDataStreamEx(
       {required DataStreamConfig config, required RtcConnection connection});
 }
