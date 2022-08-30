@@ -543,6 +543,10 @@ class _ApiCallExecutorInternal implements _ApiCallExecutorBase {
             bufferLength,
             resultPointer);
 
+        if (irisReturnCode < 0) {
+          return CallApiResult(irisReturnCode: irisReturnCode, data: const {});
+        }
+
         final result = resultPointer.cast<Utf8>().toDartString();
         final resultMap = Map<String, dynamic>.from(jsonDecode(result));
 

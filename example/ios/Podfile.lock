@@ -2,12 +2,12 @@ PODS:
   - agora_rtc_engine (6.0.0-beta.2):
     - AgoraRtcWrapper
     - Flutter
+  - AgoraIrisEventFlutter_iOS (1.2.0)
   - AgoraRtcWrapper (3.6.2)
   - Flutter (1.0.0)
   - iris_event (0.0.1):
+    - AgoraIrisEventFlutter_iOS (= 1.2.0)
     - Flutter
-    - iris_event_handler
-  - iris_event_handler (1.0.0)
   - path_provider_ios (0.0.1):
     - Flutter
   - "permission_handler (5.1.0+2)":
@@ -18,9 +18,12 @@ DEPENDENCIES:
   - AgoraRtcWrapper (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - Flutter (from `Flutter`)
   - iris_event (from `.symlinks/plugins/iris_event/ios`)
-  - iris_event_handler (from `.symlinks/plugins/iris_event/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  trunk:
+    - AgoraIrisEventFlutter_iOS
 
 EXTERNAL SOURCES:
   agora_rtc_engine:
@@ -31,8 +34,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   iris_event:
     :path: ".symlinks/plugins/iris_event/ios"
-  iris_event_handler:
-    :path: ".symlinks/plugins/iris_event/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler:
@@ -40,13 +41,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   agora_rtc_engine: 1afc0934cce5c4e5bcfada1ca0b5dae5b747351b
+  AgoraIrisEventFlutter_iOS: a0b292daa1d4043477e86d3d2abd8e1ff9aa41fb
   AgoraRtcWrapper: 564d09d8441eeb900f7790b8c849645ae7fa26b3
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  iris_event: 5e57592332e13d2b019185be65cf69bdb85d9146
-  iris_event_handler: cd2d870e191a1524499dc2888afbf4ca0683f95e
+  iris_event: 4fbdf75c1addece46820100ba015251fa145a11a
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
 
-PODFILE CHECKSUM: 3538fa4340ee4af46531873dda7538947b95865d
+PODFILE CHECKSUM: 72e5370af2daee4203d0c4d13bf19bd4287ff9ec
 
 COCOAPODS: 1.11.3
