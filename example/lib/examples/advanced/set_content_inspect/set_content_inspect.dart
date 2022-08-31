@@ -14,7 +14,7 @@ class SetContentInspect extends StatefulWidget {
   State<StatefulWidget> createState() => _State();
 }
 
-class _State extends State<SetContentInspect> {
+class _State extends State<SetContentInspect> with KeepRemoteVideoViewsMixin {
   late final RtcEngine _engine;
 
   bool _isReadyPreview = false;
@@ -141,6 +141,7 @@ class _State extends State<SetContentInspect> {
             Align(
               alignment: Alignment.topLeft,
               child: RemoteVideoViewsWidget(
+                key: keepRemoteVideoViewsKey,
                 rtcEngine: _engine,
                 channelId: _controller.text,
               ),

@@ -16,7 +16,7 @@ class SetBeautyEffect extends StatefulWidget {
   State<StatefulWidget> createState() => _State();
 }
 
-class _State extends State<SetBeautyEffect> {
+class _State extends State<SetBeautyEffect> with KeepRemoteVideoViewsMixin {
   late final RtcEngine _engine;
   bool _isReadyPreview = false;
   bool isJoined = false;
@@ -347,6 +347,7 @@ class _State extends State<SetBeautyEffect> {
             Align(
               alignment: Alignment.topLeft,
               child: RemoteVideoViewsWidget(
+                key: keepRemoteVideoViewsKey,
                 rtcEngine: _engine,
                 channelId: _channelIdController.text,
               ),

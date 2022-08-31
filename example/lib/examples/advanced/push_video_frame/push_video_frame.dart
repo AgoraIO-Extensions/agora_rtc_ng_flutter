@@ -25,6 +25,10 @@ class _State extends State<PushVideoFrame> {
   Set<int> remoteUid = {};
   late TextEditingController _controller;
 
+  late final Uint8List _imageByteData;
+  late final int _imageWidth;
+  late final int _imageHeight;
+
   @override
   void initState() {
     super.initState();
@@ -93,6 +97,8 @@ class _State extends State<PushVideoFrame> {
 
     await _engine.enableVideo();
 
+    await _loadImageByteData();
+
     setState(() {
       _isReadyPreview = true;
     });
@@ -114,7 +120,7 @@ class _State extends State<PushVideoFrame> {
     await _engine.leaveChannel();
   }
 
-  Future<void> _pushVideoFrame() async {
+  Future<void> _loadImageByteData() async {
     ByteData data = await rootBundle.load("assets/agora-logo.png");
     Uint8List bytes =
         data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
@@ -123,18 +129,20 @@ class _State extends State<PushVideoFrame> {
 
     final byteData =
         await image.toByteData(format: ImageByteFormat.rawStraightRgba);
-    final imageByteData = byteData!.buffer.asUint8List();
-    final imageWidth = image.width;
-    final imageHeight = image.height;
+    _imageByteData = byteData!.buffer.asUint8List();
+    _imageWidth = image.width;
+    _imageHeight = image.height;
     image.dispose();
+  }
 
+  Future<void> _pushVideoFrame() async {
     await _engine.getMediaEngine().pushVideoFrame(
         frame: ExternalVideoFrame(
             type: VideoBufferType.videoBufferRawData,
             format: VideoPixelFormat.videoPixelRgba,
-            buffer: imageByteData,
-            stride: imageWidth,
-            height: imageHeight,
+            buffer: _imageByteData,
+            stride: _imageWidth,
+            height: _imageHeight,
             timestamp: DateTime.now().millisecondsSinceEpoch));
   }
 

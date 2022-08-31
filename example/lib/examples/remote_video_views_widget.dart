@@ -2,9 +2,17 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:agora_rtc_engine_example/examples/log_sink.dart';
 import 'package:flutter/material.dart';
 
+mixin KeepRemoteVideoViewsMixin<T extends StatefulWidget> on State<T> {
+  final GlobalKey _keepRemoteVideoViewsKey = GlobalKey();
+  GlobalKey get keepRemoteVideoViewsKey => _keepRemoteVideoViewsKey;
+}
+
 class RemoteVideoViewsWidget extends StatefulWidget {
   const RemoteVideoViewsWidget(
-      {Key? key, required this.rtcEngine, required this.channelId, this.connectionUid})
+      {Key? key,
+      required this.rtcEngine,
+      required this.channelId,
+      this.connectionUid})
       : super(key: key);
 
   final RtcEngine rtcEngine;
@@ -70,6 +78,7 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
   @override
   Widget build(BuildContext context) {
     final widgets = <Widget>[];
+    debugPrint('_remoteUidsMap: $_remoteUidsMap');
     _remoteUidsMap.forEach((key, value) {
       widgets.add(
         SizedBox(
@@ -81,7 +90,9 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
                 controller: VideoViewController.remote(
                   rtcEngine: widget.rtcEngine,
                   canvas: VideoCanvas(uid: key),
-                  connection: RtcConnection(channelId: widget.channelId, localUid: widget.connectionUid),
+                  connection: RtcConnection(
+                      channelId: widget.channelId,
+                      localUid: widget.connectionUid),
                 ),
               ),
               Column(
@@ -90,7 +101,9 @@ class _RemoteVideoViewsWidgetState extends State<RemoteVideoViewsWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    widget.connectionUid != null ? 'localuid: ${widget.connectionUid}' : '',
+                    widget.connectionUid != null
+                        ? 'localuid: ${widget.connectionUid}'
+                        : '',
                     style: const TextStyle(color: Colors.white, fontSize: 10),
                   ),
                   Text(

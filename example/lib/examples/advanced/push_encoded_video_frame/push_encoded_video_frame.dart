@@ -35,12 +35,12 @@ class _State extends State<PushEncodedVideoFrame> {
 
   @override
   void dispose() {
-    super.dispose();
-
     _dispose();
+    super.dispose();
   }
 
   Future<void> _dispose() async {
+    await _engine.leaveChannel();
     await _engine.release();
   }
 

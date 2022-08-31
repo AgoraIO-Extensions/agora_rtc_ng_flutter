@@ -15,7 +15,7 @@ class ScreenSharing extends StatefulWidget {
   State<StatefulWidget> createState() => _State();
 }
 
-class _State extends State<ScreenSharing> {
+class _State extends State<ScreenSharing> with KeepRemoteVideoViewsMixin {
   late final RtcEngineEx _engine;
   bool _isReadyPreview = false;
   String channelId = config.channelId;
@@ -206,6 +206,7 @@ class _State extends State<ScreenSharing> {
             Align(
               alignment: Alignment.topLeft,
               child: RemoteVideoViewsWidget(
+                key: keepRemoteVideoViewsKey,
                 rtcEngine: _engine,
                 channelId: _controller.text,
                 connectionUid: int.tryParse(_localUidController.text),
@@ -268,6 +269,9 @@ class _State extends State<ScreenSharing> {
                   rtcEngine: _engine,
                   isScreenShared: _isScreenShared,
                   onStartScreenShared: () {
+                    if (isJoined) {
+                      _updateScreenShareChannelMediaOptions();
+                    }
                     setState(() {
                       _isScreenShared = !_isScreenShared;
                     });
