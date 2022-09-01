@@ -18,7 +18,7 @@ dependencies:
   ffi: ">=1.1.2"
   # iris_event: ^1.1.0
   iris_event:
-    path: /Users/fenglang/codes/aw/iris_event/
+    path: ../iris_event/
   async: ^2.8.2
   meta: ^1.7.0
 

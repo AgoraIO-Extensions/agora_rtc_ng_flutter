@@ -46,6 +46,8 @@ public:
     // std::string channel_id_;
     std::mutex mutex_;
     FlutterDesktopPixelBuffer *pixel_buffer_;
+    IrisVideoFrameBufferConfig *config_;
+    IrisVideoFrame *video_frame_cache_;
 };
 
 #endif // TEXTURE_RENDER_H_

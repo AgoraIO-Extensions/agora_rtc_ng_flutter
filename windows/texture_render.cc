@@ -13,13 +13,14 @@ using namespace agora::iris::rtc;
 TextureRender::TextureRender(flutter::BinaryMessenger *messenger,
                              flutter::TextureRegistrar *registrar,
                              agora::iris::IrisVideoFrameBufferManager *videoFrameBufferManager)
-    : registrar_(registrar),
+    : registrar_(registrar),video_frame_cache_(nullptr),
       videoFrameBufferManager_(videoFrameBufferManager),
       texture_(PixelBufferTexture(std::bind(&TextureRender::CopyPixelBuffer,
                                             this,
                                             std::placeholders::_1,
                                             std::placeholders::_2))),
-      pixel_buffer_(new FlutterDesktopPixelBuffer{nullptr, 0, 0})
+      pixel_buffer_(new FlutterDesktopPixelBuffer{nullptr, 0, 0}),
+      config_(nullptr)
 {
     texture_id_ = registrar_->RegisterTexture(&texture_);
     // auto channel = std::make_unique<MethodChannel<EncodableValue>>(
@@ -117,37 +118,75 @@ void TextureRender::OnVideoFrameReceived(const IrisVideoFrame &video_frame,
                                          const IrisVideoFrameBufferConfig *config,
                                          bool resize)
 {
-    std::lock_guard<std::mutex> lock_guard(mutex_);
-    if (pixel_buffer_->width != video_frame.width ||
-        pixel_buffer_->height != video_frame.height)
-    {
-        if (pixel_buffer_->buffer)
-        {
-            delete[] pixel_buffer_->buffer;
-        }
-        pixel_buffer_->buffer = new uint8_t[video_frame.y_buffer_length];
-    }
-    memcpy((void *)pixel_buffer_->buffer, video_frame.y_buffer,
-           video_frame.y_buffer_length);
-    pixel_buffer_->width = video_frame.width;
-    pixel_buffer_->height = video_frame.height;
+    // std::lock_guard<std::mutex> lock_guard(mutex_);
+    // if (pixel_buffer_->width != video_frame.width ||
+    //     pixel_buffer_->height != video_frame.height)
+    // {
+    //     if (pixel_buffer_->buffer)
+    //     {
+    //         delete[] pixel_buffer_->buffer;
+    //     }
+    //     pixel_buffer_->buffer = new uint8_t[video_frame.y_buffer_length];
+    // }
+    // memcpy((void *)pixel_buffer_->buffer, video_frame.y_buffer,
+    //        video_frame.y_buffer_length);
+    // pixel_buffer_->width = video_frame.width;
+    // pixel_buffer_->height = video_frame.height;
     registrar_->MarkTextureFrameAvailable(texture_id_);
 }
 
 const FlutterDesktopPixelBuffer *
 TextureRender::CopyPixelBuffer(size_t width, size_t height)
 {
-    std::lock_guard<std::mutex> lock_guard(mutex_);
+    if (!video_frame_cache_)
+    {
+        video_frame_cache_ = new IrisVideoFrame;
+        video_frame_cache_->y_buffer = nullptr;
+        video_frame_cache_->width = 0;
+        video_frame_cache_->height = 0;
+        pixel_buffer_->buffer = nullptr;
+    }
+
+    bool is_new_frame;
+
+    IrisVideoFrameBufferConfig config = *config_;
+    int ret = videoFrameBufferManager_->GetVideoFrame(*video_frame_cache_, is_new_frame, &config);
+
+    if (ret == IRIS_VIDEO_PROCESS_ERR::ERR_SIZE_NOT_MATCHING)
+    {
+        if (video_frame_cache_->y_buffer)
+        {
+            delete[] video_frame_cache_->y_buffer;
+        }
+
+        if (pixel_buffer_->buffer)
+        {
+            delete[] pixel_buffer_->buffer;
+        }
+        
+        video_frame_cache_->y_buffer = new uint8_t[video_frame_cache_->width * video_frame_cache_->height * 4];
+        pixel_buffer_->buffer = (const uint8_t *)video_frame_cache_->y_buffer;
+        videoFrameBufferManager_->GetVideoFrame(*video_frame_cache_, is_new_frame, &config);
+    }
+
+    pixel_buffer_->width = video_frame_cache_->width;
+    pixel_buffer_->height = video_frame_cache_->height;
+
     return pixel_buffer_;
 }
 
 void TextureRender::UpdateData(unsigned int uid, const std::string &channelId, unsigned int videoSourceType)
 {
     IrisVideoFrameBuffer buffer(kVideoFrameTypeRGBA, this, 16);
-    IrisVideoFrameBufferConfig config;
+    // IrisVideoFrameBufferConfig config;
 
-    config.id = uid;
-    config.type = (IrisVideoSourceType)videoSourceType; //::kVideoSourceTypeCameraPrimary;
+    if (!config_)
+    {
+        config_ = new IrisVideoFrameBufferConfig;
+    }
+
+    config_->id = uid;
+    config_->type = (IrisVideoSourceType)videoSourceType; //::kVideoSourceTypeCameraPrimary;
     // if (config.id == 0)
     // {
     //     config.type = IrisVideoSourceType::kVideoSourceTypeCameraPrimary;
@@ -158,17 +197,23 @@ void TextureRender::UpdateData(unsigned int uid, const std::string &channelId, u
     // }
     if (!channelId.empty())
     {
-        strcpy_s(config.key, channelId.c_str());
+        strcpy_s(config_->key, channelId.c_str());
     }
     else
     {
-        strcpy_s(config.key, "");
+        strcpy_s(config_->key, "");
     }
-    videoFrameBufferManager_->EnableVideoFrameBuffer(buffer, &config);
+    videoFrameBufferManager_->EnableVideoFrameBuffer(buffer, config_);
 }
 
 void TextureRender::Dispose()
 {
+    if (config_)
+    {
+        delete config_;
+        config_ = nullptr;
+    }
+
     if (videoFrameBufferManager_)
     {
         videoFrameBufferManager_->DisableVideoFrameBuffer(this);

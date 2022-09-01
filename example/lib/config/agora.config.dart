@@ -9,7 +9,7 @@ String get appId {
 String get token {
   // Allow pass a `token` as an environment variable with name `TEST_TOKEN` by using --dart-define
   return const String.fromEnvironment('TEST_TOKEN',
-      defaultValue: '<TEST_TOKEN>');
+      defaultValue: '');
 }
 
 /// Your channel ID
@@ -17,7 +17,7 @@ String get channelId {
   // Allow pass a `channelId` as an environment variable with name `TEST_CHANNEL_ID` by using --dart-define
   return const String.fromEnvironment(
     'TEST_CHANNEL_ID',
-    defaultValue: '<TEST_CHANNEL_ID>',
+    defaultValue: 'jy',
   );
 }
 
