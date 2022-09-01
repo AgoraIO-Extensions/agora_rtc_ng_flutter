@@ -9,7 +9,7 @@
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
 #include <flutter/standard_method_codec.h>
-#include "include/agora_rtc_ng/video_view_controller.h"
+#include "include/agora_rtc_engine/video_view_controller.h"
 
 #include <memory>
 #include <sstream>
