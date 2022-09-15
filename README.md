@@ -1,5 +1,8 @@
 # agora_rtc_ng
 
+## Deprecated
+The code has been merged to the https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK/tree/main. This repository is no longer maintain.
+
 <p align="center">
     <a href="https://pub.dev/packages/agora_rtc_ng"><img src="https://badges.bar/agora_rtc_ng/likes" alt="Pub.dev likes"/></a>
     <a href="https://pub.dev/packages/agora_rtc_ng" alt="Pub.dev popularity"><img src="https://badges.bar/agora_rtc_ng/popularity"/></a>
